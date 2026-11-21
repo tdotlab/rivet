@@ -2628,816 +2628,408 @@ jr_00c_4e35:
     ret nz                                           ; $4e51
 jr_00c_4e52:
     jp $33fb                                         ; $4e52
-    ld bc, $5b57                                     ; $4e55
-    ld bc, $385e                                     ; $4e58
-    ld [bc], a                                       ; $4e5b
-    ld b, h                                          ; $4e5c
-    ld b, [hl]                                       ; $4e5d
-    ld a, h                                          ; $4e5e
-    ld [bc], a                                       ; $4e5f
-    ld l, [hl]                                       ; $4e60
-    ld e, h                                          ; $4e61
-    ld a, h                                          ; $4e62
-    ld [bc], a                                       ; $4e63
-    sub d                                            ; $4e64
-    ld e, h                                          ; $4e65
-    ld a, h                                          ; $4e66
-    inc bc                                           ; $4e67
-    ld a, b                                          ; $4e68
-    ld [hl], l                                       ; $4e69
-    halt                                             ; $4e6a
-    ld [hl], a                                       ; $4e6b
-    ld bc, $7470                                     ; $4e6c
-    ld bc, $7471                                     ; $4e6f
-    ld bc, $7472                                     ; $4e72
-    ld bc, $7473                                     ; $4e75
-    ld bc, $9cc4                                     ; $4e78
-    ld bc, $3e4a                                     ; $4e7b
-    ld bc, $3db9                                     ; $4e7e
-    ld bc, $3d67                                     ; $4e81
-    ld bc, $7e4c                                     ; $4e84
-    ld bc, $7e52                                     ; $4e87
-    rst $38                                          ; $4e8a
-    nop                                              ; $4e8b
-    add l                                            ; $4e8c
-    nop                                              ; $4e8d
-    sub e                                            ; $4e8e
-    ld d, b                                          ; $4e8f
-    jr nc, jr_00c_4e93                               ; $4e90
-    nop                                              ; $4e92
-jr_00c_4e93:
-    nop                                              ; $4e93
-    and b                                            ; $4e94
-    ld bc, $5e00                                     ; $4e95
-    xor c                                            ; $4e98
-    ld bc, $bc00                                     ; $4e99
-    or d                                             ; $4e9c
-    ld [bc], a                                       ; $4e9d
-    nop                                              ; $4e9e
-    nop                                              ; $4e9f
-    and b                                            ; $4ea0
-    ld [bc], a                                       ; $4ea1
-    nop                                              ; $4ea2
-    ld e, [hl]                                       ; $4ea3
-    xor c                                            ; $4ea4
-    ld [bc], a                                       ; $4ea5
-    nop                                              ; $4ea6
-    cp h                                             ; $4ea7
-    or d                                             ; $4ea8
-    inc bc                                           ; $4ea9
-    nop                                              ; $4eaa
-    nop                                              ; $4eab
-    and b                                            ; $4eac
-    inc bc                                           ; $4ead
-    nop                                              ; $4eae
-    ld e, [hl]                                       ; $4eaf
-    xor c                                            ; $4eb0
-    inc bc                                           ; $4eb1
-    nop                                              ; $4eb2
-    cp h                                             ; $4eb3
-    or d                                             ; $4eb4
-    ld [hl+], a                                      ; $4eb5
-    ret z                                            ; $4eb6
-    ld bc, $2603                                     ; $4eb7
-    ret z                                            ; $4eba
-    ld l, a                                          ; $4ebb
-    ret                                              ; $4ebc
-    ld bc, $7303                                     ; $4ebd
-    ret                                              ; $4ec0
-    ld a, b                                          ; $4ec1
-    ret                                              ; $4ec2
-    ld bc, $7c03                                     ; $4ec3
-    ret                                              ; $4ec6
-    add c                                            ; $4ec7
-    ret                                              ; $4ec8
-    ld bc, $8503                                     ; $4ec9
-    ret                                              ; $4ecc
-    adc d                                            ; $4ecd
-    ret                                              ; $4ece
-    ld bc, $8e03                                     ; $4ecf
-    ret                                              ; $4ed2
-    sub e                                            ; $4ed3
-    ret                                              ; $4ed4
-    ld bc, $9703                                     ; $4ed5
-    ret                                              ; $4ed8
-    sbc h                                            ; $4ed9
-    ret                                              ; $4eda
-    ld bc, $a003                                     ; $4edb
-    ret                                              ; $4ede
-    and l                                            ; $4edf
-    ret                                              ; $4ee0
-    ld bc, $a903                                     ; $4ee1
-    ret                                              ; $4ee4
-    xor [hl]                                         ; $4ee5
-    ret                                              ; $4ee6
-    ld bc, $b203                                     ; $4ee7
-    ret                                              ; $4eea
-    nop                                              ; $4eeb
-    nop                                              ; $4eec
-    ld [bc], a                                       ; $4eed
-    ld [bc], a                                       ; $4eee
-    inc b                                            ; $4eef
-    inc b                                            ; $4ef0
-    ld b, $06                                        ; $4ef1
-    ld [$0a08], sp                                   ; $4ef3
-    ld a, [bc]                                       ; $4ef6
-    inc c                                            ; $4ef7
-    inc c                                            ; $4ef8
-    ld c, $0e                                        ; $4ef9
-    db $10                                           ; $4efb
-jr_00c_4efc:
-    db $10                                           ; $4efc
-    ld [de], a                                       ; $4efd
-    ld [de], a                                       ; $4efe
-    inc d                                            ; $4eff
-    inc d                                            ; $4f00
-    ld d, $16                                        ; $4f01
-    jr $4f1d                                         ; $4f03
-    ld a, [de]                                       ; $4f05
-    ld a, [de]                                       ; $4f06
-    inc e                                            ; $4f07
-    inc e                                            ; $4f08
-    ld e, $1e                                        ; $4f09
-    nop                                              ; $4f0b
-    jr nz, jr_00c_4f10                               ; $4f0c
-    ld [hl+], a                                      ; $4f0e
-    inc b                                            ; $4f0f
-jr_00c_4f10:
-    inc h                                            ; $4f10
-    ld b, $26                                        ; $4f11
-    ld [$0a28], sp                                   ; $4f13
-    ld a, [hl+]                                      ; $4f16
-    inc c                                            ; $4f17
-    inc l                                            ; $4f18
-    ld c, $2e                                        ; $4f19
-    db $10                                           ; $4f1b
-    jr nc, jr_00c_4f30                               ; $4f1c
-jr_00c_4f1e:
-    ld [hl-], a                                      ; $4f1e
-    inc d                                            ; $4f1f
-    inc [hl]                                         ; $4f20
-    ld d, $36                                        ; $4f21
-    jr jr_00c_4f5d                                   ; $4f23
-    ld a, [de]                                       ; $4f25
-    ld a, [hl-]                                      ; $4f26
-    inc e                                            ; $4f27
-    inc a                                            ; $4f28
-    ld e, $3e                                        ; $4f29
-    nop                                              ; $4f2b
-    nop                                              ; $4f2c
-    ld e, $40                                        ; $4f2d
-    nop                                              ; $4f2f
-jr_00c_4f30:
-    nop                                              ; $4f30
-    nop                                              ; $4f31
-    nop                                              ; $4f32
-    nop                                              ; $4f33
-    nop                                              ; $4f34
-    nop                                              ; $4f35
-    nop                                              ; $4f36
-    nop                                              ; $4f37
-    nop                                              ; $4f38
-    nop                                              ; $4f39
-    nop                                              ; $4f3a
-    nop                                              ; $4f3b
-    nop                                              ; $4f3c
-    nop                                              ; $4f3d
-    nop                                              ; $4f3e
-    nop                                              ; $4f3f
-    nop                                              ; $4f40
-    nop                                              ; $4f41
-    nop                                              ; $4f42
-    nop                                              ; $4f43
-    nop                                              ; $4f44
-    nop                                              ; $4f45
-    nop                                              ; $4f46
-    nop                                              ; $4f47
-    nop                                              ; $4f48
-    nop                                              ; $4f49
-    nop                                              ; $4f4a
-    nop                                              ; $4f4b
-    nop                                              ; $4f4c
-    nop                                              ; $4f4d
-    nop                                              ; $4f4e
-    nop                                              ; $4f4f
-    nop                                              ; $4f50
-    nop                                              ; $4f51
-    nop                                              ; $4f52
-    nop                                              ; $4f53
-    nop                                              ; $4f54
-    nop                                              ; $4f55
-    nop                                              ; $4f56
-    nop                                              ; $4f57
-    nop                                              ; $4f58
-    nop                                              ; $4f59
-    nop                                              ; $4f5a
-    nop                                              ; $4f5b
-    nop                                              ; $4f5c
-jr_00c_4f5d:
-    nop                                              ; $4f5d
-    nop                                              ; $4f5e
-    nop                                              ; $4f5f
-    nop                                              ; $4f60
-    nop                                              ; $4f61
-    nop                                              ; $4f62
-    nop                                              ; $4f63
-    nop                                              ; $4f64
-    nop                                              ; $4f65
-    nop                                              ; $4f66
-    nop                                              ; $4f67
-    nop                                              ; $4f68
-    nop                                              ; $4f69
-    nop                                              ; $4f6a
-    ld l, $20                                        ; $4f6b
-    ld d, h                                          ; $4f6d
-    add hl, bc                                       ; $4f6e
-    ld a, [bc]                                       ; $4f6f
-    ld [hl], d                                       ; $4f70
-    ld [hl], b                                       ; $4f71
-    ld a, [hl+]                                      ; $4f72
-    add hl, hl                                       ; $4f73
-    ld a, [de]                                       ; $4f74
-    cp c                                             ; $4f75
-    ld h, a                                          ; $4f76
-    ld b, b                                          ; $4f77
-    jr nz, jr_00c_4fda                               ; $4f78
-    jr nz, jr_00c_4efc                               ; $4f7a
-    jr nz, jr_00c_4f1e                               ; $4f7c
-    jr nz, jr_00c_4fc0                               ; $4f7e
-    ld b, b                                          ; $4f80
-    ld h, b                                          ; $4f81
-    ld b, b                                          ; $4f82
-    add b                                            ; $4f83
-    ld b, b                                          ; $4f84
-    and b                                            ; $4f85
-    ld b, b                                          ; $4f86
-    ld b, b                                          ; $4f87
-    ld h, b                                          ; $4f88
-    ld h, b                                          ; $4f89
-    ld h, b                                          ; $4f8a
-    add b                                            ; $4f8b
-    ld h, b                                          ; $4f8c
-    and b                                            ; $4f8d
-    ld h, b                                          ; $4f8e
-    ld b, b                                          ; $4f8f
-    add b                                            ; $4f90
-    ld h, b                                          ; $4f91
-    add b                                            ; $4f92
-    add b                                            ; $4f93
-    add b                                            ; $4f94
-    and b                                            ; $4f95
-    add b                                            ; $4f96
-    inc bc                                           ; $4f97
-    nop                                              ; $4f98
-    ld [bc], a                                       ; $4f99
-    ret z                                            ; $4f9a
-    ld bc, $0400                                     ; $4f9b
-    nop                                              ; $4f9e
-    ld [bc], a                                       ; $4f9f
-    ret                                              ; $4fa0
-    ld bc, $0401                                     ; $4fa1
-    nop                                              ; $4fa4
-    ld [bc], a                                       ; $4fa5
-    jp z, $0201                                      ; $4fa6
-    inc b                                            ; $4fa9
-    nop                                              ; $4faa
-    ld [bc], a                                       ; $4fab
-    rlc c                                            ; $4fac
-    inc bc                                           ; $4fae
-    inc b                                            ; $4faf
-    ld bc, $0014                                     ; $4fb0
-    ld [bc], a                                       ; $4fb3
-    nop                                              ; $4fb4
-    inc bc                                           ; $4fb5
-    ld bc, $0401                                     ; $4fb6
-    ld [bc], a                                       ; $4fb9
-    ld bc, $0203                                     ; $4fba
-    ld bc, $0205                                     ; $4fbd
-jr_00c_4fc0:
-    ld [bc], a                                       ; $4fc0
-    inc bc                                           ; $4fc1
-    ld [bc], a                                       ; $4fc2
-    ld bc, $0206                                     ; $4fc3
-    inc bc                                           ; $4fc6
-    ld bc, $0407                                     ; $4fc7
-    nop                                              ; $4fca
-    inc d                                            ; $4fcb
-    ld bc, $0402                                     ; $4fcc
-    inc bc                                           ; $4fcf
-    ld bc, $0801                                     ; $4fd0
-    ld [bc], a                                       ; $4fd3
-    dec b                                            ; $4fd4
-    inc bc                                           ; $4fd5
-    ld [bc], a                                       ; $4fd6
-    ld bc, $0209                                     ; $4fd7
-jr_00c_4fda:
-    ld b, $03                                        ; $4fda
-    ld [bc], a                                       ; $4fdc
-    ld bc, $020a                                     ; $4fdd
-    rlca                                             ; $4fe0
-    ld bc, $040b                                     ; $4fe1
-    dec b                                            ; $4fe4
-    inc d                                            ; $4fe5
-    ld [bc], a                                       ; $4fe6
-    ld [bc], a                                       ; $4fe7
-    ld [$0103], sp                                   ; $4fe8
-    ld bc, $020c                                     ; $4feb
-    add hl, bc                                       ; $4fee
-    inc bc                                           ; $4fef
-    ld [bc], a                                       ; $4ff0
-    ld bc, $020d                                     ; $4ff1
-    ld a, [bc]                                       ; $4ff4
-    inc bc                                           ; $4ff5
-    ld [bc], a                                       ; $4ff6
-    ld bc, $020e                                     ; $4ff7
-    dec bc                                           ; $4ffa
-    ld bc, $040f                                     ; $4ffb
-    nop                                              ; $4ffe
-    inc d                                            ; $4fff
-    inc b                                            ; $5000
-    ld [bc], a                                       ; $5001
-    inc c                                            ; $5002
-    inc bc                                           ; $5003
-    ld bc, $1001                                     ; $5004
-    ld [bc], a                                       ; $5007
-    dec c                                            ; $5008
-    inc bc                                           ; $5009
-    ld [bc], a                                       ; $500a
-    ld bc, $0211                                     ; $500b
-    ld c, $03                                        ; $500e
-    ld [bc], a                                       ; $5010
-    ld bc, $0212                                     ; $5011
-    rrca                                             ; $5014
-    ld bc, $0413                                     ; $5015
-    nop                                              ; $5018
-    inc d                                            ; $5019
-    inc bc                                           ; $501a
-    ld [bc], a                                       ; $501b
-    db $10                                           ; $501c
-    inc bc                                           ; $501d
-    ld bc, $1401                                     ; $501e
-    ld [bc], a                                       ; $5021
-    ld de, $0203                                     ; $5022
-    ld bc, $0215                                     ; $5025
-    ld [de], a                                       ; $5028
-    inc bc                                           ; $5029
-    ld [bc], a                                       ; $502a
-    ld bc, $0216                                     ; $502b
-    inc de                                           ; $502e
-    ld bc, $0417                                     ; $502f
-    dec b                                            ; $5032
-    inc d                                            ; $5033
-    dec b                                            ; $5034
-    ld [bc], a                                       ; $5035
-    inc d                                            ; $5036
-    inc bc                                           ; $5037
-    ld bc, $1801                                     ; $5038
-    ld [bc], a                                       ; $503b
-    dec d                                            ; $503c
-    inc bc                                           ; $503d
-    ld [bc], a                                       ; $503e
-    ld bc, $0219                                     ; $503f
-    ld d, $03                                        ; $5042
-    ld [bc], a                                       ; $5044
-    ld bc, $021a                                     ; $5045
-    rla                                              ; $5048
-    ld bc, $041b                                     ; $5049
-    nop                                              ; $504c
-    inc d                                            ; $504d
-    ld b, $02                                        ; $504e
-    jr jr_00c_5055                                   ; $5050
-    ld bc, $1c01                                     ; $5052
-jr_00c_5055:
-    ld [bc], a                                       ; $5055
-    add hl, de                                       ; $5056
-    inc bc                                           ; $5057
-    ld [bc], a                                       ; $5058
-    ld bc, $021d                                     ; $5059
-    ld a, [de]                                       ; $505c
-    inc bc                                           ; $505d
-    ld [bc], a                                       ; $505e
-    ld bc, $021e                                     ; $505f
-    dec de                                           ; $5062
-    ld bc, $041f                                     ; $5063
-    dec b                                            ; $5066
-    inc d                                            ; $5067
-    rlca                                             ; $5068
-    ld [bc], a                                       ; $5069
-    inc e                                            ; $506a
-    inc bc                                           ; $506b
-    ld bc, $2001                                     ; $506c
-    ld [bc], a                                       ; $506f
-    dec e                                            ; $5070
-    inc bc                                           ; $5071
-    ld [bc], a                                       ; $5072
-    ld bc, $0221                                     ; $5073
-    ld e, $03                                        ; $5076
-    ld [bc], a                                       ; $5078
-    ld bc, $0222                                     ; $5079
-    rra                                              ; $507c
-    ld bc, $0423                                     ; $507d
-    nop                                              ; $5080
-    inc d                                            ; $5081
-    ld [$2002], sp                                   ; $5082
-    inc bc                                           ; $5085
-    ld bc, $2401                                     ; $5086
-    ld [bc], a                                       ; $5089
-    ld hl, $0203                                     ; $508a
-    ld bc, $0225                                     ; $508d
-    ld [hl+], a                                      ; $5090
-    inc bc                                           ; $5091
-    ld [bc], a                                       ; $5092
-    ld bc, $0226                                     ; $5093
-    inc hl                                           ; $5096
-    ld bc, $0427                                     ; $5097
-    nop                                              ; $509a
-    inc d                                            ; $509b
-    add hl, bc                                       ; $509c
-    ld [bc], a                                       ; $509d
-    inc h                                            ; $509e
-    inc bc                                           ; $509f
-    ld bc, $2801                                     ; $50a0
-    ld [bc], a                                       ; $50a3
-    dec h                                            ; $50a4
-    inc bc                                           ; $50a5
-    ld [bc], a                                       ; $50a6
-    ld bc, $0229                                     ; $50a7
-    ld h, $03                                        ; $50aa
-    ld [bc], a                                       ; $50ac
-    ld bc, $022a                                     ; $50ad
-    daa                                              ; $50b0
-    ld bc, $042b                                     ; $50b1
-    dec b                                            ; $50b4
-    inc d                                            ; $50b5
-    ld a, [bc]                                       ; $50b6
-    ld [bc], a                                       ; $50b7
-    jr z, jr_00c_50bd                                ; $50b8
-    ld bc, $2c01                                     ; $50ba
-jr_00c_50bd:
-    ld [bc], a                                       ; $50bd
-    add hl, hl                                       ; $50be
-    inc bc                                           ; $50bf
-    ld [bc], a                                       ; $50c0
-    ld bc, $022d                                     ; $50c1
-    ld a, [hl+]                                      ; $50c4
-    inc bc                                           ; $50c5
-    ld [bc], a                                       ; $50c6
-    ld bc, $022e                                     ; $50c7
-    dec hl                                           ; $50ca
-    ld bc, $042f                                     ; $50cb
-    nop                                              ; $50ce
-    inc d                                            ; $50cf
-    inc c                                            ; $50d0
-    ld [bc], a                                       ; $50d1
-    inc l                                            ; $50d2
-    inc bc                                           ; $50d3
-    ld bc, $3001                                     ; $50d4
-    ld [bc], a                                       ; $50d7
-    dec l                                            ; $50d8
-    inc bc                                           ; $50d9
-    ld [bc], a                                       ; $50da
-    ld bc, $0231                                     ; $50db
-    ld l, $03                                        ; $50de
-    ld [bc], a                                       ; $50e0
-    ld bc, $0232                                     ; $50e1
-    cpl                                              ; $50e4
-    ld bc, $0433                                     ; $50e5
-    nop                                              ; $50e8
-    inc d                                            ; $50e9
-    dec bc                                           ; $50ea
-    ld [bc], a                                       ; $50eb
-    jr nc, jr_00c_50f1                               ; $50ec
-    ld bc, $3401                                     ; $50ee
-jr_00c_50f1:
-    ld [bc], a                                       ; $50f1
-    ld sp, $0203                                     ; $50f2
-    ld bc, $0235                                     ; $50f5
-    ld [hl-], a                                      ; $50f8
-    inc bc                                           ; $50f9
-    ld [bc], a                                       ; $50fa
-    ld bc, $0236                                     ; $50fb
-    inc sp                                           ; $50fe
-    ld bc, $0437                                     ; $50ff
-    dec b                                            ; $5102
-    inc d                                            ; $5103
-    dec c                                            ; $5104
-    ld [bc], a                                       ; $5105
-    inc [hl]                                         ; $5106
-    inc bc                                           ; $5107
-    ld bc, $3801                                     ; $5108
-    ld [bc], a                                       ; $510b
-    dec [hl]                                         ; $510c
-    inc bc                                           ; $510d
-    ld [bc], a                                       ; $510e
-    ld bc, $0239                                     ; $510f
-    ld [hl], $03                                     ; $5112
-    ld [bc], a                                       ; $5114
-    ld bc, $023a                                     ; $5115
-    scf                                              ; $5118
-    ld bc, $043b                                     ; $5119
-    nop                                              ; $511c
-    inc d                                            ; $511d
-    ld c, $02                                        ; $511e
-    jr c, jr_00c_5125                                ; $5120
-    ld bc, $3c01                                     ; $5122
-jr_00c_5125:
-    ld [bc], a                                       ; $5125
-    add hl, sp                                       ; $5126
-    inc bc                                           ; $5127
-    ld [bc], a                                       ; $5128
-    ld bc, $023d                                     ; $5129
-    ld a, [hl-]                                      ; $512c
-    inc bc                                           ; $512d
-    ld [bc], a                                       ; $512e
-    ld bc, $023e                                     ; $512f
-    dec sp                                           ; $5132
-    ld bc, $043f                                     ; $5133
-    dec b                                            ; $5136
-    inc d                                            ; $5137
-    rrca                                             ; $5138
-    ld [bc], a                                       ; $5139
-    inc a                                            ; $513a
-    inc bc                                           ; $513b
-    ld bc, $4001                                     ; $513c
-    ld [bc], a                                       ; $513f
-    dec a                                            ; $5140
-    inc bc                                           ; $5141
-    ld [bc], a                                       ; $5142
-    ld bc, $0241                                     ; $5143
-    ld a, $03                                        ; $5146
-    ld [bc], a                                       ; $5148
-    ld bc, $0242                                     ; $5149
-    ccf                                              ; $514c
-    ld bc, $0443                                     ; $514d
-    nop                                              ; $5150
-    inc d                                            ; $5151
-    ld de, $4002                                     ; $5152
-    inc bc                                           ; $5155
-    ld bc, $4401                                     ; $5156
-    ld [bc], a                                       ; $5159
-    ld b, c                                          ; $515a
-    inc bc                                           ; $515b
-    ld [bc], a                                       ; $515c
-    ld bc, $0245                                     ; $515d
-    ld b, d                                          ; $5160
-    inc bc                                           ; $5161
-    ld [bc], a                                       ; $5162
-    ld bc, $0246                                     ; $5163
-    ld b, e                                          ; $5166
-    ld bc, $0447                                     ; $5167
-    nop                                              ; $516a
-    inc d                                            ; $516b
-    db $10                                           ; $516c
-    ld [bc], a                                       ; $516d
-    ld b, h                                          ; $516e
-    inc bc                                           ; $516f
-    ld bc, $4801                                     ; $5170
-    ld [bc], a                                       ; $5173
-    ld b, l                                          ; $5174
-    inc bc                                           ; $5175
-    ld [bc], a                                       ; $5176
-    ld bc, $0249                                     ; $5177
-    ld b, [hl]                                       ; $517a
-    inc bc                                           ; $517b
-    ld [bc], a                                       ; $517c
-    ld bc, $024a                                     ; $517d
-    ld b, a                                          ; $5180
-    ld bc, $044b                                     ; $5181
-    dec b                                            ; $5184
-    inc d                                            ; $5185
-    ld [de], a                                       ; $5186
-    ld [bc], a                                       ; $5187
-    ld c, b                                          ; $5188
-    inc bc                                           ; $5189
-    ld bc, $4c01                                     ; $518a
-    ld [bc], a                                       ; $518d
-    ld c, c                                          ; $518e
-    inc bc                                           ; $518f
-    ld [bc], a                                       ; $5190
-    ld bc, $024d                                     ; $5191
-    ld c, d                                          ; $5194
-    inc bc                                           ; $5195
-    ld [bc], a                                       ; $5196
-    ld bc, $024e                                     ; $5197
-    ld c, e                                          ; $519a
-    ld bc, $044f                                     ; $519b
-    nop                                              ; $519e
-    inc d                                            ; $519f
-    inc de                                           ; $51a0
-    ld [bc], a                                       ; $51a1
-    ld c, h                                          ; $51a2
-    inc bc                                           ; $51a3
-    ld bc, $5001                                     ; $51a4
-    ld [bc], a                                       ; $51a7
-    ld c, l                                          ; $51a8
-    inc bc                                           ; $51a9
-    ld [bc], a                                       ; $51aa
-    ld bc, $0251                                     ; $51ab
-    ld c, [hl]                                       ; $51ae
-    inc bc                                           ; $51af
-    ld [bc], a                                       ; $51b0
-    ld bc, $0252                                     ; $51b1
-    ld c, a                                          ; $51b4
-    ld bc, $0453                                     ; $51b5
-    nop                                              ; $51b8
-    inc d                                            ; $51b9
-    inc d                                            ; $51ba
-    ld [bc], a                                       ; $51bb
-    ld d, b                                          ; $51bc
-    inc bc                                           ; $51bd
-    ld bc, $5401                                     ; $51be
-    ld [bc], a                                       ; $51c1
-    ld d, c                                          ; $51c2
-    inc bc                                           ; $51c3
-    ld [bc], a                                       ; $51c4
-    ld bc, $0255                                     ; $51c5
-    ld d, d                                          ; $51c8
-    inc bc                                           ; $51c9
-    ld [bc], a                                       ; $51ca
-    ld bc, $0256                                     ; $51cb
-    ld d, e                                          ; $51ce
-    ld bc, $0457                                     ; $51cf
-    nop                                              ; $51d2
-    inc d                                            ; $51d3
-    dec d                                            ; $51d4
-    ld [bc], a                                       ; $51d5
-    ld d, h                                          ; $51d6
-    inc bc                                           ; $51d7
-    ld bc, $5801                                     ; $51d8
-    ld [bc], a                                       ; $51db
-    ld d, l                                          ; $51dc
-    inc bc                                           ; $51dd
-    ld [bc], a                                       ; $51de
-    ld bc, $0259                                     ; $51df
-    ld d, [hl]                                       ; $51e2
-    inc bc                                           ; $51e3
-    ld [bc], a                                       ; $51e4
-    ld bc, $025a                                     ; $51e5
-    ld d, a                                          ; $51e8
-    ld bc, $045b                                     ; $51e9
-    dec b                                            ; $51ec
-    inc d                                            ; $51ed
-    ld d, $02                                        ; $51ee
-    ld e, b                                          ; $51f0
-    ld bc, $045c                                     ; $51f1
-    nop                                              ; $51f4
-    ld [bc], a                                       ; $51f5
-    ld e, c                                          ; $51f6
-    ld bc, $045d                                     ; $51f7
-    nop                                              ; $51fa
-    ld [bc], a                                       ; $51fb
-    ld e, d                                          ; $51fc
-    ld bc, $045e                                     ; $51fd
-    nop                                              ; $5200
-    ld [bc], a                                       ; $5201
-    ld e, e                                          ; $5202
-    ld bc, $045f                                     ; $5203
-    ld [bc], a                                       ; $5206
-    inc d                                            ; $5207
-    rla                                              ; $5208
-    ld [bc], a                                       ; $5209
-    ld e, h                                          ; $520a
-    ld bc, $0460                                     ; $520b
-    nop                                              ; $520e
-    ld [bc], a                                       ; $520f
-    ld e, l                                          ; $5210
-    ld bc, $0461                                     ; $5211
-    nop                                              ; $5214
-    ld [bc], a                                       ; $5215
-    ld e, [hl]                                       ; $5216
-    ld bc, $0462                                     ; $5217
-    nop                                              ; $521a
-    ld [bc], a                                       ; $521b
-    ld e, a                                          ; $521c
-    ld bc, $0463                                     ; $521d
-    inc bc                                           ; $5220
-    inc d                                            ; $5221
-    ld a, [de]                                       ; $5222
-    ld [bc], a                                       ; $5223
-    ld h, b                                          ; $5224
-    inc bc                                           ; $5225
-    inc b                                            ; $5226
-    ld bc, $0464                                     ; $5227
-    inc b                                            ; $522a
-    inc d                                            ; $522b
-    jr jr_00c_5244                                   ; $522c
-    nop                                              ; $522e
-    inc de                                           ; $522f
-    nop                                              ; $5230
-    ld [bc], a                                       ; $5231
-    inc bc                                           ; $5232
-    ld bc, $0407                                     ; $5233
-    nop                                              ; $5236
-    ld [bc], a                                       ; $5237
-    rlca                                             ; $5238
-    ld bc, $040b                                     ; $5239
-    dec b                                            ; $523c
-    ld [bc], a                                       ; $523d
-    dec bc                                           ; $523e
-    ld bc, $040f                                     ; $523f
-    nop                                              ; $5242
-    ld [bc], a                                       ; $5243
-jr_00c_5244:
-    rrca                                             ; $5244
-    ld bc, $0413                                     ; $5245
-    nop                                              ; $5248
-    ld [bc], a                                       ; $5249
-    inc de                                           ; $524a
-    ld bc, $0417                                     ; $524b
-    dec b                                            ; $524e
-    ld [bc], a                                       ; $524f
-    rla                                              ; $5250
-    ld bc, $041b                                     ; $5251
-    nop                                              ; $5254
-    ld [bc], a                                       ; $5255
-    dec de                                           ; $5256
-    ld bc, $041f                                     ; $5257
-    dec b                                            ; $525a
-    ld [bc], a                                       ; $525b
-    rra                                              ; $525c
-    ld bc, $0423                                     ; $525d
-    nop                                              ; $5260
-    ld [bc], a                                       ; $5261
-    inc hl                                           ; $5262
-    ld bc, $0427                                     ; $5263
-    nop                                              ; $5266
-    ld [bc], a                                       ; $5267
-    daa                                              ; $5268
-    ld bc, $042b                                     ; $5269
-    dec b                                            ; $526c
-    ld [bc], a                                       ; $526d
-    dec hl                                           ; $526e
-    ld bc, $042f                                     ; $526f
-    nop                                              ; $5272
-    ld [bc], a                                       ; $5273
-    cpl                                              ; $5274
-    ld bc, $0433                                     ; $5275
-    nop                                              ; $5278
-    ld [bc], a                                       ; $5279
-    inc sp                                           ; $527a
-    ld bc, $0437                                     ; $527b
-    dec b                                            ; $527e
-    ld [bc], a                                       ; $527f
-    scf                                              ; $5280
-    ld bc, $043b                                     ; $5281
-    nop                                              ; $5284
-    ld [bc], a                                       ; $5285
-    dec sp                                           ; $5286
-    ld bc, $043f                                     ; $5287
-    dec b                                            ; $528a
-    ld [bc], a                                       ; $528b
-    ccf                                              ; $528c
-    ld bc, $0443                                     ; $528d
-    nop                                              ; $5290
-    ld [bc], a                                       ; $5291
-    ld b, e                                          ; $5292
-    ld bc, $0447                                     ; $5293
-    nop                                              ; $5296
-    ld [bc], a                                       ; $5297
-    ld b, a                                          ; $5298
-    ld bc, $044b                                     ; $5299
-    dec b                                            ; $529c
-    ld [bc], a                                       ; $529d
-    ld c, e                                          ; $529e
-    ld bc, $044f                                     ; $529f
-    nop                                              ; $52a2
-    ld [bc], a                                       ; $52a3
-    ld c, a                                          ; $52a4
-    ld bc, $0453                                     ; $52a5
-    nop                                              ; $52a8
-    ld [bc], a                                       ; $52a9
-    ld d, e                                          ; $52aa
-    ld bc, $0457                                     ; $52ab
-    nop                                              ; $52ae
-    ld [bc], a                                       ; $52af
-    ld d, a                                          ; $52b0
-    ld bc, $045b                                     ; $52b1
-    dec b                                            ; $52b4
-    ld [bc], a                                       ; $52b5
-    ld e, e                                          ; $52b6
-    ld bc, $045f                                     ; $52b7
-    ld [bc], a                                       ; $52ba
-    ld [bc], a                                       ; $52bb
-    ld e, a                                          ; $52bc
-    ld bc, $0463                                     ; $52bd
-    inc bc                                           ; $52c0
-    inc d                                            ; $52c1
-    ld a, [de]                                       ; $52c2
-    ld [bc], a                                       ; $52c3
-    ld h, b                                          ; $52c4
-    inc bc                                           ; $52c5
-    inc b                                            ; $52c6
-    ld bc, $0464                                     ; $52c7
-    inc b                                            ; $52ca
-    inc d                                            ; $52cb
-    jr jr_00c_52e4                                   ; $52cc
-    nop                                              ; $52ce
-    inc de                                           ; $52cf
-    nop                                              ; $52d0
-    inc d                                            ; $52d1
-    add hl, de                                       ; $52d2
-    inc de                                           ; $52d3
-    nop                                              ; $52d4
+    ; Slice 4: dead data, not code (was mgbdis' linear-sweep
+    ; decode). Walk-verified: no reachable instruction in
+    ; $4e55-$52d4 from any known bank-12 entry. Code ends
+    ; at $4e54 (`jp $33fb`); code resumes at $52d5.
+    ; --- $4e55-$4f96: unknown table ---
+    db $01, $57, $5b, $01, $5e, $38, $02, $44
+    db $46, $7c, $02, $6e, $5c, $7c, $02, $92
+    db $5c, $7c, $03, $78, $75, $76, $77, $01
+    db $70, $74, $01, $71, $74, $01, $72, $74
+    db $01, $73, $74, $01, $c4, $9c, $01, $4a
+    db $3e, $01, $b9, $3d, $01, $67, $3d, $01
+    db $4c, $7e, $01, $52, $7e, $ff, $00, $85
+    db $00, $93, $50, $30, $01, $00, $00, $a0
+    db $01, $00, $5e, $a9, $01, $00, $bc, $b2
+    db $02, $00, $00, $a0, $02, $00, $5e, $a9
+    db $02, $00, $bc, $b2, $03, $00, $00, $a0
+    db $03, $00, $5e, $a9, $03, $00, $bc, $b2
+    db $22, $c8, $01, $03, $26, $c8, $6f, $c9
+    db $01, $03, $73, $c9, $78, $c9, $01, $03
+    db $7c, $c9, $81, $c9, $01, $03, $85, $c9
+    db $8a, $c9, $01, $03, $8e, $c9, $93, $c9
+    db $01, $03, $97, $c9, $9c, $c9, $01, $03
+    db $a0, $c9, $a5, $c9, $01, $03, $a9, $c9
+    db $ae, $c9, $01, $03, $b2, $c9, $00, $00
+    db $02, $02, $04, $04, $06, $06, $08, $08
+    db $0a, $0a, $0c, $0c, $0e, $0e, $10, $10
+    db $12, $12, $14, $14, $16, $16, $18, $18
+    db $1a, $1a, $1c, $1c, $1e, $1e, $00, $20
+    db $02, $22, $04, $24, $06, $26, $08, $28
+    db $0a, $2a, $0c, $2c, $0e, $2e, $10, $30
+    db $12, $32, $14, $34, $16, $36, $18, $38
+    db $1a, $3a, $1c, $3c, $1e, $3e, $00, $00
+    db $1e, $40, $00, $00, $00, $00, $00, $00
+    db $00, $00, $00, $00, $00, $00, $00, $00
+    db $00, $00, $00, $00, $00, $00, $00, $00
+    db $00, $00, $00, $00, $00, $00, $00, $00
+    db $00, $00, $00, $00, $00, $00, $00, $00
+    db $00, $00, $00, $00, $00, $00, $00, $00
+    db $00, $00, $00, $00, $00, $00, $00, $00
+    db $00, $00, $00, $00, $00, $00, $2e, $20
+    db $54, $09, $0a, $72, $70, $2a, $29, $1a
+    db $b9, $67, $40, $20, $60, $20, $80, $20
+    db $a0, $20, $40, $40, $60, $40, $80, $40
+    db $a0, $40, $40, $60, $60, $60, $80, $60
+    db $a0, $60, $40, $80, $60, $80, $80, $80
+    db $a0, $80
+    ; --- $4f97-$522c: the state-16 queue table,
+    ; (C,B) pairs. C is the C-dispatch op, B the
+    ; stage/param. ---
+    db $03, $00  ; entry 0: C=state 4-or-20, B=$00
+    db $02, $c8  ; entry 1: C=state 20, B=$c8
+    db $01, $00  ; entry 2: C=load stage, B=$00
+    db $04, $00  ; entry 3: C=no-op, B=$00
+    db $02, $c9  ; entry 4: C=state 20, B=$c9
+    db $01, $01  ; entry 5: C=load stage, B=$01
+    db $04, $00  ; entry 6: C=no-op, B=$00
+    db $02, $ca  ; entry 7: C=state 20, B=$ca
+    db $01, $02  ; entry 8: C=load stage, B=$02
+    db $04, $00  ; entry 9: C=no-op, B=$00
+    db $02, $cb  ; entry 10: C=state 20, B=$cb
+    db $01, $03  ; entry 11: C=load stage, B=$03
+    db $04, $01  ; entry 12: C=no-op, B=$01
+    db $14, $00  ; entry 13: C=state 30, B=$00
+    db $02, $00  ; entry 14: C=state 20, B=$00
+    db $03, $01  ; entry 15: C=state 4-or-20, B=$01
+    db $01, $04  ; entry 16: C=load stage, B=$04
+    db $02, $01  ; entry 17: C=state 20, B=$01
+    db $03, $02  ; entry 18: C=state 4-or-20, B=$02
+    db $01, $05  ; entry 19: C=load stage, B=$05
+    db $02, $02  ; entry 20: C=state 20, B=$02
+    db $03, $02  ; entry 21: C=state 4-or-20, B=$02
+    db $01, $06  ; entry 22: C=load stage, B=$06
+    db $02, $03  ; entry 23: C=state 20, B=$03
+    db $01, $07  ; entry 24: C=load stage, B=$07
+    db $04, $00  ; entry 25: C=no-op, B=$00
+    db $14, $01  ; entry 26: C=state 30, B=$01
+    db $02, $04  ; entry 27: C=state 20, B=$04
+    db $03, $01  ; entry 28: C=state 4-or-20, B=$01
+    db $01, $08  ; entry 29: C=load stage, B=$08
+    db $02, $05  ; entry 30: C=state 20, B=$05
+    db $03, $02  ; entry 31: C=state 4-or-20, B=$02
+    db $01, $09  ; entry 32: C=load stage, B=$09
+    db $02, $06  ; entry 33: C=state 20, B=$06
+    db $03, $02  ; entry 34: C=state 4-or-20, B=$02
+    db $01, $0a  ; entry 35: C=load stage, B=$0a
+    db $02, $07  ; entry 36: C=state 20, B=$07
+    db $01, $0b  ; entry 37: C=load stage, B=$0b
+    db $04, $05  ; entry 38: C=no-op, B=$05
+    db $14, $02  ; entry 39: C=state 30, B=$02
+    db $02, $08  ; entry 40: C=state 20, B=$08
+    db $03, $01  ; entry 41: C=state 4-or-20, B=$01
+    db $01, $0c  ; entry 42: C=load stage, B=$0c
+    db $02, $09  ; entry 43: C=state 20, B=$09
+    db $03, $02  ; entry 44: C=state 4-or-20, B=$02
+    db $01, $0d  ; entry 45: C=load stage, B=$0d
+    db $02, $0a  ; entry 46: C=state 20, B=$0a
+    db $03, $02  ; entry 47: C=state 4-or-20, B=$02
+    db $01, $0e  ; entry 48: C=load stage, B=$0e
+    db $02, $0b  ; entry 49: C=state 20, B=$0b
+    db $01, $0f  ; entry 50: C=load stage, B=$0f
+    db $04, $00  ; entry 51: C=no-op, B=$00
+    db $14, $04  ; entry 52: C=state 30, B=$04
+    db $02, $0c  ; entry 53: C=state 20, B=$0c
+    db $03, $01  ; entry 54: C=state 4-or-20, B=$01
+    db $01, $10  ; entry 55: C=load stage, B=$10
+    db $02, $0d  ; entry 56: C=state 20, B=$0d
+    db $03, $02  ; entry 57: C=state 4-or-20, B=$02
+    db $01, $11  ; entry 58: C=load stage, B=$11
+    db $02, $0e  ; entry 59: C=state 20, B=$0e
+    db $03, $02  ; entry 60: C=state 4-or-20, B=$02
+    db $01, $12  ; entry 61: C=load stage, B=$12
+    db $02, $0f  ; entry 62: C=state 20, B=$0f
+    db $01, $13  ; entry 63: C=load stage, B=$13
+    db $04, $00  ; entry 64: C=no-op, B=$00
+    db $14, $03  ; entry 65: C=state 30, B=$03
+    db $02, $10  ; entry 66: C=state 20, B=$10
+    db $03, $01  ; entry 67: C=state 4-or-20, B=$01
+    db $01, $14  ; entry 68: C=load stage, B=$14
+    db $02, $11  ; entry 69: C=state 20, B=$11
+    db $03, $02  ; entry 70: C=state 4-or-20, B=$02
+    db $01, $15  ; entry 71: C=load stage, B=$15
+    db $02, $12  ; entry 72: C=state 20, B=$12
+    db $03, $02  ; entry 73: C=state 4-or-20, B=$02
+    db $01, $16  ; entry 74: C=load stage, B=$16
+    db $02, $13  ; entry 75: C=state 20, B=$13
+    db $01, $17  ; entry 76: C=load stage, B=$17
+    db $04, $05  ; entry 77: C=no-op, B=$05
+    db $14, $05  ; entry 78: C=state 30, B=$05
+    db $02, $14  ; entry 79: C=state 20, B=$14
+    db $03, $01  ; entry 80: C=state 4-or-20, B=$01
+    db $01, $18  ; entry 81: C=load stage, B=$18
+    db $02, $15  ; entry 82: C=state 20, B=$15
+    db $03, $02  ; entry 83: C=state 4-or-20, B=$02
+    db $01, $19  ; entry 84: C=load stage, B=$19
+    db $02, $16  ; entry 85: C=state 20, B=$16
+    db $03, $02  ; entry 86: C=state 4-or-20, B=$02
+    db $01, $1a  ; entry 87: C=load stage, B=$1a
+    db $02, $17  ; entry 88: C=state 20, B=$17
+    db $01, $1b  ; entry 89: C=load stage, B=$1b
+    db $04, $00  ; entry 90: C=no-op, B=$00
+    db $14, $06  ; entry 91: C=state 30, B=$06
+    db $02, $18  ; entry 92: C=state 20, B=$18
+    db $03, $01  ; entry 93: C=state 4-or-20, B=$01
+    db $01, $1c  ; entry 94: C=load stage, B=$1c
+    db $02, $19  ; entry 95: C=state 20, B=$19
+    db $03, $02  ; entry 96: C=state 4-or-20, B=$02
+    db $01, $1d  ; entry 97: C=load stage, B=$1d
+    db $02, $1a  ; entry 98: C=state 20, B=$1a
+    db $03, $02  ; entry 99: C=state 4-or-20, B=$02
+    db $01, $1e  ; entry 100: C=load stage, B=$1e
+    db $02, $1b  ; entry 101: C=state 20, B=$1b
+    db $01, $1f  ; entry 102: C=load stage, B=$1f
+    db $04, $05  ; entry 103: C=no-op, B=$05
+    db $14, $07  ; entry 104: C=state 30, B=$07
+    db $02, $1c  ; entry 105: C=state 20, B=$1c
+    db $03, $01  ; entry 106: C=state 4-or-20, B=$01
+    db $01, $20  ; entry 107: C=load stage, B=$20
+    db $02, $1d  ; entry 108: C=state 20, B=$1d
+    db $03, $02  ; entry 109: C=state 4-or-20, B=$02
+    db $01, $21  ; entry 110: C=load stage, B=$21
+    db $02, $1e  ; entry 111: C=state 20, B=$1e
+    db $03, $02  ; entry 112: C=state 4-or-20, B=$02
+    db $01, $22  ; entry 113: C=load stage, B=$22
+    db $02, $1f  ; entry 114: C=state 20, B=$1f
+    db $01, $23  ; entry 115: C=load stage, B=$23
+    db $04, $00  ; entry 116: C=no-op, B=$00
+    db $14, $08  ; entry 117: C=state 30, B=$08
+    db $02, $20  ; entry 118: C=state 20, B=$20
+    db $03, $01  ; entry 119: C=state 4-or-20, B=$01
+    db $01, $24  ; entry 120: C=load stage, B=$24
+    db $02, $21  ; entry 121: C=state 20, B=$21
+    db $03, $02  ; entry 122: C=state 4-or-20, B=$02
+    db $01, $25  ; entry 123: C=load stage, B=$25
+    db $02, $22  ; entry 124: C=state 20, B=$22
+    db $03, $02  ; entry 125: C=state 4-or-20, B=$02
+    db $01, $26  ; entry 126: C=load stage, B=$26
+    db $02, $23  ; entry 127: C=state 20, B=$23
+    db $01, $27  ; entry 128: C=load stage, B=$27
+    db $04, $00  ; entry 129: C=no-op, B=$00
+    db $14, $09  ; entry 130: C=state 30, B=$09
+    db $02, $24  ; entry 131: C=state 20, B=$24
+    db $03, $01  ; entry 132: C=state 4-or-20, B=$01
+    db $01, $28  ; entry 133: C=load stage, B=$28
+    db $02, $25  ; entry 134: C=state 20, B=$25
+    db $03, $02  ; entry 135: C=state 4-or-20, B=$02
+    db $01, $29  ; entry 136: C=load stage, B=$29
+    db $02, $26  ; entry 137: C=state 20, B=$26
+    db $03, $02  ; entry 138: C=state 4-or-20, B=$02
+    db $01, $2a  ; entry 139: C=load stage, B=$2a
+    db $02, $27  ; entry 140: C=state 20, B=$27
+    db $01, $2b  ; entry 141: C=load stage, B=$2b
+    db $04, $05  ; entry 142: C=no-op, B=$05
+    db $14, $0a  ; entry 143: C=state 30, B=$0a
+    db $02, $28  ; entry 144: C=state 20, B=$28
+    db $03, $01  ; entry 145: C=state 4-or-20, B=$01
+    db $01, $2c  ; entry 146: C=load stage, B=$2c
+    db $02, $29  ; entry 147: C=state 20, B=$29
+    db $03, $02  ; entry 148: C=state 4-or-20, B=$02
+    db $01, $2d  ; entry 149: C=load stage, B=$2d
+    db $02, $2a  ; entry 150: C=state 20, B=$2a
+    db $03, $02  ; entry 151: C=state 4-or-20, B=$02
+    db $01, $2e  ; entry 152: C=load stage, B=$2e
+    db $02, $2b  ; entry 153: C=state 20, B=$2b
+    db $01, $2f  ; entry 154: C=load stage, B=$2f
+    db $04, $00  ; entry 155: C=no-op, B=$00
+    db $14, $0c  ; entry 156: C=state 30, B=$0c
+    db $02, $2c  ; entry 157: C=state 20, B=$2c
+    db $03, $01  ; entry 158: C=state 4-or-20, B=$01
+    db $01, $30  ; entry 159: C=load stage, B=$30
+    db $02, $2d  ; entry 160: C=state 20, B=$2d
+    db $03, $02  ; entry 161: C=state 4-or-20, B=$02
+    db $01, $31  ; entry 162: C=load stage, B=$31
+    db $02, $2e  ; entry 163: C=state 20, B=$2e
+    db $03, $02  ; entry 164: C=state 4-or-20, B=$02
+    db $01, $32  ; entry 165: C=load stage, B=$32
+    db $02, $2f  ; entry 166: C=state 20, B=$2f
+    db $01, $33  ; entry 167: C=load stage, B=$33
+    db $04, $00  ; entry 168: C=no-op, B=$00
+    db $14, $0b  ; entry 169: C=state 30, B=$0b
+    db $02, $30  ; entry 170: C=state 20, B=$30
+    db $03, $01  ; entry 171: C=state 4-or-20, B=$01
+    db $01, $34  ; entry 172: C=load stage, B=$34
+    db $02, $31  ; entry 173: C=state 20, B=$31
+    db $03, $02  ; entry 174: C=state 4-or-20, B=$02
+    db $01, $35  ; entry 175: C=load stage, B=$35
+    db $02, $32  ; entry 176: C=state 20, B=$32
+    db $03, $02  ; entry 177: C=state 4-or-20, B=$02
+    db $01, $36  ; entry 178: C=load stage, B=$36
+    db $02, $33  ; entry 179: C=state 20, B=$33
+    db $01, $37  ; entry 180: C=load stage, B=$37
+    db $04, $05  ; entry 181: C=no-op, B=$05
+    db $14, $0d  ; entry 182: C=state 30, B=$0d
+    db $02, $34  ; entry 183: C=state 20, B=$34
+    db $03, $01  ; entry 184: C=state 4-or-20, B=$01
+    db $01, $38  ; entry 185: C=load stage, B=$38
+    db $02, $35  ; entry 186: C=state 20, B=$35
+    db $03, $02  ; entry 187: C=state 4-or-20, B=$02
+    db $01, $39  ; entry 188: C=load stage, B=$39
+    db $02, $36  ; entry 189: C=state 20, B=$36
+    db $03, $02  ; entry 190: C=state 4-or-20, B=$02
+    db $01, $3a  ; entry 191: C=load stage, B=$3a
+    db $02, $37  ; entry 192: C=state 20, B=$37
+    db $01, $3b  ; entry 193: C=load stage, B=$3b
+    db $04, $00  ; entry 194: C=no-op, B=$00
+    db $14, $0e  ; entry 195: C=state 30, B=$0e
+    db $02, $38  ; entry 196: C=state 20, B=$38
+    db $03, $01  ; entry 197: C=state 4-or-20, B=$01
+    db $01, $3c  ; entry 198: C=load stage, B=$3c
+    db $02, $39  ; entry 199: C=state 20, B=$39
+    db $03, $02  ; entry 200: C=state 4-or-20, B=$02
+    db $01, $3d  ; entry 201: C=load stage, B=$3d
+    db $02, $3a  ; entry 202: C=state 20, B=$3a
+    db $03, $02  ; entry 203: C=state 4-or-20, B=$02
+    db $01, $3e  ; entry 204: C=load stage, B=$3e
+    db $02, $3b  ; entry 205: C=state 20, B=$3b
+    db $01, $3f  ; entry 206: C=load stage, B=$3f
+    db $04, $05  ; entry 207: C=no-op, B=$05
+    db $14, $0f  ; entry 208: C=state 30, B=$0f
+    db $02, $3c  ; entry 209: C=state 20, B=$3c
+    db $03, $01  ; entry 210: C=state 4-or-20, B=$01
+    db $01, $40  ; entry 211: C=load stage, B=$40
+    db $02, $3d  ; entry 212: C=state 20, B=$3d
+    db $03, $02  ; entry 213: C=state 4-or-20, B=$02
+    db $01, $41  ; entry 214: C=load stage, B=$41
+    db $02, $3e  ; entry 215: C=state 20, B=$3e
+    db $03, $02  ; entry 216: C=state 4-or-20, B=$02
+    db $01, $42  ; entry 217: C=load stage, B=$42
+    db $02, $3f  ; entry 218: C=state 20, B=$3f
+    db $01, $43  ; entry 219: C=load stage, B=$43
+    db $04, $00  ; entry 220: C=no-op, B=$00
+    db $14, $11  ; entry 221: C=state 30, B=$11
+    db $02, $40  ; entry 222: C=state 20, B=$40
+    db $03, $01  ; entry 223: C=state 4-or-20, B=$01
+    db $01, $44  ; entry 224: C=load stage, B=$44
+    db $02, $41  ; entry 225: C=state 20, B=$41
+    db $03, $02  ; entry 226: C=state 4-or-20, B=$02
+    db $01, $45  ; entry 227: C=load stage, B=$45
+    db $02, $42  ; entry 228: C=state 20, B=$42
+    db $03, $02  ; entry 229: C=state 4-or-20, B=$02
+    db $01, $46  ; entry 230: C=load stage, B=$46
+    db $02, $43  ; entry 231: C=state 20, B=$43
+    db $01, $47  ; entry 232: C=load stage, B=$47
+    db $04, $00  ; entry 233: C=no-op, B=$00
+    db $14, $10  ; entry 234: C=state 30, B=$10
+    db $02, $44  ; entry 235: C=state 20, B=$44
+    db $03, $01  ; entry 236: C=state 4-or-20, B=$01
+    db $01, $48  ; entry 237: C=load stage, B=$48
+    db $02, $45  ; entry 238: C=state 20, B=$45
+    db $03, $02  ; entry 239: C=state 4-or-20, B=$02
+    db $01, $49  ; entry 240: C=load stage, B=$49
+    db $02, $46  ; entry 241: C=state 20, B=$46
+    db $03, $02  ; entry 242: C=state 4-or-20, B=$02
+    db $01, $4a  ; entry 243: C=load stage, B=$4a
+    db $02, $47  ; entry 244: C=state 20, B=$47
+    db $01, $4b  ; entry 245: C=load stage, B=$4b
+    db $04, $05  ; entry 246: C=no-op, B=$05
+    db $14, $12  ; entry 247: C=state 30, B=$12
+    db $02, $48  ; entry 248: C=state 20, B=$48
+    db $03, $01  ; entry 249: C=state 4-or-20, B=$01
+    db $01, $4c  ; entry 250: C=load stage, B=$4c
+    db $02, $49  ; entry 251: C=state 20, B=$49
+    db $03, $02  ; entry 252: C=state 4-or-20, B=$02
+    db $01, $4d  ; entry 253: C=load stage, B=$4d
+    db $02, $4a  ; entry 254: C=state 20, B=$4a
+    db $03, $02  ; entry 255: C=state 4-or-20, B=$02
+    db $01, $4e  ; entry 256: C=load stage, B=$4e
+    db $02, $4b  ; entry 257: C=state 20, B=$4b
+    db $01, $4f  ; entry 258: C=load stage, B=$4f
+    db $04, $00  ; entry 259: C=no-op, B=$00
+    db $14, $13  ; entry 260: C=state 30, B=$13
+    db $02, $4c  ; entry 261: C=state 20, B=$4c
+    db $03, $01  ; entry 262: C=state 4-or-20, B=$01
+    db $01, $50  ; entry 263: C=load stage, B=$50
+    db $02, $4d  ; entry 264: C=state 20, B=$4d
+    db $03, $02  ; entry 265: C=state 4-or-20, B=$02
+    db $01, $51  ; entry 266: C=load stage, B=$51
+    db $02, $4e  ; entry 267: C=state 20, B=$4e
+    db $03, $02  ; entry 268: C=state 4-or-20, B=$02
+    db $01, $52  ; entry 269: C=load stage, B=$52
+    db $02, $4f  ; entry 270: C=state 20, B=$4f
+    db $01, $53  ; entry 271: C=load stage, B=$53
+    db $04, $00  ; entry 272: C=no-op, B=$00
+    db $14, $14  ; entry 273: C=state 30, B=$14
+    db $02, $50  ; entry 274: C=state 20, B=$50
+    db $03, $01  ; entry 275: C=state 4-or-20, B=$01
+    db $01, $54  ; entry 276: C=load stage, B=$54
+    db $02, $51  ; entry 277: C=state 20, B=$51
+    db $03, $02  ; entry 278: C=state 4-or-20, B=$02
+    db $01, $55  ; entry 279: C=load stage, B=$55
+    db $02, $52  ; entry 280: C=state 20, B=$52
+    db $03, $02  ; entry 281: C=state 4-or-20, B=$02
+    db $01, $56  ; entry 282: C=load stage, B=$56
+    db $02, $53  ; entry 283: C=state 20, B=$53
+    db $01, $57  ; entry 284: C=load stage, B=$57
+    db $04, $00  ; entry 285: C=no-op, B=$00
+    db $14, $15  ; entry 286: C=state 30, B=$15
+    db $02, $54  ; entry 287: C=state 20, B=$54
+    db $03, $01  ; entry 288: C=state 4-or-20, B=$01
+    db $01, $58  ; entry 289: C=load stage, B=$58
+    db $02, $55  ; entry 290: C=state 20, B=$55
+    db $03, $02  ; entry 291: C=state 4-or-20, B=$02
+    db $01, $59  ; entry 292: C=load stage, B=$59
+    db $02, $56  ; entry 293: C=state 20, B=$56
+    db $03, $02  ; entry 294: C=state 4-or-20, B=$02
+    db $01, $5a  ; entry 295: C=load stage, B=$5a
+    db $02, $57  ; entry 296: C=state 20, B=$57
+    db $01, $5b  ; entry 297: C=load stage, B=$5b
+    db $04, $05  ; entry 298: C=no-op, B=$05
+    db $14, $16  ; entry 299: C=state 30, B=$16
+    db $02, $58  ; entry 300: C=state 20, B=$58
+    db $01, $5c  ; entry 301: C=load stage, B=$5c
+    db $04, $00  ; entry 302: C=no-op, B=$00
+    db $02, $59  ; entry 303: C=state 20, B=$59
+    db $01, $5d  ; entry 304: C=load stage, B=$5d
+    db $04, $00  ; entry 305: C=no-op, B=$00
+    db $02, $5a  ; entry 306: C=state 20, B=$5a
+    db $01, $5e  ; entry 307: C=load stage, B=$5e
+    db $04, $00  ; entry 308: C=no-op, B=$00
+    db $02, $5b  ; entry 309: C=state 20, B=$5b
+    db $01, $5f  ; entry 310: C=load stage, B=$5f
+    db $04, $02  ; entry 311: C=no-op, B=$02
+    db $14, $17  ; entry 312: C=state 30, B=$17
+    db $02, $5c  ; entry 313: C=state 20, B=$5c
+    db $01, $60  ; entry 314: C=load stage, B=$60
+    db $04, $00  ; entry 315: C=no-op, B=$00
+    db $02, $5d  ; entry 316: C=state 20, B=$5d
+    db $01, $61  ; entry 317: C=load stage, B=$61
+    db $04, $00  ; entry 318: C=no-op, B=$00
+    db $02, $5e  ; entry 319: C=state 20, B=$5e
+    db $01, $62  ; entry 320: C=load stage, B=$62
+    db $04, $00  ; entry 321: C=no-op, B=$00
+    db $02, $5f  ; entry 322: C=state 20, B=$5f
+    db $01, $63  ; entry 323: C=load stage, B=$63
+    db $04, $03  ; entry 324: C=no-op, B=$03
+    db $14, $1a  ; entry 325: C=state 30, B=$1a
+    db $02, $60  ; entry 326: C=state 20, B=$60
+    db $03, $04  ; entry 327: C=state 4-or-20, B=$04
+    db $01, $64  ; entry 328: C=load stage, B=$64
+    db $04, $04  ; entry 329: C=no-op, B=$04
+    db $14, $18  ; entry 330: C=state 30, B=$18
+    ; --- $522d-$52d4: second table ---
+    db $16, $00, $13, $00, $02, $03, $01, $07
+    db $04, $00, $02, $07, $01, $0b, $04, $05
+    db $02, $0b, $01, $0f, $04, $00, $02, $0f
+    db $01, $13, $04, $00, $02, $13, $01, $17
+    db $04, $05, $02, $17, $01, $1b, $04, $00
+    db $02, $1b, $01, $1f, $04, $05, $02, $1f
+    db $01, $23, $04, $00, $02, $23, $01, $27
+    db $04, $00, $02, $27, $01, $2b, $04, $05
+    db $02, $2b, $01, $2f, $04, $00, $02, $2f
+    db $01, $33, $04, $00, $02, $33, $01, $37
+    db $04, $05, $02, $37, $01, $3b, $04, $00
+    db $02, $3b, $01, $3f, $04, $05, $02, $3f
+    db $01, $43, $04, $00, $02, $43, $01, $47
+    db $04, $00, $02, $47, $01, $4b, $04, $05
+    db $02, $4b, $01, $4f, $04, $00, $02, $4f
+    db $01, $53, $04, $00, $02, $53, $01, $57
+    db $04, $00, $02, $57, $01, $5b, $04, $05
+    db $02, $5b, $01, $5f, $04, $02, $02, $5f
+    db $01, $63, $04, $03, $14, $1a, $02, $60
+    db $03, $04, $01, $64, $04, $04, $14, $18
+    db $16, $00, $13, $00, $14, $19, $13, $00
     inc a                                            ; $52d5
     and $01                                          ; $52d6
     ld [$c80f], a                                    ; $52d8

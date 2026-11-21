@@ -1353,43 +1353,16 @@ jr_001_47c9:
     call $169c                                       ; $48c6
     pop hl                                           ; $48c9
     ret                                              ; $48ca
-    ld [bc], a                                       ; $48cb
-    ld [bc], a                                       ; $48cc
-    ld a, b                                          ; $48cd
-    nop                                              ; $48ce
-    ld [bc], a                                       ; $48cf
-    ld [bc], a                                       ; $48d0
-    inc l                                            ; $48d1
-    nop                                              ; $48d2
-    ld [bc], a                                       ; $48d3
-    ld [bc], a                                       ; $48d4
-    ld a, h                                          ; $48d5
-    nop                                              ; $48d6
-    ld [bc], a                                       ; $48d7
-    ld [bc], a                                       ; $48d8
-    ld [hl], h                                       ; $48d9
-    nop                                              ; $48da
-    ld [hl], h                                       ; $48db
-    ld [hl], h                                       ; $48dc
-    ld [hl], h                                       ; $48dd
-    ld a, h                                          ; $48de
-    jr nc, $4912                                     ; $48df
-    ld [hl-], a                                      ; $48e1
-    inc sp                                           ; $48e2
-    inc [hl]                                         ; $48e3
-    dec [hl]                                         ; $48e4
-    ld [hl], $37                                     ; $48e5
-    jr c, $4922                                      ; $48e7
-    ld a, [hl-]                                      ; $48e9
-    dec sp                                           ; $48ea
-    inc a                                            ; $48eb
-    dec a                                            ; $48ec
-    ld a, $3f                                        ; $48ed
-    ld b, b                                          ; $48ef
-    ld b, c                                          ; $48f0
-    ld b, d                                          ; $48f1
-    ld b, e                                          ; $48f2
-    sbc l                                            ; $48f3
+    ; Slice 4: data, not code (was mgbdis' linear-sweep
+    ; decode). Five 4-byte records + the $30-$43 counting
+    ; sequence + $9d. $48f4+ is live code (call $48fd) and
+    ; is NOT part of this blob.
+    db $02, $02, $78, $00, $02, $02, $2c, $00
+    db $02, $02, $7c, $00, $02, $02, $74, $00
+    db $74, $74, $74, $7c, $30, $31, $32, $33
+    db $34, $35, $36, $37, $38, $39, $3a, $3b
+    db $3c, $3d, $3e, $3f, $40, $41, $42, $43
+    db $9d
     ld bc, $0001                                     ; $48f4
     ld c, $00                                        ; $48f7
     jr z, jr_001_48fb                                ; $48f9

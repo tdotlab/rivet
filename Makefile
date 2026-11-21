@@ -12,7 +12,7 @@ EXPECTED_SHA1 := 397ad2ff25627b83e02c71b54c72bb4deb39e0c0
 
 all: $(OUT) check
 
-$(OUT): src/main.asm src/sgb.asm src/stat.asm src/transfer.asm src/decomp.asm src/frame.asm src/states.asm src/bank0slice3.asm src/bank1.asm src/bank12.asm src/bank23.asm src/sgbpackets.asm src/banks.asm src/hardware.inc src/constants.asm $(ROM)
+$(OUT): src/main.asm src/sgb.asm src/stat.asm src/transfer.asm src/decomp.asm src/frame.asm src/states.asm src/bank0slice3.asm src/bank1.asm src/bank12.asm src/bank23.asm src/sgbpackets.asm src/bank2.asm src/bank3.asm src/bank5.asm src/bank7.asm src/banks.asm src/hardware.inc src/constants.asm $(ROM)
 	@mkdir -p build
 	$(RGBASM) -I src -o build/game.o src/main.asm
 	$(RGBLINK) -n build/game.sym -m build/game.map -o $@ build/game.o

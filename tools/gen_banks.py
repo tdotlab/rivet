@@ -11,8 +11,18 @@ ROM = "roms/Donkey_Kong_World_Rev1_SGB.gb"
 # Curated ranges, keyed by bank: [(lo, hi), ...] in $4000-$7fff space,
 # hi exclusive. Slice 3 carved bank 1 $4000-$59ff, bank 12 $4000-$5916,
 # bank 23 $731f-$7716, bank $1e (30) $4000-$40df (SGB packet table).
+# Slice 4 carved bank 2 $4003-$4008 + $4010-$43af + $45a9-$47fb +
+# $6212-$6491, bank 3 $4000-$400b + $4010-$43af + $45a9-$48f0 +
+# $76eb-$78af, bank 5 $4000-$40d3 (stage table), bank 7 $7168-$71b9.
 CARVED = {
     1: [(0x4000, 0x5A00)],
+    2: [(0x4003, 0x4009), (0x4010, 0x43B0), (0x45A9, 0x47FC),
+        (0x6212, 0x6492)],
+    3: [(0x4000, 0x400C), (0x4010, 0x43B0), (0x45A9, 0x48F1),
+        (0x76EB, 0x78B0)],
+    5: [(0x4000, 0x40D4)],
+    7: [(0x4794, 0x480E), (0x6EA9, 0x6ED2), (0x6F2E, 0x6F62),
+        (0x7168, 0x71BA), (0x77A9, 0x7ABB)],
     12: [(0x4000, 0x5917)],
     23: [(0x731F, 0x7717)],
     30: [(0x4000, 0x40E0)],

@@ -5,13 +5,19 @@
  * shade bytes plus the frame count, so an original ROM and a rebuilt
  * ROM can be compared exactly.
  * Usage: gb_headless <rom.gb> <frames> <out.ppm>
- *   [press_spec] [trace_file]
+ *   [press_spec] [trace_file] [save_in.sav] [save_out.sav]
  * The optional press spec is a comma-separated list of BTN:START:END
  * windows, e.g. "start:620:632,a:1000:1012" (buttons: start, a, b, select,
  * up, down, left, right; each held for frames [START, END)). The optional
  * trace file logs one line per frame where hGameState, hStateTimer,
  * hCurrentBank or hSTATState changes, plus a heartbeat every 60 frames,
  * so the real state flow can be checked against the disassembly.
+ * The optional save files exercise the battery SRAM: save_in is loaded
+ * into cartridge RAM before frame 0 (missing file = fresh SRAM, all
+ * $ff); save_out is written after the last frame, and the run prints
+ * whether the game wrote SRAM at all (gb_save_dirty). Used for the
+ * save-RAM tests (state 28 file 1 + A writes a save, $09f0 then
+ * routes a later boot to states 21/22).
  * Build (from the decomp project root):
  *   cc -I ~/workspace/nacre/repo/include -I ~/workspace/nacre/repo/src/gb -O2 \
  *      -o tools/gb_headless tools/gb_headless.c \
@@ -85,7 +91,7 @@ static void sha_final(Sha256 *s, char out[65]) {
 }
 
 int main(int argc, char **argv) {
-    if (argc < 4 || argc > 6) { fprintf(stderr, "usage: %s <rom.gb> <frames> <out.ppm> [press_spec] [trace_file]\n", argv[0]); return 2; }
+    if (argc < 4 || argc > 8) { fprintf(stderr, "usage: %s <rom.gb> <frames> <out.ppm> [press_spec] [trace_file] [save_in.sav] [save_out.sav]\n", argv[0]); return 2; }
     const char *rom_path = argv[1];
     int frames = atoi(argv[2]);
     const char *ppm_path = argv[3];
@@ -110,7 +116,7 @@ int main(int argc, char **argv) {
         if (argc >= 6) trace_path = argv[5];
     }
     FILE *trace = NULL;
-    if (trace_path) {
+    if (trace_path && trace_path[0]) {
         trace = fopen(trace_path, "w");
         if (!trace) { perror("open trace"); return 1; }
         fprintf(trace, "# frame pc state timer bank statstate\n");
@@ -128,6 +134,19 @@ int main(int argc, char **argv) {
         fprintf(stderr, "gb_load_rom failed: %s\n", err); return 1;
     }
     printf("title: %s\n", gb_title(gb));
+    /* Optional battery-SRAM load (argv[6]): a previous run's save. */
+    if (argc >= 7 && argv[6][0]) {
+        FILE *sf = fopen(argv[6], "rb");
+        if (sf) {
+            fseek(sf, 0, SEEK_END); long slen = ftell(sf); fseek(sf, 0, SEEK_SET);
+            uint8_t *sdata = malloc(slen);
+            if (fread(sdata, 1, slen, sf) == (size_t)slen && gb_save_load(gb, sdata, (size_t)slen))
+                printf("save-in: %s (%ld bytes)\n", argv[6], slen);
+            else
+                printf("save-in: %s FAILED (size %ld, save size %zu)\n", argv[6], slen, gb_save_size(gb));
+            free(sdata); fclose(sf);
+        } else printf("save-in: %s not found, fresh SRAM\n", argv[6]);
+    }
     int prev_state = -1, prev_timer = -1, prev_bank = -1, prev_stat = -1;
     for (int i = 0; i < frames; i++) {
         /* NOTE (slice 3): two windows for the same button used to clobber
@@ -164,6 +183,18 @@ int main(int argc, char **argv) {
     char hex[65]; sha_final(&s, hex);
     printf("frames_run: %d  gb_frames: %u  nonzero_pixels: %d/%zu  fb_sha256: %s\n",
            frames, gb_frame_count(gb), nonzero, pixels, hex);
+    /* Optional battery-SRAM dump (argv[7]) + dirty report. */
+    printf("save_dirty: %d  save_size: %zu\n", gb_save_dirty(gb), gb_save_size(gb));
+    if (argc >= 8 && argv[7][0]) {
+        size_t ssize = gb_save_size(gb);
+        uint8_t *sdata = malloc(ssize ? ssize : 1);
+        size_t written = gb_save_write(gb, sdata, ssize);
+        FILE *sf = fopen(argv[7], "wb");
+        if (sf && written) { fwrite(sdata, 1, written, sf); fclose(sf); }
+        else if (sf) fclose(sf);
+        printf("save-out: %s (%zu bytes)\n", argv[7], written);
+        free(sdata);
+    }
     FILE *o = fopen(ppm_path, "wb");
     if (!o) { perror("open ppm"); return 1; }
     static const uint8_t grey[4] = { 235, 175, 110, 40 };

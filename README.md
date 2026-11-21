@@ -24,7 +24,7 @@ shareable artefact, the game data is not.
 
 ## Status
 
-**Slices 1, 2 and 3 are done and byte-matching.** `make` rebuilds a ROM whose
+**Slices 1, 2, 3 and 4 are done and byte-matching.** `make` rebuilds a ROM whose
 SHA-1 is exactly `397ad2ff…`, and the rebuilt ROM boots to the title screen
 in Nacre (T's Game Boy emulator) with framebuffers identical to the original
 at 60, 180, and 600 frames — and, with Start/A driven by the harness,
@@ -35,7 +35,15 @@ chain + C-dispatch, and the bank-`$1e` SGB packet table (~13,180 new
 source lines, 16,398 total), resolves state 12 (dead by mechanism),
 the timer-29 oddity, and the `$01fb` entries — and drives the rebuilt
 ROM as far as the file-management screen (state 28) with a 12000-frame
-run identical to the original. See [PROGRESS.md](PROGRESS.md) for what
+run identical to the original. Slice 4 adds banks 2, 3, 5 and 7 (stream
+command engine, 106-entry stage pointer table, stage-RAM clear and
+stream index setup), the 331-entry state-16 queue table as `db` pairs
+(19,865 lines total), a recursive-descent disassembler
+(`tools/gb_rd.py`), and drives the game further live: state 8
+(file-select confirmation) reached and returned from, a save written
+via file 1 and reloaded (validates), and the first stage reached past
+state 20 — all with framebuffers, state traces and SRAM dumps identical
+to the original. See [PROGRESS.md](PROGRESS.md) for what
 is curated, what is still raw INCBIN, and the exact verification numbers.
 
 ## Build
@@ -72,8 +80,9 @@ Tools, all recorded in `tools/`:
     ~/workspace/nacre/repo/src/gb/gb_apu.c
   ```
 
-  Usage: `tools/gb_headless <rom.gb> <frames> <out.ppm> [press_spec] [trace_file]`.
-  Nacre itself is not modified.
+  Usage: `tools/gb_headless <rom.gb> <frames> <out.ppm> [press_spec] [trace_file] [save_in.sav] [save_out.sav]`.
+  The optional save files exercise the battery SRAM (load at start, dump
+  at end; the run always prints `save_dirty`). Nacre itself is not modified.
 
 ## How the disassembly is organised
 
@@ -90,6 +99,15 @@ Tools, all recorded in `tools/`:
 - `src/frame.asm` — per-frame routines `$1643-$17ea` called from VBlank.
 - `src/states.asm` — state handlers 2, 3, 4, 8, 16, 17, 18, 20, 21, 22,
   26, 28, 30 (prologues, sub-dispatch tables, bank-0 sub-steps).
+- `src/bank1.asm`, `src/bank12.asm`, `src/bank23.asm` — slice-3 carves
+  (bank 1 file-select/state-28 code + `$48cb-$48f3` data, bank 12
+  queue table + stream code, bank 23).
+- `src/bank2.asm`, `src/bank3.asm` — slice-4 carves (stream command
+  engine, stream tick/restart, sound init + tick).
+- `src/bank5.asm` — the 106-entry stage pointer table.
+- `src/bank7.asm` — stage-RAM clear, `$4794` routine, stream index setup.
+- `tools/gb_rd.py` — recursive-descent disassembler (slice 4); `tools/gen_slice4.py`
+  regenerates the slice-4 carves from the ROM bytes.
 - `src/sgb.asm` — Super Game Boy detection, border transfer, and the
   joypad-port packet sender.
 - `src/hardware.inc`, `src/constants.asm` — IO registers and RAM variables.
