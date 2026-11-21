@@ -24,11 +24,14 @@ shareable artefact, the game data is not.
 
 ## Status
 
-**Slice 1 is done and byte-matching.** `make` rebuilds a ROM whose SHA-1
-is exactly `397ad2ff…`, and the rebuilt ROM boots to the title screen in
-Nacre (T's Game Boy emulator) with framebuffers identical to the original
-at 60, 180, and 600 frames. See [PROGRESS.md](PROGRESS.md) for what is
-curated, what is still raw INCBIN, and the exact verification numbers.
+**Slices 1 and 2 are done and byte-matching.** `make` rebuilds a ROM whose
+SHA-1 is exactly `397ad2ff…`, and the rebuilt ROM boots to the title screen
+in Nacre (T's Game Boy emulator) with framebuffers identical to the original
+at 60, 180, and 600 frames — and, with Start/A driven by the harness,
+past the title screen through file select, the intro, and into gameplay
+states, with framebuffers and state traces identical to the original at
+900 and 3600 frames. See [PROGRESS.md](PROGRESS.md) for what is curated,
+what is still raw INCBIN, and the exact verification numbers.
 
 ## Build
 
@@ -50,14 +53,38 @@ Tools, all recorded in `tools/`:
 - **Nacre** (`~/workspace/nacre/repo/`, T's own GB emulator core) as the
   test harness: `tools/gb_headless.c` links Nacre's `src/gb/` core, runs
   a ROM for N frames headlessly, and dumps the framebuffer as PPM with
-  a SHA-256, so original vs rebuilt can be compared exactly. Nacre
-  itself is not modified.
+  a SHA-256, so original vs rebuilt can be compared exactly. It also
+  takes an optional input schedule (`BTN:START:END` windows, e.g.
+  `"start:620:632,a:1000:1012"`) and an optional trace file that logs
+  `hGameState`/`hStateTimer`/bank/`hSTATState` changes per frame.
+  Build it with:
+
+  ```sh
+  cc -I ~/workspace/nacre/repo/include -I ~/workspace/nacre/repo/src/gb -O2 \
+    -o tools/gb_headless tools/gb_headless.c \
+    ~/workspace/nacre/repo/src/gb/gb.c ~/workspace/nacre/repo/src/gb/gb_cpu.c \
+    ~/workspace/nacre/repo/src/gb/gb_ppu.c ~/workspace/nacre/repo/src/gb/gb_cart.c \
+    ~/workspace/nacre/repo/src/gb/gb_apu.c
+  ```
+
+  Usage: `tools/gb_headless <rom.gb> <frames> <out.ppm> [press_spec] [trace_file]`.
+  Nacre itself is not modified.
 
 ## How the disassembly is organised
 
 - `src/main.asm` — header, RST/interrupt vectors, entry point, main loop,
   soft reset, RAM clear, interrupt handlers, the two `rst $08` jump-table
-  dispatches, joypad/memory helpers, palette loader.
+  dispatches (state table now named; STAT table now 60 entries), joypad/
+  memory helpers, palette loader.
+- `src/stat.asm` — the 60 STAT dispatch targets (`$0367-$0673`) plus
+  `RestorePaletteFromShadow`.
+- `src/transfer.asm` — RNG step, transfer tables (banks `$0f`/`$1e`),
+  sprite-table builder, window helpers, palette table, SRAM save routines.
+- `src/decomp.asm` — the bitstream-LZ decompressor (`$257b-$266b`) and RLE
+  expander.
+- `src/frame.asm` — per-frame routines `$1643-$17ea` called from VBlank.
+- `src/states.asm` — state handlers 2, 3, 4, 8, 16, 17, 18, 20, 21, 22,
+  26, 28, 30 (prologues, sub-dispatch tables, bank-0 sub-steps).
 - `src/sgb.asm` — Super Game Boy detection, border transfer, and the
   joypad-port packet sender.
 - `src/hardware.inc`, `src/constants.asm` — IO registers and RAM variables.

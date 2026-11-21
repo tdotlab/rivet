@@ -20,6 +20,8 @@ DEF wLCDCShadow EQU $c0a2 ; LCDC value restored by RestoreInterruptsAndLCDC
 DEF wIEShadow EQU $c0a3 ; IE value saved/restored around LCD-off sequences
 DEF wSGBFlag EQU $c82b ; bit 7 set = Super Game Boy detected; low bits also used elsewhere (TODO)
 DEF wOAMDMATrigger EQU $c701 ; if non-zero, VBlankHandler runs the HRAM DMA routine (name inferred)
+DEF wDecompOutLen EQU $c809 ; 2 bytes: decompressor output length (lo/hi), saved by Decompress
+DEF wDecompDst EQU $c80b ; 2 bytes: decompressor destination pointer (lo/hi), saved by Decompress
 DEF wScrollShadow EQU $c707 ; SCY/SCX shadow pair written by VBlankHandler
 DEF wUnknownC711 EQU $c711 ; TODO: role unknown, read by state $15 setup
 DEF wUnknownC72F EQU $c72f ; bit 0 cleared by MainLoop each frame; set elsewhere (TODO)

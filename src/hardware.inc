@@ -8,6 +8,9 @@ DEF rSTAT EQU $ff41 ; LCD status
 DEF rSCY EQU $ff42 ; scroll Y
 DEF rSCX EQU $ff43 ; scroll X
 DEF rLY EQU $ff44 ; LCD Y coordinate
+DEF rLYC EQU $ff45 ; LCD Y compare (STAT interrupt line)
+DEF rWY EQU $ff4a ; window Y position
+DEF rWX EQU $ff4b ; window X position (WX-7 = screen X)
 DEF rDMA EQU $ff46 ; OAM DMA start
 DEF rBGP EQU $ff47 ; background palette
 DEF rOBP0 EQU $ff48 ; object palette 0

@@ -166,12 +166,13 @@ SetupTimerAndSTAT::
 ; Loads hGameState into A and uses RST $08, which jumps through the
 ; table below (table entry = 16-bit address, index = A * 2). Most
 ; states just call AdvanceState ($1d22): increment hGameState and
-; clear hStateTimer. States with real work have their own handlers
-; elsewhere in bank 0; those are NOT curated yet (see PROGRESS.md).
-; Two entries are flagged, not named:
-;   entry 12 -> $c1fe (WRAM -- no code is ever copied there that we
-;     have found; state 12 is never written in bank 0, so this entry
-;     may be dead; DO NOT assume it is a real handler)
+; clear hStateTimer. States with real work have their own handlers,
+; curated in slice 2 in src/states.asm (each handler is itself a
+; `rst $08` sub-dispatch on hStateTimer). Two entries are flagged:
+;   entry 12 -> $c1fe (WRAM -- no code is copied there, no direct
+;     writer of 12 to hGameState exists anywhere in the ROM; see
+;     PROGRESS.md Slice 2 for the full evidence -- UNRESOLVED, leaning
+;     dead, do NOT assume it is a real handler)
 ;   entry 24 -> $4000 (start of the banked window; the handler lives
 ;     in whatever bank is mapped at dispatch time)
 ; =====================================================================
@@ -182,13 +183,13 @@ DispatchState::
 StateJumpTable::
     dw AdvanceState         ; $01ac:  0
     dw AdvanceState         ; $01ae:  1
-    dw $340e                ; $01b0:  2 (TODO: name)
-    dw $359a                ; $01b2:  3 (TODO: name)
-    dw $28a8                ; $01b4:  4 (TODO: name)
+    dw TitleScreen          ; $01b0:  2
+    dw PostStart            ; $01b2:  3
+    dw State04_Intro        ; $01b4:  4
     dw AdvanceState         ; $01b6:  5
     dw AdvanceState         ; $01b8:  6
     dw AdvanceState         ; $01ba:  7
-    dw $3657                ; $01bc:  8 (TODO: name)
+    dw State08              ; $01bc:  8 (input-driven select screen; see states.asm)
     dw AdvanceState         ; $01be:  9
     dw AdvanceState         ; $01c0: 10
     dw AdvanceState         ; $01c2: 11
@@ -196,21 +197,21 @@ StateJumpTable::
     dw AdvanceState         ; $01c6: 13
     dw AdvanceState         ; $01c8: 14
     dw AdvanceState         ; $01ca: 15
-    dw $06bd                ; $01cc: 16 (TODO: name)
-    dw $34df                ; $01ce: 17 (TODO: name)
-    dw $0692                ; $01d0: 18 (TODO: name)
+    dw State16_Transition   ; $01cc: 16
+    dw FileSelect           ; $01ce: 17
+    dw FileSelectLoop       ; $01d0: 18
     dw AdvanceState         ; $01d2: 19
-    dw $266c                ; $01d4: 20 (TODO: name)
-    dw $3582                ; $01d6: 21 (TODO: name)
-    dw $3663                ; $01d8: 22 (TODO: name)
+    dw State20_Gameplay     ; $01d4: 20
+    dw State21              ; $01d6: 21
+    dw State22              ; $01d8: 22
     dw AdvanceState         ; $01da: 23
     dw $4000                ; $01dc: 24 -- banked entry, see note above
     dw AdvanceState         ; $01de: 25
-    dw $3679                ; $01e0: 26 (TODO: name)
+    dw State26              ; $01e0: 26
     dw AdvanceState         ; $01e2: 27
-    dw $3471                ; $01e4: 28 (TODO: name)
+    dw State28              ; $01e4: 28
     dw AdvanceState         ; $01e6: 29
-    dw $290a                ; $01e8: 30 (TODO: name)
+    dw State30_AttractDemo  ; $01e8: 30
     dw AdvanceState         ; $01ea: 31
 
 ; =====================================================================
@@ -406,35 +407,86 @@ TimerHandler::
 ; =====================================================================
 ; $02ec-$030e -- STATDispatch.
 ; Same RST $08 jump-table trick as DispatchState, indexed by
-; hSTATState. All 16 entries point into bank 0 code ($0367-$0447);
-; the targets are NOT curated yet, so they are listed as raw
-; addresses here, not named labels. Do not invent names for them.
+; hSTATState. Slice 2 corrected slice 1 here: the table has 60 entries
+; (0-59), not 16 -- entry 0's code sets hSTATState=$39 (57), entries
+; 16-59 live at $030f-$0366 (they were "raw" in slice 1), and the chain
+; runs 57 ($0397) -> 58 ($03a2) -> 59 ($03ad) -> 1 (STAT_03ad sets
+; hSTATState=1). Targets are curated in src/stat.asm.
 ; =====================================================================
 SECTION "STATDispatch", ROM0[$02ec]
 STATDispatch::
     ldh a, [hSTATState]     ; $02ec
     rst $08                 ; $02ee
 STATJumpTable::
-    dw $037d                ; $02ef:  0
-    dw $0367                ; $02f1:  1
-    dw $037e                ; $02f3:  2
-    dw $0367                ; $02f5:  3
-    dw $03b9                ; $02f7:  4
-    dw $03cb                ; $02f9:  5
-    dw $03db                ; $02fb:  6
-    dw $042f                ; $02fd:  7
-    dw $0435                ; $02ff:  8
-    dw $0440                ; $0301:  9
-    dw $0447                ; $0303: 10
-    dw $03ec                ; $0305: 11
-    dw $040e                ; $0307: 12
-    dw $0440                ; $0309: 13
-    dw $0423                ; $030b: 14
-    dw $03ec                ; $030d: 15
+    dw STAT_037d            ; $02ef:  0
+    dw STAT_0367            ; $02f1:  1
+    dw STAT_037e            ; $02f3:  2
+    dw STAT_0367            ; $02f5:  3
+    dw STAT_03b9            ; $02f7:  4
+    dw STAT_03cb            ; $02f9:  5
+    dw STAT_03db            ; $02fb:  6
+    dw STAT_042f            ; $02fd:  7
+    dw STAT_0435            ; $02ff:  8
+    dw STAT_0440            ; $0301:  9
+    dw STAT_0447            ; $0303: 10
+    dw STAT_03ec            ; $0305: 11
+    dw STAT_040e            ; $0307: 12
+    dw STAT_0440            ; $0309: 13
+    dw STAT_0423            ; $030b: 14
+    dw STAT_03ec            ; $030d: 15
+    dw STAT_041d            ; $030f: 16
+    dw STAT_0474            ; $0311: 17
+    dw STAT_0428            ; $0313: 18
+    dw STAT_047f            ; $0315: 19
+    dw STAT_0493            ; $0317: 20
+    dw STAT_0367            ; $0319: 21
+    dw STAT_049d            ; $031b: 22
+    dw STAT_04b0            ; $031d: 23
+    dw STAT_04d2            ; $031f: 24
+    dw STAT_04da            ; $0321: 25
+    dw STAT_04f4            ; $0323: 26
+    dw STAT_0507            ; $0325: 27
+    dw STAT_04da            ; $0327: 28
+    dw STAT_04f4            ; $0329: 29
+    dw STAT_0517            ; $032b: 30
+    dw STAT_0517            ; $032d: 31
+    dw STAT_0522            ; $032f: 32
+    dw STAT_0531            ; $0331: 33
+    dw STAT_05b5            ; $0333: 34
+    dw STAT_053d            ; $0335: 35
+    dw STAT_0554            ; $0337: 36
+    dw STAT_055c            ; $0339: 37
+    dw STAT_05b5            ; $033b: 38
+    dw STAT_0566            ; $033d: 39
+    dw STAT_0579            ; $033f: 40
+    dw STAT_058f            ; $0341: 41
+    dw STAT_059e            ; $0343: 42
+    dw STAT_05be            ; $0345: 43
+    dw STAT_05c9            ; $0347: 44
+    dw STAT_05d3            ; $0349: 45
+    dw STAT_05e6            ; $034b: 46
+    dw STAT_0601            ; $034d: 47
+    dw STAT_0614            ; $034f: 48
+    dw STAT_0620            ; $0351: 49
+    dw STAT_062a            ; $0353: 50
+    dw STAT_063a            ; $0355: 51
+    dw STAT_064b            ; $0357: 52
+    dw STAT_0367            ; $0359: 53
+    dw STAT_0660            ; $035b: 54
+    dw STAT_04b0            ; $035d: 55
+    dw STAT_0673            ; $035f: 56
+    dw STAT_0397            ; $0361: 57
+    dw STAT_03a2            ; $0363: 58
+    dw STAT_03ad            ; $0365: 59
 
-; Raw (not yet curated) bank 0, $030f-$0fc0.
-SECTION "Raw bank 0 A", ROM0[$030f]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $030f, $cb2
+; Raw (not yet curated) bank 0, $0674-$067f (gap between STAT targets and
+; RestorePaletteFromShadow).
+SECTION "Raw bank 0 A1", ROM0[$0674]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0674, $0c
+
+; Raw (not yet curated) bank 0, $0737-$0fc0 (after the state-16 step-0 code).
+SECTION "Raw bank 0 A2", ROM0[$0737]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0737, $88a
 
 ; =====================================================================
 ; $0fc1-$0fce -- CopyDMARoutine. Copies the 10-byte OAM DMA routine
@@ -648,9 +700,13 @@ ClearTilemaps_Fill:
     xor a                   ; $10be
     jp MemsetBC             ; $10bf: tail call
 
-; Raw (not yet curated) bank 0, $10c2-$1d06.
+; Raw (not yet curated) bank 0, $10c2-$1642 (before the per-frame routines).
 SECTION "Raw bank 0 B", ROM0[$10c2]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $10c2, $c45
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $10c2, $581
+
+; Raw (not yet curated) bank 0, $17eb-$1d06 (after the per-frame routines).
+SECTION "Raw bank 0 B2", ROM0[$17eb]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $17eb, $51c
 
 ; =====================================================================
 ; $1d07-$1d2e -- InitStatePtrs and the state helpers.
@@ -689,9 +745,9 @@ IncStateTimer::
     inc [hl]                ; $1d2d
     ret                     ; $1d2e
 
-; Raw (not yet curated) bank 0, $1d2f-$1e4e.
-SECTION "Raw bank 0 C", ROM0[$1d2f]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1d2f, $120
+; (Raw bank 0 C, $1d2f-$1e4e, is fully curated in slice 2: see
+; src/transfer.asm -- SeedMul, TransferTable0F/1E, LoadSpriteTable,
+; ResetWindowPos, HideWindow.)
 
 ; =====================================================================
 ; $1e4f-$1e6a -- LoadPalette.
@@ -723,9 +779,28 @@ LoadPalette::
     ld [bc], a              ; $1e69
     ret                     ; $1e6a
 
-; Raw (not yet curated) bank 0, $1e6b-$3736 (includes the palette table at $1e86).
-SECTION "Raw bank 0 D", ROM0[$1e6b]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1e6b, $18cc
+; Raw (not yet curated) bank 0 fragments in $1e6b-$3736. Curated in slice 2:
+; $1e86-$1eb8 palette table, $1eb9-$1ebd unknown bytes, $1ebe-$1f99 save
+; routines (transfer.asm); $257b-$266b decompressor (decomp.asm);
+; $266c-$26b4 state-20 prologue+table, $28a8-$291f states 4+30,
+; $340e-$3688 state-handler cluster (states.asm).
+; Raw fragments left: $1e6b-$1e85, $1f9a-$257a, $26b5-$28a7, $2920-$340d,
+; $3689-$3736.
+SECTION "Raw bank 0 D1", ROM0[$1e6b]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1e6b, $1b
+SECTION "Raw bank 0 D2", ROM0[$1f9a]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1f9a, $5e1
+SECTION "Raw bank 0 D3", ROM0[$26b5]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $26b5, $1f3
+SECTION "Raw bank 0 D4", ROM0[$2920]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $2920, $aee
+SECTION "Raw bank 0 D5", ROM0[$3689]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $3689, $ae
 
 INCLUDE "sgb.asm"
+INCLUDE "stat.asm"
+INCLUDE "transfer.asm"
+INCLUDE "decomp.asm"
+INCLUDE "frame.asm"
+INCLUDE "states.asm"
 INCLUDE "banks.asm"
