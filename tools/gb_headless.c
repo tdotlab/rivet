@@ -130,8 +130,17 @@ int main(int argc, char **argv) {
     printf("title: %s\n", gb_title(gb));
     int prev_state = -1, prev_timer = -1, prev_bank = -1, prev_stat = -1;
     for (int i = 0; i < frames; i++) {
+        /* NOTE (slice 3): two windows for the same button used to clobber
+         * each other -- the later entry overwrote the earlier one each
+         * frame, so "start:620:632,...,start:2500:2512" silently dropped
+         * the first press (the game idled instead). Windows now OR: all
+         * buttons are cleared, then every active window sets its button.
+         * Single-window specs are unaffected (verified: slice-2 hashes
+         * unchanged after this fix). */
+        for (int b = 0; b < GB_BUTTON_COUNT; b++) gb_set_button(gb, (GbButton)b, 0);
         for (int p = 0; p < npress; p++)
-            gb_set_button(gb, presses[p].btn, i >= presses[p].start && i < presses[p].end);
+            if (i >= presses[p].start && i < presses[p].end)
+                gb_set_button(gb, presses[p].btn, 1);
         if (!gb_run_cycles(gb, GB_CYCLES_PER_FRAME, err, sizeof err)) {
             fprintf(stderr, "cpu lockup at frame %d: %s\n", i, err); return 1;
         }

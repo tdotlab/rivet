@@ -24,14 +24,19 @@ shareable artefact, the game data is not.
 
 ## Status
 
-**Slices 1 and 2 are done and byte-matching.** `make` rebuilds a ROM whose
+**Slices 1, 2 and 3 are done and byte-matching.** `make` rebuilds a ROM whose
 SHA-1 is exactly `397ad2ff…`, and the rebuilt ROM boots to the title screen
 in Nacre (T's Game Boy emulator) with framebuffers identical to the original
 at 60, 180, and 600 frames — and, with Start/A driven by the harness,
 past the title screen through file select, the intro, and into gameplay
 states, with framebuffers and state traces identical to the original at
-900 and 3600 frames. See [PROGRESS.md](PROGRESS.md) for what is curated,
-what is still raw INCBIN, and the exact verification numbers.
+900 and 3600 frames. Slice 3 adds banks 1, 12, 23, the bank-0 state-16
+chain + C-dispatch, and the bank-`$1e` SGB packet table (~13,180 new
+source lines, 16,398 total), resolves state 12 (dead by mechanism),
+the timer-29 oddity, and the `$01fb` entries — and drives the rebuilt
+ROM as far as the file-management screen (state 28) with a 12000-frame
+run identical to the original. See [PROGRESS.md](PROGRESS.md) for what
+is curated, what is still raw INCBIN, and the exact verification numbers.
 
 ## Build
 

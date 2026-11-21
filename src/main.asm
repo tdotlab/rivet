@@ -484,9 +484,10 @@ STATJumpTable::
 SECTION "Raw bank 0 A1", ROM0[$0674]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0674, $0c
 
-; Raw (not yet curated) bank 0, $0737-$0fc0 (after the state-16 step-0 code).
-SECTION "Raw bank 0 A2", ROM0[$0737]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0737, $88a
+; Raw (not yet curated) bank 0, $0df4-$0fc0 (after the state-16 chain and
+; C-dispatch, curated in slice 3 in src/bank0slice3.asm).
+SECTION "Raw bank 0 A2", ROM0[$0df4]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0df4, $1cd
 
 ; =====================================================================
 ; $0fc1-$0fce -- CopyDMARoutine. Copies the 10-byte OAM DMA routine
@@ -784,16 +785,11 @@ LoadPalette::
 ; routines (transfer.asm); $257b-$266b decompressor (decomp.asm);
 ; $266c-$26b4 state-20 prologue+table, $28a8-$291f states 4+30,
 ; $340e-$3688 state-handler cluster (states.asm).
-; Raw fragments left: $1e6b-$1e85, $1f9a-$257a, $26b5-$28a7, $2920-$340d,
-; $3689-$3736.
+; Curated in slice 3 (src/bank0slice3.asm): $1f9a-$257a save/stream code,
+; $26b5-$28a7 state-20 step 0, $2920-$340d mid code.
+; Raw fragments left: $1e6b-$1e85, $3689-$3736.
 SECTION "Raw bank 0 D1", ROM0[$1e6b]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1e6b, $1b
-SECTION "Raw bank 0 D2", ROM0[$1f9a]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1f9a, $5e1
-SECTION "Raw bank 0 D3", ROM0[$26b5]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $26b5, $1f3
-SECTION "Raw bank 0 D4", ROM0[$2920]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $2920, $aee
 SECTION "Raw bank 0 D5", ROM0[$3689]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $3689, $ae
 
@@ -803,4 +799,9 @@ INCLUDE "transfer.asm"
 INCLUDE "decomp.asm"
 INCLUDE "frame.asm"
 INCLUDE "states.asm"
+INCLUDE "bank0slice3.asm"
+INCLUDE "bank1.asm"
+INCLUDE "bank12.asm"
+INCLUDE "bank23.asm"
+INCLUDE "sgbpackets.asm"
 INCLUDE "banks.asm"

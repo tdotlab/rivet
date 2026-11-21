@@ -239,6 +239,11 @@ now 806 lines, re-split; `src/hardware.inc` gained `rLYC`/`rWY`/`rWX`;
 
 ### State 12 verdict — UNRESOLVED (not proven dead, not proven live)
 
+> SUPERSEDED in slice 3: state 12 is DEAD by mechanism — see the
+> Slice 3 section. The two open paths below are both closed there
+> (C-dispatch entry state is always 16; state 8 always returns to
+> the state it came from). Kept as the record of what slice 2 knew.
+
 Searched the whole ROM (all banks) by byte pattern:
 
 - **No direct write of 12 to `hGameState` (`$ff8e`) anywhere.** All
@@ -325,30 +330,293 @@ body; whether any timer ever reaches those entries is unverified.
    `build/raw-mgbdis/` + hand-written tables, with the hand fixes
    (state-28 step 0, state 8) patched into it.
 
+## Slice 3 — DONE, byte-matching (2026-11-21)
+
+**Curated in slice 3** (~13,180 new source lines; `src/` total now
+16,398 lines): `src/bank1.asm` (3,962 lines, bank 1 `$4000-$59ff`),
+`src/bank12.asm` (4,441 lines, bank 12 `$4000-$5916`; code ends at
+`$5916` `ret`; `$5917-$599f` is data — repeating `4a 4e 4b 4c…` pattern —
+and `$59a0+` is credits text, both stay INCBIN),
+`src/bank23.asm` (587 lines, bank 23 `$731f-$7716`; `$7300-$731e` is
+data, 3-byte records; the `$7722` `rst $08` site stays INCBIN),
+`src/bank0slice3.asm` (4,065 lines: bank 0 `$0737-$0df3` state-16
+chain + C-dispatch, `$1f9a-$257a` save + stream code, `$26b5-$28a7`
+state-20 step 0, `$2920-$340d` mid code), `src/sgbpackets.asm` (117
+lines: bank `$1e` `$4000-$40df`, 112-entry SGB packet pointer table,
+all entries validated — target in `$40e0-$7fff`, packet-count byte
+& 7 in 1..7; packets at `$40e0+` stay INCBIN). `src/banks.asm`
+regenerated fragment-aware (INCBIN only for the gaps); `src/main.asm`
+raw A2 shrunk to `$0df4-$0fc0`, raw D2/D3/D4 deleted;
+`src/hardware.inc` gained `rSC`, `rDIV`, `rNR14`, `rNR42`. Generator
+is durable this time: `tools/gen_slice3.py` (carve + `rst $08`
+tables + data blobs + entry labels; rerun with
+`python3 tools/gen_slice3.py`), `tools/survey3.py` (byte-pattern
+survey helper), `tools/gen_banks.py` rewritten fragment-aware.
+`tools/gb_probe17.c` is a one-shot cycle-stepping probe for the
+timer-29 oddity (see below); `tools/gb_headless.c` had a real bug
+fixed (see below).
+
+**Byte-match proof:** clean `make` rebuilds SHA-1
+`397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero diffs
+(`build/game.gb: OK`, `BYTE-MATCH: rebuilt ROM == original ROM`).
+
+### State 12 verdict — DEAD (by mechanism, not by absence)
+
+Slice 2 left state 12 unresolved with two open paths. Both are now
+closed with positive evidence; the verdict rests on the mechanism,
+not on never having seen the state.
+
+- **Complete writer inventory for hGameState (`$ff8e`).** 23×
+  `ldh [hGameState],a`: direct values {1, 2, 3, 4, 8, $10, $12, $14,
+  $18, $1a, $1c, $1e} plus variable-A at bank 1 `$597e` (the
+  `$c810` pair — state 8's return, see below). 4× `ld hl,$ff8e`:
+  `$09fe` writes $15 (21), `$0d07` dec (C-dispatch), `$1d22`
+  AdvanceState inc, bank 1 `$4e14` dec (file-select step 3).
+  Zero `ld [$ff8e],a`. Zero credible `ldh [c],a` with C=$8e (the
+  six `0e 8e` pairs sit in tile data in banks 20/24, which are
+  never selected). No writer of 9, 12, or 13 exists anywhere in
+  the ROM.
+- **Path (b) dec-from-13 via C-dispatch: CLOSED.** The C-dispatch
+  table at `$0d8c` has 23 entries (0–22): 0 `$0d07` (dec), 1
+  `$0d1a` (store B, call `$24e7`, dec), 2 `$0d23` (state 20), 3
+  `$0d2c` (state 4 or 20), 4 `$0d2b` (no-op), 5–18 alternating
+  `$0d07`/`$0d1a` (all dec), 19 `$0d6c` (`jp $01fb` soft reset),
+  20 `$0d6f` (state 30), 21 `$0d23` (state 20), 22 `$0d81`
+  (state 26). The only entry to `$0d8a` is via `$0d04`, reached
+  only from `$0cec` (sole `call $0cec` is at `$071f`,
+  TransitionStep0, state 16 timer 0) plus re-entrant
+  `jp $0d04`/`call $0d04` inside `$0d2c` itself. Entry state is
+  therefore always 16; at most one dec per frame (dec entries
+  `pop af; ret`); a dec gives 15, then AdvanceState 15→16. State
+  13 can never be current at dispatch entry. The bank-12 queue
+  table at `$4f97` (331 entries, indices 0–330) has C ∈
+  {1,2,3,4,$14} only: C=1 → `$0d1a` → load stage B via bank-5
+  `$24e7` (reads the stage entry from bank-5 `$4000+[$c829]*2`;
+  does NOT write hGameState), then dec 16→15; C=2 → state 20;
+  C=3 → `$0d2c` walk (B==0 → state 4; B==4 + `wSGBFlag` bit 4 →
+  advance + re-dispatch; else advance + re-dispatch then
+  `$0dc7`); C=4 → no-op; C=$14 → state 30. This is the traced
+  16↔15 cycling. The seven `8a 0d` pairs in bank 19 (`$5671`,
+  `$56f7`, `$5abe`, `$5b31`, `$5b46`, `$5bc9`, `$5c0f`) are NOT
+  callers: they sit inside compressed/data regions (mgbdis
+  decodes garbage there, e.g. `adc d; dec c`); bank 19 is NEVER
+  selected by any `ld a,$xx / rst $10` in the ROM; no
+  `call $0d8a`/`jp $0d8a` exists outside `$0d04` itself. (Slice-2
+  confusion noted: bank keys were decimal, not hex — "13: 1"
+  meant bank 0x0d, not 0x13.)
+- **Path (a) AdvanceState from 11 via state 9: CLOSED.** State 9's
+  only possible producer is the (`$c80f`=timer, `$c810`=state)
+  pair consumed by state-8 step 2 (`$5977`). State 8 is entered
+  ONLY via bank 1 `$4de7` (sole write of 8), the tail of the
+  `$4dc9` routine (FileSelect step 1, `$4d66`): it writes
+  `[$c80f]=6`, `[$c810]=current hGameState` (17 in that flow),
+  then sets state 8 — so every state-8 entry overwrites the pair
+  first, and state 8 always returns to the state it came from
+  (17). Nothing rewrites the pair during state 8: state-8 steps
+  don't touch it, and the per-frame routines (`$1643-$17ea`,
+  `src/frame.asm`) are pure memory copies — no stream-code calls,
+  no `$c80f`/`$c810` writes (re-verified this slice). Other
+  `$c810` writers can't be consumed by step 2: bank 0 `$2252`
+  gives {0,2} only (bank-1 tables `$7802`/`$780e`/`$781a` are the
+  only sane ones across all 32 banks); bank 12 `$52ff` gives 0–7
+  (bits 4–6 of a level-data byte); bank 0 `$2480` gives a bank-14
+  level-data byte used immediately as a ROM bank number (overwritten
+  by `$4dc9` before any state-8 entry).
+- **Residue (stated honestly):** the proof is static. Three
+  `e0 8e` pairs in data-looking regions (bank 0x15 `$78d2`,
+  bank 0x19 `$45ef`, bank 0x1b `$70d6`) are classified as data,
+  not code, on decode + bank-mapping evidence (0x15/0x19 never
+  selected; 0x1b mapped only for the `$7918` sprite-table data
+  read at `$1e08`). A full-execution trace of a complete
+  playthrough would be the final confirmation; Nacre fuzzing this
+  slice never observed states 8/9/12 either (state 8 itself was
+  not reached — file-select confirmation flow needs the right
+  button timing; see Next slices).
+
+### Timer-29-in-state-17 — RESOLVED (not a bug, never jumps to WRAM)
+
+- Slice 2 observed state 17 at timer 29 for 2 frames and
+  hypothesised `FileSelectTable[29]` → bytes at `$351f` →
+  `$cdc8` (WRAM). Reproduced in slice 3 (idle + Start at
+  2500–2511 path, frame 4108) and probed with a cycle-stepping
+  harness (`tools/gb_probe17.c`): WRAM `$cc00-$ce00` is all
+  zeros at the moment, but **the CPU never executes at `$cdc8`**
+  (no WRAM PC in `$c000-$dfff` at all in the window) and never
+  even enters `FileSelect` (`$34df`) while the timer is 29. The
+  three `rst $08` executions in the window are sub-dispatches
+  inside the running stream-loader routine (bank switches
+  2→3→12), not the state dispatch. Mechanism: the state variable
+  changes mid-routine (18→17→18) while the CPU is still inside
+  the long stream-loader routine; the main loop re-dispatches
+  only after the routine returns, by which time the state is 18
+  again (AdvanceState at cycle ~27412: 17→18, timer reset 0→1).
+  `FileSelectTable` is therefore never indexed with 29. The two
+  timer values that look alike are different things: timer 29
+  (decimal, `$1d`) is set by `$256e` at the end of a stream
+  routine and is a VALID index into the 46-entry State16Table
+  (entry 29 = `$0ab5`); timer `$29` (41 decimal) is set by
+  `$08c0` in state 16's step `$083e` and is the saved
+  continuation for state 17's return — `FileSelectStep3`
+  (`$4e06`) restores it from `[$c70b]` and decs 17→16.
+  The one instruction that decs 18→17 inside the loader was not
+  identified (candidates: bank-1 `$4e14` via a FileSelectStep3
+  call chain, or `$0d07` via a re-entrant C-dispatch); it does
+  not matter for the verdict, since the `$cdc8` jump provably
+  never happens.
+- **`$01fb` table entries (states 17/28) — RESOLVED.** `$01fb`
+  is mid-`CheckSoftReset`: `ld a,$5f; call SendSGBPacketIfSGB`
+  — jumping there skips the button/state guards and runs the
+  reset sequence straight to state 2. In state 17 timer 5 is
+  UNREACHABLE (steps go 0→1→2→3; step 3 restores `[$c70b]` and
+  decs to 16). In state 28 timer 5 IS reachable and was observed
+  dynamically: down+A in state 28 (file 1 → +3 timer bump in
+  `State28Step1` `$4c1b`, timer 1→4; step 4 `$4ca2` waits for
+  `[$ff95]==$2d`, then incs to 5) → frame 5945 timer 5 → frame
+  5952 state 2 timer 0. The entry is a live reset exit in state
+  28, dead in state 17.
+
+### Flaky Start — NOT REPRODUCIBLE, cause narrowed
+
+- The Start-900 test (Start 620–632) ran 10/10 identical on the
+  original ROM: state 3 at frame 710 every time. Nacre's boot
+  state is fully deterministic (`calloc` + `memset` WRAM/HRAM,
+  SRAM filled `0xFF` in `gb_cart.c`/`gb.c`), so the "uninitialised
+  RAM" hypothesis is ruled out for the current harness/Nacre
+  build. Most likely the slice-2 early runs used an earlier
+  harness build (the press-spec feature was being developed
+  then). Recorded as closed-but-not-fully-explained; no evidence
+  of a ROM bug.
+- **Real harness bug found and fixed (`tools/gb_headless.c`):**
+  two press windows for the same button clobbered each other —
+  the later entry overwrote the earlier one each frame, so
+  `start:620:632,...,start:2500:2512` silently dropped the first
+  press and the game idled. Windows now OR (all buttons cleared,
+  then every active window sets its button). Single-window specs
+  are unaffected: slice-2 hashes reproduce exactly after the
+  fix (600f `1cf92679…`, 900f `39ffd5ee…`, 3600f `88515f4e…`).
+  This bug is also the likely explanation for the slice-2
+  "multi-press run" going down the idle path (its spec had two
+  Start windows) — the state-17-timer-29 observation came from
+  that idle-path run, which is why it was hard to reproduce.
+
+### Nacre results (slice 3)
+
+- Slice-2 tests re-run on the slice-3 build, original vs
+  rebuilt identical (framebuffer SHA-256 + full state traces):
+  600f no-input `1cf926799cff7d9119d27ca6fde515c0da226eccb342eb0a823e8bbb79733c03`,
+  900f Start `39ffd5eeceadd3dd34a33f90e6c58d813124ce141959aac4a4b2b37ca7e11c49`,
+  3600f Start+A `88515f4ea0b61c47aac5b15c8d41887719521100f0ee8119676809120285318b`.
+- **Further into gameplay:** Start 620–632 + A 1000–1012 +
+  Start again 2500–2512 (fixed harness), 12000f: original and
+  rebuilt identical (fb `92d2e18501ff9a2670d0b3260ed6dc83e53ff1e1b9a1f0ff9a5ea5e4b6aacdff`,
+  traces identical). States visited `[0, 2, 3, 4, 15, 16, 20, 28]`:
+  title → post-start → intro → gameplay/demo loop → **state 28
+  screen at frame 5645** (file-management screen; waits for
+  input). With down+A at 5800/5900 it reaches state 28 timer 5
+  and soft-resets to state 2 (see `$01fb` above), then idles
+  into attract (state 30) and back to title. The rebuilt ROM
+  provably gets as far as the file-management screen and the
+  soft-reset path.
+- Idle + Start-at-2500 path (the old buggy spec's effective
+  input), 6000f: states `[0, 2, 16, 17, 18, 20, 30]` — this is
+  the run that reproduces state 17 timer 29 (frame 4108).
+
+### Other findings from the carve (verified from code)
+
+- Bank 1 `$4000`: 5-entry hStateTimer dispatch (entries `$400d`,
+  `$406c`, `$41cf`, `$411b`, `$4142`) — state 24's handler when
+  bank 1 is mapped. Bank 12 `$4000`: `call $4009; ld hl,$c7f7;
+  jp $16c2` — state 24 when bank 12 is mapped (after states
+  22/23). `$4009` pushes HL/DE into `$c7f7` + a byte from
+  `$d93d+[$c725]`.
+- Bank 1 `$400d` (dispatch 0): `call $1ec0; xor a; call $1ebf;
+  ld hl,$bbc0…` (save-related).
+- Bank 12 `$58f3-$5916`: tilemap-fill loop using `$c809`/`$c80a`
+  (decompressor output), ends `ret` at `$5916`.
+- Bank 23 `$73b2`: `xor a; ld [$c80f],a; ld [$c809],a;
+  dec [$c85c]` (attract demo consumes queue entries).
+- Bank 0 `$20d3` dispatcher: `xor a; call $30f3` (reads stream
+  byte at `[$c80b]+A`, no bank switch), then type codes
+  {1→`$21f1`, 3→`$2317`, 4→`$237f`, 7→`$23c6`, $0b→`$2109`,
+  $11→`$2196`, $13→`$21b8`}. `$21f1` computes the pair via
+  bank-1 tables `$7802` (B), `$781a` (timer), `$780e` (state).
+- Bank 0 `$0cec` (called only from `$071f`): sets `[$c856]=$30`,
+  `[$c857]=$b4`, calls bank-1 `$495c`, then falls through to
+  `$0d04` → C-dispatch.
+- `$0737+` (TransitionStep1) is a big level-load routine (clears
+  VRAM, bank-1 `$1c29`, bank-12 `$432c`/`$46a9`/`$47a7`, bank-7
+  `$7169`); at `$078c` it sets timer=2.
+- `$09d5-$09ed`: queue-advance helper — sets timer `$2a` (42),
+  advances the queue index, fetches next (C,B); if C==4 sets
+  timer `$21` (33).
+- `$09f0` CheckSaveForState21: if `[$c858]==0` and `[$c860]!=0`
+  sets state 21/`$15`, increments to 22 if `[$c711]` bit 0.
+- State-16 step `$083e` (timers 3/5/7/9): if `[$c82b]` bit 3
+  clear → save timer to `[$c70b]`, set timer `$29` (41), ret;
+  if set → save timer, `jp $1d22` (AdvanceState 16→17).
+- Bank 1 `$48d0-$48ff` is DATA (counting sequence `30 31 32…`),
+  not code — mgbdis mis-decodes it.
+- Bank 12 `$4f97` table is 331 (C,B) pairs (indices 0–330);
+  bytes after suggest a second table/script. It is still
+  emitted as decoded code in `src/bank12.asm` (byte-identical
+  but misleading) — a next slice should emit it as `db` pairs.
+- `$0d2c` re-dispatch subtlety: nested dec returns into
+  TransitionStep0's tail at `$0722` (InitStatePtrs,
+  IncStateTimer→1, bank-7 call `$7168`, fall to `$0737`) with
+  state 15, rather than to MainLoop. First-level dec returns to
+  MainLoop.
+- `$256e` sets timer `$1d` (29) at the end of a stream routine
+  — the source of timer 29 in state 16.
+
+### Mistakes caught by the byte-match check (slice 3)
+
+1. mgbdis `@+/-$off` notation is relative to the instruction's
+   own address, not PC-after-fetch: target = addr ± printed
+   number (first draft used addr+2±off, mismatched 10 bytes:
+   bank 1 `$48e0`, `$48e8`, `$52ad`; bank 12 `$4d8f`, `$4da4`,
+   `$4dc0`, `$4dc3`, `$4e08`, `$4e0e`, `$4f04`). Note: the
+   `$48df`/`$48e7` "jr" sites are actually data bytes (`30 31
+   32…` counting sequence at bank 1 `$48d0+`), so targets there
+   are meaningless — byte-match is what matters.
+2. Raw A2 length `$1cc` vs correct `$1cd` (missed byte `$0fc0` =
+   `$b4`).
+3. `rDIV`/`rSC`/`rNR14`/`rNR42` missing from `hardware.inc`.
+
 ## Next slices (priority order)
 
-1. **Banked sub-step bodies** — the bank-0 prologues/tables from slice 2
-   call into bank 1 (`$4998-$4b2a` title, `$5131-$56f1` post-Start,
-   `$4c1b-$4e90` file-select, `$43f9-$4807` gameplay), bank 12
-   (`$55xx-$59xx` states 8/22/26, `$58f3` tilemap loop), bank 23
-   (`$73xx-$76xx` attract demo). Carving `banks.asm` for banks 1, 12,
-   23. Then the `$0d8a` C-dispatch callers in bank 19 and whether
-   state 8's step 2 ever emits state 9 (state 12 resolution), the
-   `$0c80-$0dc7` region (including `$0d8a` dispatch + `$09f0`/`$09e1`
-   helpers), `$0737+` (state-16 timer-1 chain), `$1f9a+`
-   save-clear/write, `$17eb+` frame routines, and the SGB packet table
-   in bank `$1e` at `$4000` (not yet touched).
-2. **Gameplay code in banks 1–31** beyond the state sub-steps, starting
-   with whichever bank state 2's handler calls into (bank 1).
+1. **Banked sub-step bodies, continued** — bank 5 (`$24e7`
+   stage loaders; the timer-29 source in state 16), bank 7
+   (`$7168`/`$7169`, called from TransitionStep0's tail), bank
+   2/3/12 stream-loader code behind the `$30xx` routines, bank
+   12 `$4f97` queue table as `db` pairs, bank 1 `$48d0-$48ff`
+   counting data as `db`, bank 23 `$7722` `rst $08` site, bank
+   12 `$5917+` data/credits.
+2. **Gameplay:** drive the rebuilt ROM further with the fixed
+   harness — file-select confirmation (state 8: file 2+ + A/B
+   in state 17/28, which should exercise the `$c80f`/`$c810`
+   pair return live), first stage gameplay past state 20, save
+   RAM behaviour (battery: write a save, reload, check
+   `$09f0` → state 21/22), state 26/30 paths.
+3. **Gameplay code in banks 1–31** beyond the state sub-steps.
 
 ## Not done / blocked
 
-- Nothing is blocked. No GitHub push has been made (needs T's say-so).
-- Ghidra was not needed: mgbdis + hand-checking against the bytes
-  covered slices 1–2. It may still be useful for banked code later.
-- Save RAM (battery) behaviour was not exercised. The SGB packet table
-  in bank `$1e` at `$4000` is not yet curated. State 12 is unresolved
-  (see Slice 2); the timer-29-in-state-17 oddity and the flaky early
-  Start runs (2 of 5 went down the idle path) are unexplained.
+- Nothing is blocked. Save RAM (battery) behaviour was not
+  exercised. Ghidra was not needed: mgbdis + hand-checking
+  against the bytes covered slices 1–3. It may still be useful
+  for banked code later.
+- The generator script for the slice-2 files is in `/tmp/gen_slice2.py`
+  (ephemeral — see Slice 2 notes); the durable output is `src/*.asm`.
+  Slice 3's generator is in the repo (`tools/gen_slice3.py`).
+- `tools/gb_headless` (compiled binary) is in the repo but not in
+  any push (see slice 1 note — keep-or-exclude undecided; it
+  rebuilds from `tools/gb_headless.c` with the command in the
+  file header). `tools/gb_probe17` + `tools/gb_probe17.c` are
+  likewise build products of a one-shot probe; the `.c` is the
+  durable part.
+- State 12 residue: three `e0 8e` pairs in data regions
+  (banks 0x15/0x19/0x1b) classified as data, not code; the one
+  instruction that decs 18→17 inside the stream loader is
+  unidentified. Neither affects the verdict (see Slice 3).
 - The generator script for the slice-2 files is in `/tmp/gen_slice2.py`
   (ephemeral — see Slice 2 notes); the durable output is `src/*.asm`.
