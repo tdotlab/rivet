@@ -1,0 +1,5 @@
+# The ROM is T's own dump. Never committed, never pushed, never uploaded.
+roms/
+build/
+*.gb
+*.sav
