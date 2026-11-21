@@ -31,17 +31,15 @@
  *   waypoints: optional "x,y;x,y;..." pre-key route (last is the key).
  *   postwp: optional "x,y;x,y;..." post-key route (door last resort).
  * Key OAM target: key tiles at screen (80,44) -> OAM (88,60).
- * Door prior: OAM (112,96) -- the $c0-$c3 2x2 block at tilemap rows
- * 9-10, cols 12-13 (screen x=96-111, y=72-87). The top-right
- * candidates (152,40) and (152,20) were tested by jumping/falling
- * through and by standing (play6/9/10) with no trigger, and the top
- * girder does not support Mario at x=153. The $c0-$c3 block is the
- * one untested door-like structure: Mario oscillates at (116-124,
- * 56-72) just above it in the earlier runs, never dropping to
- * y=88-96 to touch it, because the prior pulled him up. The
- * $c0-$c3 tiles render as a 2x2 frame (vertical bars + bottom bar),
- * consistent with a doorway. Terminal is the real stage-clear
- * (timer >= 33), not the prior.
+ * Door prior: OAM (127,95) -- center of the $c0-$c3 2x2 block at
+ * tilemap rows 9-10, cols 14-15 (screen x=112-127, y=72-87). Slice 8's
+ * play11 only reached (116,98), 4px short of overlap, with the old
+ * (112,96) prior at the block's left edge; the top-right candidates
+ * (152,40) and (152,20) were tested by jumping/falling through and by
+ * standing (play6/9/10) with no trigger, and the top girder does not
+ * support Mario at x=153. Terminal is any stage-clear entry timer
+ * (13/23/26/42/33+, slice 9): the door sets timer 26 (bank-1 $56c3)
+ * and the clear chain runs 33->40->42->43->44->45->0.
  * Build (from the decomp project root):
  *   cc -I ~/workspace/nacre/repo/include -I ~/workspace/nacre/repo/src/gb -O2 \
  *      -o tools/gb_play tools/gb_play.c \
@@ -95,6 +93,27 @@ static const int abits[NACTIONS] = {
 static const char *rom_path, *save_path;
 static int max_chunks;
 
+/* dump WRAM+HRAM+VRAM at a notable moment (key collect, terminal) so
+ * the $c200/$db15 records and tilemap can be diffed afterwards.
+ * Durable path under the repo (slice 9): /tmp was wiped mid-session
+ * and took the key dump with it once already. */
+static void dump_state(Gb *gb, const char *tag) {
+    char dir[256];
+    snprintf(dir, sizeof dir, "build/nacre-test/slice9/play");
+    char cmd[300];
+    snprintf(cmd, sizeof cmd, "mkdir -p %s", dir);
+    (void)system(cmd);
+    char path[300];
+    snprintf(path, sizeof path, "%s/%s_wram.bin", dir, tag);
+    FILE *f = fopen(path, "wb"); if (f) { fwrite(gb->wram, 1, 8192, f); fclose(f); }
+    snprintf(path, sizeof path, "%s/%s_hram.bin", dir, tag);
+    f = fopen(path, "wb"); if (f) { fwrite(gb->hram, 1, 128, f); fclose(f); }
+    snprintf(path, sizeof path, "%s/%s_vram.bin", dir, tag);
+    f = fopen(path, "wb"); if (f) { fwrite(gb->vram, 1, 8192, f); fclose(f); }
+    printf("  dumped %s/* to %s\\n", tag, dir);
+    fflush(stdout);
+}
+
 /* Mario pos from $c200 record 0; key present from VRAM tilemap. */
 static void read_state(Gb *gb, int *mx, int *my, int *key, int *lives) {
     *mx = gb->wram[0x207];   /* $c207 record 0 byte 7 = X */
@@ -122,10 +141,16 @@ static void run_chunk(Gb *gb, int bits, int frames, int *dead, int *term) {
         }
         int state = gb->hram[0x0e], timer = gb->hram[0x10];
         if (state == 16 && timer == 12) *dead = 1;
-        /* stage-clear chain is timers 33->40->42->43->44->45 (slice 7);
-         * timers 23/26 are queue-advance timers, NOT stage clear, and
-         * timer 28 is part of the post-(3,1) level-load chain. */
-        if (state == 16 && timer >= 33) *term = 1;
+        /* Stage-clear entry timers (slice 9): the door sets timer 26
+         * (bank-1 $56c3, the only writer of $1a to $ff90) or timer 23
+         * (no direct writer; reached only via IncStateTimer); the
+         * clear chain is timers 33->40->42->43->44->45. Timer 13 is
+         * set by bank-10 $5405 handlers 2/4/12 ($555d/$564f/$59ad) --
+         * those tiles ($5c/$64/$68/$be) are absent from stage 1-1, so
+         * timer 13 firing here would itself be news. Report the exact
+         * timer value so a hit can be judged, not just "term". */
+        if (state == 16 && (timer == 13 || timer == 23 || timer == 26 ||
+                            timer == 42 || timer >= 33)) *term = timer;
     }
 }
 
@@ -344,7 +369,7 @@ int main(int argc, char **argv) {
                     s = 10000.0 - 10.0 * dist(r.mx, r.my, postwp[cur_postwp][0], postwp[cur_postwp][1])
                         + 2.0 * (136 - r.my);
                 }
-                else s = 10000.0 - 10.0 * dist(r.mx, r.my, 112, 96) + 2.0 * (136 - r.my);
+                else s = 10000.0 - 10.0 * dist(r.mx, r.my, 127, 95) + 2.0 * (136 - r.my);
                 /* visit penalty (parent-side, from the child's end cell) */
                 int cx = r.mx / 8, cy = r.my / 8;
                 if (cx >= 0 && cx < 32 && cy >= 0 && cy < 32)
@@ -363,8 +388,8 @@ int main(int argc, char **argv) {
             } else {
                 chosen = bestr.action;
                 if (bestr.term) {
-                    printf("chunk %d: TERMINAL via %s at (%d,%d)\n",
-                           nchunks, aname[chosen], bestr.mx, bestr.my);
+                    printf("chunk %d: TERMINAL timer=%d via %s at (%d,%d)\n",
+                           nchunks, bestr.term, aname[chosen], bestr.mx, bestr.my);
                     done = 1;
                 }
                 if (best > best_score + 0.5) { best_score = best; stall = 0; }
@@ -426,6 +451,30 @@ int main(int argc, char **argv) {
             read_state(gb, &mx, &my, &key, &lives);
             int cx = mx / 8, cy = my / 8;
             if (cx >= 0 && cx < 32 && cy >= 0 && cy < 32) visits[cy * 32 + cx]++;
+            if (key0 && !key) {
+                printf("chunk %d: KEY COLLECTED at (%d,%d)\n", nchunks, mx, my);
+                dump_state(gb, "key");
+            }
+            /* Periodic dump every 25 chunks: lets us watch [$ff91]
+             * (handler-5 ORs $c3 into it) and $c200 rec0 byte 18
+             * (handler 5 sets bit 3) while Mario explores the door
+             * block, without waiting for a terminal event. */
+            if (nchunks % 25 == 0) {
+                char tag[32];
+                snprintf(tag, sizeof tag, "chunk%03d", nchunks);
+                dump_state(gb, tag);
+            }
+            /* Block-proximity dump: Mario's OAM box overlapping the
+             * $c0-$c3 block (screen x 112-127, y 72-87; OAM x 120-135,
+             * y 88-103 for feet, but he stands ON it at y~72, so
+             * watch a generous box). This is the decisive record:
+             * if handler 5 ($56cc) fires here, rec0 byte 18 gains
+             * bit 3 and [$ff91] gains $c3. */
+            if (mx >= 108 && mx <= 140 && my >= 56 && my <= 104) {
+                char tag[32];
+                snprintf(tag, sizeof tag, "block%03d", nchunks);
+                dump_state(gb, tag);
+            }
             maybe_advance_wp(mx, my, key);
             printf("chunk %d: %s -> (%d,%d) key=%d lives=%d state=%d timer=%d\n",
                    nchunks, aname[chosen], mx, my, key, lives,
@@ -433,6 +482,7 @@ int main(int argc, char **argv) {
             fflush(stdout);
             if (term) {
                 printf("STAGE CLEAR (timer %d) at chunk %d\n", gb->hram[0x10], nchunks);
+                dump_state(gb, "clear");
                 done = 1;
             }
             nchunks++;

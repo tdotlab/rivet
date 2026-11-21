@@ -25,6 +25,10 @@ ROM = "roms/Donkey_Kong_World_Rev1_SGB.gb"
 # and bank 16 ($10) $4031-$4044 + $51c8-$52e7 + $52e7-$5428 +
 # $5428-$59f1 (the death path: $51c8 per-frame update, $52e0/$5405
 # rst-$08 tables, $5349 death handler setting hStateTimer=12).
+# Slice 9 carved bank 9 $4000-$4020 (rst-$08 dispatch, 16 entries) +
+# $418b-$4690 (object handlers) + $63f3-$6401 (record-pointer helper)
+# + $6480-$6484 (dec [$da4a]).
+# Slice 9 also carved bank 12 $5917-$5dbb (data + credits text).
 CARVED = {
     1: [(0x4000, 0x5A00)],
     2: [(0x4003, 0x4009), (0x4010, 0x43B0), (0x45A9, 0x47FC),
@@ -36,8 +40,10 @@ CARVED = {
         (0x6572, 0x6581), (0x68AD, 0x68C4), (0x6B0A, 0x6B55),
         (0x6EA9, 0x6ED2), (0x6F2E, 0x7001), (0x7168, 0x71BA),
         (0x77A9, 0x7ABB), (0x7EDD, 0x7F0D)],
+    9: [(0x4000, 0x4021), (0x418B, 0x4691),
+        (0x63F3, 0x6402), (0x6480, 0x6485)],
     11: [(0x4000, 0x4100)],
-    12: [(0x4000, 0x5917)],
+    12: [(0x4000, 0x5DBC)],
     16: [(0x4031, 0x4044), (0x51C8, 0x52E7), (0x52E7, 0x5428),
          (0x5428, 0x59F1)],
     18: [(0x4934, 0x4C84)],
