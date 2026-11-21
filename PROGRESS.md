@@ -1576,39 +1576,369 @@ framing is corrected below; the queue oscillates 14->15->16->14
 - Pushed: slice 6 `fb1f1626` (head at slice-7 start). Slice 7
   NOT pushed (coordinator handles pushes).
 
+## Slice 8 — IN PROGRESS, byte-matching (2026-11-21)
+
+Head at start: slice 7 pushed (`cd9f78fe`). `src/` 23,652 lines
+at start, 25,071 after the bank-$10 carve. Byte-match holds
+throughout (clean `make` → SHA-1 `397ad2ff…`, `cmp` clean) and
+both regression suites re-pass after every carve.
+
+### 1. Stage-table layout — RESOLVED (slice 7's decimal/hex slip corrected)
+
+- Slice 7 carved bank 18 **decimal** (`$12`) `$4934` as "the
+  stage table". Wrong bank: the game selects bank `$18`
+  (**hex** = 24 decimal; `ld a,$18; rst $10` at `$26f6`).
+  The real table is bank `$18` (decimal 24) `$4934`.
+- Writer found live with the new `tools/gb_watch` (two-pass
+  write watchpoint): the (world,stage) writes are at bank-0
+  `$2745` (`ld [$c860],a`) and `$2750` (`ld [$c861],a`), in
+  the already-curated state-20 step-0 stage-table path
+  (`$271e`), executed with bank `$18` mapped — frame 1100,
+  cycles 3381/3388, state 20 timer 1, regs A=01 B=00 C=02
+  HL=$4935/$493a, rom_bank=24. Slice 7's hypothesis ("written
+  by uncarved stream code during timer 1") was wrong; the
+  write is the tail of step 0 (IncStateTimer at `$26ee` runs
+  before the fetch at `$26f9`, so the write lands during
+  timer 1). Queue fetch confirmed: index 14 = (C=2,B=0) via
+  `QueueFetchBC $0dda` (bank-12 table `$4f97+[$c85c]*2`).
+- Layout VERIFIED: `[+0]`=world, `[+5]`=world (duplicate, for
+  B<97), `[+6]`=stage-in-world. B=0..96 are clean: world 1
+  B=0–7 stages 1–8; world 2 B=8–19 stages 1–12; world 3
+  B=20–27 stages 1–8; world 4 B=28–39 stages 1–12; world 5
+  B=40–51 stages 1–12; world 6 B=52–59 stages 1–8; world 7
+  B=60–71 stages 1–12; world 8 B=72–87 stages 1–16; world 9
+  B=88–96 stages 1–9. Evidence: bank `$18` record B=0 is
+  `01 80 20 60 80 01 01 05` ([0]=01, [6]=01) matching the live
+  (1,1); the instruction ring independently showed the `jr z`
+  at `$272c` taken (record[0]==$01), which bank `$12`'s record
+  (`03 44 01 f0 f0 f3 ee 40`) cannot produce.
+- `[+1..+4]` are coordinate-like pairs (unresolved; often
+  [1]==[3], e.g. B=0 `80 20 60 80`); `[+7]` is a small value
+  4–40 for B<97 (unresolved). B=97..105 do NOT fit the
+  pattern (worlds 0/110/62/28, stages 60/67/255/62) — role
+  unresolved; the queue does contain C==1 entries with
+  B=97..100 (C==1 B values are 0..100, each exactly once
+  across 101 entries), so they may be reachable live.
+- Also decoded: `$2738` sets bit 1 of `[$c70f]` when
+  record[0]!=$01 and != prev record[0]; `$2758` sets bit 2
+  when (stage−1)&3==0; `$288e` returns Z iff
+  `([$c70f]&3)==3`, in which case the world/stage are read
+  from the **previous** record (HL−=8) — the prev-record
+  fallback. The bit-0 setter of `[$c70f]` is still unfound
+  (open). Demo branch (`$2701`, B≥$c8): `[$c861]`=
+  B−$af−$19+1, `[$c860]` stays 0.
+- Carve: new `tools/gen_slice8.py` emits `src/bank24.asm`
+  (106 records with world/stage annotations);
+  `tools/gen_slice7.py` `emit_bank18` header corrected and
+  `src/bank18.asm` regenerated — it keeps its bytes (bank
+  `$12` $4934, 106 records, byte-correct) but is now honestly
+  labelled "NOT the stage table, role unknown".
+  `tools/gen_banks.py` CARVED gained
+  `24: [(0x4934, 0x4C84)]`.
+
+### 2. Death→timer-12 instruction — PINNED (both slice-7 candidates wrong)
+
+- The write: frame 2668, cycle 4184, `$ff90` (hStateTimer)
+  05→0c, by the instruction at bank `$10` (decimal 16)
+  `$53c8`: `ldh [hStateTimer],a` with A=$0c (ROM bytes
+  `e0 90`, preceded by `ld a,$0c` at `$53c6` and
+  `ld hl,$ff91; ld a,[hl]; or $03; ld [hl],a` at
+  `$53bf-$53c5`, which sets bits 0–1 of `[$ff91]`). The death
+  run spec: progress-1 save,
+  `start:620:632,a:1000:1012,a:2000:2012,right:2500:3000,a:2600:2612,a:2900:2912`,
+  3000f; the only transition to $0c in 3000 frames was
+  04→0c at frame 2668 (state 16, timer 12, `[$c711]`=$94,
+  countdown not zero — confirming the `$0c2f` timeout path is
+  ruled out, as slice 7 found).
+- Call chain (128-instruction ring): state-16 timer code
+  `$0874` (in `$0868`, the per-frame object-update routine
+  called from timers 3/5/7/9) → `ld a,$10; rst $10; call
+  $51c8` → bank $10 `$51c8-$51f5` → `$529a-$52e0` →
+  `rst $08` at `$52e0` → dispatch handler `$0fd9` → table
+  entry `$5664` → `$5349-$53c8` → write. Note `$0868` also
+  calls bank-9 `$0bff` (the `$db15` object dispatch, slice 7's
+  candidate) right before `$51c8`, in the same routine —
+  right neighborhood, wrong instruction.
+- Carve: `src/bank10.asm` (new, 1,285 lines, 1,179
+  instructions in 4 spans: `$4031-$4044`, `$51c8-$52e7`,
+  `$52e7-$5428`, `$5428-$59f1`; the span ends run through the
+  rst-$08 tables, so the INCBIN gaps do not overlap them —
+  the first attempt used `$52e1`/`$5406` ends and rgblink
+  refused with an overlap error, which is what caught it).
+  The `$52e0` rst-$08 table (3 entries: `$5349, $53fc,
+  $5664`) and the `$5405` rst-$08 table (17 entries) are
+  emitted as `dw`. Out-of-window targets `$2b30`/`$2b3c`
+  are bank-0 routines already carved in
+  `src/bank0slice3.asm`. The `$4031` span is a 19-byte
+  routine whose entry mechanism is unverified (it ran in the
+  death-run ring before `$0874`). `tools/gen_banks.py`
+  CARVED gained
+  `16: [(0x4031,0x4044),(0x51C8,0x52E7),(0x52E7,0x5428),(0x5428,0x59F1)]`.
+
+### 3. Completing stage 1-1 live — IN PROGRESS (key collected, door not yet reached)
+
+- New tools: `tools/gb_watch.c` (two-pass write watchpoint;
+  values in watch specs are **hex** — `ff90=12` matches
+  timer **18**, decimal timer 12 is `ff90=0c`) and
+  `tools/gb_wramdump.c` (full WRAM+HRAM+VRAM dumps at
+  selected frames; both in `tools/`, build commands in their
+  headers).
+- Mario's position by WRAM diff: `$c200` record 0 byte 7
+  (`$c207`) = X, byte 3 (`$c203`) = Y (mirrors OAM `$c001`/
+  `$c000`). At stage start Mario is OAM (17,136) = screen
+  (9,120). Record 0 layout: byte 0 = type ($01 = active
+  sprite), byte 3 = Y, byte 7 = X.
+- Key position VERIFIED: background tiles `$3b`/`$3c` at
+  tilemap `$9800` row 5, cols 9–10 → screen (72–87, 40–47),
+  center ≈ screen (80,44), OAM (88,60). Confirmed by
+  rendering tiles as ASCII (diagonal key shape) and by an
+  annotated screenshot.
+- Door position NOT yet positively identified (open). The
+  top-right structure first thought to be the door is a
+  ladder (screen x≈144–152, y≈16–48). Tiles `$c0`–`$c3`
+  (rows 9–10, cols 12–13) are a gun/cannon pointing left;
+  tiles `$b6`–`$b9` (rows 15–16, cols 12–13) are plain brick.
+  The tilemap `$9800` is the displayed BG (`$9c00` is mostly
+  blank). Stage layout from tilemap/screenshot: parasol box
+  top-left (cols 0–3, rows 1–3); top girder rows 2–3 cols
+  11–19; key niche rows 4–5 cols 8–11; middle column cols
+  7–11 rows 7–14 (solid); ladders at col 6 (rows 6–10, tile
+  `$30`) and col 5 (rows 15–16); ground girder row 17; Mario
+  starts bottom-left, Pauline bottom-right (OAM (136,144)).
+  Tile renders and crops are in `/tmp/slice8/` (ephemeral).
+- New autopilot `tools/gb_play.c` (greedy fork-based; build
+  command in its header): runs the intro, waits for the
+  first playable frame (state 16, timer 3, Mario x<200 and
+  y<200 — playable frame is 2499), then per 15-frame chunk
+  forks one child per action (wait/right/left/up/down/
+  right+A/left+A/A/B/right+B), each reporting Mario pos,
+  key-present flag, death (timer 12 seen, or lives dropped)
+  and stage-clear; the parent picks the best score, applies
+  it, and repeats. On stall (no score improvement for 10
+  chunks) or all-actions-die it backtracks by replaying from
+  frame 0 to the last decision point with an untried action.
+  Terminal is the real stage-clear (timer ≥33 — the
+  33→40→42→43→44→45 chain; the first version used ≥23 and
+  false-fired on timer 28, part of the normal post-(3,1)
+  level-load chain 3→28→29→30→31→32→3).
+- **Bug found by the score audit (slice 8): the two score
+  branches were swapped** — the key-present branch scored
+  distance-to-door and the key-collected branch scored
+  distance-to-key, so the first two play runs (play2, play3)
+  optimized "go to the door" from the start and never
+  collected the key. Fixed in `tools/gb_play.c` (key present
+  → distance-to-waypoint/key; key gone → distance-to-door),
+  visit penalty 150→60/visit.
+- **Waypoints were needed twice.** Plain distance-to-key
+  leads Mario right along the ground into a local optimum
+  (he never climbs, because walking right always scores
+  better than climbing at each step); plain distance-to-door
+  stalls the same way after the key, because the route
+  backtracks down to the ground first. `gb_play` now takes
+  pre-key waypoints (argv[5]) and post-key waypoints
+  (argv[6]), each reached within 12px; the key waypoint is
+  reached only when the key is actually collected.
+- Play runs (all on the original ROM; the rebuilt ROM has
+  not yet been run through a completion):
+  - play2 (buggy score, 150 chunks): Mario walked right
+    along the ground to (113,136), jumped around, reached
+    the bottom-right (155,136) and up to (156,37) — proving
+    the top-right is reachable — but never climbed a ladder
+    and never reached the key; ended at max chunks.
+  - play3 (fixed score, no waypoints, 172 chunks): Mario
+    reached (124,56) near the key's height but oscillated
+    at (116–124, 56–72), never reaching the key (88,60);
+    the visit penalty drove him left/down.
+  - play4 (waypoints `56,136;56,56;88,60`, 147 chunks):
+    **key collected** — Mario reached (80,60) key=0 at
+    chunk 31, via the col-5/col-6 ladders. Post-key he
+    oscillated at (51–71, 59–90) near the ladder area and
+    never reached the door.
+  - play5 (added post-key waypoints `56,136;152,136`, 197
+    chunks): key collected at chunk 31; both post-key
+    waypoints reached (Mario got down to the ground and
+    across to (152,136)); then stalled oscillating at
+    (116–124, 56–72) — the climb from the ground-right to
+    the door was not found.
+  - play6 (added climb waypoints `148,112;148,88;148,64;
+    152,40`, 250 chunks, 197 used): key collected at chunk
+    31; ALL post-key waypoints reached (Mario climbed to
+    (149,39) at chunk 64 and (156,35)/(156,39) repeatedly)
+    — but stage-clear NEVER fired, and Mario kept falling
+    back to (116–124, 56–72). Root cause: the door prior
+    (152,40) was at the WRONG height. At (156,35) Mario is
+    at the apex of a jump / on no floor, and he falls to
+    y=50, y=64; the score penalized jumping up to the top
+    girder (y≈16) because that moved AWAY from the (152,40)
+    prior (distance term −10/px beats the upward bias
+    +2/px). The door is plausibly ON the top girder (row 2,
+    y=16–23), so the prior is corrected to (152,20).
+  - play7 (door prior corrected to (152,20), last waypoint
+    (152,20), 250 chunks, 205 used): key collected at chunk
+    31; Mario reached the top girder — (128,23) at chunk 199
+    and (120,19) at chunk 200, the closest yet — but he
+    cannot LAND on it. His jump apex is y≈19, 3px below the
+    girder top (y=16); from (120,19) every action falls to
+    y=34, and he drifts left/down and stalls. The final step
+    needs a jump from a takeoff at y≈40 (row 5), whose apex
+    (y≈15) would clear the girder — the greedy does not
+    chain it, because from the apex (y=23) a second jump
+    only reaches y=19.
+  - play8 (added takeoff waypoint (140,40), 250 chunks, 207
+    used): key collected at chunk 31; all post-key waypoints
+    reached, including (140,40) and (152,20); Mario reached
+    (105,23) and (97,19) at chunks 205–206 — again y=19,
+    now at x=97–105 — but never lands on the girder and
+    never triggers the door.
+  - **Jump height measured (slice 8): Mario's jump is 16px,
+    not 25px.** Holding A from the ground (y=136) reaches
+    apex y=120 and lands back at 136 (gb_wramdump, frames
+    2500–2540). So the 24px girder gaps (row 14→11→8) cannot
+    be jumped — they need the ladders. The right-side
+    $50/$51/$52/$53 tiles at rows 5–6 and rows 9–10 (cols
+    18–19) are ladder segments: the route is ground (136)
+    → row 14 (112) → row 11 (88) → climb rows 9–10 ladder
+    to 72 → jump to 56 → climb rows 5–6 ladder to 40 →
+    jump to 24 → land on the girder (16). Play6/7/8's
+    (148,64) waypoint sat in a gap between the ladders and
+    demanded a 24px jump Mario cannot make — that is why
+    they stalled at y=56–72.
+  - play9 (post-key waypoints follow the right-side ladders:
+    `56,136;152,136;152,112;152,88;152,72;152,40;152,16`,
+    250 chunks, 201 used): key collected at chunk 31; all
+    post-key waypoints reached, including (152,16); Mario
+    reached (153,19) at chunk 74 — essentially on the door
+    prior — but he was in mid-air, not standing: he fell to
+    (150,34), (142,52), (140,64) over the next chunks. The
+    top girder does NOT support Mario at x=153 (walking
+    left from (153,19) falls to y=34 instead of staying at
+    y=19). He ends drifting at (100–117, 32–48).
+  - **Door findings (slice 8).** The door is NOT a
+    background tile that appears after the key (tilemap diff
+    pre-key frame 2500 vs post-key frame 3000 shows only the
+    key tiles changing: `$3b/$3c/$3d/$3e` → `$3f/$40/$41/
+    $42`, a 2x2 block at rows 5–6, cols 9–10) and NOT a
+    sprite (OAM at frame 3000 has no new sprite near the
+    top-right; the sprites present are Mario, Pauline, and
+    the parasol/bonus items, several of which move). The
+    door is therefore a fixed background structure or a
+    position trigger, not yet identified. Candidates tested
+    and NOT triggered by jumping/falling through: (152,40)
+    [play6: (149,39)/(156,35) repeatedly], (152,20)
+    [play9: (153,19)]. Remaining hypothesis: the door needs
+    Mario STANDING at (152,40) — top of the rows 5–6 ladder
+    (cols 18–19), climbed, not jumped.
+  - play10 (post-key waypoints end at (152,40), door prior
+    (152,40), 250 chunks, 195 used): key collected at chunk
+    31; all post-key waypoints reached, including (152,40)
+    13 times; Mario ends oscillating at (116–124, 56–72).
+    Standing at (152,40) did not trigger the door (or Mario
+    never actually stood there — the waypoint is "reached"
+    within 12px, which includes (152,48)/(144,40)).
+  - **Schedule-replay divergence (methodological, slice 8).**
+    Replaying a play run's printed SCHEDULE through
+    `gb_wramdump`/`gb_headless` reproduces it EXACTLY for
+    the first ~10 chunks (frame 2648 = (49,87) and frame
+    2663 = (41,83) match play10's log exactly) but then
+    drifts: by frame 2994 Mario is 2px off play10's
+    position, by frame 3009 he is stuck at (69,89) while
+    play10 has him moving, and by frame 3309 the replay is
+    on a different screen entirely (Mario (176,16), lives 0,
+    state 19, a dense non-stage tilemap). The early
+    1-frame/1px seed is not understood — the press windows
+    use the same [start,end) semantics in gb_play,
+    gb_headless, and gb_wramdump, and the intro table
+    matches — but the drift compounds through the physics,
+    so a SCHEDULE replay is NOT a reliable verification.
+    A future completion must be verified inside gb_play
+    itself (it already reports STAGE CLEAR + done=0/1) or
+    the divergence source found. The frame-3600 "different
+    screen" and Mario-at-(176,16) findings are artifacts
+    of the diverged replay, NOT real game states — disregard
+    them. (The stage is 160px wide: tilemap cols 20–31 are
+    all $00 at stage start.)
+  - **Door re-think (slice 8).** The $c0–$c3 2x2 block at
+    rows 9–10, cols 12–13 (screen x=96–111, y=72–87) renders
+    as a frame (vertical bars + bottom bar), consistent with
+    a doorway, and is the one door-like structure never
+    tested as a prior. Mario oscillates at (116–124, 56–72)
+    just above it in the earlier runs, never dropping to
+    y=88–96 to touch it, because the prior pulled him up.
+  - play11 (door prior (112,96) — the $c0–$c3 block, post-key
+    waypoint (112,96), 250 chunks, 193 used): key collected
+    at chunk 31; Mario reached (116,98) at chunk 188 —
+    INSIDE the $c0–$c3 block's OAM range — and (110,112),
+    (100,113), (92,98), (90,103) around it, but no
+    stage-clear fired. The $c0–$c3 block is NOT the door
+    (or touching it is not enough).
+  - **Door status at end of slice 8: UNIDENTIFIED.** Three
+    candidates tested with no trigger: (152,40) [play6/10],
+    (152,20) [play9], (112,96) [$c0–$c3 block, play11].
+    The door is not a background tile appearing after the
+    key and not a sprite in OAM. The $db15 records (stride
+    15) are packed/flag-like, not clean x/y — decoding
+    their stream format (likely via the bank-9 $0bff object
+    dispatch) is the next step for slice 9, along with
+    finding what sets timer 33 in the state-16 timer code.
+    The state never left 16 in any play run and timer 33–45
+    was never seen, so the terminal check (state 16,
+    timer ≥33) is correct — it simply never fired.
+
+### 4. Byte-match + Nacre (slice 8)
+
+- Clean `make` (build/game.gb removed first): rebuilt SHA-1
+  `397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero diffs
+  (after the bank-24 carve, after the bank-10 carve, and
+  after the span-end fix).
+- `tools/run_slice5_regression.sh`: exit 0, "ALL REGRESSION
+  CASES IDENTICAL" (re-run after the bank-10 carve).
+- `tools/run_slice7_cases.sh`: exit 0, "ALL SLICE-7 CASES
+  IDENTICAL" (re-run after the bank-10 carve; f1 fb
+  `1cf92679…`, death fb `632b2eaf…` reproduce slice 7).
+- Slice 8 NOT pushed (coordinator handles pushes).
+
 ## Next slices (priority order)
 
 1. **Gameplay: complete stage 1-1 live (key -> door).**
-   Slice 7 proved the playable stage runs in state 16
-   (timers 3-10) and that (2,1)@17 is the post-completion
-   entry, not the blocker — but no run has yet completed 1-1
+   Slice 8 collected the key live (play4/play5, chunk 31,
+   (80,60)) and proved the post-key route down to the ground
+   and across to (152,136) — but no run has yet completed 1-1
    to watch the queue advance 16->17 and the (2,1) dispatch
-   fire. Needs real play (or a scripted input schedule that
-   walks Mario to the key and the door). Also open: the exact
-   death->timer-12 instruction (candidates: bank-9 `$0bff`
-   `$db15`/object dispatch, `$11e8` iterator-B handlers; the
-   countdown path is ruled out), and the `[$c70f]` bit-0
-   setter (never found in carved code).
-2. **Bank-18 stage-table layout.** Slice 7 carved the table
-   as db but the record layout is UNRESOLVED: the naive
-   (world=[+0], stage=[+6]) reading contradicts the live
-   (1,1) for B=0, and the (1,1) is written by uncarved stream
-   code during state-20 timer 1. Find that writer (bank 2/3
-   stream ops and/or bank-11 table handlers) and the layout
-   follows. Related: the bank-11 table's pointed-to sprite
-   blocks ($42xx-$71xx) are still raw data.
+   fire. Remaining: the door's exact position/trigger is
+   UNIDENTIFIED (slice 8 §3) — three candidates tested with
+   no trigger: (152,40), (152,20), and (112,96) [$c0–$c3
+   block]. Slice 9 should decode the $db15 stream format
+   (bank-9 $0bff object dispatch) and find what sets timer
+   33 in the state-16 timer code, then complete 1-1. Once a
+   run completes, verify the winning schedule by replaying
+   it with `gb_headless` on both the original and rebuilt
+   ROMs (framebuffer hash + state trace + save identical) —
+   but note the slice-8 schedule-replay divergence (the
+   SCHEDULE drifts slowly through gb_headless, so verify
+   inside gb_play itself or find the divergence source
+   first). Also open: the `[$c70f]` bit-0 setter
+   (never found in carved code).
+2. **Bank-11 sprite blocks.** The bank-11 table's pointed-to
+   sprite blocks ($42xx-$71xx) are still raw data, and the
+   table's extent (128 entries) is inferred, not verified
+   against live record[0] values. (The stage-table layout is
+   RESOLVED — slice 8 §1 — and the death->timer-12
+   instruction is PINNED — slice 8 §2.)
 3. **Roles for the carved code.** Bank 7 `$6f62` and bank 23
-   `$7722` are pinned (slice 7 §2). Still open: bank 7
+   `$7722` are pinned (slice 7 §2); bank 10 `$51c8`/`$5349`
+   are pinned (slice 8 §2). Still open: bank 7
    `$4794`, `$77a9`/`$78ba` roles from slice 4; the `$3414`
    dispatcher and the `$b4ca-$b927` SRAM writer are resolved
    (slice 6 §2, §4).
-4. **Further carves.** Whole banks 4, 6, 8–10, 13–17, 19–22,
-   24–31 still largely raw. Next candidates by dependency:
-   bank 12 `$5917+` data/credits, the bank-11 sprite blocks
-   the `$4000` table points at, bank 2/3 stream ops (the
-   timer-1 world/stage writer), bank 9 `$0bff` object dispatch
-   (death->timer-12). Bank 11 `$4000`, bank 18 `$4934`, and
-   bank 0 `$17eb-$1d06` are done (slice 7 §3).
+4. **Further carves.** Whole banks 4, 6, 8–10, 13–15, 17,
+   19–22, 25–31 still largely raw (bank 16 and bank 24 are
+   now partially carved — slice 8). Next candidates by
+   dependency: bank 12 `$5917+` data/credits, the bank-11
+   sprite blocks the `$4000` table points at, bank 9 `$0bff`
+   object dispatch (it runs in the same `$0868` routine as
+   the death path, right before `$51c8`). Bank 11 `$4000`,
+   bank 18 `$4934`, bank 24 `$4934`, bank 10 `$51c8-$59f1`,
+   and bank 0 `$17eb-$1d06` are done (slices 7–8).
 
 ## Not done / blocked
 
@@ -1631,15 +1961,15 @@ framing is corrected below; the queue oscillates 14->15->16->14
   1–3, and the recursive-descent disassembler
   (`tools/gb_rd.py`) covered slices 4–7. It may still be
   useful for banked code later.
-- Open (slice 7, not blocks): the bank-18 stage-table record
-  layout is unresolved — the naive (world=[+0], stage=[+6])
-  reading contradicts the live (1,1) for B=0, and the (1,1)
-  is written by uncarved stream code during state-20 timer 1
-  (see Slice 7 §3). The death->timer-12 exact instruction is
-  unpinned (countdown path ruled out). The `[$c70f]` bit-0
-  setter is not found in carved code. The bank-11 table's
-  extent (128 entries) is inferred, not verified against live
-  record[0] values.
+- Open (slice 8, not blocks): the door position/trigger is
+  not positively identified (prior OAM (152,40) is a guess);
+  no run has completed 1-1 yet (key collected, climb to the
+  door pending — play6 running). The `[$c70f]` bit-0 setter
+  is not found in carved code. The bank-11 table's extent
+  (128 entries) is inferred, not verified against live
+  record[0] values. Stage-table records B=97..105 do not fit
+  the (world,stage) pattern — role unresolved. The bank-10
+  `$4031` routine's entry mechanism is unverified.
 - Pushed: slice 1 `62d9e52c`, slice 2 `6a21aa7f`, slice 3
   `e8d923ee858b188e2aa4ec229d0aae4f5156bc0f` (16 files, 887,317
   bytes; sync record `~/workspace/mike-monorepo.muse-github-snapshot-sync.json`),

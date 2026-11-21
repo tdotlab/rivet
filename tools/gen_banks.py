@@ -18,7 +18,13 @@ ROM = "roms/Donkey_Kong_World_Rev1_SGB.gb"
 # $68ad-$68c3 + $6b0a-$6b54 + $6f62-$7000 + $7edd-$7f0c, bank 23
 # $7717-$7e11 (the $7722 rst-$08 dispatch + handlers).
 # Slice 7 carved bank 11 $4000-$40ff (sprite-pointer table) and
-# bank 18 $4934-$4c83 (stage table, 106 8-byte records).
+# bank 18 DECIMAL ($12) $4934-$4c83 (106 8-byte records -- slice 7
+# called it the stage table, but that was a decimal/hex slip; the
+# real stage table is bank $18 HEX = decimal 24, see slice 8).
+# Slice 8 carved bank 24 ($18) $4934-$4c83 (stage table, 106 records)
+# and bank 16 ($10) $4031-$4044 + $51c8-$52e7 + $52e7-$5428 +
+# $5428-$59f1 (the death path: $51c8 per-frame update, $52e0/$5405
+# rst-$08 tables, $5349 death handler setting hStateTimer=12).
 CARVED = {
     1: [(0x4000, 0x5A00)],
     2: [(0x4003, 0x4009), (0x4010, 0x43B0), (0x45A9, 0x47FC),
@@ -32,8 +38,11 @@ CARVED = {
         (0x77A9, 0x7ABB), (0x7EDD, 0x7F0D)],
     11: [(0x4000, 0x4100)],
     12: [(0x4000, 0x5917)],
+    16: [(0x4031, 0x4044), (0x51C8, 0x52E7), (0x52E7, 0x5428),
+         (0x5428, 0x59F1)],
     18: [(0x4934, 0x4C84)],
     23: [(0x731F, 0x7717), (0x7717, 0x7E12)],
+    24: [(0x4934, 0x4C84)],
     30: [(0x4000, 0x40E0)],
 }
 
