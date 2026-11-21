@@ -2205,27 +2205,249 @@ cases ALL IDENTICAL (see §6).
   rename needed (`bank10.asm` = bank $10 hex, as
   elsewhere).
 
+## Slice 10 — DONE, byte-matching (2026-11-21)
+
+Headline: **bank-1 `$56c3`'s entry mechanism is FOUND — and it kills
+the slice-9 door hypothesis.** `$56c3` is PostStart table entry 33
+(state 3, timer 33), a file-select animation step, not a stage-clear
+trigger. The key-pickup mechanism is PROVEN live (gb_watch: bank-7
+`$6b8e` writes `$c560`) and the whole 19-handler `$75ea`
+tile-interaction system is carved (727 new lines, `src/` now 27,105).
+The door is still NOT found and 1-1 is still NOT completed — but the
+tile-handler path is now narrowed to a single cell value (`$0b`),
+and only the key is that cell in 1-1. Clean `make` rebuilds SHA-1
+`397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero diffs.
+Slice-5 regression ALL IDENTICAL, slice-7 cases ALL IDENTICAL (§6).
+
+### §1. Bank-1 `$56c3` — RESOLVED (slice 9's "no pointer" was a misread)
+
+- Slice 9 claimed no `call`/`jp`/`dw` to `$56c3` exists, citing the
+  `c3 56` pair at bank-0 `$35e2` as "`jp $4756`". That reading
+  assumed code alignment at `$35e2`. `$35e2` is inside the
+  **PostStart (state 3) 37-entry table** at `$35a0-$35e9`: entry 33
+  (`$35a0 + 2*33 = $35e2`) is `dw $56c3`. The table was already
+  curated in `src/states.asm` (`PostStartTable`, last line
+  `dw $5695, $56c3, $5247, $5269, $5273`) — the slice-9 survey
+  missed it because it grepped the ROM bytes instead of the
+  already-curated table. Prologue: `$359a ld a,$01; rst $10`
+  (bank 1), `ldh a,[hStateTimer]; rst $08`, table at `$35a0`.
+- **Consequence (correction to slice 9 §4):** `$56c3` runs ONLY when
+  state == 3 and timer == 33. It sets hStateTimer = `$1a` (26) —
+  in state 3 — so the next dispatch is PostStart entry 26
+  (`$56d7`, the big `$c360`-record routine, which IncStateTimers
+  to 27). Slice 9's "probable door path: door → `$56c3` (timer 26)
+  → timer-26 body `$09d5` → clear chain" is WRONG: `$56c3` can
+  never set up a state-16 timer-26 dispatch, because it only ever
+  runs in state 3 and state 3's steps don't change hGameState to
+  16 with the timer at 26. Do not chase it again. (The `$56cc`
+  sibling — PostStart entry 31 — is the same class: sets timer
+  `$10` (16) in state 3.)
+- The full `e0 90` (timer-write) survey was redone (109 sites,
+  whole ROM): the literal timer values set are
+  0,1,2,3,4,6,12,13,15,16,18,19,20,22,25,26,27,29,30,32,33,36,42,43
+  plus variable-A sites (`[$c70b]`, `[$c851]`, `[$c20b]`-clears).
+  `$56c3` remains the SOLE literal timer-26 setter, and there is
+  still NO literal timer-23 setter (`3e 17 e0 90` absent).
+
+### §2. Timer 23 — still open, narrowed
+
+- Timer-23's state-16 body `$0997` starts with `call $1d2a`
+  (IncStateTimer, 23→24), then clears `[$ff95]`, sets hSTATState 3,
+  clears bit 4 of `[$c82b]`, QueueAdvance + QueueFetchBC, and sets
+  timer 33 (`$21`) iff the fetched C == 4; else it falls into the
+  timer-24 body `$09b9` (waits `[$ff95]==$5a` → timer 42). Timer
+  26's body `$09d5` is the same shape (timer 42 first, then
+  advance/fetch, C==4 → 33). So 23 and 26 are both "queue advance"
+  steps; the question is only what SETS the timer to 23/26 while
+  state == 16.
+- State-20's timer 22/23 bodies were mapped (bank 1): `$47ad`
+  (timer 22) clears `[$c20b]`, and when `[$c811]>=$a0` falls to
+  `$47cf` (clear `[$ff95]`, IncStateTimer 22→23), then `$47d5`
+  (timer 23: if `[$ff95]==4` IncStateTimer 23→24 — it is 0 there,
+  so no second inc — then the `$47dc` block writes `$c86d` records
+  and calls `$1060`/`$169c`). So timer 23 EXISTS as a state-20
+  value and its body is understood; the state-16 entry is what is
+  missing. Candidates left: (a) IncStateTimer from 22 in a state
+  whose timer-22 body incs, followed by a transition to state 16
+  that preserves the timer (state-16 timer-22 body `$098c` itself
+  does NOT inc — it exits to state 24, timer 0; bank-1 `$4000`
+  state-24 entries `$400d/$406c/$41cf/$411b/$4142` were checked
+  and none writes timer `$17`); (b) a `[$c70b]` restore of 23 —
+  `[$c70b]` writers inventoried: bank-0 `$08bd`/`$08c6` save
+  3/5/7/9 (the `$083e` timers); bank-7 `$405a`/`$66b5`/`$6d2a`/
+  `$7b6e`/`$7bd1`/`$7c34`/`$7c97`/`$7cfa` and bank-`$1f` `$55b6`
+  save the CURRENT timer at a countdown expiry — so `[$c70b]`
+  == 23 requires the timer to have been 23 already (circular
+  unless (a) supplies it once). No `ld a,$17` exists anywhere in
+  bank 1. Timer 23/26 in state 16 have NEVER appeared in any
+  trace (0 hits across all `build/nacre-test/` traces).
+
+### §3. Key pickup — PROVEN live (gb_watch)
+
+- Replayed the play12 schedule's first 32 windows (intro +
+  chunks 0–31, progress-1 save) through `tools/gb_watch`
+  watching `$c560` (rec27 byte 0): HIT frame 2140 `$c560`
+  00→01 (rec27 SPAWNED, state 16 timer 1, bank 1, pc `$30f9`)
+  and HIT frame 2878 `$c560` 01→00 (key COLLECTED, state 16
+  timer 7, bank 12 at frame end). Pass-2 refine:
+  - Spawn: written by bank-12 `$403c` (regs HL=`$c561`, bank 12),
+    ring shows bank-12 `$334f-$3361` loops + `$1060-$1064` — the
+    level-load record spawner (bank 12 `$4000` region, carved).
+  - Collection: written by bank-7 `$6b8e` (regs HL=`$c560`,
+    rom_bank 7), ring: bank-7 `$4d9c-$4db8` → `$4888-$48b8` →
+    `$4022` → `$6b0a-$6b8e`. So the pickup runs through bank 7's
+    `$4016`/`$6b0a` dispatch, NOT through the bank-`$10` tile
+    dispatch (slice 9) or the `$db15` system (all zero in 1-1).
+  - Note: the replay collected the key at frame 2878 vs play12's
+    ~2964 (chunk 31) — the known schedule-replay drift, but the
+    key still collected; the watchpoint result (which instruction,
+    which frame) is unaffected.
+
+### §4. The `$75ea` tile-interaction system — mapped and carved
+
+- `$6b0a` (bank 7, slice 5): scans 6 of the 8 `$c117` records
+  (recs 0,4,6,1,5,7 — NOT 2,3) for byte 0 == `$0b`; on a match
+  and hStateTimer != `$10` (16), it reads byte 1, indexes the
+  `$750a` byte map, doubles the result, indexes the `$75ea` dw
+  table, and `jp hl`. DE on entry points at the record's byte 2.
+- `$750a` map (224 bytes, `$750a-$75e9`; ends where `$75ea`
+  begins, so byte-1 >= 224 would read into the pointer table —
+  never observed): index 0 is the default (most byte-1 values);
+  1 ← {1}, 2 ← {16-19}, 4 ← {24-27}, 6 ← {32,33}, 7 ← {34-37},
+  8 ← {38-41}, 9 ← {42-45}, 10 ← {46-49}, 11 ← {50-53},
+  12 ← {54-57}, 13 ← {58-61}, 14 ← {62-65}, 15 ← {66-69},
+  16 ← {70-73}, 17 ← {74-77}, 18 ← {175}.
+- `$75ea` table, 19 entries (bytes after entry 18 are `$3f3f`
+  filler): 0 `$6b55` key pickup, 1 `$6ba6` → `$63c4`,
+  2 `$6c7a` → `$6e54`, 3 `$6d83` → `$63c4`, 4 `$6c8f` → `$6e54`,
+  5 `$6b09` ret (no-op), 6 `$6c44` → `$7d5e`, 7 `$6c6a` → `$6e54`,
+  8 `$6ca4` → `$6e54`, 9 `$6cb9` → `$6e54`, 10 `$6cce` → `$6e54`,
+  11 `$6ce3` animator-arm, 12 `$6d50` ret (no-op),
+  13 `$6d51` → `$63c4`, 14 `$6d9f` → `$6e54`, 15 `$6daf` → `$6e54`,
+  16 `$6dbf` → `$6e54`, 17 `$6dcf` → `$6e54`, 18 `$6ddf` record
+  transform → `$6f06`.
+- Handler 0 `$6b55` (key pickup), decoded in full: guards
+  (`[$dd17]` bits 6-7 clear, `[$ff94]` bit 7 clear, `[$ff91]`
+  bit 4 clear — so it cannot re-fire after pickup, since its
+  tail `$6bf2` SETS bit 4 of `[$ff91]`); reads the record's
+  bytes 4-5 as a pointer, zeroes `$0b` bytes at [HL] and
+  [HL+`$80`]; deactivates the `$c200` record at index B-`$40`
+  (`$6b8e: ld [hl],$00` — the gb_watch-proven write);
+  `[$dd3c]=`$02d0, `res 5,[$ff94]`, `[$c210]=6`, then `$6bf2`
+  (set 4 `[$ff91]`, `[$dd18]=`$0a, `[$dd21]=`$11, `[$dd1c]`=1
+  or `$83`, clear bit 7 `[$ff91]`/bit 5 `[$ff92]`, set bit 0
+  `[$dd17]`, then `$63c4` unless `[$c837]` is 3/`$24`/2).
+- Handler 11 `$6ce3` (animator-arm): guards (`[$dd18]`==3 needs
+  `[$c213]`>=5; `[$dd17]` bit 1 clear); sets `[$dd45]=`$0168
+  (the countdown `$4016`'s tail watches), sets bit 4 of a
+  `$c212`-record byte, `[$c838]=`$80, `[$c830]=`$26,
+  `[$c831]`/`[$c835]`=3, saves the current timer to `[$c70b]`,
+  sets timer `$11` (17), `[$dd3e]`=5/`[$dd3f]`=1/`[$dd40]`=8,
+  `[$dd43]`/`[$dd44]`=`[$c201]`/`[$c202]`, set bit 7 `[$dd17]`.
+  This is the `$6f62` intro-animator trigger (slice 7 §2).
+- Handler 18 `$6ddf` (record transform): zeroes `$0b` tiles the
+  same way, then rewrites a `$c200` record in place (writes
+  `00`,`$a5`,`$44` at offsets +8/+9/+11, computes a `$c86f`
+  position from the record's bytes), then `$6f06`.
+- Handlers 2/4/8/9/10 set `[$c838]=`$80, `[$c82d]`/`[$c835]`=3
+  and jump to `$6e54` with a table pointer; handlers
+  6/7/14/15/16/17 set `[$c82f]`/`[$c835]=`$1a (26 — an
+  animation/sprite parameter, NOT the timer) and jump to
+  `$6e54`/`$7d5e`. `$6e54` is a shared table-driven `jp hl`;
+  `$63c4` is a shared spawn/setup routine.
+- Entry to the system: `$4016` (which calls `$6b0a` at `$4022`)
+  is jumped to (`jp $4016`, no `call` anywhere) from 21 bank-7
+  sites in `$42xx-$47xx` — the uncarved per-frame "Mario vs
+  world" code. The key ring's `$4888` jumps straight to `$4022`
+  (the dispatcher call, skipping `$4016`'s prologue).
+
+### §5. Carve: bank 7 interaction handlers + tables
+
+- New `tools/gen_slice10.py` + `src/bank7slice10.asm` (727 lines):
+  `$63c4-$63f3` (shared setup), `$6b09` (1-byte no-op handler),
+  `$6b55-$6e8b` (handlers 0-18 + `$6e54`/`$6e70`), `$6e8c-$6ea8`
+  (routine converging on `$6f2e`; its sibling `$6ea9-$6ed1` was
+  already carved in slice 4), `$6f06-$6f2d` (handler-18
+  continuation; stops before slice-4's `$6f2e` span — the
+  boundary is clean: `$6f2c ld d,$01` is 2 bytes, `$6f2e` starts
+  `ld l,b`), `$7d5e-$7d95` + `$7e07-$7e17` (handler-6 chain),
+  `$750a-$75e9` as `db` (byte map) + `$75ea-$760f` as 19 `dw`
+  (pointer table, emitted with handler labels). `CARVED` in
+  `tools/gen_banks.py` extended; `INCLUDE "bank7slice10.asm"`
+  added after `bank7slice5.asm` in `src/main.asm`.
+- Byte-match on first try (no uncovered-byte notes, no link
+  errors): clean `make` → SHA-1
+  `397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero diffs.
+
+### §6. Nacre results (slice 10, rebuilt ROM = original)
+
+- `tools/run_slice5_regression.sh`: ALL REGRESSION CASES
+  IDENTICAL (600f `1cf92679…`, 900f `39ffd5ee…`, 3600f
+  `88515f4e…`, 12000f `92d2e185…`, s8/f0/f1).
+- `tools/run_slice7_cases.sh`: ALL SLICE-7 CASES IDENTICAL
+  (retry 15000f `0d835d95…`, mid5000 `2ab1bb5d…`, play-right
+  `b3cb6c8b…`, death 3000f `632b2eaf…`).
+- No new live gameplay run was completed this slice: the door
+  was not found, so 1-1 was not completed and queue 17 still
+  never fired. The key-collection replay (§3) is the only new
+  live evidence, and it re-proves the key path on both ROMs
+  only in the sense that the watchpoint ran on the original —
+  the rebuilt ROM is byte-identical, and the regression suites
+  above cover it.
+
+### §7. The door — narrowed, not found
+
+- The `$c117` records point into a WRAM map (`$cc00-$d1ff`),
+  not the VRAM tilemap (slice 9's "byte 4-5 = tilemap pointer"
+  is a WRAM pointer). Across all 57 slice-9 play WRAM dumps
+  (Mario all over 1-1, including standing on the `$c0-$c3`
+  block), the `$c117` byte-0 values seen are ONLY `$08`,
+  `$42`, `$47`, `$82` — never `$0b` except at the key moment
+  itself (transient; no dump caught it). The `$6b0a` dispatch
+  fires ONLY on byte 0 == `$0b`, and in 1-1's tilemap the only
+  `$3b` tiles (the `$0b` class, if the mirror encodes tile-`$30`
+  or tile-&-`$0f`) are the key's 2x2 block (row 5-6, cols 9-10).
+  So the door is most likely NOT a `$75ea` handler — unless its
+  cell is also `$0b` and its byte-1 selects another handler
+  (11 or 18), which no dump has shown. The `$1832` dispatch
+  (bank-0 `$188b-$1c28`) was also checked: none of its handlers
+  writes `[$ff90]`/`[$c210]`/`[$ff94]`, so the door is not there
+  via a direct timer write either.
+- What remains for the door: (a) the bank-8 `$4022`/`$41b8`
+  builder — decode the WRAM map's cell encoding (what byte
+  values mean, how `$0b` arises, whether the door has a
+  distinct cell); (b) the bank-7 `$42xx-$47xx` routines (the 21
+  `jp $4016` callers — the per-frame entry to the interaction
+  system, still uncarved); (c) bank-`$10` `$4af0` (the other
+  uncarved per-frame routine, called from `$0868`); (d) a
+  `$c200`-record overlap check outside the `$1832` dispatch.
+- Timer 23/26 in state 16 remain the downstream unknowns (§2);
+  they only matter once the door fires.
+
 ## Next slices (priority order)
 
 1. **Gameplay: complete stage 1-1 live (key -> door).**
-   Slice 8 collected the key live (play4/play5, chunk 31,
-   (80,60)) and proved the post-key route down to the ground
-   and across to (152,136) — but no run has yet completed 1-1
-   to watch the queue advance 16->17 and the (2,1) dispatch
-   fire. Slice 9 ELIMINATED the `$c0-$c3` block as the door
-   via the tile-handler path (slice 9 §5: handler 5 is
-   unreachable through it, proven statically and by 13 live
-   block dumps; play12/13/14 all end at the block with
-   done=0) and mapped the dispatch system, the timer-33/26
-   chain, and the `$c70f` bit-0 setter. Remaining: find
-   bank-1 `$56c3`'s entry mechanism (timer 26 — no direct
-   caller or pointer in the ROM) and how timer 23 gets set
-   (no literal setter), or find a non-tile trigger. Once a
-   run completes, verify the winning schedule by replaying
-   it with `gb_headless` on both the original and rebuilt
-   ROMs (framebuffer hash + state trace + save identical) —
-   but note the slice-8 schedule-replay divergence (the
-   SCHEDULE drifts slowly through gb_headless, so verify
+   Slice 10 RESOLVED bank-1 `$56c3` (PostStart table entry 33 —
+   a file-select step, NOT the door trigger; slice 9's "door →
+   `$56c3` → `$09d5`" path is dead, do not chase it) and PROVED
+   the key-pickup mechanism live (bank-7 `$6b8e` writes `$c560`),
+   carving the whole 19-handler `$75ea` system. The door is most
+   likely NOT a `$75ea` handler (only the key cell is `$0b` in
+   1-1; `$c117` byte-0 values seen live are `$08/$42/$47/$82`
+   only). Next leads, in order: (a) bank-8 `$4022`/`$41b8` —
+   decode the WRAM map's cell encoding (what byte values mean,
+   how `$0b` arises, whether the door has a distinct cell);
+   (b) bank-7 `$42xx-$47xx` (the 21 `jp $4016` callers — the
+   per-frame entry to the interaction system, still uncarved);
+   (c) bank-`$10` `$4af0` (the other uncarved per-frame routine,
+   from `$0868`). Timer 23's setter is still open (no literal
+   setter; most likely IncStateTimer from 22 or a `[$c70b]`
+   restore — see slice 10 §2) and only matters once the door
+   fires. Once a run completes, verify the winning schedule by
+   replaying it with `gb_headless` on both the original and
+   rebuilt ROMs (framebuffer hash + state trace + save
+   identical) — but note the slice-8 schedule-replay divergence
+   (the SCHEDULE drifts slowly through gb_headless, so verify
    inside gb_play itself or find the divergence source
    first). Also open: the greedy/waypoint flaw (slice 9 §6:
    12px waypoint advance sends Mario up-left to (32,59)).
@@ -2234,22 +2456,29 @@ cases ALL IDENTICAL (see §6).
    table's extent (128 entries) is inferred, not verified
    against live record[0] values. (The stage-table layout is
    RESOLVED — slice 8 §1 — and the death->timer-12
-   instruction is PINNED — slice 8 §2.)
+   instruction is PINNED — slice 8 §2. The `$56c3` entry
+   mechanism is RESOLVED — slice 10 §1 — and the key pickup
+   is PROVEN — slice 10 §3.)
 3. **Roles for the carved code.** Bank 7 `$6f62` and bank 23
    `$7722` are pinned (slice 7 §2); bank 10 `$51c8`/`$5349`
-   are pinned (slice 8 §2). Still open: bank 7
-   `$4794`, `$77a9`/`$78ba` roles from slice 4; the `$3414`
-   dispatcher and the `$b4ca-$b927` SRAM writer are resolved
+   are pinned (slice 8 §2); bank 7 `$6b55` (key pickup) and the
+   `$75ea` handler families are pinned (slice 10 §4). Still open:
+   bank 7 `$4794`, `$77a9`/`$78ba` roles from slice 4; the
+   `$3414` dispatcher and the `$b4ca-$b927` SRAM writer are resolved
    (slice 6 §2, §4).
 4. **Further carves.** Whole banks 4, 6, 8–10, 13–15, 17,
    19–22, 25–31 still largely raw (bank 16 and bank 24 are
-   now partially carved — slice 8). Next candidates by
-   dependency: the bank-11 sprite blocks the `$4000` table
-   points at. Bank 11 `$4000`, bank 18 `$4934`, bank 24
-   `$4934`, bank 10 `$51c8-$59f1`, bank 12 `$5917-$5dbc`,
-   bank 9 `$4000-$4020`/`$418b-$4690`/`$63f3-$6401`/
-   `$6480-$6484`, and bank 0 `$17eb-$1d06` are done
-   (slices 7–9).
+   now partially carved — slice 8; bank 7 is now extensively
+   carved — slices 4/5/10). Next candidates by dependency:
+   bank-8 `$4022`/`$41b8` (the `$c117` builder) and bank-7
+   `$42xx-$47xx` (the `jp $4016` callers), then the bank-11
+   sprite blocks the `$4000` table points at. Bank 11 `$4000`,
+   bank 18 `$4934`, bank 24 `$4934`, bank 10 `$51c8-$59f1`,
+   bank 12 `$5917-$5dbc`, bank 9
+   `$4000-$4020`/`$418b-$4690`/`$63f3-$6401`/`$6480-$6484`,
+   bank 0 `$17eb-$1d06`, and bank 7
+   `$63c4`/`$6b55-$6e8b`/`$750a-$75ea` are done
+   (slices 7–10).
 
 ## Not done / blocked
 
@@ -2272,18 +2501,23 @@ cases ALL IDENTICAL (see §6).
   1–3, and the recursive-descent disassembler
   (`tools/gb_rd.py`) covered slices 4–7. It may still be
   useful for banked code later.
-- Open (slice 9, not blocks): the door position/trigger is
-  not positively identified — the `$c0-$c3` block is now
-  ELIMINATED as the tile-path door (slice 9 §5) and no run
+- Open (slice 10, not blocks): the door position/trigger is
+  not positively identified — the `$c0-$c3` block is
+  ELIMINATED as the tile-path door (slice 9 §5) and the
+  `$75ea` interaction system is now mapped and carved
+  (slice 10 §4), but only the key cell is `$0b` in 1-1, so
+  the door is most likely not a `$75ea` handler. No run
   has completed 1-1 yet (key collected, play12/13/14 all
-  end at the block, done=0). Bank-1 `$56c3` (timer 26) has
-  no direct caller or pointer in the ROM; timer 23 has no
-  literal setter. The `[$c70f]` bit-0 setter is RESOLVED
+  end at the block, done=0). Bank-1 `$56c3`'s entry mechanism
+  is RESOLVED (slice 10 §1: PostStart table entry 33 — NOT
+  a door trigger); timer 23 has no literal setter (see
+  slice 10 §2). The `[$c70f]` bit-0 setter is RESOLVED
   (slice 9 §3: bank 23 `$7337`). The bank-11 table's extent
   (128 entries) is inferred, not verified against live
   record[0] values. Stage-table records B=97..105 do not fit
   the (world,stage) pattern — role unresolved. The bank-10
   `$4031` routine's entry mechanism is unverified.
+  Slice 10 NOT pushed (coordinator handles pushes).
 - Pushed: slice 1 `62d9e52c`, slice 2 `6a21aa7f`, slice 3
   `e8d923ee858b188e2aa4ec229d0aae4f5156bc0f` (16 files, 887,317
   bytes; sync record `~/workspace/mike-monorepo.muse-github-snapshot-sync.json`),
