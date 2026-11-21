@@ -701,9 +701,8 @@ ClearTilemaps_Fill:
     xor a                   ; $10be
     jp MemsetBC             ; $10bf: tail call
 
-; Raw (not yet curated) bank 0, $10c2-$1642 (before the per-frame routines).
-SECTION "Raw bank 0 B", ROM0[$10c2]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $10c2, $581
+; Bank 0 $10c2-$1642 (sprite-stream engine) is curated in slice 6:
+; see src/bank0slice6.asm (INCLUDEd below with the other slice files).
 
 ; Raw (not yet curated) bank 0, $17eb-$1d06 (after the per-frame routines).
 SECTION "Raw bank 0 B2", ROM0[$17eb]
@@ -800,6 +799,7 @@ INCLUDE "decomp.asm"
 INCLUDE "frame.asm"
 INCLUDE "states.asm"
 INCLUDE "bank0slice3.asm"
+INCLUDE "bank0slice6.asm"
 INCLUDE "bank1.asm"
 INCLUDE "bank12.asm"
 INCLUDE "bank23.asm"
