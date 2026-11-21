@@ -17,6 +17,8 @@ ROM = "roms/Donkey_Kong_World_Rev1_SGB.gb"
 # Slice 5 carved bank 7 $4016-$41dc + $480e-$4826 + $6572-$6580 +
 # $68ad-$68c3 + $6b0a-$6b54 + $6f62-$7000 + $7edd-$7f0c, bank 23
 # $7717-$7e11 (the $7722 rst-$08 dispatch + handlers).
+# Slice 7 carved bank 11 $4000-$40ff (sprite-pointer table) and
+# bank 18 $4934-$4c83 (stage table, 106 8-byte records).
 CARVED = {
     1: [(0x4000, 0x5A00)],
     2: [(0x4003, 0x4009), (0x4010, 0x43B0), (0x45A9, 0x47FC),
@@ -28,7 +30,9 @@ CARVED = {
         (0x6572, 0x6581), (0x68AD, 0x68C4), (0x6B0A, 0x6B55),
         (0x6EA9, 0x6ED2), (0x6F2E, 0x7001), (0x7168, 0x71BA),
         (0x77A9, 0x7ABB), (0x7EDD, 0x7F0D)],
+    11: [(0x4000, 0x4100)],
     12: [(0x4000, 0x5917)],
+    18: [(0x4934, 0x4C84)],
     23: [(0x731F, 0x7717), (0x7717, 0x7E12)],
     30: [(0x4000, 0x40E0)],
 }

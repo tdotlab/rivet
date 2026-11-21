@@ -168,15 +168,28 @@ def walk(bank, seeds, max_rst08_table=128):
         if kind == "rst08":
             tbl = []
             t = addr + 1
-            while len(tbl) < max_rst08_table and t + 1 <= 0x7FFF:
+            # Bank 0's rst-$08 tables live in ROM0, so their entries are
+            # ROM0 addresses ($0000-$3fff), not ROMX ($4000-$7fff).
+            # (Fixed in slice 7: the old range rejected every ROM0
+            # entry, so the $1832 table read zero entries.)
+            tmax = 0x3FFF if bank == 0 else 0x7FFF
+            while len(tbl) < max_rst08_table and t + 1 <= tmax:
                 w = rom[file_off(bank, t)] | (rom[file_off(bank, t + 1)] << 8)
-                if not (0x4000 <= w <= 0x7FFF or 0xC000 <= w <= 0xDFFF):
+                if bank == 0:
+                    ok = 0x0000 <= w <= 0x3FFF
+                else:
+                    ok = 0x4000 <= w <= 0x7FFF or 0xC000 <= w <= 0xDFFF
+                if not ok:
                     break
                 tbl.append(w)
                 t += 2
             rst08[addr] = tbl
             for w in tbl:
-                if 0x4000 <= w <= 0x7FFF and w not in reached:
+                if bank == 0:
+                    push = 0x0000 <= w <= 0x3FFF
+                else:
+                    push = 0x4000 <= w <= 0x7FFF
+                if push and w not in reached:
                     stack.append(w)
             continue
         if kind == "ret":

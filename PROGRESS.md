@@ -1323,46 +1323,305 @@ coherent routine with a proper prologue/epilogue, not data.
   `jp $1057` outside the carve (already curated in main.asm) —
   the generator now filters emission to `$10c2-$1642`.
 
+## Slice 7 — DONE, byte-matching (2026-11-21)
+
+Headline: **(2,1) is NOT the blocker for playable stages.**
+Slice 6's premise was wrong. Playable stage 1-1 runs in STATE 16
+(timers 3-10), reached via map -> (3,1) -> (1,4) load -> timer
+chain; player control verified live (Mario moves and dies, deaths
+cost lives, the stage replays via the intro card). (2,1)@17 is the
+post-completion entry (next stage's map/card visit), reachable only
+after completing 1-1 (key -> door). Slice 6's "never dispatched"
+framing is corrected below; the queue oscillates 14->15->16->14
+(map exit +1, timer-32 +1, retry -2) until the stage is completed.
+
+### 1. The (2,1) dispatch — verified live
+
+- Queue table (bank 12 `$4f97`, 331 entries, dumped from ROM):
+  indices 0-40 are 0 (3,0), 1 (2,200), 2 (1,0), 3 (4,0), 4 (2,201),
+  5 (1,1), 6 (4,0), 7 (2,202), 8 (1,2), 9 (4,0), 10 (2,203),
+  11 (1,3), 12 (4,1), 13 (0x14,0), 14 (2,0), 15 (3,1), 16 (1,4),
+  17 (2,1), 18 (3,2), 19 (1,5), 20 (2,2), 21 (3,2), 22 (1,6),
+  23 (2,3), 24 (1,7), 25 (4,0), 26 (0x14,1), 27 (2,4), 28 (3,1),
+  29 (1,8), 30 (2,5), 31 (3,2), 32 (1,9), 33 (2,6), 34 (3,2),
+  35 (1,10), 36 (2,7), 37 (1,11), 38 (4,5), 39 (0x14,2),
+  40 (2,8). C histogram {1:101, 2:101, 3:68, 4:35, 20:26}. The
+  ONLY (3,4) entry in all 331 is index 327, successor (1,100)@328;
+  the only (3,0) is index 0. C==3 B values {0,1,2,4}; C==1 B range
+  0-100; C==4 B values {0..5}; C==0x14 B values 0-26 except 25.
+- `$0d2c` (C-dispatch entry 3): B==0 -> state 4; B==4 +
+  `[$c82b]` bit 4 set -> advance (qidx++), fetch next,
+  `jp $0d04` re-dispatch (NO retreat); else -> advance, fetch,
+  `call $0d04` (nested dispatch), `jp $0dc7` retreat. Subtlety:
+  nested C=2 dispatch (`$0d23`) does `pop af; ret`, discarding
+  the return address, so the retreat at `$0d59` is SKIPPED and
+  qidx stays advanced. Nested C=1 returns normally, so retreat
+  runs.
+- State-16 timer-12 retry (`$08f7`): after stream calls, if the
+  timer is still 12, checks bit 3 of `[$c82b]`; if clear, sets
+  bits 3 AND 4 (`$0920`/`$0922`), retreats up to twice looking
+  for C==2 or C==$15, else advances twice (net 0); then `$094d`
+  sets `[$c858]`=$ff, `[$c859]`=0, `[$c838]`=0, dec `[$da43]`
+  (lives); lives wrapping to $ff -> state 28. Retry takes ~263
+  frames of stream work.
+- `$495c` (bank 1, from `$0cec` before C-dispatch): peeks at the
+  next entry (advance + fetch + retreat, net 0), sets
+  `[$c856]`/`[$c857]` from tables `$5d5e`/`$5d74` indexed by C;
+  if next C==4 sets `[$c857]`=$5b; if world==9/stage==8 sets
+  `[$c856]`=$3b. Preserves BC; does NOT change qidx permanently.
+- State-20 step 0 (`$26b5`): clears `[$c860]`/`[$c861]`
+  (`$26e5`), IncStateTimer (`$26ee`), bank $18, fetch (C,B);
+  B>=$c8 demo branch (`$2701`); B<$c8 stage-table path (`$271e`:
+  HL=bank-18 `$4934`+B*8). Tail `$2829`: if timer<2 AND
+  `[$c82b]` bit 4 clear: `[$c70f]` bit 0 -> timer=$13 (19);
+  `[$c70f]` bit 2 -> timer=$0f (15). World==9/stage==9 ->
+  timer=1.
+- State-20 timer 1/17/26 (`$43f9`, bank 1): bit 5 set OR
+  world==0 -> countdown path (dec `[$c20b]`, exit at $81 wrap
+  -> timer 18 + QueueAdvance `$446a`); else joypad path: A/Start
+  (bits 0/3 of hJoypadNew) -> exit `$4434` (timer=$12 (18),
+  `jp $0dba` advance); else dec `[$c20b]` with NO $81 check
+  (waits forever without input). Timer 18 (`$448e`): waits
+  `[$ff95]`==$60 (or $a0 if `[$c80d]`==$6f); then timer=0,
+  state=16 (bit 5 clear) or 18 (bit 5 set).
+- State-16 timer chain after a (3,1) dispatch: timer 0
+  (dispatch) -> 15 (dec) -> 1 (level load `$0737`) -> 2
+  (`$07e7`; tail: `[$c85b]`==3 -> timer 27) -> 3 -> 28
+  (`$0a98`; `$0a9b` quirk: if bit 4 set AND fetched B==1, B++
+  before bank-$10 `$6b32`(B)) -> 29 -> 30 -> 31 -> 32
+  (`$0ac4`: advance qidx, timer=3) -> 3-10 cycle (joypad watch
+  `$0868`: Start -> pause state 17, Select -> timer $29) -> 12
+  (retry). Timer 9->12 jump via timer-9 tail `$1528` -> bank $0c
+  `$4bf1`.
+- `$0c2f` (timer-4 tail): stage-time countdown -- every 15th
+  call decrements 16-bit `[$c711]`/`[$c712]`; hits 0 -> timer=12
+  (retry). This is the TIMEOUT trigger.
+- Complete QueueAdvance (`$0dba`) call-site inventory:
+  `$0d47` (bit-4 path), `$0d50` (else path), `$0d7e` (C=$14),
+  `$446a` (map/card exit), `$0ac4` (timer 32), `$0997`
+  (timer 23), `$09d5` (timer 26), `$0b25` (timer 40), `$58f0`
+  (state-4 step 3 exit: state 16 + timer 0 + advance),
+  `$0942`/`$0945` (retry fall-through, net 0), `$4970`/`$4993`
+  (`$495c` peek, net 0). `$4d21` loads qidx from the `$5e99`
+  progress table.
+- Timers 23/26 clear bit 4 (`$09a1`/`$09d9` `res 4,[hl]`).
+  Timer 40 (`$0b21`): timer=$2a + advance. Timer 42 (`$0b45`):
+  world/stage 9,9 -> timer 0; else Select-path + timer $2b (43).
+  Timer 43 (`$0b6a`), 44 (`$0b95`: countdown `[$c711]`, inc timer
+  at 0), 45 (`$0bde`: wait any joypad -> timer 0). Chain
+  33->...->40->42->43->44->45->0 is the stage-clear sequence,
+  entered from timers 23/26 when the advanced-to entry has C==4.
+- `$4bcd`/`$4bf1` (bank 12) are scroll/sprite routines, NOT
+  gameplay logic. `$169c` is a memory-copy helper, not a timer
+  advancer. `$0bff` decrements 16-bit `[$da47]`, scans 32
+  `$db15` records (stride 15), calls banked `$4000` for records
+  with byte >= $30.
+- `[$c70f]` writers: `$2735` set bit 1, `$2758` set bit 2,
+  `$29ea` clear, `$4463` clear, `$46af` clear. Bit-0 setter NOT
+  yet found in carved code.
+- **`[$c82b]` bit 4 role pinned (verified live)**: set ONLY by
+  the timer-12 retry (`$0922`); cleared by state-16 timers
+  23/26 and boot. It flips the state-20 visit from map-lane
+  (timers 15-17) to card-lane (timers 0/1/18) -- after a retry,
+  the (2,0) visit shows the stage card, not the map. It also
+  gates the `$0d2c` B==4 path and the `$0a9b` B++.
+- Slice 6's `$73b2` question answered: the attract map
+  auto-advances because `$43f9`'s countdown path ($81 wrap)
+  runs when bit 5 is set or world==0; the progress map waits
+  for A/Start because the joypad path decrements `[$c20b]`
+  without the $81 check.
+- Live runs (original ROM, Nacre `gb_headless`, progress-1
+  save, `GB_WATCH=c85c,c82b,c860,c861,da43,c70f`): retry run
+  (15000f, fb `0d835d95da32f694f2ad35754221c89da3ecea0bbeba0d52e50fd937194c9ab1`)
+  -- after the retry (f=11496 timer 12; f=11759 state 16 timer
+  1; f=11760 state 20 timer 0 qidx=14 lives=3) the second map
+  visit sits at state 20 timer 1 FOREVER (f=11763-14997),
+  `c82b`=$1e (bits 1,2,3,4 set), world=1 stage=1 lives=3
+  `c70f`=$04. The bit-4-set visit does NOT jump to timer 15;
+  it waits at timer 1 for A/Start. Mid-stage screenshot
+  (5000f, fb `2ab1bb5dfac756816557ed1f86dbd875623b4ae71cbdfa5417e187b96006b237`,
+  `build/nacre-test/slice7/mid5000.png`): PLAYABLE stage 1-1
+  (Mario bottom-left, Pauline bottom-right, girders, ladders,
+  key, door, oil can; top bar "109", score 0000000, lives x04).
+  Play test (5000f, right 2500-5000 + A presses 2600-4700, fb
+  `b3cb6c8b25271e0c759cce70c28dc4468ad1b9c3b2abfcc4a4e2716cbcfef094`):
+  timer 12 (death) at f=2668 (~170f into stage); f=2932 timer 0;
+  f=2933 state 20 timer 0; f=2936 timer 1; f=3200 timer 18;
+  f=3296 state 16 timer 0; stage again f=3528; second death
+  f=3677; third death f=4600; final screenshot shows
+  "BIG-CITY / STAGE 1-1 / x1" intro card at state 20 timer 1.
+  Lives 4->1 across three deaths. Death probe (3000f, fb
+  `632b2eaf7002bc0ab2a1785b41c8ad166bc29f47f8115fec1226448f0d4efc44`):
+  first timer 12 at f=2668 with `[$c711]`=$94, `[$c712]`=$00 --
+  countdown NOT zero, so death does NOT go through `$0c2f`'s
+  countdown==0 path. `[$c711]` $96 at f=2500 -> $94 at f=2650
+  (~1/100f).
+- OPEN from Part 1: completing stage 1-1 live (needs real play,
+  key -> door) to watch the queue advance 16->17; the
+  death->timer-12 exact instruction is not pinned (candidates:
+  bank-9 `$0bff` `$db15`/object dispatch, `$11e8` iterator-B
+  handlers; the countdown path is ruled out).
+
+### 2. Bank 7 `$6f62` / bank 23 `$7722` roles — pinned
+
+- Bank 7 `$6f62` = **timed sprite-record animator for the stage
+  intro**, called from `$08ee` (state-16 timer 8/9 region).
+  `[$dd40]` is a per-step countdown (reloaded from
+  `[$dd3e]`/`[$dd3f]`); `[$dd41]` is the phase (bit 0 toggled by
+  the return code after each dispatch, bit 7 = done, set by
+  `$6fad` when hStateTimer != $13). Entry 0 (`$6f81`): writes
+  `[$c201]` = ([$dd43]&1)+$30, `[$c202]`=0. Entry 1 (`$6f96`):
+  writes `[$c201]` = [$dd43]&1, `[$c202]`=0; increments
+  `[$dd42]`; after 7 cycles falls to `$6fad`. `$6fad` (on
+  hStateTimer==$13): writes `[$c201]`/`[$c202]` from
+  `[$dd43]`/`[$dd44]`, restores hStateTimer from `[$c70b]`,
+  clears `[$c838]`, clears bit 1 of `[$ff91]`, and jumps via the
+  `$7001` table (entries $701b, $706c, $7068, $708f, $70c2,
+  $70e4, $70f0 — per-`[$dd18]` intro endpoints). Entry 2
+  (`$4121`) is the per-frame tick (writes `$c830`/`$c831`/
+  `$c835`, sets hStateTimer=$11). Entry 3 (`$7edd`) is DATA,
+  not a handler (garbage disassembly — `ld d,d` filler).
+- Bank 23 `$7722` = **stage-data stream interpreter (bytecode
+  VM)**, driven by the `$c200`-record loop (`$76f1`/`$7707`,
+  bank23.asm). Entry `$7717` stores HL+1 into `[$ca6a]`/`[$ca6b]`
+  (the resume pointer), reads the opcode A=[HL], rst $08
+  dispatches on it (74 entries, `$77bc`-$7af5). Handlers copy
+  bytes from the stream (HL) to a destination (DE) and loop
+  back to `$7717` (`jp $7717`); some call `$7de6`/`$7dee`
+  (stream helpers) and set `[$ca65]` / `[$c835]`. It consumes
+  the compressed stage stream and materializes it into
+  WRAM/VRAM. `[$ca6a]`/`[$ca6b]` and `[$dd40]`/`[$dd41]` are
+  local state for their subsystems — no other carved code
+  touches them.
+
+### 3. Carves (933 new lines; `src/` now 23,652 lines)
+
+- Bank 0 `$17eb-$1d06` (584 instructions, `src/bank0slice7.asm`,
+  generator `tools/gen_slice7.py`): `$17eb`
+  SpriteRecordDispatch (gated on `[$c200]`!=0; A=`[$c201]`>>1,
+  dispatch via `$1832` on change; called from `$0a95`), `$1805`
+  SpriteRecordDispatchB (ungated; called from `$0886`/`$08d8`/
+  `$090f`/`$0986`/`$09b9`/`$09c6`/`$0a18`), `$1832` Rst08Dispatch
+  (rst $08, **44-entry** dw table `$1833-$188a`, handlers
+  `$188b-$1c28` plus `$1d29` `ret` as entries 15 and 24),
+  `$1c29` BuildAttrMap (reads exactly 13 bytes from the `$1c7d`
+  table, C=0..12, indexes `$ddf5`/`$d93d`, writes VRAM pointers
+  into `$daf5` and C+1 into `$da4f`+C, tail-jumps to banked
+  `$5d21`; called from `$076b`), `$1c8a` LoadStagePtrWrapper
+  (call `$1c91`, switch bank to $17, ret), `$1c91` LoadStagePtr
+  (bank $1e, loads the stage's state-table pointer from
+  bank-$1e `$64e5`, 16-byte stride, `[$c853]`/`[$c854]`/`[$c855]`
+  overrides for D==0/1/9, into `[$da5f]`/`[$da60]`; jumps to
+  `$1d07` when the record byte is 0), `$1cf7` IncAttrCounter
+  (two-nibble counter at `$da4d`). Seeds `$17eb`/`$1805`/
+  `$1c29`/`$1c8a` recorded in the generator. The walk also
+  reaches `$1060-$1064`/`$106e-$1074` (called from the carved
+  code, still INCBIN'd in the $1000-$17ea raw region — bare
+  `call $1060`/`$106e`, not emitted).
+- Bank 11 `$4000-$40ff` (128 dw, `src/bank11.asm`): the `$112c`
+  sprite-pointer table (bank $0b/$1d $4000, indexed by
+  2*record[0], then +2*record[1]). Entries 0-87 are a clean
+  increasing run ($4269-$591e, pair repeats); 88-95 and 98-101
+  are $4200 (the empty/default block); 114-119 point at
+  $53xx-$71xx. Extent 128 is INFERRED (the $4200 runs are
+  consistent with unused slots; every word is a plausible
+  pointer) — not verified against live record[0] values.
+- Bank 18 `$4934-$4c83` (106 8-byte db records,
+  `src/bank18.asm`): the stage table read by `$271e`/`$4586`/
+  `$4807` (base `$4934`, stride 8, index B). Entries 0-100
+  verified (B<=100 from the queue's C==1 entries); entries
+  101-105 inferred (same texture, 106 matches bank 5's 106
+  stage pointers). **RECORD LAYOUT UNRESOLVED (honest gap)**:
+  the naive (world=[+0], stage=[+6]) reading gives world=$03/
+  stage=$ee for B=0, but the live map visit shows world=1/
+  stage=1 (verified by ROM bytes at file offset $48934:
+  `03 44 01 f0 f0 f3 ee 40`, and by the `$271e` hand-decode,
+  which the disassembly matches exactly). The only writers of
+  `[$c860]`/`[$c861]` in carved code are `$26e5`/`$26e8`
+  (clear), `$270e` (demo branch), `$2745`/`$2750` (stage-table
+  path), and the live trace shows world=0 until f=1100 — 7
+  frames into state-20 timer 1 — so the (1,1) must be written
+  by UNCARVED stream code during timer 1 (bank 2/3 + bank-11
+  table handlers). The bytes are carved as db with no field
+  claims; do not read (world, stage) off offsets 0/6 until
+  the stream writer is found.
+- `tools/gb_rd.py` fix (slice 7): `walk()`'s rst-$08 table
+  reader rejected ROM0 addresses (only accepted
+  $4000-$7fff/$c000-$dfff), so bank-0 tables read zero
+  entries. It now accepts $0000-$3fff when bank==0 (and
+  bounds the table scan at $3fff). Slice-6's walk is unchanged
+  (1003 instrs, 0 rst08 sites, no notes — verified after the
+  patch).
+- `tools/gen_banks.py` CARVED map: added bank 11
+  `$4000-$4100` and bank 18 `$4934-$4c84`; `src/banks.asm`
+  regenerated. `src/main.asm`: "Raw bank 0 B2" INCBIN removed,
+  INCLUDEs added for `bank0slice7.asm`, `bank11.asm`,
+  `bank18.asm`.
+
+### 4. Byte-match + Nacre (slice 7)
+
+- Clean `make` (build/game.gb removed first): rebuilt SHA-1
+  `397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero diffs.
+- `tools/run_slice5_regression.sh`: all 7 prior cases identical
+  (600/900/3600/12000/s8/f0/f1).
+- `tools/run_slice7_cases.sh` (new, 4 cases, orig vs rebuilt —
+  fb + trace + save all identical, and each fb matches the
+  slice-7 original run): retry 15000f fb `0d835d95...`,
+  mid5000 5000f fb `2ab1bb5d...` (playable stage 1-1), play-right
+  5000f fb `b3cb6c8b...`, death 3000f fb `632b2eaf...`. Note: the
+  first mid5000 attempt used a spec missing `a:2000:2012` and
+  sat on the map (fb `a50e8bb0...`); the corrected spec (with the
+  second A) reproduces the playable-stage fb exactly — the
+  script now carries the corrected spec.
+- Pushed: slice 6 `fb1f1626` (head at slice-7 start). Slice 7
+  NOT pushed (coordinator handles pushes).
+
 ## Next slices (priority order)
 
-1. **Gameplay: dispatch (2,1) — the playable stage.**
-   Slice 6 reached the 1-1 MAP (state-20 timer 17) via a
-   validated progress-1 save, but A/Start only skips the
-   map, and the queue then ping-pongs between (3,1) and
-   (1,4) until the timer-12 retry sends it back to the map
-   with a life lost. The (2,1) entry at queue 17 is never
-   dispatched. Leads: the `$0d2c` B==4 + `[$c82b]`-bit-4 path
-   (advance WITHOUT retreat — bit 4 is set by the retry
-   itself at `$091a`); a map input other than A/Start
-   (directional move to the node first — read the state-20
-   timer-17 handler to see what it waits for); or the
-   state-26/30 paths. Also: what the `$73b2` demo driver
-   does differently that lets the attract map advance in
-   ~370f while the progress map waits forever at timer 17.
-2. **Roles for the carved code.** Bank 7 `$6f62` subsystem
-   (what `[$dd40]`/`[$dd41]` are, the 4 dispatch entries),
-   bank 23 `$7722` handler roles. State 21/22 contents are
-   now read (slice 6 §7); the `$3414` dispatcher and the
-   `$b4ca-$b927` SRAM writer are resolved (slice 6 §2, §4).
-3. **Further carves.** Whole banks 4, 6, 8–11, 13–22, 24–31
-   still largely raw. Next candidates by dependency: bank 11
-   `$4000` (sprite/animation table used by `$112c`), bank 18
-   stage table `$4934` region, bank 0 `$17eb-$1d06` (B2,
-   after the per-frame routines), bank 12 `$5917+`
-   data/credits. Bank 7 `$4794`, `$77a9`/`$78ba` roles from
-   slice 4 still open.
+1. **Gameplay: complete stage 1-1 live (key -> door).**
+   Slice 7 proved the playable stage runs in state 16
+   (timers 3-10) and that (2,1)@17 is the post-completion
+   entry, not the blocker — but no run has yet completed 1-1
+   to watch the queue advance 16->17 and the (2,1) dispatch
+   fire. Needs real play (or a scripted input schedule that
+   walks Mario to the key and the door). Also open: the exact
+   death->timer-12 instruction (candidates: bank-9 `$0bff`
+   `$db15`/object dispatch, `$11e8` iterator-B handlers; the
+   countdown path is ruled out), and the `[$c70f]` bit-0
+   setter (never found in carved code).
+2. **Bank-18 stage-table layout.** Slice 7 carved the table
+   as db but the record layout is UNRESOLVED: the naive
+   (world=[+0], stage=[+6]) reading contradicts the live
+   (1,1) for B=0, and the (1,1) is written by uncarved stream
+   code during state-20 timer 1. Find that writer (bank 2/3
+   stream ops and/or bank-11 table handlers) and the layout
+   follows. Related: the bank-11 table's pointed-to sprite
+   blocks ($42xx-$71xx) are still raw data.
+3. **Roles for the carved code.** Bank 7 `$6f62` and bank 23
+   `$7722` are pinned (slice 7 §2). Still open: bank 7
+   `$4794`, `$77a9`/`$78ba` roles from slice 4; the `$3414`
+   dispatcher and the `$b4ca-$b927` SRAM writer are resolved
+   (slice 6 §2, §4).
+4. **Further carves.** Whole banks 4, 6, 8–10, 13–17, 19–22,
+   24–31 still largely raw. Next candidates by dependency:
+   bank 12 `$5917+` data/credits, the bank-11 sprite blocks
+   the `$4000` table points at, bank 2/3 stream ops (the
+   timer-1 world/stage writer), bank 9 `$0bff` object dispatch
+   (death->timer-12). Bank 11 `$4000`, bank 18 `$4934`, and
+   bank 0 `$17eb-$1d06` are done (slice 7 §3).
 
 ## Not done / blocked
 
 - Nothing is blocked. States 21/22 are now VERDICTED
   unreachable by mechanism (slice 5 — a finding, not a
   block; see Slice 5) and their contents are read (slice 6
-  §7). Player-driven state-20 gameplay is still unvisited
-  live: slice 6 reached the 1-1 map via a validated
-  progress-1 save, but the (2,1) stage entry is never
-  dispatched (the (3,1)/(1,4) ping-pong + timer-12 retry —
-  see Slice 6 §1). CORRECTION (slice 6 §3): slice 4's
-  "save VALIDATES" was overstated — the f1 save fails its
+  §7). Player-driven state-20 gameplay is now visited live:
+  slice 7 proved the playable stage runs in state 16
+  (timers 3-10) and corrected slice 6's "(2,1) is the
+  blocker" premise — (2,1)@17 is the post-completion entry,
+  reached only after completing 1-1 (key -> door), which no
+  run has done yet (see Next slices §1). CORRECTION (slice 6
+  §3): slice 4's "save VALIDATES" was overstated — the f1 save fails its
   own validation because `$4cbe` never writes `$be2a`; a
   hand-crafted save must fix the `$a000`/`$be2c` checksum
   pairs (`tools/make_progress_save.py` now does). Save RAM
@@ -1370,8 +1629,17 @@ coherent routine with a proper prologue/epilogue, not data.
   state-28 file 1 + A, reload). Ghidra was not needed:
   mgbdis + hand-checking against the bytes covered slices
   1–3, and the recursive-descent disassembler
-  (`tools/gb_rd.py`) covered slices 4–5. It may still be
+  (`tools/gb_rd.py`) covered slices 4–7. It may still be
   useful for banked code later.
+- Open (slice 7, not blocks): the bank-18 stage-table record
+  layout is unresolved — the naive (world=[+0], stage=[+6])
+  reading contradicts the live (1,1) for B=0, and the (1,1)
+  is written by uncarved stream code during state-20 timer 1
+  (see Slice 7 §3). The death->timer-12 exact instruction is
+  unpinned (countdown path ruled out). The `[$c70f]` bit-0
+  setter is not found in carved code. The bank-11 table's
+  extent (128 entries) is inferred, not verified against live
+  record[0] values.
 - Pushed: slice 1 `62d9e52c`, slice 2 `6a21aa7f`, slice 3
   `e8d923ee858b188e2aa4ec229d0aae4f5156bc0f` (16 files, 887,317
   bytes; sync record `~/workspace/mike-monorepo.muse-github-snapshot-sync.json`),
