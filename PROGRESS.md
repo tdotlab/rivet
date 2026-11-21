@@ -800,39 +800,375 @@ framebuffer hashes, state traces, and SRAM dumps):
   contents live; the stable state-17 entry; player-driven
   state-20 gameplay.
 
+## Slice 5 — DONE, byte-matching (2026-11-21)
+
+Code carved (`src/` 19,865 → 21,640 lines), all byte-matching
+(SHA-1 `397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero
+diffs):
+
+1. **Tooling: `rst $08` table handling in `tools/gb_rd.py`.**
+   `walk()` already decoded `rst $08` tables (reads the dw
+   entries after the rst, walks each target); the table-entry
+   cap was raised 64 → 128 because bank 23's table has 74
+   entries. A table ends at the first word that is not a
+   plausible address. `tools/gen_slice5.py`: `emit_carve()`
+   now emits `rst $08` tables as `dw` lines.
+2. **Bank 7 `$6f62`** (`src/bank7slice5.asm`, 557 lines).
+   Walk: 348 instructions (464 with hand-seeded gap seeds),
+   1 `rst $08` site at `$6f74`, 4 entries `$6f81`, `$6f96`,
+   `$4121`, `$7edd`. Spans: `$4016-$4084`, `$4121-$4132`,
+   `$4157-$41a9`, `$41c9-$41dc`, `$480e-$4826`, `$6572-$6580`,
+   `$68ad-$68c3`, `$6b0a-$6b54`, `$6f62-$6f74`, `$6f81-$7000`,
+   `$7edd-$7f0c`. Reachability: `$4016` ← `jp z` from `$41cd`;
+   `$480e` ← call from `$401f`; `$6572` ← `call c` from
+   `$4815`; `$68ad` ← call from `$4016`; `$6b0a` ← call from
+   `$4022`; `$4121`/`$6f81`/`$6f96`/`$7edd` reachable only
+   via the `rst $08` table. All spans end in `jp hl`
+   (computed return). `$7f0d` decodes as data (`db $10`) —
+   carve ends at `$7f0c`. Prologue: `ld a,[$dd41]; rla;
+   jr c,$6fad; ld hl,$dd40; dec [hl]; ret nz; ld hl,$6f79;
+   push hl; ld a,[$dd41]; rst $08`. The return code at
+   `$6f79` **overlaps** table entries 2–3: bytes
+   `21 41 dd 7e ee 01 77 c9` are both `dw $4121, $7edd` and
+   `ld hl,$dd41; ld a,[hl]; xor $01; ld [hl],a; ret`
+   (verified from ROM bytes) — `emit_bank7_6f62()` emits
+   entries 0–1 as `dw` and entries 2–3 as the return-code
+   instructions producing the same bytes, with a ROM-bytes
+   assertion. Gaps `$4085-$4120`, `$4133-$4156`,
+   `$41aa-$41c8` (unreached by the `$6f62` walk alone)
+   decode as clean code merging exactly with the `$4121`
+   walk (341 instructions from those seeds, no data notes;
+   `$408d` jumps to `$41aa`, `$41aa` code jumps back to
+   `$408f`); seeded by hand in the generator — most likely
+   `jp hl` continuations, exact entry mechanism unverified.
+   Combined walk gives one contiguous span `$4016-$41dc`
+   (455 bytes).
+3. **Bank 23 `$7722`** (`src/bank23slice5.asm`, 1,201 lines).
+   Walk: 1,110 instructions, 74-entry table at
+   `$7723-$77b6` (ends at first invalid word `$013e`),
+   handlers `$77b7-$7e11` one contiguous span (1,627 bytes).
+   Prologue `$7717-$7722`: stores HL to `$ca6a`/`$ca6b`,
+   `A=[HL]`, `rst $08`; called from `$7707` inside the
+   `$76f1` loop (iterates `$c200` records, 16 of them). Two
+   bank-0 calls `$106e`, `$169c` (noted as outside-window
+   targets; normal).
+4. **Ranges** (`tools/gen_banks.py` CARVED): bank 7 added
+   `(0x4016,0x41DD)`, `(0x480E,0x4827)`, `(0x6572,0x6581)`,
+   `(0x68AD,0x68C4)`, `(0x6B0A,0x6B55)`, merged
+   `(0x6F2E,0x7001)`, `(0x7EDD,0x7F0D)`; bank 23 added
+   `(0x7717,0x7E12)`. `src/main.asm` now INCLUDEs
+   `bank7slice5.asm` (after `bank7.asm`) and
+   `bank23slice5.asm` (after `bank23.asm`). Labels are
+   address-derived (`Bank7_6F62`, `Bank7_6F62Return`,
+   `Bank7_4016`, `Bank7_4121`, `Bank7_480E`, `Bank7_6572`,
+   `Bank7_68AD`, `Bank7_6B0A`, `Bank7_6F81`, `Bank7_6F96`,
+   `Bank7_6FAD`, `Bank7_7EDD`, `Bank23_7717`); roles beyond
+   call-site notes are unverified.
+
+**Byte-match on first try** — `rm build/game.gb && make` →
+SHA-1 `397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` clean.
+
+**What the byte-match check caught in slice 5** (all fixed,
+all worth not repeating):
+1. An edit to `tools/gen_banks.py` CARVED nearly dropped
+   the existing `(0x6EA9,0x6ED2)` range (slice 4's bank-7
+   extension) — it was restored. Verify CARVED against the
+   previous version on any future edit; a dropped range
+   silently reverts carved code to zeros.
+2. Nothing else: no link errors, no stale-artifact trap
+   this slice (the `rm build/game.gb` before the verifying
+   make was done first).
+
+**Harness: WRAM watch** (`tools/gb_headless.c`). `GB_WATCH`
+   env var — comma-separated hex WRAM addresses in
+   `$c000-$dfff`, up to 8 (e.g.
+   `GB_WATCH=c858,c860,da4b,c711,c712`) — values appended to
+   every trace line so a state transition can be read against
+   the flags that caused it; unset = trace format unchanged.
+   Rebuilt with the documented command in the file header.
+
+**Nacre regression** (orig vs rebuilt, identical in every
+case; artifacts in `build/nacre-test/slice5/`):
+- 600f no input: fb `1cf926799cff7d9119d27ca6fde515c0da226eccb342eb0a823e8bbb79733c03`.
+- 900f Start 620–632: fb `39ffd5eeceadd3dd34a33f90e6c58d813124ce141959aac4a4b2b37ca7e11c49`.
+- 3600f Start 620–632 + A 1000–1012: fb `88515f4ea0b61c47aac5b15c8d41887719521100f0ee8119676809120285318b`.
+- 12000f Start 620–632 + A 1000–1012 + Start 2500–2512:
+  fb `92d2e18501ff9a2670d0b3260ed6dc83e53ff1e1b9a1f0ff9a5ea5e4b6aacdff`.
+- s8 7000f (state-8 path): fb `92d2e185…` identical.
+- f0 7000f (state-28 file 0 + A): fb `3390d76364f76cdfc6efd694c3ad9ed008d864289c12e65bd6e0ef10ced78985`
+  identical (differs from slice 4's `6dbff66a…` only because
+  slice 4 measured at a different frame count).
+- f1 7000f (state-28 file 1 + A): fb `1cf92679…` identical.
+- 30000f idle (new): fb `40cefdae99c7d9497dd12f1023aef47cf2f92b395439f1859a3fd6ed021f2140`
+  identical, traces byte-identical.
+- Right 9450–9750 during a real-stage visit (new): fb
+  `89ce425cf8593fc3185e58f76e3e99d502e93679a3739991811777b6fa0e59c4`
+  identical, traces byte-identical.
+The f0 trace re-confirms state 28 at frame 5645 and state 20
+at 5747.
+
+**Gameplay, verified live** (all orig-vs-rebuilt identical:
+framebuffer hashes, state traces, screenshots):
+
+- **State 17 is the PAUSE menu — stable entry proven.**
+  Path: Start 620–632, A 1000–1012, Start 2300–2312 —
+  pressing Start during the state-16 timer 3–10 cycling →
+  **state 17 timer 0 at frame 2301**, timer 1 (input wait)
+  holding through frame 3200. Screenshot
+  (`build/nacre-test/slice5/exp/s17-orig.png`): "STAGE
+  0-1", options CONTINUE / SAVE+END / RECORD, cursor on
+  CONTINUE, Mario standing on bricks; top bar `099`,
+  `0000000`, `x04`. Mechanism (code + live watch):
+  state-16 steps at timers 3/5/7/9 (`$083e`) and 4/8
+  (`$0847`), 6 (`$0859`), 10 (`$0853`) run the `$0868`
+  joypad watch (`call $1805; ldh a,[hJoypadNew $ff8b];
+  and $0c`); Start (bit 3) → save timer to `[$c70b]`,
+  `jp $1d22` (AdvanceState 16→17); Select (bit 2) → save
+  timer, timer=`$29` (41). Guards at `$088f-$089e`:
+  `[$da4b]!=$21` and (`[$c712]!=0` or `[$c711]!=1`). Live
+  watch at entry (frame 2301): `[$c858]=$ff, [$c860]=00,
+  [$c82b]=06, [$da4b]=00, [$c70b]=07, [$c711]=$63,
+  [$c712]=00` — guards pass; saved timer 7. Timer 10's
+  entry `$0853` sets timer=3, so timers 3–10 cycle
+  indefinitely — the Start window is wide, not a single
+  frame. FileSelectStep1 (`$4d66`, bank 1): Up/Down/Select
+  move cursor `[$c809]` (0–3, refreshed each frame by
+  `$10dd`); A/Start: file 0 (CONTINUE) → step 2 (`$4e6d`:
+  clear `[$c200]`, `call $10dd`, IncStateTimer) → step 3
+  (`$4e06`: restore timer from `[$c70b]`, dec 17→16);
+  file 1 (SAVE+END) → `[$c82d]/[$c835]=$4a`, `call $4cbe`
+  (save write), timer+=2 → step 4 (`$4e7c`: wait for
+  `[$ff95]==$2b`) → step 5 (`$01fb` soft reset to title);
+  file 2+ (RECORD) → `$4dc9` stores pair
+  (`[$c80f]=6`, `[$c810]`=current state 17), timer=0,
+  state 8 (confirm dialog; matches slice 4's state-8
+  finding). `$10dd`: switch to bank `$0b`, clear
+  `[$c701]`, loop 32× over the `$c200` table calling
+  `$112c` per nonzero byte.
+- **File 0 + A from the pause menu returns to the demo,
+  no new game.** s17 flow + A 2400–2412: state 17 timer 2
+  at 2400, timer 3 at 2401, **state 16 timer 7 at 2424**
+  (FileSelectStep3 restored `[$c70b]=7`, dec 17→16 —
+  exactly as code predicts), then demo cycle resumed:
+  state 20 at 2845/3576/4307/5039, state 28 at 5769.
+  `[$c860]=00`, `[$c858]=$ff` throughout. `[$c809]` was
+  `00` at the A press (it fluctuates during state 17
+  because the stream engine also writes `[$c809]`, but
+  `$10dd` refreshes the cursor each step-1 frame).
+- **State 28 is the GAME OVER screen.** Screenshot
+  (`build/nacre-test/slice5/exp/ng-orig.png`): "GAME OVER"
+  with DK, same menu CONTINUE / SAVE+END / RECORD.
+- **The queue's real stages ARE reached — in the attract
+  demo.** 30000f idle (no input): queue index reaches 158;
+  state-20 visits at indices 1 (B=200), 14 (B=0), 40
+  (B=8), 79 (B=20), then 1, 14, 40 again. The C=2 entries
+  are NOT all B>=200: indices 1,4,7,10 → B=200,201,202,203
+  (demo stages), indices 14,17,20,23,27,30,33,36,40,43 →
+  B=0,1,2,3,4,5,6,7,8,9 (real stages). Live: index-14
+  visit (frames 9442–~9700) has `[$c860]=01, [$c861]=01`
+  (world 1, stage 1), timers 1 → 16 → 17 (long visits,
+  ~200+ frames — real gameplay timers, not the 144f
+  intro); index 40 → `[$c860]=02`; index 79 →
+  `[$c860]=03`. `[$c860]` is the WORLD number,
+  `[$c861]` the stage-in-world (the pause menu's "STAGE
+  0-1" is world 0, stage 1). The B<200 path at `$271e`
+  reads the stage table at bank `$18` `$4934 + B*8`.
+  States visited in the idle run: {0, 2, 16, 17, 18, 20,
+  30} — states 17/18 appear transiently without input.
+- **Why state 20 ignores input in the demo flow
+  (verified live + code).** Queue: `QueueFetchBC $0dda`
+  reads bank-12 table `$4f97+[$c85c]*2` → (C,B);
+  `[$c85b]`=C. C meanings (C-dispatch table at bank-0
+  `$0d8c`, 23 entries): 1=load stage B (`$0d1a` →
+  `$24e7`, then dec), 2=state 20 (`$0d23`), 3=state
+  4-or-20 walk (`$0d2c`), 4=no-op, `$14`=state 30.
+  State-20 step 0 (`$26b5`): clears `[$c860]/[$c861]` at
+  `$26e5`, fetches (C,B); `B<$c8` → stage-table path sets
+  `[$c860]` from stage data at `$2745`; `B>=$c8` →
+  `$2701` branch, `[$c860]` stays 0, `[$c861]=1` (B=200:
+  `200-$af-$19+1=1`). B=200 is exactly the `$c8`
+  threshold. State-20 timer 1 (`$43f9`, bank 1): joypad
+  check (A/Start bits 0/3 of `hJoypadNew`) runs only if
+  `[$c82b]` bit 5 clear AND `[$c860]!=0`; otherwise it
+  counts down `[$c20b]` and calls `$169c` every 16
+  frames. With `[$c860]==0` the check is skipped — this
+  explains slice 4's byte-identical Right+A test during
+  state 20 (Right isn't even checked there).
+  State-20 prologue `$266c`: if bit 5 set and any joypad
+  held → `jp $06a5` (→ `$01fb` soft reset to title).
+  State-16 timer-12 queue-advance path (`$08f7`):
+  `[$c858]=$ff`, `[$c859]=0`, `[$c838]=0`, dec `[$da43]`;
+  when `[$da43]` wraps to `$ff` → state `$1c` (28),
+  timer 0. `[$da43]` starts at 4 (ClearRAMAndInit) — the
+  5 demo cycles then state 28 at 5645. Full f0 state
+  sequence (verified): 0→2 (17)→3 (710)→16 (1089)→4
+  (1090)→16 (1988)→20 (1989)→16 (2134)→15 timer 29
+  (2142)→16 timer 1 (2147)→20 (2720)→…→28 (5645)→16
+  (5746)→20 (5747)→16 (5892)→15 (5900)→16 (5905)→20
+  (6478)→…
+- **Player-driven state 20 is NOT reached — and now the
+  mechanism is mapped.** The real stages (world 1/2/3)
+  are reached only through the attract demo (state 30),
+  which sets the demo flag `[$c82b]` bit 5 at every
+  state-16 timer-0 transition (live: bit 5 set at frames
+  1475, 7281, 9441, all state 16 timer 0; cleared at 5835
+  state 2 and 7978 state 18 timer 7 — both resets). While
+  bit 5 is set, ANY joypad input during a state-20 visit
+  soft-resets to title — proven live: holding Right
+  9450–9750 during the index-14 real-stage visit →
+  **state 2 at frame 9469**, `[$c82b]` `$20`→`00`,
+  `[$c860]` 01→00, queue index `0e`→00 (control run
+  stayed in state 20). Bit-5 inventory (whole-ROM
+  survey, opcode-corrected): the ONLY `set 5,[hl]` with
+  HL=`$c82b` in the ROM is bank-1 `$4ab4` (inside
+  `$4aa4`, reached via the bank-0 `$3414` jump table —
+  entries `$4998, $49bf, $49ef, $4a2e, $4a75, $4aa4,
+  $4b14, $4b21, $4a7f, $4b2a`; the table's dispatcher is
+  unidentified, no `ld hl,$3414` in the ROM); the ONLY
+  `res 5,[hl]` on `$c82b` is bank-0 `$06b8`
+  (FileSelectLoop_Joypad, then `jp $01fb`); boot clears
+  bit 5 via ClearRAMAndInit's `[$c82b] & $cd` mask.
+  `$4a75` sets up the 16-bit countdown `[$def7]=$03fc`;
+  `$4aa4` decrements it and sets bit 5 at 0. No `call
+  $4a75`/`call $4aa4` anywhere — they are entered via the
+  `$3414` table only. The real-gameplay path (bit 5
+  clear + world!=0) must reach a real stage WITHOUT the
+  attract demo — most likely starting a new game from a
+  file screen, which the demo flow never offers (state
+  28's CONTINUE just replays the demo). That is the next
+  slice's target.
+- **States 21/22: UNREACHABLE — verdict, not a guess.**
+  `$09f0` (called only from TransitionStep0 `$071c`,
+  state-16 timer 0) sets state 21 (`$15`, then inc to 22
+  if `[$c711]` bit 0) iff `[$c858]==0` AND `[$c860]!=0`.
+  Both conjuncts fail at every timer-0 check in every
+  observed flow (demo, attract, game-over):
+  - `[$c858]==0` is impossible by construction. Complete
+    writer inventory (9 `ld hl,$c858` sites + `$0273`;
+    zero `ld [$c858],a` anywhere in the ROM): `$0273`
+    boot `$ff`; `$094d` queue-advance `$ff`; `$505f`/
+    `$5690` (bank 1/12 state→16 exits) `$ff`; `$47a7`
+    clears to 0 (transient — see below); `$4866`
+    normalizes to `$ff` (count<3) or 3 (count>=3);
+    `$48a7`/`$48b5`/`$48c3` inc during the scan; `$7e07`
+    (bank 7) reads only. `$47a7` (bank 12, called only
+    from `$077a` TransitionStep1; sole `call $47a7` site
+    in the ROM) clears `[$c858]/[$c859]/[$c0a4]/[$c863]`,
+    scans 960 bytes `$c86d-$ca2c` counting `$20`/`$22`/
+    `$4a` bytes, then `$4866` normalizes `[$c858]` to
+    `$ff`/`3`. Verified by grep that no `ret` exists
+    between `$47a7` and `$4866` (the `$4716` ret belongs
+    to the separate `$46a9` loop) — the normalization
+    always runs. Ordering: `$09f0` runs at state-16
+    timer 0; `$47a7` runs at state-16 timer 1. Timer 0
+    always precedes timer 1 in a state-16 visit, so at
+    `$09f0` time `[$c858]` is the previous load's
+    `$ff`/`3`, never 0. The only 0-window is transient
+    inside `$47a7`'s own execution, which `$09f0` cannot
+    observe on a single CPU. Live: WRAM watch shows
+    `[$c858]=$ff` at all 12 state-16 timer-0 visits in
+    the 7000f f0 flow, and at every timer 0 in the
+    30000f idle flow. No save path writes `[$c858]`
+    (save routines operate on SRAM `$a000-$bfff` only;
+    `$bfbe` readers `$5789`/`$53c7`/`$5512` read file
+    data into other variables) — a crafted save cannot
+    set it either.
+  - `[$c860]!=0` is never true at a timer-0 check either.
+    `[$c860]` is set only during a state-20 visit (the
+    B<`$c8` path at `$2745`) and cleared only at the
+    next state-20 step 0 (`$26e5`) or by a reset
+    (ClearRAMAndInit) — but no state-16 timer-0 check
+    follows a real-stage visit before a reset clears it:
+    verified in the 30000f idle trace, there is no
+    state-16 timer-0 line between the index-14 visit's
+    end (~9700) and the reset at 10647 (state 2,
+    `[$c860]`→00, queue index→00), and every timer-0
+    line in the trace has `[$c860]=00`.
+  - No other path writes 21. `jp $1d22` (AdvanceState)
+    has only 2 sites in the ROM — `$08c9` (16→17 via
+    Start) and `$30bb` (called only from the C-dispatch
+    dec handler `$0d07` via `$30b8`, which does
+    `call $42c8; jp $1d22` — the dec→inc round trip
+    16→15→16); `call $1d22` has 0 hits. Slice 3's writer
+    inventory stands: direct `ldh [hGameState],a` values
+    {1,2,3,4,8,$10,$12,$14,$18,$1a,$1c,$1e} plus `$09fe`'s
+    `$15` plus variable-A at bank 1 `$597e` (state-8
+    return pair — returns to the state it came from).
+  States 21/22 are therefore dead code, same class as
+  state 12 (slice 3), but by an unsatisfiable guard
+  rather than a missing writer. Their contents (`$3582`,
+  9 entries, bank 0; `$3663`, 8 entries, bank 12) have
+  not been examined live — they never run — and are
+  readable statically in a later slice.
+- **Save-RAM side finding.** Slice-4 f0 and f1 saves are
+  byte-identical except the tail: both 1,622 non-`$ff`
+  bytes, `$a000-$a4af` zeroed (the `$1f9a` clear),
+  scattered data `$b4ca-$b927` in both; f0 tail
+  `$bfbe-$bfff` all zeros, f1 tail has file data
+  `00 01 04 40 …`, `$bffa` signature, `$bff6`/`$bfd8` =
+  `02 07`. `save_dirty: 1` also in the 12000f and f0
+  regression runs, `0` in the 600f title run — the game
+  writes SRAM during longer demo flows, not just on
+  explicit save. Which routine writes the `$b4ca-$b927`
+  region is not yet established.
+
+**Inferred, not verified** (do not present as settled):
+- Bank 7 `$6f62` routine roles (what `[$dd40]`/`[$dd41]`
+  are, what the 4 dispatch entries do) and bank 23
+  handler roles — labels are address-derived only.
+- The `$3414` jump table's dispatcher identity.
+- The `$b4ca-$b927` SRAM-write source.
+- State 21/22 handler contents (`$3582`, `$3663`) — never
+  run, readable statically.
+- Bank 2 `$4142-$415b` (slice 4), bank 12 `$4e55-$4f96` /
+  `$522d-$52d4` table structures (slice 4), bank 7 `$4794`
+  role, `$77a9`/`$78ba` roles (slice 4) — unchanged from
+  slice 4.
+
 ## Next slices (priority order)
 
-1. **Bank 7 `$6f62`** — its walk hits `rst $08` at `$6f74`;
-   `gb_rd` needs rst-$08 table handling (decode the dw table
-   after the rst, walk each target) before the `$6f62` routine
-   and its scattered spans (`$4016-$4084`, `$480e-$4826`,
-   `$6572-$6580`, `$68ad-$68c3`, `$6b0a-$6b54`, `$6f81-$7000`,
-   `$7edd-$7f0c`) can be carved. Bank 23 `$7722` `rst $08`
-   site is the same class of work.
-2. **Gameplay, continued** — the real new-game path: a stable
-   state-17 file-select entry (it is only a 4-frame transient
-   in the attract loop so far), player-driven state 20 (Mario
-   responding to joypad — the state-20 visits reached so far
-   are attract demos that ignore input), states 21/22
-   (continue flow — needs a file with in-progress stage
-   selected in a way that leaves `[$c858]==0`; the `$09f0`
-   mechanism is mapped in Slice 4), state 26/30 paths.
-3. **Gameplay code in banks 1–31** beyond the state sub-steps;
-   bank 12 `$5917+` data/credits.
+1. **Gameplay: the real new-game path.** Slice 5 proved
+   state 17 is the pause menu (stable entry, CONTINUE
+   resumes the demo) and states 21/22 are unreachable by
+   mechanism — but player-driven state 20 (Mario responding
+   to joypad, bit 5 clear + world!=0) is still unvisited
+   live. The route must reach a real stage WITHOUT the
+   attract demo: how does a new game start? Candidates:
+   the file screen with a fresh save (state 28's CONTINUE
+   just replays the demo — find what distinguishes a
+   fresh-file start), a title-screen path not yet exercised,
+   or the `$3414`-table `$4a75`/`$4aa4` countdown path (what
+   calls it, and when bit 5 is meant to be clear). Also:
+   state 26/30 paths, and the `$b4ca-$b927` SRAM-write
+   source.
+2. **Roles for the carved code.** Bank 7 `$6f62` subsystem
+   (what `[$dd40]`/`[$dd41]` are, the 4 dispatch entries),
+   bank 23 `$7722` handler roles, the `$3414` jump table's
+   dispatcher. State 21/22 handler contents (`$3582`,
+   `$3663`) by static read — dead code, but readable.
+3. **Gameplay code in banks 1–31** beyond the state
+   sub-steps; bank 12 `$5917+` data/credits. Further bank
+   carves following natural dependencies (bank 7 `$4794`,
+   `$77a9`/`$78ba` roles from slice 4).
 
 ## Not done / blocked
 
-- Nothing is blocked. Save RAM (battery) behaviour was
-  exercised in slice 4 (write via state-28 file 1 + A, reload,
-  `ValidateSave` passes) — but states 21/22 and player-driven
-  state-20 gameplay are still unvisited live (see Slice 4).
-  Ghidra was not needed: mgbdis + hand-checking against the
-  bytes covered slices 1–3, and the recursive-descent
-  disassembler (`tools/gb_rd.py`) covered slice 4. It may
-  still be useful for banked code later.
+- Nothing is blocked. States 21/22 are now VERDICTED
+  unreachable by mechanism (slice 5 — a finding, not a
+  block; see Slice 5). Player-driven state-20 gameplay is
+  still unvisited live; the real new-game path is the next
+  slice's target. Save RAM (battery) behaviour was
+  exercised in slice 4 (write via state-28 file 1 + A,
+  reload, `ValidateSave` passes). Ghidra was not needed:
+  mgbdis + hand-checking against the bytes covered slices
+  1–3, and the recursive-descent disassembler
+  (`tools/gb_rd.py`) covered slices 4–5. It may still be
+  useful for banked code later.
 - Pushed: slice 1 `62d9e52c`, slice 2 `6a21aa7f`, slice 3
   `e8d923ee858b188e2aa4ec229d0aae4f5156bc0f` (16 files, 887,317
-  bytes; sync record `~/workspace/mike-monorepo.muse-github-snapshot-sync.json`).
+  bytes; sync record `~/workspace/mike-monorepo.muse-github-snapshot-sync.json`),
+  slice 4 `17b86513f1387c36b06107c7fc50c9677417ad23` (16 files,
+  832,860 bytes; same sync record).
 - The generator script for the slice-2 files is in `/tmp/gen_slice2.py`
   (ephemeral — see Slice 2 notes); the durable output is `src/*.asm`.
   Slice 3's generator is in the repo (`tools/gen_slice3.py`).

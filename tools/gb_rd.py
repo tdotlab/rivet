@@ -141,7 +141,7 @@ def file_off(bank, addr):
     return bank * 0x4000 + (addr - 0x4000 if bank else addr)
 
 
-def walk(bank, seeds, max_rst08_table=64):
+def walk(bank, seeds, max_rst08_table=128):
     """Recursive-descent walk. Returns (reached, rst08, notes)."""
     rom = open(ROM, "rb").read()
     reached = {}

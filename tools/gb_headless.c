@@ -18,6 +18,10 @@
  * whether the game wrote SRAM at all (gb_save_dirty). Used for the
  * save-RAM tests (state 28 file 1 + A writes a save, $09f0 then
  * routes a later boot to states 21/22).
+ * Env GB_WATCH (slice 5): comma-separated hex WRAM addresses in
+ * $c000-$dfff, e.g. GB_WATCH=c858,c860,da4b,c711,c712 -- their values
+ * are appended to every trace line, so a state transition can be read
+ * against the flags that caused it. Unset = trace format unchanged.
  * Build (from the decomp project root):
  *   cc -I ~/workspace/nacre/repo/include -I ~/workspace/nacre/repo/src/gb -O2 \
  *      -o tools/gb_headless tools/gb_headless.c \
@@ -116,10 +120,30 @@ int main(int argc, char **argv) {
         if (argc >= 6) trace_path = argv[5];
     }
     FILE *trace = NULL;
+    /* Slice 5: optional WRAM watch. GB_WATCH="c858,c860,da4b,c711,c712"
+     * (hex addresses in $c000-$dfff, comma-separated, up to 8) appends
+     * those bytes to every trace line, so a state transition can be
+     * read against the flags that caused it (e.g. the $09f0
+     * [$c858]/[$c860] check, the $0868 [$da4b]/[$c711]/[$c712]
+     * guards). Unset = trace format unchanged. */
+    int watch[8], nwatch = 0;
+    const char *wenv = getenv("GB_WATCH");
+    if (wenv && wenv[0]) {
+        char wbuf[256];
+        snprintf(wbuf, sizeof wbuf, "%s", wenv);
+        for (char *tok = strtok(wbuf, ","); tok && nwatch < 8;
+             tok = strtok(NULL, ",")) {
+            unsigned a = 0;
+            if (sscanf(tok, "%x", &a) == 1 && a >= 0xc000 && a <= 0xdfff)
+                watch[nwatch++] = (int)a;
+        }
+    }
     if (trace_path && trace_path[0]) {
         trace = fopen(trace_path, "w");
         if (!trace) { perror("open trace"); return 1; }
-        fprintf(trace, "# frame pc state timer bank statstate\n");
+        fprintf(trace, "# frame pc state timer bank statstate");
+        for (int w = 0; w < nwatch; w++) fprintf(trace, " w%04x", watch[w]);
+        fprintf(trace, "\n");
     }
     FILE *f = fopen(rom_path, "rb");
     if (!f) { perror("open rom"); return 1; }
@@ -170,7 +194,10 @@ int main(int argc, char **argv) {
             int bank = gb->hram[0x0c], stat = gb->hram[0x0f];
             if (state != prev_state || timer != prev_timer || bank != prev_bank ||
                 stat != prev_stat || i % 60 == 0) {
-                fprintf(trace, "%d %04x %d %d %d %d\n", i, gb->pc, state, timer, bank, stat);
+                fprintf(trace, "%d %04x %d %d %d %d", i, gb->pc, state, timer, bank, stat);
+                for (int w = 0; w < nwatch; w++)
+                    fprintf(trace, " %02x", gb->wram[watch[w] - 0xc000]);
+                fprintf(trace, "\n");
                 prev_state = state; prev_timer = timer; prev_bank = bank; prev_stat = stat;
             }
         }
