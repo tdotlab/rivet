@@ -99,7 +99,7 @@ static int max_chunks;
  * and took the key dump with it once already. */
 static void dump_state(Gb *gb, const char *tag) {
     char dir[256];
-    snprintf(dir, sizeof dir, "build/nacre-test/slice9/play");
+    snprintf(dir, sizeof dir, "build/nacre-test/slice12/play");
     char cmd[300];
     snprintf(cmd, sizeof cmd, "mkdir -p %s", dir);
     (void)system(cmd);
@@ -231,15 +231,21 @@ static int cur_postwp = 0;
  * The last waypoint is the key itself: it only advances when the
  * key is actually collected (key==0), so Mario keeps being pulled
  * to the exact key position until he touches it. */
+/* Advance the current waypoint when Mario gets within 6px of it.
+ * (Slice 12: was 12px -- at 12px Mario at (48,136) "reached"
+ * (56,136) while still on the ground, the target switched to
+ * (56,56), and the greedy climbed diagonally up-left to (32,59)
+ * where all actions die. 6px keeps him on the waypoint until he
+ * is actually there.) */
 static void maybe_advance_wp(int mx, int my, int key) {
     while (cur_wp < nwaypoints && key &&
-           dist(mx, my, waypoints[cur_wp][0], waypoints[cur_wp][1]) < 12.0) {
+           dist(mx, my, waypoints[cur_wp][0], waypoints[cur_wp][1]) < 6.0) {
         printf("  waypoint %d (%d,%d) reached\n", cur_wp,
                waypoints[cur_wp][0], waypoints[cur_wp][1]);
         cur_wp++;
     }
     while (cur_postwp < npostwp && !key &&
-           dist(mx, my, postwp[cur_postwp][0], postwp[cur_postwp][1]) < 12.0) {
+           dist(mx, my, postwp[cur_postwp][0], postwp[cur_postwp][1]) < 6.0) {
         printf("  post-key waypoint %d (%d,%d) reached\n", cur_postwp,
                postwp[cur_postwp][0], postwp[cur_postwp][1]);
         cur_postwp++;

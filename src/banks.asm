@@ -18,8 +18,8 @@ SECTION "Bank 02 $4009-$400f", ROMX[$4009], BANK[2]
 SECTION "Bank 02 $43b0-$45a8", ROMX[$43b0], BANK[2]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $083b0, $01f9
 
-SECTION "Bank 02 $47fc-$6211", ROMX[$47fc], BANK[2]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $087fc, $1a16
+SECTION "Bank 02 $48ea-$6211", ROMX[$48ea], BANK[2]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $088ea, $1928
 
 SECTION "Bank 02 $6492-$7fff", ROMX[$6492], BANK[2]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0a492, $1b6e
@@ -30,8 +30,8 @@ SECTION "Bank 03 $400c-$400f", ROMX[$400c], BANK[3]
 SECTION "Bank 03 $43b0-$45a8", ROMX[$43b0], BANK[3]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0c3b0, $01f9
 
-SECTION "Bank 03 $48f1-$76ea", ROMX[$48f1], BANK[3]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0c8f1, $2dfa
+SECTION "Bank 03 $4943-$76ea", ROMX[$4943], BANK[3]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0c943, $2da8
 
 SECTION "Bank 03 $78b0-$7fff", ROMX[$78b0], BANK[3]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0f8b0, $0750
@@ -45,29 +45,20 @@ SECTION "Bank 05 $40d4-$7fff", ROMX[$40d4], BANK[5]
 SECTION "Bank 06 $4000-$7fff", ROMX[$4000], BANK[6]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $18000, $4000
 
-SECTION "Bank 07 $4000-$4015", ROMX[$4000], BANK[7]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1c000, $0016
+SECTION "Bank 07 $6581-$664d", ROMX[$6581], BANK[7]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1e581, $00cd
 
-SECTION "Bank 07 $41dd-$4793", ROMX[$41dd], BANK[7]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1c1dd, $05b7
+SECTION "Bank 07 $67a1-$68ac", ROMX[$67a1], BANK[7]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1e7a1, $010c
 
-SECTION "Bank 07 $4827-$63c3", ROMX[$4827], BANK[7]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1c827, $1b9d
-
-SECTION "Bank 07 $63f4-$6571", ROMX[$63f4], BANK[7]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1e3f4, $017e
-
-SECTION "Bank 07 $6581-$68ac", ROMX[$6581], BANK[7]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1e581, $032c
-
-SECTION "Bank 07 $68c4-$6b08", ROMX[$68c4], BANK[7]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1e8c4, $0245
+SECTION "Bank 07 $68c4-$695a", ROMX[$68c4], BANK[7]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1e8c4, $0097
 
 SECTION "Bank 07 $6ed2-$6f05", ROMX[$6ed2], BANK[7]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1eed2, $0034
 
-SECTION "Bank 07 $7001-$7167", ROMX[$7001], BANK[7]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1f001, $0167
+SECTION "Bank 07 $7001-$714b", ROMX[$7001], BANK[7]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1f001, $014b
 
 SECTION "Bank 07 $71ba-$7509", ROMX[$71ba], BANK[7]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1f1ba, $0350
@@ -78,17 +69,14 @@ SECTION "Bank 07 $7610-$77a8", ROMX[$7610], BANK[7]
 SECTION "Bank 07 $7abb-$7d5d", ROMX[$7abb], BANK[7]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1fabb, $02a3
 
-SECTION "Bank 07 $7d96-$7e06", ROMX[$7d96], BANK[7]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1fd96, $0071
-
 SECTION "Bank 07 $7e18-$7edc", ROMX[$7e18], BANK[7]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1fe18, $00c5
 
 SECTION "Bank 07 $7f0d-$7fff", ROMX[$7f0d], BANK[7]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1ff0d, $00f3
 
-SECTION "Bank 08 $4000-$7fff", ROMX[$4000], BANK[8]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $20000, $4000
+SECTION "Bank 08 $5809-$7fff", ROMX[$5809], BANK[8]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $21809, $27f7
 
 SECTION "Bank 09 $4021-$418a", ROMX[$4021], BANK[9]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $24021, $016a
@@ -123,8 +111,11 @@ SECTION "Bank 15 $4000-$7fff", ROMX[$4000], BANK[15]
 SECTION "Bank 16 $4000-$4030", ROMX[$4000], BANK[16]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $40000, $0031
 
-SECTION "Bank 16 $4044-$51c7", ROMX[$4044], BANK[16]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $40044, $1184
+SECTION "Bank 16 $4044-$4aef", ROMX[$4044], BANK[16]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $40044, $0aac
+
+SECTION "Bank 16 $4e89-$51c7", ROMX[$4e89], BANK[16]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $40e89, $033f
 
 SECTION "Bank 16 $59f1-$7fff", ROMX[$59f1], BANK[16]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $419f1, $260f

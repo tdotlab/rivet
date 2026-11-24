@@ -484,10 +484,14 @@ STATJumpTable::
 SECTION "Raw bank 0 A1", ROM0[$0674]
     INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0674, $0c
 
-; Raw (not yet curated) bank 0, $0df4-$0fc0 (after the state-16 chain and
-; C-dispatch, curated in slice 3 in src/bank0slice3.asm).
-SECTION "Raw bank 0 A2", ROM0[$0df4]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0df4, $1cd
+; Raw (not yet curated) bank 0, $0df4-$0f08 and $0f74-$0fc0 (after the
+; state-16 chain and C-dispatch, curated in slice 3 in
+; src/bank0slice3.asm). $0f09-$0f73 carved in slice 14
+; (src/bank0slice14.asm).
+SECTION "Raw bank 0 A2a", ROM0[$0df4]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0df4, $115
+SECTION "Raw bank 0 A2b", ROM0[$0f74]
+    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0f74, $4d
 
 ; =====================================================================
 ; $0fc1-$0fce -- CopyDMARoutine. Copies the 10-byte OAM DMA routine
@@ -801,19 +805,28 @@ INCLUDE "states.asm"
 INCLUDE "bank0slice3.asm"
 INCLUDE "bank0slice6.asm"
 INCLUDE "bank0slice7.asm"
+INCLUDE "bank0slice14.asm"
 INCLUDE "bank1.asm"
 INCLUDE "bank12.asm"
 INCLUDE "bank12slice9.asm"
 INCLUDE "bank23.asm"
 INCLUDE "bank23slice5.asm"
 INCLUDE "bank2.asm"
+INCLUDE "bank2slice12.asm"
 INCLUDE "bank3.asm"
+INCLUDE "bank3slice12.asm"
 INCLUDE "bank5.asm"
 INCLUDE "bank7.asm"
 INCLUDE "bank7slice5.asm"
 INCLUDE "bank7slice10.asm"
+INCLUDE "bank7slice11.asm"
+INCLUDE "bank7slice12.asm"
+INCLUDE "bank7slice13.asm"
+INCLUDE "bank7slice14.asm"
+INCLUDE "bank8.asm"
 INCLUDE "bank11.asm"
 INCLUDE "bank10.asm"
+INCLUDE "bank16slice11.asm"
 INCLUDE "bank9.asm"
 INCLUDE "bank18.asm"
 INCLUDE "bank24.asm"

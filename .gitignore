@@ -3,3 +3,10 @@ roms/
 build/
 *.gb
 *.sav
+__pycache__/
+tools/gb_headless
+tools/gb_play
+tools/gb_probe17
+tools/gb_sramwatch
+tools/gb_watch
+tools/gb_wramdump
