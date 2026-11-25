@@ -479,19 +479,11 @@ STATJumpTable::
     dw STAT_03a2            ; $0363: 58
     dw STAT_03ad            ; $0365: 59
 
-; Raw (not yet curated) bank 0, $0674-$067f (gap between STAT targets and
-; RestorePaletteFromShadow).
-SECTION "Raw bank 0 A1", ROM0[$0674]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0674, $0c
 
-; Raw (not yet curated) bank 0, $0df4-$0f08 and $0f74-$0fc0 (after the
-; state-16 chain and C-dispatch, curated in slice 3 in
-; src/bank0slice3.asm). $0f09-$0f73 carved in slice 14
-; (src/bank0slice14.asm).
-SECTION "Raw bank 0 A2a", ROM0[$0df4]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0df4, $115
-SECTION "Raw bank 0 A2b", ROM0[$0f74]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $0f74, $4d
+; Bank 0 $0df4-$0f08, $0f74-$0fc0 carved in slice 28
+; (src/bank0slice28.asm). $0f09-$0f73 carved in slice 14
+; (src/bank0slice14.asm). $0f95-$0fa0 carved in slice 17
+; (src/bank0slice17.asm).
 
 ; =====================================================================
 ; $0fc1-$0fce -- CopyDMARoutine. Copies the 10-byte OAM DMA routine
@@ -679,9 +671,6 @@ MemcpyC::
     jr nz, MemcpyC          ; $1072
     ret                     ; $1074
 
-; Raw (not yet curated) bank 0, $1075-$10aa.
-SECTION "Raw bank 0 B1", ROM0[$1075]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1075, $36
 
 ; =====================================================================
 ; $10ab-$10c1 -- ClearTilemaps.
@@ -790,11 +779,8 @@ LoadPalette::
 ; $340e-$3688 state-handler cluster (states.asm).
 ; Curated in slice 3 (src/bank0slice3.asm): $1f9a-$257a save/stream code,
 ; $26b5-$28a7 state-20 step 0, $2920-$340d mid code.
-; Raw fragments left: $1e6b-$1e85, $3689-$3736.
-SECTION "Raw bank 0 D1", ROM0[$1e6b]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $1e6b, $1b
-SECTION "Raw bank 0 D5", ROM0[$3689]
-    INCBIN "roms/Donkey_Kong_World_Rev1_SGB.gb", $3689, $ae
+; Bank-0 raw fragments $1e6b-$1e85, $3689-$3736 carved in slice 28
+; (src/bank0slice28.asm).
 
 INCLUDE "sgb.asm"
 INCLUDE "stat.asm"
@@ -805,17 +791,41 @@ INCLUDE "states.asm"
 INCLUDE "bank0slice3.asm"
 INCLUDE "bank0slice6.asm"
 INCLUDE "bank0slice7.asm"
+INCLUDE "bank0slice28.asm"
 INCLUDE "bank0slice14.asm"
+INCLUDE "bank0slice17.asm"
 INCLUDE "bank1.asm"
+INCLUDE "bank1slice25.asm"
+INCLUDE "bank1slice26.asm"
 INCLUDE "bank12.asm"
 INCLUDE "bank12slice9.asm"
+INCLUDE "bank12slice25.asm"
 INCLUDE "bank23.asm"
 INCLUDE "bank23slice5.asm"
+INCLUDE "bank23slice25.asm"
 INCLUDE "bank2.asm"
 INCLUDE "bank2slice12.asm"
+INCLUDE "bank2slice26.asm"
 INCLUDE "bank3.asm"
 INCLUDE "bank3slice12.asm"
+INCLUDE "bank3slice26.asm"
 INCLUDE "bank5.asm"
+INCLUDE "bank5slice25.asm"
+INCLUDE "bank4.asm"
+INCLUDE "bank13.asm"
+INCLUDE "bank14.asm"
+INCLUDE "bank15.asm"
+INCLUDE "bank6.asm"
+INCLUDE "bank17.asm"
+INCLUDE "bank19.asm"
+INCLUDE "bank20.asm"
+INCLUDE "bank21.asm"
+INCLUDE "bank22.asm"
+INCLUDE "bank25.asm"
+INCLUDE "bank26.asm"
+INCLUDE "bank27.asm"
+INCLUDE "bank28.asm"
+INCLUDE "bank30.asm"
 INCLUDE "bank7.asm"
 INCLUDE "bank7slice5.asm"
 INCLUDE "bank7slice10.asm"
@@ -823,12 +833,36 @@ INCLUDE "bank7slice11.asm"
 INCLUDE "bank7slice12.asm"
 INCLUDE "bank7slice13.asm"
 INCLUDE "bank7slice14.asm"
+INCLUDE "bank7slice27.asm"
 INCLUDE "bank8.asm"
+INCLUDE "bank8slice15.asm"
+INCLUDE "bank8slice16.asm"
+INCLUDE "bank8slice27.asm"
 INCLUDE "bank11.asm"
+INCLUDE "bank11slice18.asm"
+INCLUDE "bank29.asm"
+INCLUDE "bank29slice19.asm"
 INCLUDE "bank10.asm"
+INCLUDE "bank10slice19.asm"
+INCLUDE "bank10slice20.asm"
+INCLUDE "bank0a.asm"
+INCLUDE "bank0aslice16.asm"
+INCLUDE "bank31.asm"
+INCLUDE "bank31slice17.asm"
+INCLUDE "bank31slice18.asm"
+INCLUDE "bank31slice19.asm"
+INCLUDE "bank31slice20.asm"
 INCLUDE "bank16slice11.asm"
+INCLUDE "bank16slice16.asm"
+INCLUDE "bank16slice26.asm"
+INCLUDE "bank16slice28.asm"
 INCLUDE "bank9.asm"
+INCLUDE "bank9slice17.asm"
+INCLUDE "bank9slice18.asm"
+INCLUDE "bank9slice21.asm"
 INCLUDE "bank18.asm"
+INCLUDE "bank18slice25.asm"
 INCLUDE "bank24.asm"
+INCLUDE "bank24slice25.asm"
 INCLUDE "sgbpackets.asm"
 INCLUDE "banks.asm"

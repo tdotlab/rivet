@@ -100,15 +100,20 @@ int main(int argc, char **argv) {
     int frames = atoi(argv[2]);
     const char *ppm_path = argv[3];
     const char *trace_path = NULL;
-    /* press windows: up to 16 (button, start, end) triples */
+    /* press windows: up to 512 (button, start, end) triples.
+     * Slice 29: raised from 16 -- gb_play schedules run to ~250
+     * merged windows, and the old cap silently dropped the rest,
+     * which is the likely source of the slice-8 schedule-replay
+     * divergence (the replayed Mario was not the autopilot's Mario).
+     * Short specs are unaffected: windows are still OR'd per frame. */
     typedef struct { GbButton btn; int start, end; } Press;
-    Press presses[16]; int npress = 0;
+    Press presses[512]; int npress = 0;
     if (argc >= 5) {
         if (strchr(argv[4], ':')) {
             /* press spec "btn:start:end,..." */
-            char spec[512];
+            char spec[8192];
             snprintf(spec, sizeof spec, "%s", argv[4]);
-            for (char *tok = strtok(spec, ","); tok && npress < 16; tok = strtok(NULL, ",")) {
+            for (char *tok = strtok(spec, ","); tok && npress < 512; tok = strtok(NULL, ",")) {
                 char name[16]; int s, e;
                 if (sscanf(tok, "%15[^:]:%d:%d", name, &s, &e) != 3) continue;
                 static const char *names[GB_BUTTON_COUNT] = {
