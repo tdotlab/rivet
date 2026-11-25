@@ -3473,6 +3473,3370 @@ does WHEN a stage clears") is read from its code and
 callers, not observed live — no run has reached timer
 23/26.
 
+## Slice 15 — DONE, byte-matching (2026-11-24)
+
+The `$2a0a` per-frame dispatch, carved whole — decimal bank 10
+`$7730` and its tables, bank 8 `$7526` / `$6443` / `$65fc` /
+`$68b8` / `$6f26`, and the bank-0 `$2b48` dispatch table itself,
+which was mis-decoded as code. The timer-13 mechanism is now
+fully mapped — and closed as the 1-1 clear-chain entry: two
+`$2b48` handlers set it, both gated on a record flag no 1-1
+record carries, and its body resolves to timer 1 or 12, never
+to 23/26/33/42. The door is still not found. `src/` is now
+38,720 lines (was 36,165).
+
+### §1 What was carved
+
+Generator `tools/gen_slice15.py` (new), two new files
+`src/bank0a.asm` (decimal bank 10 — NOT `src/bank10.asm`,
+which is hex bank `$10` = decimal 16, the death-path bank)
+and `src/bank8slice15.asm`, `INCLUDE`d in `src/main.asm`
+(bank-8 file after `bank8.asm`, bank-10 file after
+`bank10.asm`). `tools/gen_banks.py` CARVED gains the bank-8
+ranges below plus a new key 10; `src/banks.asm`
+regenerated. The bank-0 `$2b48` table is spliced into
+`src/bank0slice3.asm` in place (237 garbage lines replaced
+by 96 table lines; the generator's splice is idempotent).
+
+- Decimal bank 10 `$4ff2-$4ffe`, `$5021-$5084`,
+  `$5c4f-$5cf7` (the three remaining `[$dd18]` spans; the
+  last holds the `$5c97`/`$5c4f` timer-13 routine and its
+  `$5cd8` entry-53 handler, plus the `$5cf8` 8-entry dw
+  table — entries 0-3/6-7 point into uncarved
+  `$5d08-$5e97`, entries 4-5 are `$0000` dead slots),
+  `$759a-$75af` (the `[$dd18]` writer tail),
+  `$7730-$7814` (the record pre-dispatch, incl. the
+  `$77d4` / `$77f2` continuations), `$7815` (lone 1-byte
+  `ret`), `$7816-$787c` (the spawn routine, reached via
+  the bank-0 `$2b30` trampoline), `$787d-$789e` (the two
+  overlapping 20-byte spawn templates, one section —
+  see §5), `$7c57-$7caf` (the `$c0c7`-list insert/remove),
+  `$7e50-$7ead` (the 94-byte `$7730` transition table),
+  `$7eae-$7f43` (25 6-byte transition records).
+- Bank 8 `$5e37-$5efd` (the record linker, via the bank-0
+  `$2b0e` trampoline) + `$5efe-$5f5b` (its 94-byte B table),
+  `$5f5c-$5f6a`, `$609d-$60e8`, `$6110-$611e`,
+  `$6274-$6282`, `$63b5-$63ef`, `$6443-$6466` +
+  `$6467-$646c` (6-entry dw table) + `$6473-$6667` (incl.
+  `$65fc`) + `$6668` (1-byte `ret`, the entry-8 handler),
+  `$67bd-$67cb`, `$68b8-$68ee` (proximity trigger),
+  `$69af-$69bd`, `$6a25-$6a33`, `$6abb-$6ac9`,
+  `$6d8a-$6da9` + `$6daa-$6db5` (6-entry dw table) +
+  `$6db6-$6f64` (the `$6daa` routines, the `$6ecd` /
+  `$6f26` timer-13 setter, and the `$6f56` handler) +
+  `$6f65-$6f7a` (11-entry dw table) + `$6f7b-$7291`,
+  `$7310-$74f3` (bare `ret` + the `$7311` sprite-frame
+  routine), `$7526-$7587` (the `$2a0a` per-frame tail) +
+  `$77da-$7819` (32-entry dw table), `$7602-$7629` +
+  `$7685-$76b5` (shared subroutines, `jp`'d to from
+  `$5ff6`/`$651f`/`$72d1` and `$7600`), `$76e3-$7740`
+  (94-byte table) + `$7741-$7746` (3-entry dw table) +
+  `$7747-$77d9` (sprite triple tables).
+- Bank 0 `$2b48-$2c61`: the `$2a0a` dispatch table, 94
+  entries x 3 bytes (bank, lo, hi), carved as data. Entry
+  checks (read from the ROM, not the old decode): 0 →
+  bank `$0a` `$47a3`, 1 → bank 8 `$5f5c`, 3 → bank 8
+  `$7310`, 6 → bank 8 `$6443`, 34 → bank 8 `$6d8a`, 37 →
+  bank 8 `$6f56`, 53 → bank `$0a` `$5cd8`, 63 → bank `$0a`
+  `$705f`, 64 → bank `$0a` `$4000`, 65 → bank `$0a`
+  `$41c2`, 66/67 → bank `$0a` `$33e3`/`$33ef` (targets in
+  ROM0 address space), 93 → bank `$1f` `$7bf6`. Banks
+  used: `$08`, `$09`, `$0a`, `$1f`.
+
+### §2 The `$2a0a` dispatch, statically
+
+`$2a0a` (bank 0, already curated) iterates `[$dd7b]`
+0–7 over the `$c0c7` list (8 groups x 6 bytes); per
+record it copies 32 bytes from `$c200+idx*32` to `$c0f7`
+and dispatches on `[$c103]` (copied record byte 12)
+bit 3: clear → bank `$0a`, `B=$5efe[[$c105]]`,
+`jp $7730`; set → the `$2b48` table (`A=[$c105]`,
+`HL=$2b48+A*3`, bank=`[HL]`, `rst $10`, `jp hl`,
+return `$2a72`). On return, if `[$c0f7]!=0` and
+`[$c103]` bit 5 is clear → bank 8 `jp $7311`; then the
+record is copied back. Loop end `$2a99`: `[$dd7b]++ &
+7`; if `[$ddad]!=0` call bank-31 `$7e44`; then bank 8
+`jp $7526` (per-frame tail). Called from `$086e`/`$096e`
+(state-16 timers 3/5/7/9 and timer 13).
+
+- `$7730` (bank `$0a`) is a pre-dispatch, not a handler:
+  guards (`[$ff93]` bit 5, B bit 1, the `$5e37` linker
+  call, `[$dd9e]==0`, linked record byte 14 `==$3f` and
+  byte 19 `$02`/`$05`, `[$dd9f]` bit 7), then the table
+  rewrite: `[$c105]` indexes `$7e50` → V;
+  `HL=$7eae+V*6`; byte0→`[$c0f9]` unless `$ff`;
+  byte1→`[$c116]` unless `$ff`; `[$c102]=0`;
+  `[$c104]`=old `[$c105]`; `[$c105]`=byte2;
+  `[$c10a]`=byte3; `jp hl` (almost always `$77d4`,
+  except record 11 → `$77f2`, the record-KILL path:
+  zeroes `$c0fc-$c101`, `[$dd9e]=0`, clears bit 4 /
+  sets bit 3 of `[$c103]`, removes the record from the
+  `$c0c7` list via `$7c88`, re-inserts via `$7c57`).
+  ALL `$7730` exits jump to `$2a59` — the `$2b48`
+  dispatch — so `$7730` can rewrite `[$c105]` (the
+  `$2b48` index) before the real handler runs.
+- `$5e37` (bank 8, the linker) scans `$c220` records
+  1–32 for a link candidate: byte 0 nonzero, byte 12
+  bit 3 clear, byte 14 `!=$21` (with a `$3f` + byte-20
+  special case), a ROM-bit test at `$5e00+(byte14-2)`,
+  and proximity windows vs `[$c0fa]`/`[$c0fe]`. On
+  match it sets bit 4 of the found record's byte 12 and
+  stores the link in `[$dd9e]`/`[$dd9f]`. This is the
+  ONLY `[$dd9e]` setter besides the level-load `$ff`
+  fill (see §4).
+- `$7816` (bank `$0a`, the spawn routine, via the bank-0
+  `$2b30` trampoline from bank-7 `$43d9`) is how a spawn
+  becomes a `$2a0a`-dispatched `$c200` record: it clears
+  `[$dd18]`/`[$dd1d]` (the `$7825` `[$dd18]` site),
+  copies a 20-byte template (`$787d` or `$788b`, by
+  `[$ff94]` bit 5) to `$c1ab`, positions the record at
+  Mario Y−16 / X+4, and inserts into the `$c0c7` list
+  via `$7c57`.
+- `$7526` (bank 8, the `$2a0a` tail) loops over `$c22c`
+  records (stride 32): byte 0 bit 2 set → byte 2 (or
+  byte 1 `& $7f` if byte 2==`$3f`), `*2` → the `$77da`
+  dw table → a nested table indexed by the byte at
+  DE+`$11` `& $0f` — a sprite/animation-data processor.
+- `$7311` (bank 8) is the post-handler sprite-frame
+  routine: scales `[$c0fc]`/`[$c0fd]`/`[$c100]`/`[$c101]`
+  by `[$c103]&3`, indexes `$76e3` by `[$c105]` (or
+  `[$c104]&$7f` when `[$c105]==$3f`) → `$7741` dw table
+  → sprite data, then stamps into the WRAM map (base
+  `$c86f`), with a `[$c105]==$3b` special case; ends
+  `jp $2a85` (back to the `$2a0a` copy-back loop).
+
+### §3 Timer 13: mechanism mapped, unreachable in 1-1 (VERIFIED)
+
+Static (whole-ROM byte surveys) + live (see §4):
+
+- Timer 13 has exactly TWO `$2b48`-dispatch setters,
+  both gated on `[$c109]` (copied record byte 18) bit 3:
+  entry 34 → bank 8 `$6d8a` (`bit 3,[$c109]`; set →
+  `[$c10a]=5`, `jp $6ecd`) and entry 53 → bank `$0a`
+  `$5cd8` (`bit 3,[$c109]`; set → `[$c10a]=7`,
+  `jp $5c4f`). Both tails are the same shape:
+  position a sprite record (`[$c201]=$46`), then
+  `[$c213]=5`, `[$dd1a]=0`, `[$dd18]=$07` (the `$6f26` /
+  `$5ca8` `[$dd18]` sites), `[$dd21]=$ff`,
+  `[$ff91]|=$c0`, `[$dd2b]=$09`, `[$dd2c]=$0b`,
+  timer=13, `res 2,[$c103]`, `[$c102]=0`, `[$c0f9]=$0a`,
+  `[$c116]=1`, `ret`. The ONLY `jp $6ecd` in the ROM is
+  bank 8 `$6d98` (inside `$6d8a`).
+- `[$c109]` bit 3 is a per-record "armed" flag. Its
+  setters are tiny routines: bank `$0a` `$4add` /
+  `$4d58` (`set 3,[hl]; ret`) and bank 31 `$6ca9` — all
+  inside the uncarved bank-`$0a` handler set / bank 31.
+  What arms a record (which handler, on what event) is
+  the next carve's question; the flag is TESTED by 17
+  handlers across banks 8/`$0a`/31.
+- Timer-13's body `$0968` (state-16 table entry 13)
+  contains no timer write: it runs `$2a0a`, bank-16
+  `$5a11`, bank-8 `$4000`, bank-16 `$4e89`, then `$0f95`.
+  `$5a11` was walked this slice (909 instrs, NOT carved
+  — it is bank 16's Mario animation/state machine, with
+  seven `rst $08` tables dispatching on `[$c213]` /
+  `[$c21a]`): its routines set ONLY timers 1 and 12.
+  `$4e89` (26 instrs, walked) is a position nudge
+  (`[$c207] += 2` or `$fe` by `[$c133]`/`[$c141]` bit
+  tests) with no timer write. So timer 13 resolves to
+  timer 1 (resume gameplay) or 12 (death) — never to
+  23/26/33/42. Even in a stage WITH a 34/53 record,
+  timer 13 would not start the clear chain.
+- The other literal timer-13 setters (whole-ROM
+  `3e 0d e0 90` survey, 8 sites): bank 1 `$51fc` (a +4
+  clamp inside the `$51ca` save/cutscene routine — NOT
+  state-16 gameplay; timer 9 + 4 = 13 is the only way
+  that clamp yields 13, and it runs in the bank-1
+  `$51xx` region, not the gameplay path), bank 16
+  `$555b` / `$564d` (real code, `[$c213]=3` then
+  timer=13; entries unidentified — no absolute
+  call/jp references to either), bank 16 `$59ab` and
+  bank 31 `$7845` (sites confirmed as bytes only;
+  context not fully decoded), bank 31 `$4b6e` (the same
+  `$09`/`$0b`/`$0d` routine shape; bank 31 is selected
+  at exactly ONE site, `$2aa7`, gated on `[$ddad]!=0`).
+  None of these is a 1-1 door lead.
+- No `[$c105]`=34 or 53 record exists in 1-1: live
+  byte-14 values over frames 2900–3050 are
+  {0,1,2,3,6,7,32,45,72} (see §4). VERDICT: timer 13 is
+  NOT the clear-chain entry for 1-1 — same verdict
+  class as timer 23, but now with the entry mechanism
+  identified. A `[$c105]`=34/53 record type may exist in
+  other stages' record sets; that is where the mechanism
+  could fire.
+
+### §4 Live findings (1-1 key-pickup run, original ROM)
+
+Replay: the first 32 windows of play12's SCHEDULE
+(chunks 0–31) + seed
+`start:620:632,a:1000:1012,a:2000:2012`, via
+`gb_wramdump` (30 dumps, frames 2900–3050, every 5) in
+`build/nacre-test/slice15/play/`. The replay drifted
+vs play12 (slice-8 drift, both directions): in play12
+the key was collected at chunk 31 (~frame 2964); here
+the `$5b` trigger fired at frame 2878 and the key was
+collected ~frame 2965–2970.
+
+- Key collection: the key cells (`0b4a/0b4b/0b4c/0b4d`,
+  map rows 6–7, cols 10–11) intact through frame 2965,
+  cleared to `0001` by frame 2970; `[$c858]` 3→2; Mario
+  at (85,67). The key was collected with `[$dd18]==0`
+  (cleared ~frame 2904, before the key) — the key does
+  NOT need `[$dd18]==$0a`.
+- The `$5b` trigger firing is PINNED live (`gb_watch`,
+  `dd18=0a`, 2900 frames): single hit frame 2878, written
+  by bank-7 `$6bfd` (the `$6bf2` tail, `ld [$dd18],a`
+  with A=`$0a`), ring
+  `$4888→$4022→$6b0a→$6b55` (handler 0) → `$6bf2`.
+  State 16 timer 7.
+- `[$dd18]` timeline in the replay: `$0a` at frame 2900
+  (set frame 2878), `$00` at 2905–2985, `$0a` again at
+  2990–3045 (still `$0a` at 3045, `[$dd3c]` frozen at
+  `$3402` from frame 3035 — Mario idle after the press
+  spec ends at frame 3009; the `$627b` countdown stalls
+  when `[$dd1a]>=3`). The 2904 clear is a bank-7 `$42xx`
+  routine setting `[$dd18]=0` as Mario's state changed
+  (Mario at (59,89), far from the key) — NOT the key.
+  The 2990 `$0a` re-set is UNEXPLAINED (the `$5b` cells
+  are cleared by then; parasol/top-right map to
+  handlers 7/6, not 0; Mario at (73,63) is far from all
+  `$0b` cells). Open loose end, not the door.
+- `$5e37` link formation is PINNED live (`gb_watch`,
+  `dd9e=1e`, 3050 frames): single hit frame 3022,
+  written by bank-8 `$5ee8` (C=`$1e`=30, i.e. rec30
+  `$c5c0`, byte14=`$48`), ring showing the `$5e37` scan
+  loop, the proximity checks, then the link path `$5ec8`
+  (set bit 4 of the found record's byte 12,
+  `[$dd9f]`/`[$dd9e]`=D/C). State 16 timer 7. The link
+  cleared by frame 3028 (`$dd9e` `$1e`→00 — by `$5ebd`
+  on a later no-link pass, or `$77f2`; not pinned
+  which).
+- `$c200` record byte-14 values seen live in 1-1:
+  rec0 (Mario) `$00`/`$01`/`$02`/`$03`/`$06`, rec1
+  `$20`, rec26 `$07`, rec28/31 `$2d`, rec30 `$48`.
+  NEVER `$22` (34) and NEVER `$3f` (63). `[$dd9e]` is
+  `$00` at every frame end (links form and clear
+  mid-frame only). In 1-1 the `$2a0a` dispatch actually
+  uses: `$7730` (pass-through — `[$dd9e]==0` at entry,
+  exits before the table rewrite), `$2b48` entries **1**
+  (bank 8 `$5f5c`), **7** (bank `$1f` `$40e1`), **32**
+  (bank `$1f` `$48e3`), **45** (bank `$1f` `$49b0`),
+  **72** (bank `$1f` `$58e2`), and bank-8 `$7311`
+  post-handler. Bank `$1f` is almost entirely uncarved
+  — it holds the per-frame record behavior actually
+  firing in 1-1.
+- CORRECTION to slice 14: handler 17 creates a `$c72f`
+  slot record, NOT a `$c200` record. The `$c200`
+  record enters the `$2a0a` loop via `$7816`→`$7c57`
+  (insert into the `$c0c7` list). The `$c72f` slots are
+  consumed by `$169c`-family code. `$33a7` (called by
+  `$7dbe`) is a map-pointer→tile-coords computation, not
+  a record creator.
+
+### §5 Byte-match proof
+
+Clean `make` (rm `build/game.gb` first) rebuilds SHA-1
+`397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero
+diffs vs `roms/Donkey_Kong_World_Rev1_SGB.gb`.
+
+What the generator's assertions caught (my own errors,
+all fixed before the first clean build — the byte-match
+itself passed on the first try once the generator was
+right):
+
+- The `$7813-$7815` "gap bytes" misread: `$7813`/`$7814`
+  are the operands of the `$77f2` routine's `jp $2a59`
+  at `$7812-$7814`; only `$7815` is a lone `ret` byte.
+  The carve is `$7730-$7814`, not `$7730-$7812`.
+- The `$7e50` table has NO `$ff` sentinel (values 0–24;
+  `$ff` lives in the `$7eae` records' byte 0/1, meaning
+  "don't change `$c0f9`/`$c116`"). The `$5efe` table
+  values are {0,1,2,3,`$83`}, with no `$fa`/`$0a` tail.
+  Both `$ff`/`$fa` claims came from the pre-slice notes
+  and were wrong; the generator now asserts the real
+  shapes.
+- The `$77da` table entry 13 is `$79ae`, outside the
+  assumed `$7896-$7944` range (31 of 32 entries are in
+  range; the assertion now checks plausible bank-8
+  addresses).
+- The `$6467` table is 6 dw = `$6467-$6472` (hi `$6473`),
+  not `$646d`: the first CARVED range left its last 3
+  entries INCBIN and rgblink refused the overlap.
+- The two spawn templates overlap (`$787d` vs `$788b`,
+  14 bytes apart, 20 bytes each — bytes `$788b-$7890`
+  are shared), so they are one `$787d-$789e` section
+  with two entry labels, not two sections.
+- `$2b48` entry 0 is bank `$0a` `$47a3` (not bank 2
+  `$4773`) and entries 66/67 are bank `$0a`
+  `$33e3`/`$33ef` (not bank 0) — the opcode misread
+  (`$0a` is `ld a,[bc]`, `$02` is `ld [bc],a`).
+
+### §6 Nacre results
+
+`tools/run_slice5_regression.sh` and
+`tools/run_slice7_cases.sh` on the final build, original vs
+rebuilt identical in every case (framebuffer hash + state
+trace + save):
+
+- Slice 5: 600f `1cf92679…`, 900f `39ffd5ee…`, 3600f
+  `88515f4e…`, 12000f `92d2e185…`, s8 `92d2e185…`, f0
+  `3390d763…`, f1 `1cf92679…` — ALL REGRESSION CASES
+  IDENTICAL.
+- Slice 7: retry 15000f `0d835d95…`, mid5000
+  `2ab1bb5d…`, play-right 5000f `b3cb6c8b…`, death 3000f
+  `632b2eaf…` — ALL SLICE-7 CASES IDENTICAL.
+
+All eight slice-5 and four slice-7 hashes match the
+previously recorded values exactly.
+
+### §7 Completion attempt: NO-GO (decision, not a block)
+
+No door/clear-chain entry was found, so there is no new
+lead to attempt a completion on. The parasol route
+remains blocked by the greedy/waypoint flaw (slice 12
+§5), and collecting the parasol would only play the
+`$44` jingle anyway (slice 12 §3). No `gb_play`
+completion run was burned this slice; a run should
+target a NEW lead (the bank-`$1f` handlers, or a
+hand-written parasol schedule), not the same waypoints.
+
+### §8 What the next slice should do
+
+- **Bank `$1f` `$2b48` handlers (entries 7/32/45/72:
+  `$40e1`, `$48e3`, `$49b0`, `$58e2`) + bank-8 `$5f5c`
+  (entry 1)** — the handlers actually firing every
+  frame in 1-1, almost entirely uncarved. After that:
+  the decimal-bank-`$0a` `$2b48`-handler set
+  (`$4000-$7072`, 2401 instrs already walked — incl.
+  the `[$c109]`-bit-3 setters `$4add`/`$4d58` and the
+  `$5cf8`-table routines `$5d08`/`$5d48`/`$5d86`/`$5d9f`/
+  `$5e88`/`$5e97`) and bank-16 `$5a11`/`$4e89` (the
+  timer-13 body / Mario animation machine, 909 + 26
+  instrs walked).
+- The door/clear-chain entry remains the open question.
+  The `$6d8a`→timer-13 mechanism needs a `[$c105]`=34
+  record and the `$5cd8`→timer-13 mechanism a
+  `[$c105]`=53 record; what arms a record (`[$c109]`
+  bit 3) and which stages spawn 34/53 records are the
+  questions the bank-`$0a` handler-set carve answers.
+
+## Slice 16 — DONE, byte-matching (2026-11-24)
+
+The per-frame `$2b48` handlers actually firing in 1-1, carved whole
+— bank `$1f` entries 7/32/45/72 (+73), bank-8 entry 1's missing
+table + routines, the FULL decimal-bank-`$0a` handler set, and
+bank-16 `$5a11`/`$4e89`. `src/` is now 43,750 lines (was 38,720).
+Clean `make` rebuilds SHA-1
+`397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero diffs.
+Slice-5 regression ALL IDENTICAL, slice-7 cases ALL IDENTICAL (§6).
+The door is still not found — but the carved handlers are now
+proven NOT to be it (§4), and the `$2b48` table is 54/94 carved.
+
+### §1 What was carved
+
+Generator `tools/gen_slice16.py` (new; gb_rd recursive descent;
+tables verified against ROM bytes before emission). Four new files:
+`src/bank31.asm` (797 lines, 616 instrs), `src/bank8slice16.asm`
+(262 lines, 306 instrs), `src/bank0aslice16.asm` (2,536 lines,
+2,304 instrs), `src/bank16slice16.asm` (1,329 lines, 1,094 instrs).
+`tools/gen_banks.py` CARVED gains key 31 + the bank-8/10/16 ranges;
+`src/banks.asm` regenerated; INCLUDEs added to `src/main.asm`.
+
+- **Bank `$1f` (decimal 31), the firing handlers**
+  (`src/bank31.asm`): entry 7 `$40e1` (jp-hl head via `[$c10a]`)
+  + the `$40f0` table (3 dw: `$40f6`, `$411e`, `$4142`) +
+  routines `$40f6-$414d`; entry 32 `$48e3-$4931` (the only
+  non-dispatch head of the four); entry 45 `$49b0` + the `$49bf`
+  table (2 dw: `$49c3`, `$49fd`) + routines `$49c3-$4a94`;
+  entry 72 `$589c` + the `$58ab` table (2 dw: `$58af`, `$58dc`)
+  + routines `$58af-$58e1`; entry 73 `$58e2` + the `$58fe`
+  table (8 dw) + routines `$590e-$5a3b`; shared callees
+  `$7ca1-$7ce1` (incl. `$7cb8`), `$7d83-$7db8`, `$7e07-$7e43`,
+  `$7e7e-$7ea5`, `$7f01-$7f5e` (incl. `$7f0a`/`$7f32`/`$7f39`).
+- **Bank 8, entry 1's missing pieces**
+  (`src/bank8slice16.asm`): the `$5f6b` `[$c10a]` table (8 dw:
+  `$6473`, `$5f7b`, `$609d`, `$7310`, `$63b5`, `$6646`, `$63f0`,
+  `$60e9`; the head `$5f5c-$5f6a` was carved in slice 15) + the
+  three uncarved table routines `$5f7b-$609c` (290 bytes, the
+  big movement routine with the `$6038` shared tail),
+  `$60e9-$610f`, `$63f0-$6442`. The other five targets were
+  already carved in slice 15.
+- **Decimal bank `$0a`, the whole handler set**
+  (`src/bank0aslice16.asm`): `$4000-$46e2` (14 entry heads:
+  64 `$4000`, 61 `$40dd`, 65 `$41c2`, 21 `$41ce`, 22 `$4203`,
+  23 `$422c`, 24 `$4252`, 25 `$427b`, 39 `$42a0`, 40 `$4345`,
+  41 `$43f6`, 42 `$44c3`, 43 `$458a`, 44 `$463e`) + the
+  `$46e3-$47a2` byte table (db, 192 bytes — `$4000` reads it
+  two ways, see §3) + entry 0 `$47a3-$4809` + the
+  `[$c109]`-bit-3 setters `$4add`/`$4d58` + `$4dbe-$4e55`
+  (entry 10) + entry 11 `$5192` + `$51e0-$5211` + entries
+  13/14 `$522b`/`$532b` + entry 16 `$5412` + entry 17 `$568c`
+  + entry 31 `$56db` + entry 33 `$57bb` + entry 36 `$5909` +
+  the `$5cf8`-table routines `$5d08-$5d5d` / `$5d86-$5e09` /
+  `$5e88-$5ec9` (entries 0–3/6–7; the `$5c4f-$5cf7` timer-13
+  routine + `$5cf8` table were carved in slice 15) +
+  `$60f3-$612d` + entry 55 `$63a3` + entry 58 `$6582` +
+  entry 62 `$678c` + entry 84 `$69be` + entry 85 `$6af9` +
+  entry 49 `$6d77` + entry 86 `$6e42` + entry 87 `$6f3d` +
+  entry 63 `$705f` + shared routines `$7951-$79e9` /
+  `$7ab8-$7b11` / `$7b3f-$7b6b` / `$7c24-$7c56` (`$7c57+` was
+  carved in slice 15).
+- **Bank 16 (`$10`), the `$5a11` machine**
+  (`src/bank16slice16.asm`): head `$5a11-$5a17` (`call $5f6c`,
+  dispatch on `[$c213]` via the `$5a18` table, 7 entries:
+  `$5a26`, `$5a46`, `$5b3c`, `$5c02`, `$5d4e`, `$5e00`,
+  `$5f13`) + the nested rst-`$08` tables `$5a4f` (5),
+  `$5b40` (3), `$5c06` (8), `$5d52` (3), `$5e04` (5),
+  `$5f17` (4) + their routines `$5a26-$5a4e`, `$5a59-$5b3f`,
+  `$5b46-$5c05`, `$5c16-$5d51`, `$5d58-$5e03`, `$5e0e-$5f16`,
+  `$5f1f-$5fd2` + the `[$c213]`-record routines
+  `$4993-$49c3` / `$49c8-$4a17` / `$4a18-$4aee` + their
+  `$49c4` dw table (2 entries: `$4a18`, `$4a61`) + the lone
+  `$c9` ret at `$4aef` + `$4e89-$4eb1` (the position nudge).
+
+### §2 CORRECTION — `$58e2` is entry 73, not 72 (slice 15 §8 slip)
+
+Slice 15 §8 (and the slice-16 task text) said "entries 7/32/45/72:
+`$40e1`, `$48e3`, `$49b0`, `$58e2`". The `$2b48` table itself
+says otherwise: entry 72 is bank `$1f` `$589c`, entry 73 is
+`$58e2`. The live `[$c105]` values seen in 1-1 were {7, 32, 45,
+72}, so entry 72 = `$589c` is the firing one; entry 73 (`$58e2`)
+is carved here too because it sits adjacent (its head starts
+the byte after the entry-72 routines end at `$58e1`) and shares
+the `[$c10a]` dispatch shape. Both heads are now carved, so the
+slip costs nothing going forward.
+
+### §3 The handlers, what they do (verified from code)
+
+- **Entry 7 (`$40e1`)** is a 3-state `[$c10a]` machine.
+  `$40f6`: `[$c0fc]`/`[$c0fd]` = `$6000`, `[$c112]` =
+  `$10,$0c,$00,$02,$01`, `[$c10a]++`, set bit 2 of `[$c103]`.
+  `$411e`: `call $2acd`, then if `[$dd92]` & `$c0`:
+  `[$c0fc]`/`[$c0fd]` = `$00ff`, `[$c10a]++`, `[$c10c]`=4.
+  `$4142`: dec `[$c10c]`; at 0, `[$c10a]`=0 and `jp $40f6`
+  (restart the cycle).
+- **Entry 32 (`$48e3`)** is record maintenance, not a
+  trigger. It sets bit 5 of `[$c103]`, range-checks `[$c0fa]`
+  against `[$10,$e0)`, clamps the `[$c0fc]`/`[$c0fd]` pointer
+  to `$00c0` (unless its high byte has bit 7 set or its low
+  byte is < `$c0`), then: if `[$c0fa]` < `$e0` it sets bit 0
+  of `[$c109]` and returns; if `[$c109]` bit 0 is already
+  set it calls `$7f32` (zero `[$c0f7]`/`[$c103]`, then the
+  `$7f39` loop) and jumps to `$7f0a` (the `$c0c8`-list
+  link-remove). This is the record-KILL path — it removes
+  a record and its link, it never writes a timer or a
+  sound ID.
+- **Entry 45 (`$49b0`)** is a 2-state machine. `$49c3`:
+  `SeedMul` (`$1d2f`) with A=2, sets `[$c0f8]` bit 0 from
+  the result, `[$c100]`/`[$c101]` = ±`$20`, `[$c10a]`=1,
+  `[$c112]` = `$10,$10,$00,$00,$50`. `$49fd` is the
+  busiest routine in the carve: `[$dd98]`/`[$dd92]`
+  checks, then `$7ca1`/`$7cb8`/`$7e07` (the link-record
+  reader); its `[$dd18]==$0a` branch sets `[$c0f9]`=3,
+  `[$c116]`=`$51` (the post-`$5b`-trigger state), while the
+  else branch clears bit 0 of `[$c109]` with `[$c0f9]`=0,
+  `[$c116]`=`$50`; its tail adjusts `[$c100]` by
+  `$c0`/`$40`/`$20` by `[$c109]` bit 0 / `[$c0f8]` bit 0.
+- **Entry 72 (`$589c`)**: `$58af` (`[$c10a]++`,
+  `[$c0a6]+([ $c108]-$40)` = `$18`, res 5 `[$c103]`,
+  `[$c0f9]`=0, `[$c112]` = `$0d,$0c,$03,$02,$80`);
+  `$58dc` (set 5 `[$c103]`, ret — a 3-instruction no-op
+  with a side effect).
+- **Entry 73 (`$58e2`)**: `[$c109]` bit 4 set →
+  `[$c0fe]`=`$ff`, ret; else `[$c10a]` dispatch over 8
+  routines `$590e-$5a3b`. `$5934` runs the `$7d83`
+  proximity check and then writes `[$c831]`/`[$c835]` =
+  `$64` (sound 100 — a valid `$47fc` entry, < 119);
+  `$59d2` writes `[$c0fe]`=`$ff` and jumps to `$7f39`;
+  `$59eb` restores `[$c0fa]`/`[$c0fe]` from `[$c10d]`/
+  `[$c10e]`.
+- **Shared bank-31 routines**: `$7cb8` resets
+  `[$c100]`/`[$c101]`, copies `[$c105]`→`[$c104]`,
+  sets `[$c105]`=`$3f`, `[$c10a]`=2, `[$c0f9]`=D,
+  `[$c116]`=E, sets bit 2 of `[$c103]`, calls `$7f0a`,
+  jumps to `$7e7e` (the `$c0c7`-list insert). `$7d83` is
+  a proximity check (carry = miss, computed from
+  `[$c0fa]`/`[$c0fe]` vs Mario's `[$c203]`/`[$c207]`).
+  `$7e07` reads a link record (`[$dd9f]` bit 4 / the
+  `[$c108]`-derived `$c16b` table). `$7f39` is the shared
+  grid-clear loop (scans 3 rows × 3 cols of a `$74`-stride
+  table from the `[$c108]` pointer, zeroing bytes equal
+  to `[$c1f3]`); `$7f32` zeroes `[$c0f7]`/`[$c103]` first,
+  `$59e8` jumps straight to the loop.
+- **Bank-8 entry 1 (`$5f7b`)** is the 290-byte movement
+  routine: `[$dd98]`/`[$dd8c]`/`[$dd92]` checks, the
+  `$6038` shared tail (angle/distance math into
+  `[$c100]`/`[$c101]`/`[$c10c]`/`[$c110]`, `jp $6478`
+  when the result is 0), and the `$5ff8` fallback
+  (flips `[$c0f8]` bit 0, `[$c100]` = ±`$80`, `[$c10b]`
+  ^= 7). `$60e9` and `$63f0` are its shorter siblings
+  (the `$63f0` span ends at `$6442`, adjacent to the
+  slice-15 entry-6 head).
+- **Bank `$0a` `$4000` (entry 64)** recomputes `[$c10a]`
+  from `[$c109]`/`[$c10b]` via the `$46e3-$47a2` byte
+  table: when `[$c102]`==8 it reads a `[$c10a]`-indexed
+  pair at `$46e7` (1-byte stride, overlapping entries)
+  and writes the nibble-swapped pair into `[$c0fc]`/
+  `[$c0fd]`/`[$c100]`/`[$c101]`; otherwise it scans the
+  `$46e3` 8-byte records for a `[$c10b]`-derived match
+  and stores the record's offset into `[$c10a]`. The
+  table is emitted as one db blob — the two views
+  overlap in the same 192 bytes, so no field claims.
+- **The `[$c109]`-bit-3 arming question — narrowed, not
+  solved.** The setters `$4add`/`$4d58` (`set 3,[hl];
+  ret`, HL=`$c109`) have NO direct caller anywhere in
+  the ROM: whole-ROM byte search for `call $4add`
+  (`cd dd 4a`), `call $4d58` (`cd 58 4d`), `jp $4add`,
+  `jp $4d58` finds zero hits. They are entered via a
+  computed jump or a dispatch table, or they are dead —
+  same class as slice 14's `$5083`. (Note: `$63d7` also
+  reads `set 3, [hl]` but HL=`$c103` there — it sets
+  the `$2a0a` dispatch flag, NOT the arming flag; do not
+  confuse the two.) The flag IS tested by 10 more
+  handlers carved here (bank `$0a` entries 10/13/14/17/
+  31/55/58/62/84/86 at `$4e39`/`$522e`/`$532e`/`$568f`/
+  `$56de`/`$63f7`/`$6585`/`$678f`/`$69c1`/`$6e45`, all
+  `ld hl,$c109; bit 3,[hl]`), on top of the entry-34/53
+  setters slice 15 found. What arms a record remains
+  open; the third setter slice 15 named (bank 31
+  `$6ca9`) sits in the still-uncarved `$5a3c-$7ca0`
+  gap.
+- **Bank-16 `$5a11` — slice 15's claim VERIFIED.**
+  All 13 `ldh [$ff90],a` sites in the carved machine
+  are literal `$01` (8 sites: `$5a43`, `$5b12`,
+  `$5b39`, `$5bff`, `$5d30`, `$5dfd`, `$5f10`, `$5f69`)
+  or `$0c` (5 sites: `$5c6e`, `$5d26`, `$5d46`,
+  `$5f07`, `$5f46`) — timers 1 and 12 only, exactly as
+  slice 15 said from its walk. Timer 13 therefore
+  resolves to timer 1 (resume gameplay) or timer 12
+  (death), never to 23/26/33/42. One open observation
+  from the same machine: `$5d48` writes `$33` (51) to
+  `[$c836]`, the music-request field — 51 exceeds the
+  41-song `$48f1` table (slice 12 §3), so either `$33`
+  is a special music value or the field's meaning is
+  wider than "song index"; unverified, noted not
+  claimed. `$4a0f` writes `$67` (103) to `[$c833]`/
+  `[$c835]` — a valid sound ID.
+
+### §4 Door / clear-chain entry — NOT in this carve (VERIFIED)
+
+- **No carved handler writes a clear-chain timer.**
+  Whole-carve grep: zero `ldh [$ff90],a` sites in
+  `src/bank31.asm`, `src/bank8slice16.asm`, or
+  `src/bank0aslice16.asm`; the only timer writes in
+  the slice are bank-16 `$5a11`'s thirteen, all
+  `$01`/`$0c` (§3). No handler sets timer 23/26/33/42.
+- **The sound writes are sound IDs, not door signals.**
+  Bank-31 `$5934` writes `$64` (100), bank-`$0a`
+  `$583b` writes `$42` (66), bank-`$0a` `$6127` writes
+  `$12` (18) — all valid `$47fc` sound-table entries
+  (< 119), consumed by the bank-2 timer tick per
+  slice 12 §3. Same verdict class as `$44`/`$5f`.
+- **Completion attempt: NO-GO (decision, not a block).**
+  Same as slice 15 §7 — no carved handler is the
+  door-tile handler or starts the clear chain, so there
+  is no new lead to attempt a completion on. No
+  `gb_play` run was burned this slice.
+- **`$2b48` status after slice 16: 54/94 entries carved.**
+  Bank 8 is complete; bank `$0a` is complete except
+  entries 66/67 (see below); bank `$1f` has 5 of 40.
+  Still uncarved: bank 9 entries 26 (`$6574`), 56
+  (`$6cce`), 89 (`$6d8b`); bank `$0a` entries 66/67
+  (`$33e3`/`$33ef` — the table's bank byte says `$0a`
+  but the targets are ROM0 addresses, so the dispatch
+  would jump into bank-0 code with bank `$0a` mapped;
+  whether that is a table quirk or a real path is
+  unresolved); bank `$1f` entries 5 (`$4000`), 12
+  (`$64ee`), 15 (`$414e`), 18 (`$41ec`), 19 (`$442f`),
+  20 (`$4567`), 28 (`$46b1`), 30 (`$484b`), 35
+  (`$4932`), 46 (`$4a95`), 47 (`$4cd5`), 48 (`$4da6`),
+  50 (`$4e31`), 51 (`$503c`), 52 (`$79ec`), 59
+  (`$5201`), 60 (`$53cb`), 68 (`$5455`), 70 (`$55c9`),
+  71 (`$56b6`), 74 (`$5a3c`), 75 (`$5b42`), 76
+  (`$4fb9`), 77 (`$5e73`), 78 (`$5f29`), 79 (`$616e`),
+  80 (`$61a5`), 81 (`$64ef`), 82 (`$66a3`), 83
+  (`$67bc`), 88 (`$68dc`), 90 (`$68eb`), 91 (`$6a89`),
+  92 (`$7316`), 93 (`$7bf6`). The door, if it lives in
+  a `$2b48` handler at all, is among these 40 — bank 9's
+  three and bank `$1f`'s 35 are the next carve.
+
+### §5 Byte-match proof
+
+Clean `make` (rm `build/game.gb` first) rebuilds SHA-1
+`397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero
+diffs vs `roms/Donkey_Kong_World_Rev1_SGB.gb` — after the
+bank-31/bank-8 carve, after adding bank `$0a`, and after
+adding bank 16 (three verifying builds, all first-try
+passes).
+
+What the byte-match check caught: nothing this slice.
+The one near-miss was caught by re-reading, not by the
+build: the first `tools/gen_banks.py` CARVED edit for
+bank 10 omitted the `(0x4D58, 0x4D5E)` range (the second
+`[$c109]`-bit-3 setter), which would have left its bytes
+INCBIN'd under the new section and failed the link on
+overlap. It was fixed before the build ran. (Side note:
+`tools/run_slice5_regression.sh` is not executable —
+run it as `bash tools/...`; pre-existing, not slice-16.)
+
+### §6 Nacre results
+
+`tools/run_slice5_regression.sh` and
+`tools/run_slice7_cases.sh` on the final build, original vs
+rebuilt identical in every case (framebuffer hash + state
+trace + save):
+
+- Slice 5: 600f `1cf92679…`, 900f `39ffd5ee…`, 3600f
+  `88515f4e…`, 12000f `92d2e185…`, s8 `92d2e185…`, f0
+  `3390d763…`, f1 `1cf92679…` — ALL REGRESSION CASES
+  IDENTICAL.
+- Slice 7: retry 15000f `0d835d95…`, mid5000
+  `2ab1bb5d…`, play-right 5000f `b3cb6c8b…`, death 3000f
+  `632b2eaf…` — ALL SLICE-7 CASES IDENTICAL.
+
+All eleven hashes match the previously recorded values
+exactly. The play-right and death cases exercise the
+carved `$2b48` handlers live (state-16 timers 3–10,
+Mario moving and dying in 1-1) on both ROMs.
+
+### §7 Verified vs inferred
+
+VERIFIED: the `$58e2`-is-entry-73 correction (read from
+the `$2b48` table bytes); the four bank-`$1f` heads +
+their `[$c10a]` tables (ROM bytes + byte-match); entry
+32 as the record-kill path (code — `$7f32`/`$7f0a`
+bodies read, no timer write); the `$4add`/`$4d58`
+no-direct-caller result (whole-ROM byte search, zero
+hits for `call`/`jp` forms); the 10 bank-`$0a`
+`[$c109]`-bit-3 test sites (code); bank-16 `$5a11`
+setting only timers 1/12 (all 13 literal writes read
+from the carved code); the sound-ID values `$64`/`$42`/
+`$12` (valid `$47fc` entries); byte-match + both
+regression suites on the final build.
+INFERRED (not verified): that the door lives in one of
+the 40 uncarved `$2b48` entries (it is the best
+remaining lead, but no carved handler points at it);
+that `$4add`/`$4d58` are entered via a computed jump
+(the zero-hit byte search rules out direct calls, not
+computed ones); what `$33` to `[$c836]` means (slice 12
+said song < `$29`; 51 is out of range); the `$46e3`/
+`$46e7` table's record structure (emitted as a db blob
+with no field claims); the `$2b48` entries 66/67 ROM0
+targets (table quirk vs real path, unresolved).
+
+## Slice 17 — DONE, byte-matching (2026-11-24)
+
+The `$2b48` table is now 94/94 carved — every entry has a
+curated handler. Bank 9's three entries (26 `$6574`, 56
+`$6cce`, 89 `$6d8b`) with callees, bank `$0a` entries 66/67
+(`$33e3`/`$33ef`, RESOLVED as a real path, not a table
+quirk), bank `$1f`'s remaining 35 entries in table order,
+and bank 0 `$0f95-$0fa0` (the last unverified callee of
+the timer-13 body `$0968`). Generator:
+`tools/gen_slice17.py` (walks: bank 9 1,087 instrs, bank
+31 6,316 instrs, bank 0 152 instrs; no `rst $08` sites
+anywhere in this slice). Outputs: `src/bank9slice17.asm`
+(1,364 lines), `src/bank31slice17.asm` (7,212 lines),
+`src/bank0slice17.asm` (14 lines). `src/` is now 52,487
+lines (was 43,750).
+
+### §1 What was carved
+
+- Bank 9, entry 26 `$6574-$6649`: head reads the `$6f9c`
+  `[$dd18]` byte table, the `$66a3` `[$c10b]*3` records,
+  the `$66a0` `([$c10e]>>1)` table and the `$6696`
+  `[$c10a]` remap, then a shared tail at `$6616` (push
+  `$6660`, compute the map pointer from `[$c0fa]`/
+  `[$c0fe]`, `jp hl` through the `$664a` table — 8
+  entries `$66b7, $66fb, $673f, $6783, $6f9b, $6f9b,
+  $67c7, $680b`). `$6f9b` is a 1-byte `ret` (`$c9`) —
+  table entries 4/5 are no-op returns. The `$6660`
+  shared return routine and all table routines are
+  carved (`$66b7-$684e` plus callees down to `$6c7e-
+  $6ca9`).
+- Bank 9, entry 56 `$6cce-$6d32`: head ends `jp hl`
+  through the `$6d33` table (identical words to
+  `$664a` — a second copy), plus the `$6490-$64ca`
+  callee (writes sound `$6a` to `[$c82f]`/`[$c835]`,
+  fills a record, `call $3337`, `call $33a7` — bank-0
+  trampolines — ends `jp $169c`). Two 8-word
+  signed-offset tables `$6d49` and `$6d5b` (same 8
+  values, permuted; selected by `[$c10e]` bit 0,
+  indexed by `[$c10b]*2`).
+- Bank 9, entry 89 `$6d8b-$6d99`: 10-instr `jp hl`
+  head through the `$6d9a` table — 2 entries
+  (`$6d9e, $6de0`), not 10. The "entries 2–9" (`$0efa,
+  $87c1, …`) are a misread of the `$6d9e` routine's
+  code bytes (same trap as slice 16's `$58e2`
+  correction): the word at `$6d9e` (`$0efa`) is the
+  first two bytes of routine 0's `ld a,[$c10e]`
+  (`fa 0e c1`), not a table entry. Routines `$6d9e-
+  $6dd3` and `$6de0-$6e62` plus callees are carved.
+  `$6dd4-$6ddf` is a 12-byte DATA blob (`00 20 ff e0
+  00 40 ff c0 00 80 ff 80`), pointed to by `$6da5`
+  (`ld hl,$6dd4`) — meaning unresolved. (See §5 for
+  what the byte-match check caught here.)
+- Bank 9 data: `$6696-$66b6` as one db blob (the
+  `$6696` `[$c10a]` remap 8B, `$66a0` 3B, `$66a3`
+  records 12B, `$66af-$66b6` 8B unresolved — overlapping
+  views, no field claims, like slice 16's `$46e3`);
+  `$6f9c-$6fab` as a db blob (`[$dd18]`-indexed, indices
+  0–12, `$ff` at 12+).
+- Bank 31 (`$1f`), all 35 remaining entries, each head
+  plus its `[$c10a]` `jp hl` table and the table
+  routines the walk reaches: 5 `$4000` (direct routine,
+  bit-4 branch + `jp hl` via `$4053`, 3 entries), 12
+  `$64ee` (1-byte `ret` — a no-op entry), 15 `$414e`
+  (5), 18 `$41ec` (5), 19 `$442f` (direct routine, 147
+  instrs), 20 `$4567` (3 — NOT 4: the 4th word `$403e`
+  is routine 0's first instruction `ld a,$40`, and
+  `$403e` is also entry 5's mid-routine `call $7f0a`,
+  a coincidence, not an entry), 28 `$46b1` (4), 30
+  `$484b` (direct, 144), 35 `$4932` (2), 46 `$4a95`
+  (3 — entry 2 is entry 47's head `$4cd4`, shared),
+  47 `$4cd5` (3), 48 `$4da6` (3), 50 `$4e31` (4), 51
+  `$503c` (direct, 115), 52 `$79ec` (direct, 76), 59
+  `$5201` (4), 60 `$53cb` (3), 68 `$5455` (2), 70
+  `$55c9` (3), 71 `$56b6` (5), 74 `$5a3c` (direct, 41 —
+  `[$c109]` bit-0 test, sound `$62`, `[$c213]`=1), 75
+  `$5b42` (12 instrs, pushes `$5b55` as return, `jp hl`
+  via `$5b5b`, 9 entries — `$5cf6` is a 1-byte `ret`,
+  `$5cf7` the next routine), 76 `$4fb9` (96, `call
+  $7d4c`), 77 `$5e73` (3), 78 `$5f29` (9 — 9th `$60de`),
+  79 `$616e` (96, `call $7d4c`), 80 `$61a5` (direct,
+  134), 81 `$64ef` (7), 82 `$66a3` (5), 83 `$67bc`
+  (direct, 84), 88 `$68dc` (direct, 31), 90 `$68eb`
+  (3), 91 `$6a89` (9 — 9th `$6e95`), 92 `$7316` (22
+  entries, all plausible, increasing `$7351-$79dd`),
+  93 `$7bf6` (direct, 61). Table lengths are
+  (first-routine − base)/2 from the ROM bytes; every
+  table entry was asserted as a decoded instruction
+  start in the generator. Shared callees carved:
+  `$7050`, `$723e`, `$7ea6`, `$7de4`, `$7bf6`. Data as
+  db: `$6cc2-$6cc6` (5-byte template copied to `$dd81`
+  by `$6c60`), `$6d8e-$6da1` (20-byte template copied
+  to `$c1ab` by `$6c60`'s tail — byte 14 is `$aa`, byte
+  18 is `$00`).
+- Bank 0 `$0f95-$0fa0`: the scroll-clamp wrapper called
+  from 8 state-16 timer bodies (and from timer-13's
+  body `$0968`) — `push hl/bc; xor a; ld [$c706],a;
+  call $152e; pop; ret`. Its callee `$152e` was carved
+  in slice 6. Raw bank-0 A2b in `src/main.asm` split
+  `$0f74-$0fc0` into `$0f74-$0f94` (`$21`) and
+  `$0fa1-$0fc0` (`$20`) around it.
+- Bank `$0a` entries 66/67: NO new carve — see §2.
+
+### §2 Entries 66/67 RESOLVED: real path, already carved
+
+The `$2a0a` dispatch reads the bank byte first and
+switches bank before reading lo/hi (`$2a59-$2a71`).
+Entries 66/67 say bank `$0a`, targets `$33e3`/`$33ef`
+(ROM0 addresses). Since `$0000-$3fff` always maps ROM0
+regardless of the bank register, the `$0a` switch is
+harmless; `jp hl` lands at bank-0 `$33e3`/`$33ef`.
+Those are already curated in `src/bank0slice3.asm`:
+two trampolines in the same shape as the `$2b0e`/
+`$2b1a`/`$2b24`/`$2b30`/`$2b3c` trampolines — `ldh
+a,[$ff8c]; push af; ld a,$0c; rst $10; call $4e15`
+(`$33e3`) / `call $4e35` (`$33ef`); `pop af; rst $10;
+ret` — switch to bank 12, call, restore bank, `ret`
+to `$2a72`. Bank-12 `$4e15`/`$4e35` are already carved
+in `src/bank12.asm`: record-byte checks on `[$c106]`/
+`[$c107]` + `$7e` offset (byte == `$8d`, second byte
+== `$02`/`$04` for `$4e15`, `$06`/`$00` for `$4e35`);
+on match `jp $33fb` (the third bank-0 trampoline:
+switch bank `$0a`, `call $7ae5`, `call $7c88`,
+restore, ret); otherwise `ret nz`. The mechanism is
+proven statically end-to-end — every byte of the chain
+is carved and byte-matched. Live firing was NOT
+observed in 1-1 because no `[$c105]`=66/67 record
+occurs there (live byte-14 values in 1-1 were
+{0,1,2,3,6,7,32,45,72}) — that limit is recorded
+honestly, not papered over.
+
+### §3 CORRECTIONS to slice 15
+
+- **Timer 13 has FOUR known `$2b48` setters, not two.**
+  Slice 15's "exactly TWO" was wrong — it surveyed
+  only the two then known; the bank-`$1f` set was
+  uncarved then. The four, all setting `ld a,$0d;
+  ldh [$ff90],a`:
+  - Entry 34 (bank 8 `$6d8a`→`$6ecd`) and entry 53
+    (bank `$0a` `$5cd8`→`$5c4f`) — slice 15, both gated
+    on `[$c109]` bit 3.
+  - **Entry 46 (bank `$1f`), table entry 1 `$4aee`:**
+    `ld hl,$c109; bit 3,[hl]; jp z,$4b8c` — if set:
+    `res 3,[hl]` (**disarms**), `[$c10a]=2`,
+    `[$c201]=$46`, position math on `[$c207]`/`[$c203]`,
+    `[$c213]=5`, `[$dd1a]=0`, `[$dd18]=$07`,
+    `[$dd21]=$ff`, `[$ff91]|=$c0`, `[$dd2b]=$09`,
+    `[$dd2c]=$0b`, **timer=13 at `$4b6e`/`$4b70`**,
+    `[$c100]=0`, `res 2,[$c103]`, `[$c102]=0`,
+    `[$c0f9]=$0a`, `[$c116]=1`, `ret`. If bit 3 clear:
+    `$4b8c` countdown path (dec `[$c10c]`, negates
+    `[$c100]`, toggles `[$c855]` bits, scans `$c22e`
+    records).
+  - **Entry 92 (bank `$1f`), table entry 15 `$780b`:**
+    NOT gated on bit 3 — gated on **position**
+    (`[$c203]<$6c` and `[$c207]-$48<$10`, i.e. Mario
+    OAM Y<108, X in [72,88) — near the key niche) plus
+    a `[$c10c]` countdown. On trigger: sets
+    `[$c203]=$68` etc., **timer=13 at `$7845`/`$7847`**,
+    `[$ff91]|=$c3`, set bit 7 of `[$ff92]`,
+    `[$c836]=$80` (music-request field — out of the
+    41-song range, like slice 16's `$33` to `[$c836]`;
+    unverified meaning), sound writes `[$c82d]=$34`,
+    `[$c82e]=3`, `[$c835]=3` (sound IDs 52 and 3, valid
+    `$47fc` entries), `[$dd2b]=$18`, `[$c213]=6`,
+    `[$dd21]=7`, `[$dd22]=$ff`, `jp $754e`.
+- **`$6ca9` is NOT a callable subroutine — it is inline
+  fall-through code inside `$6c60`.** Slice 15's
+  "third setter" framing was wrong. The arming path is
+  entry 91 state 4 (`$6c60`): `ld a,[$c109]; bit 2,a;
+  jp z,$723e`; if bit 2 set: `res 2`, setup (`[$c10b]`,
+  `[$c10d]`, `[$c110]`, copy 5 bytes `$6cc2`→`$dd81`),
+  `[$c10c]=1`, `[$c10a]=5`, then `ld a,[$c109]; bit
+  3,a; jp nz,$723e`; if bit 3 clear, fall through to
+  **`$6ca9`: `ld hl,$c109; set 3,[hl]`** (then
+  `[$c10b]=1`, `[$c1f4]=$50`, `[$c1f5]=2`, copy 20-byte
+  template `$6d8e`→`$c1ab`, `call $106e`, `call $1097`,
+  `[$c1f3]=B`). `$723e` is the already-armed/
+  already-done branch (clears `[$c100]`, position
+  checks, copies `$730a`/`$7306` records). Entry 91's
+  return continuation `$5b55` (`ld hl,$c109; res
+  3,[hl]; ret`) clears the flag on return.
+- **What remains UNVERIFIED about arming:** whether the
+  SAME record instance flows 91→46. `$6c60` arms bit 3
+  on its own (type-91) record; `$4aee` consumes bit 3
+  on its own (type-46) record. No link found: the
+  `$7730` transition tables (`$7e50`/`$7eae`, bank
+  `$0a`) rewrite `[$c105]` only to `$3f` (byte 2 of
+  every record is `$3f`, except V=11 → `$36`/54) —
+  never 46; `[$c105]`=91 cannot index the 25-entry
+  `$7e50` table. The `$6d8e` spawn template's byte 14
+  is `$aa` and byte 18 is `$00`, so the record `$6c60`
+  spawns is NOT born as type 46 nor born armed. Live
+  `[$c105]` values in 1-1 never include 46 or 91. The
+  two halves are pinned; the connection is open.
+- **`$4add`/`$4d58` STILL have no direct caller**
+  (re-verified this slice): whole-ROM byte search —
+  `$4add` pair: **zero hits anywhere**; `$4d58` pair:
+  one hit, bank 29 `$54b4`, inside bank-29 data (bytes
+  `58 b5 58 4d`, preceded by `$58` not `$cd`/`$c3`/
+  `$21`, in a repeating `$58 xx` data pattern — not a
+  call/jp/ld-hl/dw entry). No `$4add`/`$4d58` reference
+  in the bank-31 or bank-9 walks either. They remain
+  caller-less (dead or computed-jump entry, same class
+  as slice 14's `$5083`).
+
+### §4 Door / clear chain: verdict stands, no completion attempt
+
+Whole-carve timer-write grep: bank 31 has exactly two
+`ldh [$ff90],a` sites (`$4b70` and `$7847`, both
+literal `$0d`=13); bank 9 has zero. No handler in this
+slice writes timer 23/26/33/42. Timer 13's body `$0968`
+contains no timer write; its callees are `$2a0a`
+(dispatch), bank-16 `$5a11` (slice 16 verified: only
+timers 1/12), bank-16 `$4e89` (nudge, no timer write),
+bank-8 `$4000` (map builders), and bank-0 `$0f95`
+(carved this slice — just the scroll-clamp wrapper
+around `$152e`, **no timer write**). So timer 13 still
+resolves only to timer 1 (resume) or 12 (death), never
+23/26/33/42. The door/clear-chain entry is still NOT
+found. No completion attempt was run this slice — no
+new door lead to attempt one on (same NO-GO decision
+as slices 15–16).
+
+### §5 Byte-match proof
+
+Clean `make` (rm `build/game.gb` first) rebuilds SHA-1
+`397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero
+diffs vs `roms/Donkey_Kong_World_Rev1_SGB.gb` — first
+clean build after the §5 fix below.
+
+What the byte-match check caught: the LINK caught it,
+not the hash — the first build failed with `Undefined
+symbol jr_009_6dd6` at `src/bank9slice17.asm(1082)`. The
+generator had seeded `$6dd4` as a code entry; the bytes
+there decode as `nop; jr nz,$6dd6; rst $38…` — garbage.
+The real story: `$6dd4` is never jumped or called
+(whole-walk reference search: zero hits); `$6da5`
+does `ld hl,$6dd4` — a DATA pointer, like the
+`$6cc2`/`$6d8e` templates. The fix: `$6dd4-$6ddf`
+emitted as a 12-byte db blob, the `$6d9e` carve split
+into `$6d9e-$6dd3` and `$6de0-$6e62`, the spurious seed
+dropped. Lesson (same class as slice 16's `$58e2`
+correction): a `ld hl,$X` reference is a data pointer,
+not a code seed — only `call`/`jp`/`jr`/table targets
+seed the walk. The generator now asserts every table
+entry is a decoded instruction start, which would have
+caught a table misread but not this one; the link error
+did.
+
+### §6 Nacre results
+
+`tools/run_slice5_regression.sh` and
+`tools/run_slice7_cases.sh` on the final build, original vs
+rebuilt identical in every case (framebuffer hash + state
+trace + save):
+
+- Slice 5: 600f `1cf92679…`, 900f `39ffd5ee…`, 3600f
+  `88515f4e…`, 12000f `92d2e185…`, s8 `92d2e185…`, f0
+  `3390d763…`, f1 `1cf92679…` — ALL REGRESSION CASES
+  IDENTICAL.
+- Slice 7: retry 15000f `0d835d95…`, mid5000
+  `2ab1bb5d…`, play-right 5000f `b3cb6c8b…`, death 3000f
+  `632b2eaf…` — ALL SLICE-7 CASES IDENTICAL.
+
+All eleven hashes match the previously recorded values
+exactly.
+
+### §7 Verified vs inferred
+
+VERIFIED: the 66/67 mechanism (every byte of the
+`$33e3`/`$33ef` → bank-12 → `$33fb` chain carved and
+byte-matched; the `$0a` switch is harmless because
+`$0000-$3fff` always maps ROM0); the four timer-13
+`$2b48` setters (code read — `$4b70`/`$7847` are the
+only two `ldh [$ff90],a` sites in the whole bank-31
+carve, bank 9 has none); entry 46 disarming bit 3 on
+entry and entry 92's position gate (code read);
+`$6ca9` as inline fall-through inside `$6c60` (code
+read — `$6c60`'s `jp nz,$723e` falls through to it);
+`$5b55` clearing bit 3 on return (6 bytes read);
+`$4add`/`$4d58` having no direct caller (whole-ROM
+byte search, re-verified); the `$6dd4` data-blob
+verdict (zero code references + garbage linear decode
++ `ld hl,$6dd4` data pointer at `$6da5`); the 25
+`[$c10a]` table lengths (ROM bytes + generator
+assertions); byte-match + both regression suites on
+the final build.
+INFERRED (not verified): that a 91-armed record ever
+becomes a 46 record (no `[$c105]` rewrite to 46
+exists, and 1-1 never shows 46/91 live — the two
+halves are pinned, the connection is open); what the
+`$6dd4` 12-byte blob means; what `$80` to `[$c836]`
+(entry 92) and `$33` to `[$c836]` (slice 16) mean
+(both out of the 41-song range); the `$6696`/
+`$66a3`/`$6f9c` table field meanings beyond their
+index registers (emitted as db blobs with index notes
+only); that the door lives in one of the remaining
+uncarved regions (the `$2b48` table is now exhausted
+as a lead — see Next slices).
+
+## Slice 18 — DONE, byte-matching (2026-11-24)
+
+§1 **The 91→46 record-lifecycle link is DEAD — proven,
+not merely unverified.** Static, whole-ROM: `$2b48`
+entries 34 (bank 8 `$6d8a`), 46 (bank `$1f` `$4a95`),
+53 (bank `$0a` `$5cd8`), 91 (bank `$1f` `$6a89`), 92
+(bank `$1f` `$7316`). The `$7730` transition records
+(`$7eae`, 25 records) rewrite `[$c105]` to `$3f` for
+all except record 11 → `$36` — never 46. Direct
+`ld [$c105],a` writers in the whole ROM: exactly 11
+sites, values `$53`,`$37`,`$36`,`[$c104]&$7f`,`$34`,
+`$21`,`$36` (bank 10) and `$0c`,`$0c`,`$5d`,`$34`
+(bank 31) — none is 46. The one variable path, bank-10
+`$7378` (`ld a,[$c104]; and $7f; ld [$c105],a`), then
+dispatches via the `$7e3c` dw table indexed by
+`$7dde[newtype]`; `$7dde[46]`=0 → `$7e3c[0]`=`$7815`
+(a 1-byte `ret`, a no-op) — so even if it ran with
+`[$c104]`=`$46`/`$c6`, the follow-up is a no-op. Its
+containing routine (~`$7300`–`$75af`) has NO direct
+caller anywhere in the ROM (whole-ROM search for
+`78 73` — zero hits), the same orphaned class as
+`$4add`/`$4d58`/`$5083`; entry mechanism unverified.
+The `$7816` spawn routine copies 20-byte templates to
+`$c1ab`, NOT to `$c200` (templates bank 10 `$787d`
+byte 14=`$18`, `$788b` byte 14=`$cd`; bank 7 `$643f`
+byte 14=`$fa`; bank 31 `$6d8e` byte 14=`$aa`) — none
+spawns a `$c200` type-91 record. `$c200` records come
+from the level-load spawner (bank 12 `$403c`). The
+`$2a85` writeback WOULD persist a 91→46 rewrite if
+one existed — none does.
+Live (`tools/survey18_records.py`, slice-13 dumps, all
+101 loadable stages): **type-46 records exist in exactly
+ONE stage — B1, record 26, in all 3 dumps** (bytes e.g.
+`01 74 02 68 00 00 00 45 80 00 80 01 85 00 2e 8f ce 5a
+00 01 00 18 01 00 …`, byte 14=46, byte 18=0). Type-34:
+B27, B59, B67, B95, B97. Type-53: B23, B31, B63, B75.
+Type-92: NONE. Type-91: NONE in any of the 101 stages.
+**No record in any surveyed stage has byte 13 in
+{`$46`,`$c6`}** — the only values that could make
+bank-10 `$7378` write `[$c105]`=46. Byte-18 bit-3-set
+("armed") records exist but on OTHER types: type 66
+(97 dumps), 67 (84), 6 (3), 75 (1) — bit 3 of byte 18
+is a general flag, not exclusive to the 91-arming.
+Dense B1 run (new, `build/nacre-test/slice18/B1/`,
+6000f, dumps every 100 frames 2000–5900, 40 dumps):
+type-46 record 26 present in EVERY dump, byte 18=`$00`
+always, byte 13=`$00` always, state-16 timers 6/10
+alternating, no 91 ever. `gb_watch` on B1, 6000f,
+`ff90=0d` (timer-13 set): **0 hits** — timer 13 never
+fires in B1 despite the type-46 record being dispatched
+every frame. Honest residual: dumps cover stage loads
+with Mario idle. A 91 record spawning mid-play from a
+pickup/spawn routine is not covered by the dump survey,
+but no surveyed spawn mechanism produces one, and no
+code path rewrites to 46 at all.
+
+§2 **Bank-11 sprite blocks — table extent 128 → 256,
+VERIFIED (not inferred).** `$112c` indexes the table
+by the FULL record byte 0 (C = byte 0, HL = `$4000` +
+2*C, no masking), so the table must cover all 256 byte
+values; live record byte-0 values across the 101
+surveyed stages reach **229** (max; values seen
+{0,1,108,110,112,113,160,164,174,192,226,227,228,229};
+record byte-1 max 254). All 256 words (`$4000`–
+`$4200`) are plausible pointers (`$4200`–`$7xxx`),
+none points into `$4100`–`$41ff`, 35 are `$4200` in
+bank 11 (99 in bank 29). Whole-ROM survey: ONLY banks
+11 and 29 carry this table (256/256 plausible words);
+bank 29's table differs in 220/256 entries. Bank 5's
+252/256 is the stage-pointer table coincidence; bank
+28's 190/256 is data. The 256 entries point at **176
+distinct targets** in `$4200`–`$7948`; they partition
+the range exactly (consecutive-target gaps sum to the
+span — no gaps, no overlaps). Last block `$7948` runs
+to `$7e3d` (bank 11's last non-`$ff` byte is at
+`$7e3c`; `$7e3d`–`$7fff` is 451 bytes of `$ff` padding,
+stays INCBIN). Banks 11 vs 29 `$4200`–`$7fff` share
+only 1644/15872 bytes (separate sprite sets); their
+`$4200` default blocks are byte-identical. Files:
+`tools/gen_slice7.py` `emit_bank11` extended 128→256
+dw (re-ran — `src/bank0slice7.asm` and `src/bank18.asm`
+regenerated with zero diff); new `tools/gen_slice18.py`
+emits `src/bank11slice18.asm` (176 `db` blocks, each
+labelled `Bank11_SpriteBlock_XXXX` with its table-entry
+owners listed); `tools/gen_banks.py` CARVED bank 11 now
+`(0x4000, 0x4200), (0x4200, 0x7E3D)`; `src/main.asm`
+INCLUDEs `bank11slice18.asm` after `bank11.asm`.
+Block internal structure not decoded (plain `db`;
+`$112c` shows 2×record[1] selects a sub-entry whose
+first byte is a count and second byte `$f0`/`$f1`
+marks flip variants). Bank 29's table + blocks NOT
+carved this slice (next-slice target).
+
+§3 **Bank-9 / bank-31 gaps carved, in task order.**
+Whole-ROM byte-pair reference searches are too noisy
+(mostly data in other banks); same-bank carved-code
+references are the signal.
+- Bank 9 `$684f-$6907` (185 bytes): three map-sample
+  dispatch routines (`$684f`, `$6893`, `$68d7`), same
+  shape as the `$664a`-table routines (slice 17):
+  HL = DE + a signed offset, sample [HL] & `$c0`,
+  jump to the carved `$6ae7`/`$6b8d`/`$6bbc`/`$6bf2`/
+  `$6c34`/`$6c7e`/`$6cb7` routines. `$68d7` also writes
+  `$c112-$c116` (`$10`,`$10`,0,0,`$a0`), sets bit 2 of
+  `[$c103]`, clears `[$c102]`, then dispatches on
+  `[$c10e]` bit 0 (`jp nc,$6ad5`). Entry mechanism for
+  all three heads is UNVERIFIED (no call/jp ref
+  anywhere in the ROM; the preceding spans end in jp,
+  no fall-through). Alignment trap found: `$6891`–
+  `$6892` are the `jp $6ae7` operand bytes, NOT code —
+  a walk seeded at `$6891` misaligns by 2 (decodes
+  `rst $38` + `ld l,d` garbage that coincidentally
+  flows on). Correct continuation seed is `$6893`.
+- Bank 31 `$4499-$4566` (205 bytes): a 3-entry dw
+  table (`$449f`,`$44dc`,`$4540`) read by the carved
+  `$4205-$4498` span's jp-hl dispatch (`ld a,[$c10a];
+  add a; ld hl,$4499; ...; jp hl` at `$4491`), plus
+  the three table routines. `$449f` sets `[$c103]`
+  bit 2 and `[$c109]` bit 0, inc `[$c10a]`, `call
+  $1d2f`, position math, `[$c0f9]`=`$2a`,
+  `[$c116]`=`$51`. The earlier walk seeded at `$4499`
+  misdecoded table words as code — the table base load
+  at `$4491` is a data pointer, not a code seed.
+- Bank 31 `$506c-$5200` (404 bytes): a 7-entry dw
+  table (`$507a`,`$50e0`,`$510f`,`$5175`,`$519b`,
+  `$51ce`,`$51e3`) read by the entry-51 handler's
+  `ld hl,$506c` … `jp hl` at `$5064`, plus the seven
+  routines (walk from `$506c` dies after 10 instrs —
+  it is data, not code).
+- Bank 31 `$6244-$64ed` (681 bytes): an 11-entry dw
+  table read by the entry-80 handler's `ld hl,$6244`
+  … `jp hl` at `$623c`, plus the eleven routines.
+- Bank 31 `$6fde-$704f` (113 bytes): a 28-byte data
+  table (`$6fde-$6ff9` — exactly `$1c` bytes, matching
+  the `ld c,$1c` in the routine below), a countdown/
+  state routine `$6ffa-$704a` (dec `[$c867]`,
+  `[$c0fa]`+=4, dec `[$c10c]` with `$1e` reload,
+  `[$c10a]`=1 or `$0c`, `[$c114]`=1 on the `[$c0a4]`==2
+  path, then memcpy `$6fde`→`$c1c4` via `$106e` and
+  `jp $6f89`), and a 5-byte countdown wrapper
+  `$704b-$704f` (`dec [$c10c]; ret nz`) falling through
+  into the carved `$7050` shared routine. `$6ffa`'s
+  entry is unverified; `$704b`'s fall-through into
+  `$7050` is structural (same countdown shape as
+  `$708f`).
+- Bank 31 `$708f-$723d` (430 bytes): only the head is
+  code — `$708f-$70cd` (`dec [$c10c]; jp nz,$723e`;
+  position math on `[$c213]` records; `[$c10a]`=4,
+  `[$c114]`=2; `jp $723e`) plus the tiny state-setter
+  `$70d0-$70de` (`[$c10a]`=1, `[$c10c]`=`$0f`,
+  `[$c114]`=0). Remainder `$70df-$723d` stays INCBIN
+  (mixed data: byte tables incl. ASCII-ish runs, plus
+  two `[$c10c]`-countdown fragments at the tail with no
+  verified seed). Alignment trap: `$70ce` is the `jp
+  $723e` operand byte, NOT code — the tiny routine
+  starts at `$70d0`, same trap as `$6891`. Entry for
+  `$708f` unverified.
+- Bank 31 `$7a12-$7bf5` (483 bytes): a 6-entry dw
+  table read by the `$7934-$7a11` span's `ld
+  hl,$7a12` … `jp hl` at `$7a0a`, plus the six
+  routines.
+All table lengths are the increasing-dw-run rule,
+verified against the ROM bytes; every table entry is
+asserted to be a decoded instruction start; every
+carve's coverage is asserted byte-complete (no
+uncovered bytes in range). Generator:
+`tools/gen_slice18.py` extended with `emit_carve` /
+`emit_dw_table` / `emit_db` helpers in the
+`gen_slice17.py` pattern; new files
+`src/bank9slice18.asm` (104 lines) and
+`src/bank31slice18.asm` (1170 lines); INCLUDEs added
+after the slice-17 files in `src/main.asm`. `src/`
+now 55,633 lines (was 52,487 at slice start).
+
+§4 **Door / clear chain: no new lead.** No completion
+attempt run (NO-GO, same as slices 15–17 — the 91→46
+link was the lead and is now dead). The `$7378`
+routine and the `$708f`/`$6ffa` countdown routines are
+newly-noted code whose roles are unverified; none
+writes timers 23/26/33/42 (the `$708f` routine jumps
+only to `$723e`, the `$6c60` armed-branch shared
+routine; `$6ffa` jumps only to `$6f89`). The `$2b48`
+table is DONE (94/94) and closed as a door lead;
+timer 13 still resolves only to timer 1 or 12.
+
+§5 **What byte-match caught.** (a) `gen_banks.py`
+prints to stdout — running it bare does NOT update
+`src/banks.asm`. The first build failed with a link
+overlap ("Bank 31 `$625a-$64ed` `$6244`-table
+routines" vs INCBIN "Bank 31 `$6244-$64ed`") because
+`banks.asm` still held the old INCBINs; regenerate
+with `python3 tools/gen_banks.py > src/banks.asm`.
+(b) Hand-reflowing CARVED lines dropped entries:
+across the fix attempts, `(0x7CE2, 0x7D83)`,
+`(0x69AC, 0x6A08)`, `(0x6A9C, 0x6AC8)`, `(0x7E07,
+0x7E44)`, `(0x6B8D, 0x6BE9)` were each lost once,
+plus the dict's closing `}` — each surfaced as a link
+overlap on the next build ("Bank 31 `$7ce2-$7d82`
+entry-93 callee" vs INCBIN, "Bank 9 `$69ac-$6a07`
+table-routine callee" vs INCBIN, and a syntax error).
+All restored and verified by diffing the CARVED tuple
+set against git: dropped — only the intended
+`(0x4000, 0x4100)` bank-11 replacement; added —
+exactly the 9 new ranges. Lesson: never reflow
+CARVED lines by hand — insert tuples only, and diff
+the tuple set after editing. Final build: `rm
+build/game.gb && make` → SHA-1
+`397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp`
+clean. Nacre regressions on the final build, original
+vs rebuilt identical: slice-5 suite ALL IDENTICAL
+(600f `1cf92679…`, 900f `39ffd5ee…`, 3600f
+`88515f4e…`, 12000f `92d2e185…`, s8 `92d2e185…`, f0
+`3390d763…`, f1 `1cf92679…` — all match the slice-17
+reference hashes); slice-7 suite ALL IDENTICAL
+(retry 15000f `0d835d95…`, mid5000 `2ab1bb5d…`,
+play-right `b3cb6c8b…`, death 3000f `632b2eaf…` —
+all match). `git status` clean of build artifacts /
+`.gb` / `.sav` / binaries / `__pycache__`.
+
+## Slice 19 — DONE, byte-matching (2026-11-24)
+
+§1 **Bank-29 sprite-table selector: PINNED, statically and live.**
+`$10d5` (bank 0) selects bank `$1d` (29) then jumps into the
+`$10e3` iterator loop body, skipping the bank-`$0b` select at
+`$10e0`; `$10dd` selects bank `$0b` (11) at `$10e0` and runs the
+same loop. The selector is the call site itself — no runtime
+flag. Static proof: whole-ROM pattern scan finds exactly ONE
+`ld a,$1d; rst $10` in the ROM (bank-0 `$10d8`); `$10d5`'s
+callers are ONLY state-16 transition steps (bank-0 `$09d2`,
+`$0ab2`, `$0ae1`, `$0b12`, `$0b95`, `$0bde`) plus state-20 step 0
+(`$2907`), while `$10dd`'s callers are everywhere (bank 1,
+state-20 `$285a`, ...). So state-16 transition rendering uses
+bank 29's sprite set; everything else uses bank 11's.
+Live proof (`tools/gb_bank29.c`, new cycle-stepping probe —
+frame-stepping cannot see these switches, the bank is restored
+before the frame ends): 6000f Start+A run, original ROM:
+**1,770 executions of `rst $10` with A=`$1d` at `$10da`** (first
+at frame 1189, state 18 timer 28 — the state variable reads 18
+while the CPU is still inside a transition step, the slice-3
+mid-routine effect) vs **21,756 with A=`$0b` at `$10e2`**
+(first at frame 10, title state 2); `$10d5` entered 1,771 times.
+Rebuilt ROM reproduces the counts exactly (1770/21756/1771).
+`gb_watch ff8c=1d` on the same run found 0 hits — NOT evidence
+against the selector, just the frame-sampling limit (recorded so
+it is not re-run as a disproof).
+
+§2 **Bank 29 carved: table + 121 blocks.** 256 dw at `$4000`,
+121 distinct targets in `$4200`–`$7d02`, partitioning the range
+exactly; last block `$7d02` runs to `$7e94` (last non-`$ff` byte
+at `$7e93`; `$7e94`–`$7fff` is `$ff` padding, stays INCBIN). 99
+entries are `$4200`; the `$4200` default block is byte-identical
+to bank 11's. Files: `src/bank29.asm` (256 dw),
+`src/bank29slice19.asm` (121 `db` blocks, each labelled
+`Bank29_SpriteBlock_XXXX` with its table-entry owners);
+`tools/gen_banks.py` CARVED bank 29 now `(0x4000,0x4200),
+(0x4200,0x7E94)`. Bank 29 is DONE except its `$ff` padding.
+
+§3 **The `$7378` routine's entry mechanism: RESOLVED + live.**
+`$7378` is not a routine head: the head is `$7369` (`dec
+[$c10c]; ret nz; res 3,[$c103]; ld a,[$c104]; and $7f;
+ld [$c105],a`, then the `$7dde`/`$7e3c` dw dispatch ending
+`jp hl`). `$7369` is `[$c10a]`=4 of the 7-entry dw table at
+`$7073` (`$7081`, `$7815`, `$70a6`, `$7297`, `$7369`, `$738f`,
+`$7400`), read by the `$2b48`-entry-63 handler `$705f` (carved
+slice 16: `ld a,[$c10a]; add a; ld hl,$7073; ...; jp hl`, gated
+on `[$ff93]` bit 5 clear). Slice 18's "no direct caller" was
+true but beside the point — the entry is via the jp-hl table,
+the same pattern as bank 31's `$6a98` table. The whole
+`$7073`–`$7599` span is carved here: the table, entry routines
+`$7081`/`$70a6`/`$7297`/`$7369`/`$738f`/`$7400` (entry 1 `$7815`
+was already carved, a 1-byte ret), data `$7290`–`$7296` (7
+bytes, indexed by `[$c705]`) and `$74aa`–`$74b9` (16 bytes, two
+8-byte records loaded via DE by the `$748f` routine). Note
+`$7300` is NOT a routine head: it is the `$07` immediate byte
+of `cp $07` at `$72ff` (slice 18's "~`$7300`" was approximate;
+the real head is `$7297`, table entry 3). Live proof
+(`tools/gb_pcwatch.c`, new bank-qualified PC probe — an
+unqualified PC is ambiguous across banks: the first run
+counted 2,765 `$7378` hits that were mostly bank 8's `$7378`):
+stage B55, which survey 18 shows carries a `$2b48`-entry-63
+record (byte 14 = 63), on the slice-13 batch-1 test ROM +
+save, 5000f: **`$705f` 66×, `$7369` 8×, `$7378` 2×, all with
+bank=10** (frames 1241–1259 and 3554–3557, state 18 timer 6).
+Most `$7369` entries return early at `ret nz` (`[$c10c]`
+countdown); only two reached `$7378`. B55's record byte 13 is
+`$13`, so `$7378` wrote `[$c105]`=`$13` there, not 46 —
+consistent with slice 18 (no record has byte 13 in
+{`$46`,`$c6`}). Files: `src/bank10slice19.asm` (811 lines);
+`tools/gen_slice19.py`.
+
+§4 **Bank-31 `$70df`–`$723d` remainder: carved, entry RESOLVED.**
+Slice 17 truncated the `$6a98` `[$c10a]` table at 9 entries
+(`$6a98`–`$6aa9`); it is actually **19 entries**
+(`$6a98`–`$6abd`): entries 9–18 are `$6ed6`, `$6ffa`, `$704b`,
+`$708f`, `$70d0`, `$70df`, `$7161`, `$71bd`, `$7222`, `$722c`
+— all increasing, all decoded instruction starts. Entries
+10–13 (`$6ffa`/`$704b`/`$708f`/`$70d0`) were carved in slice 18
+without noting they are table entries; entries 14–18 are
+carved here (`$70df`–`$7144` code: sets `[$c109]` bit 4,
+`[$ff93]` bit 5, memcpy `$7145`→`$c1c4`, `[$c10c]`=8,
+`[$c10a]`=`$0f`, sound `$4e`, `[$c836]`=`$80`, then a
+`$c260`-record scan rewriting `$5d` bytes; `$7161`–`$7211`
+code: `[$c868]` toggle + `[$c213]`-record gates, `[$c10a]`=
+`$10`/`$11`, sound `$73`, and the `$71bd` countdown branch;
+`$7222`–`$722b` and `$722c`–`$723d` countdown tails), plus
+entry 9 (`$6ed6`–`$6f88`, sharing the `$6e22` tail with entry 7)
+and the memcpy data blobs `$6eba`–`$6ed5` (28 bytes, `ld
+hl,$6eba` at `$6e9a`), `$7145`–`$7160` (28 bytes, `ld hl,$7145`
+at `$70e9`) and `$7212`–`$7221` (16 bytes, ASCII
+"bodyfkhmncpejgkli", 4×4 table indexed by `[$c113]`&3 at
+`$71f2`). `tools/gen_slice17.py` TABLES31 entry 91 extended
+9 → 19; re-running it changed ONLY the `$6a98` dw block
+(verified by `git diff`). The `$79b5` `c2 09 72` byte triple is
+NOT a `jp nz,$7209`: it is the tail of `ld bc,$c213` (`$79b3`)
++ `add hl,bc` (`$79b6`) in carved code. Files:
+`src/bank31slice19.asm` (329 lines); `src/` now 58,564 lines
+(was 55,633). Bank 31 now has only 978 bytes left in 26 small
+gaps (largest: `$67f8`–`$68dc`, 228 bytes).
+
+§5 **Door / clear chain: no new lead, no completion attempt
+(NO-GO, same as slices 15–17).** None of the slice-19 carves
+writes `hStateTimer` (`$ff90`) or a clear-chain timer
+(23/26/33/42) — verified by grep over the new files: the
+bank-31 routines write only `[$c10a]`/`[$c10c]`/sound IDs
+(`$4e`/`$73`/`$03`, and `$80` to `[$c836]`, out of the 41-song
+range like slice 16's `$33`/`$80` — role unverified); the
+bank-10 routines write `[$c10a]`/`[$c10c]`/sound IDs
+(`$3a`/`$3b`/`$42`) and `[$c105]` (the `$7378` rewrite, which
+slice 18 already closed as a 46-path: `$7dde[46]`=0 → no-op,
+and no record has byte 13 = `$46`/`$c6`). Bank 29 is data.
+The door/clear-chain entry is still NOT found.
+
+§6 **What byte-match caught.** Nothing this slice — first
+build after all three carves + the `$6a98` table extension
+matched on the first try (`rm build/game.gb && make` →
+SHA-1 `397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` clean).
+Two near-misses recorded instead: (a) `gen_banks.py` CARVED
+diff vs git was checked BEFORE building (dropped: only the
+replaced `(0x6A98, 0x6AAA)`; added: exactly the 16 intended
+ranges) — the slice-18 reflow lesson, applied. (b) The
+`$7300` seed misaligns by 1 (it is an immediate byte, not
+code); seeding `$7297` instead converges the walk. Nacre
+regressions on the final build, original vs rebuilt identical:
+slice-5 suite ALL IDENTICAL (600f `1cf92679…`, 900f
+`39ffd5ee…`, 3600f `88515f4e…`, 12000f `92d2e185…`, s8
+`92d2e185…`, f0 `3390d763…`, f1 `1cf92679…` — all match the
+slice-17 reference hashes); slice-7 suite ALL IDENTICAL
+(retry 15000f `0d835d95…`, mid5000 `2ab1bb5d…`, play-right
+`b3cb6c8b…`, death 3000f `632b2eaf…` — all match).
+`git status` clean of build artifacts / `.gb` / `.sav` /
+binaries / `__pycache__` (probe binaries `tools/gb_bank29` /
+`tools/gb_pcwatch` removed after use; only the `.c` sources
+remain in `tools/`).
+
+## Slice 20 — DONE, byte-matching (2026-11-24)
+
+§1 **Bank 31 CLOSED — all 26 gaps carved (978 bytes).**
+`tools/gen_slice20.py` (`emit_bank31`, `tools/gb_rd.py`
+walks seeded only from `call`/`jp`/`jr`/table targets)
+carved every remaining gap, verified against ROM bytes:
+dw tables `$467f` (5 WRAM pointers `$dcd8,$dce8,$dcc8,
+$dcf8,$dcb8`, indexed by 2*`[$c0a4]`), `$4fd3` (3 entries,
+routines `$4fd9`–`$503b` contiguous), `$6188` (3 entries,
+routines `$618e`–`$61a4`), `$67f8` (4 entries, routines
+`$680e`–`$68db` contiguous); 14-byte records `$48c7` (2),
+`$4c9c` (4), `$4d8a` (2), `$6152` (2, choice by
+`[$c0f8]` bit 0), `$6b53` (2), `$6800` (1 — see §3);
+other data `$4f9b`–`$4fb8` (30B blob), `$5407` (7B,
+indexed by `[$c705]`), `$5445` (6B, 3x2B, indexed by
+SeedMul), `$57a1` (32B, 16x2B pairs), `$6da2` (8B, no
+reference found in carved code — plain db), `$6df6`
+(4x5B records), `$6e84`–`$6e94` (12B memcpy template +
+5B byte table), `$7306` (4x4B records), `$7371`/`$73d1`/
+`$7434`/`$74d5` (3B each, SeedMul-indexed), `$775f`
+(22B, 11x2B pairs), `$792e` (two 3B tables, choice by
+`[$c0f8]` bit 0); code `$7db9`–`$7de3` (seeds `$7db9`,
+`$7dcc`), `$7e44`–`$7e7d` (seeds `$7e44`, `$7e61`;
+`$7e44` called from bank-0 `$2aaa`, `$7e61` jp'd to
+from `$71ba`; includes the `jr $7e72` self-loop), and
+`$7f5f` (1-byte `ret` — entry UNVERIFIED, could equally
+be the first byte of the `$7f60` table) + the `$7f60`–
+`$7fff` 160B 00/01 table (indexed by `[$dd18]`).
+Bank 31 CARVED now covers `$4000`–`$8000` with zero
+gaps (16,384/16,384 bytes). Files:
+`src/bank31slice20.asm` (552 lines).
+
+§2 **Bank 10 (decimal) CLOSED — all 34 gaps carved
+(10,344 bytes).** `tools/gen_slice20.py` (`emit_bank10`
++ `emit_bank10_rest`) carved the whole `$480a`–`$705e`
+span plus the `$75b0`–`$8000` tail: 19 dw dispatch tables
+(`$480a` 16, `$4e56` 8, `$51a1` 2, `$524b` 5, `$534b` 4,
+`$5421` 5, `$56b1` 4, `$56fb` 3, `$5894` 4, `$5918` 6,
+`$5eca` 15, `$6414` 6, `$65a2` 7, `$67ac` 7, `$69de` 7,
+`$6b08` 7, `$6d9a` 7, `$6e62` 7, `$6f66` 16, `$7d0e` 4,
+`$7e3c` 10, `$7fb6` 8 signed offsets) — all read by
+`$2b48`-entry handlers (`ld a,[$c10a]; add a; ld hl,
+$TABLE; …; jp hl`) except `$7e3c` and `$7fb6` (see
+below) — plus their routines and the interleaved
+14-byte data records (each verified by an `ld hl`/`ld de`
+reference from the walked routines), the `$75b0`–`$772f`
+record routines (seeds `$75b0,$75c2,$75f7,$7706,$76ef`
+plus the ten `$7e3c` entries; `$75c2`/`$75f7` entries
+are computed `jp hl` targets from the `$759a` routine —
+mechanism noted, not proven), `$789f`–`$7950`
+(fall-through from the carved `$787d` routine),
+`$79ea`–`$7aa9` + 14B record `$7aaa`, `$7b12`–`$7b3e`
+(entry UNVERIFIED), `$7b6c`–`$7c23`, `$7cb0`–`$7d0d`
+(reads the `$7d0e` table via `jp hl` and scans the
+`$7d16` 72x4B records by `[$c80d]`), and the `$7f44`–
+`$7fff` tail (padding + `$7fb6` offset table + byte
+tables). Table entry counts were fixed by the partition
+test (first entry == table base + 2*N, walk covers
+[first entry, next carved range) exactly apart from the
+noted data records). Two generator fixes during the
+run: the `$6e70` carve missed `$6e95`–`$6e9c` because
+`$6e95` is itself a `$6e62`-table entry (entry 3:
+`ld hl,$c10c; dec [hl]; ret nz; …` flowing through
+`$6ecc`) — seeded it; the `$7043` carve missed
+`$7059`–`$705e` because `$7059` is a `$6f66`-table
+entry (entry 2: `ld de,$00a0; jp $4a19`) — seeded it.
+Bank 10 CARVED now covers `$4000`–`$8000` with zero
+gaps (16,384/16,384 bytes). Files:
+`src/bank10slice20.asm` (6,154 lines); `src/` now
+65,092 lines (was 58,564 after slice 19).
+
+§3 **What the byte-match check caught.** The first
+build failed: SHA-1 `fa4b0ed6…`, `cmp` 24 differing
+bytes. Three data pockets between a dw table and its
+first routine had been missed in the survey (the
+routines start after them, no jump targets them):
+bank 10 `$5353`–`$535a` and `$56b9`–`$56c0` (both
+`00 00 00 00 88 5e 97 5e`, no `ld hl`/call/jp reference
+found in carved code — plain db) and bank 31
+`$6800`–`$680d` (14-byte record `98 a0 e8 f0 e8 a0 98
+f0 e8 f0 e8 a0 98 f0`, same repeating shape as the
+other 14-byte records in the bank; `ld hl,$6800` at
+`$446f` and `$67ca`, slice 17). All three added to
+`tools/gen_slice20.py` as `emit_db`; rebuild matched
+on the first try (`rm build/game.gb && make` →
+SHA-1 `397ad2ff25627b83e02c71b54c72bb4deb39e0c0`,
+`cmp` clean). `tools/gen_banks.py` CARVED diff vs git
+was checked BEFORE building (60 tuples added by
+insertion only, 0 dropped — the slice-18 lesson,
+applied; one splice case where the new tuple's
+predecessor shared its line with the list's closing
+`],`, handled by appending before the bracket).
+`src/banks.asm` regenerated (180 INCBIN lines removed).
+Nacre regressions on the final build, original vs
+rebuilt identical: slice-5 suite ALL IDENTICAL (600f
+`1cf92679…`, 900f `39ffd5ee…`, 3600f `88515f4e…`,
+12000f `92d2e185…`, s8 `92d2e185…`, f0 `3390d763…`,
+f1 `1cf92679…` — all match the slice-19 reference
+hashes); slice-7 suite ALL IDENTICAL (retry 15000f
+`0d835d95…`, mid5000 `2ab1bb5d…`, play-right
+`b3cb6c8b…`, death 3000f `632b2eaf…` — all match).
+`git status` clean of build artifacts / `.gb` / `.sav` /
+binaries / `__pycache__` (only `.c` sources in `tools/`).
+
+§4 **Door / clear-chain entry: still NOT found (NO-GO,
+no new door lead).** No `ldh [$ff90],a` (hStateTimer)
+write exists anywhere in the new carves, and no
+reference to bank-1 `$56c3` (the inferred door path's
+timer-26 setter). The four `ld [$c105],a` writes in
+the new carves set states `$53` (83, at `$6274`),
+`$37` (55, at `$632c`), `$21` (33, at `$7661`) and
+`$36` (54, at `$7708`) — none is 46, consistent with
+slice 18's DEAD 91→46 link. Note the trap, recorded
+so it is not re-run as a lead: `$7651`'s `$21` is a
+**`$c105` state** write, NOT timer 33 — timer 33 is
+`$ff90`=`$21`, set only at bank-0 `$09b4`/`$09eb`
+(slice 13 §4). `$7651` is a `$7e3c`-table entry (index
+6), reached from `$7329` (`jp z,$7651`, slice 19's
+`$7073`-region carve); it sets `[$c10a]`=1,
+`[$c10f]`=1 and calls `$7c88`. No completion attempt
+was run. Unresolved from this slice (inferred, not
+verified): the `$7e3c` table's own reader (no
+`ld hl,$7e3c` found in carved bank-10 code — the
+`$7e3c` hit in `src/bank10slice19.asm` is hex bank 16,
+a different bank); the `$7f5f` ret / `$4fff` / `$5212` /
+`$7b12` routine entries (unverified); the `$703d`
+6-byte data, `$5167` 3x14B records and `$7aaa` 14B
+record have no `ld hl` reference in carved code.
+
+## Slice 21 — DONE, byte-matching (2026-11-24)
+
+§1 **Bank 9 CLOSED — all gaps carved except the `$ff` tail.**
+`tools/gen_slice21.py` (walk: 7,356 instrs from 68 seeds, 0 `rst $08`
+sites) carved every remaining gap; bank 9 CARVED now covers
+`$4000`–`$6fab`, and the only remaining INCBIN is `$6fac`–`$8000`
+(4,180 bytes, all `$ff` — the bank's last non-`$ff` byte is at
+`$6fa7`). Files: `src/bank9slice21.asm` (5,971 lines);
+`src/` now 71,189 lines (was 65,092 after slice 20).
+
+**The `$4000` dispatch table is 197 entries, not 16 — slice 9
+CORRECTED.** The `$4021`–`$418a` bytes slice 9 called data
+("decodes as garbage") are the table's continuation, entries
+16–196 (`$4001`–`$418a`, A = record byte1 − `$30`, bank-0 `$0bff`
+dispatches any byte1 ≥ `$30`). Non-noop entries: 0 `$418b`, 1
+`$41f2`, 2 `$4259`, 3 `$4292`, 4 `$4657`, 5 `$42cb`, 7 `$46a4`,
+12 `$432b`, 13 `$439c`, 14 `$440d`, 15 `$444d`, 16 `$448d`, 18
+`$44ed`, 19 `$4592`, 20 `$4635`, 24 `$46dc`, 35 `$46dc`, 39
+`$4784`, 41 `$47c2`, 42 `$492e`, 44 `$4955`, 45 `$4691`, 64
+`$49d7`, 65 `$4a92`, 74 `$4b52`, 76 `$4f15`, 103 `$4fbd`, 104
+`$5044`, 105 `$5174`, 106 `$5251`, 107 `$533c`, 108 `$541d`, 109
+`$5507`, 112 `$55e8`, 114 `$582e`, 117 `$5a04`, 118 `$5a49`, 119
+`$5a8e`, 120 `$5ad3`, 178 `$5b18`, 179 `$5bf3`, 180 `$5cce`, 181
+`$5ea1`, 185 `$4fbd`, 187 `$6021`, 188 `$6066`, 189 `$60ab`, 190
+`$60f0`, 191 `$6139`, 196 `$63b1`; all other entries are `$1d29`
+(bank-0 `ret`, a no-op). The table ends at `$418a` because `$418b`
+is entry 0's routine start (partition test).
+`tools/gen_slice9_bank9.py` updated (TABLE9 now built from the ROM,
+197 words, each asserted `$1d29` or `$4000`–`$7fff`, spot-checked
+0=`$418b`/16=`$448d`/196=`$63b1`); `src/bank9.asm` regenerated —
+diff is header comments + 181 added `dw` lines only. **The
+`$448d`/`$44ed`/`$4592`/`$4635` entry mechanism is RESOLVED:** they
+are table entries 16/18/19/20, not orphans (slice 9's "no direct
+caller" is closed by the table itself).
+
+**Handlers `$4691`–`$63f2`** (all 50 table targets + callees):
+`$4691`–`$48df` (entries 45 `$4691`, 24/35 `$46dc`, 7 `$46a4` —
+entry 7's routine was never emitted by slice 9: its span ended at
+`$4691` and `$46a4` sits past that boundary; the `$4691` boundary
+is clean — `$468e` is `jp $169c`, `$4691` starts `call $63f3`),
+`$492e`–`$49a0` (42), `$49d7`–`$4b4d` (64/65), `$4b52`–`$5a02`
+(74/76/103/104/105/106/107/108/109/112/114), `$5a04`–`$63f2`
+(117/118/119/120/178/179/180/181/187/188/189/190/191/196).
+Data pockets, all `ld hl`-referenced (never code): `$48e0`–`$492d`
+(read by `$4823`), `$49a1`–`$49d6` (read by `$4972`), `$4b4e`–
+`$4b51` (read by `$4b6c`, 4 bytes `$f0 $f0 $96 $96`), `$6e63`–
+`$6e69` (read by `$6e41`, 7 bytes `$a8 $f8 $a8 $f8 $a8 $a8 $f8`),
+`$64cb`–`$6573` (169-byte opaque blob — no pointer to it anywhere
+in the ROM; opens `06 00 8a ff 86 ff 8a ff`, then 7-byte groups, then
+`($xx $82)` pairs), `$6d59`–`$6d5a` + `$6d6b`–`$6d6c` (`00 00`
+padding), `$5a03` (1-byte `ret`, entry UNVERIFIED, same class as
+`$6f9b`).
+
+**The `$264a` pocket's entry is RESOLVED.** The `$6182`–`$63b1`
+routines (`$6182`, `$61f4`, `$6266`, `$62cd`, `$6308`, `$636f`, all
+record-builders ending `call $6485; jp $648b`, plus internal
+16-byte copy loops `$61e9`/`$625b`) have no `call`/`jp` to them
+anywhere in the ROM — but bank-0 `$264a` (already carved,
+`src/decomp.asm`, the bank-9 level dispatch) `jp z`'s to all six
+on `[$c725]` (7→`$62cd`, `$18`→`$6308`, `$27`→`$636f`, 0→`$6182`,
+`$0c`→`$61f4`, `$23`→`$6266`). The entry mechanism was in carved
+code all along; the slice-21 walk just had to seed from it.
+
+**Helpers:** `$6402`–`$6411` (HL = `$c200` + `[$c70d]`*16, the
+`$c200` analogue of `$63f3` — no caller found, entry UNVERIFIED),
+`$6412`–`$643d` (push-bc pointer/bit routine, entry UNVERIFIED),
+`$643e`–`$644a` (clear one byte at `$c0a6`+idx, entry UNVERIFIED),
+`$644b`–`$647f` (`jp`'d to from `$5a46`/`$5a8b`/`$5ad0`/`$5b15`/
+`$6063`/`$60a8`/`$60ed`), `$6485`–`$648a` (`inc [$da4a]` ×2;
+called from `$61e3`/`$6255`), `$648b`–`$648f` (`inc [$da46]`;
+`jp`'d to from the six pocket tails).
+
+**`$2b48`-entry-89 region tails** (the slice-17 walk left each
+span a few bytes short; all walk-covered routine continuations):
+`$6962`–`$696a`, `$699a`–`$69ab`, `$6a08`–`$6a10`, `$6a40`–`$6a52`,
+`$6a7d`–`$6a9b`, `$6ac8`–`$6ae6`, `$6b43`–`$6b4b`, `$6b7b`–`$6b8c`,
+`$6be9`–`$6bf1`, `$6c21`–`$6c33`, `$6c5f`–`$6c7d`, `$6caa`–`$6cb6`.
+
+**The `$6eb1` family, entry-UNVERIFIED:** `$6e94`–`$6eb0` (c=`$08`
+scan variant), `$6ed9`–`$6f0b` (c=`$03`), `$6f0c`–`$6f33` (c=`$07`,
+falls through to `$6f34`), `$6f65`–`$6f9a` (position-check helper),
+`$6d6d`–`$6d8a` (the `$6d47` word's routine). All decode cleanly
+and belong to the called `$6eb1` family, but no `call`/`jp` to any
+of them exists anywhere in the ROM (whole-ROM byte search, zero
+hits each), so all five are carved as code with entry UNVERIFIED
+(same class as slice 18's `$684f`/`$6893`/`$68d7`).
+
+**`$664a`/`$6d33` tables are 10 entries, not 8 — slice 17
+CORRECTED.** Evidence: the `[$c10a]` writers in the carved bank-9
+routines max out at 9 (`$6b63` writes 9; the `$6696` remap outputs
+max 9), and the words at `$665a`–`$665d` / `$6d43`–`$6d46` are
+`$684f`/`$6893` — the slice-18 map-sample routines, the same
+family as the table routines. Both tables' readers index by
+`[$c10a]`*2 with no bounds check (`$6642`/`$6d27`), so entries
+8/9 are live. `tools/gen_slice17.py` updated (TABLES9 extended,
+`$684f`/`$6893` added as walk seeds) and re-run — diff is only
+the two table sections (bank-31/bank-0 files byte-identical).
+The trailing words `$665e` (`$68d7`) and `$6d47` (`$6d6d`) are
+NOT claimed as entry 10: no `[$c10a]`=10 writer exists in carved
+code, so `$68d7`/`$6d6d` stay entry-UNVERIFIED (emitted as single
+`dw` with that note). The 11-entry alternative stays open — a
+live `[$c10a]` watch during a `$6574`/`$6cce` dispatch could
+settle it.
+
+§2 **Byte-match proof.** Clean `make` (`rm build/game.gb` first)
+rebuilds SHA-1 `397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero
+diffs vs `roms/Donkey_Kong_World_Rev1_SGB.gb` — **first try, no
+build failures.** `tools/gen_banks.py` CARVED diff vs git was
+checked BEFORE building (36 tuples added by insertion only, 0
+dropped — the slice-18 lesson, applied; the `(0x4000,0x4021)`
+tuple was left untouched and `(0x4021,0x418B)` added beside it).
+`src/banks.asm` regenerated (68 INCBIN lines left; bank 9's only
+one is `$6fac`–`$7fff`). `git status` clean of build artifacts /
+`.gb` / `.sav` / binaries / `__pycache__` (only `.py`/`.asm`
+sources changed/added).
+
+§3 **Door / clear-chain entry: still NOT found (NO-GO, no new door
+lead).** Zero `ldh [$ff90],a` (hStateTimer) writes and zero
+`[$c105]` writes in the whole new carve (grep over the 7,356-instr
+walk — `tools/survey21_coverage.py`). No handler in bank 9 writes
+a clear-chain timer (23/26/33/42), and no reference to bank-1
+`$56c3` (the inferred door path's timer-26 setter). No completion
+attempt was run. Two new open notes from this slice (inferred, not
+verified): (a) the `$4000` table covers A 0–196, but bank-0 `$0bff`
+dispatches any record byte1 ≥ `$30`, i.e. A up to 207 — A 197–207
+would read handler bytes (`$418b`+ as `dw`) as table entries, which
+is undefined behavior in the original ROM; whether record byte1 can
+reach `$f5`+ live is unverified. (b) The `$68d7`/`$6d6d` entry
+question above (11-entry alternative).
+
+§4 **Nacre results.** `tools/run_slice5_regression.sh` and
+`tools/run_slice7_cases.sh` on the final build, original vs rebuilt
+identical in every case (framebuffer hash + state trace + save):
+slice-5 suite ALL IDENTICAL (600f `1cf92679…`, 900f `39ffd5ee…`,
+3600f `88515f4e…`, 12000f `92d2e185…`, s8 `92d2e185…`, f0
+`3390d763…`, f1 `1cf92679…` — all match the slice-19/20 reference
+hashes); slice-7 suite ALL IDENTICAL (retry 15000f `0d835d95…`,
+mid5000 `2ab1bb5d…`, play-right `b3cb6c8b…`, death 3000f
+`632b2eaf…` — all match).
+
+§5 **Verified vs inferred.** VERIFIED: the 197-entry `$4000`
+table (ROM bytes + partition test at `$418b` + spot checks);
+`$448d`/`$44ed`/`$4592`/`$4635` as table entries 16/18/19/20;
+the `$264a` pocket entry (bank-0 `$264a` `jp z` targets, already
+carved); the `$664a`/`$6d33` 10-entry extent (max written
+`[$c10a]` = 9 across all carved bank-9 routines + `$6696` remap
+outputs); the `$48e0`/`$49a1`/`$4b4e`/`$6e63` data pockets (`ld
+hl` references inside neighboring routines); the `$644b`/`$6485`/
+`$648b` entries (`jp`/`call` sites in the new carve); byte-match
++ both regression suites on the final build. INFERRED (not
+verified): the `$68d7`/`$6d6d` non-entry-10 verdict (rests on "no
+`[$c10a]`=10 writer in carved code" — a spawn path outside bank 9
+could still set 10); the `$64cb` blob's internal structure; the
+`$48e0`/`$49a1` table record structures (emitted as plain `db`);
+the entry mechanisms of `$6402`/`$6412`/`$643e`/`$6e94`/`$6ed9`/
+`$6f0c`/`$6f65`/`$6d6d`/`$5a03` (clean decodes, zero callers found);
+whether record byte1 can reach `$f5`+ live (the A 197–207 hole).
+
+§6 **What the next slice should do.** Bank 9 alone filled this
+slice, so the next bank is slice 22's job — **bank 4 first, not
+bank 6.** Justification (surveyed this slice): bank 4 has two
+concrete bank-0 entry points (`$2d2d` → `ld hl,$5f30`, `$356f` →
+`ld hl,$67b0`, both after `ld a,$04; rst $10`, both 128-byte VRAM
+copies via `$106e` — bank 4 is graphics/table data with known
+readers, last non-`$ff` at `$76af`). Bank 6 is the run-1 stage
+data (35 stage pointers from the bank-5 table, `$4000`–`$71a1`,
+last non-`$ff` at `$7364`) — compressed level data that slice 4
+already decided stays INCBIN as data, so carving it is mostly
+emitting `db` with little new mechanism. Bank 4's `$5f30`/`$67b0`
+copies (what tiles, for which screens) are the concrete next
+question; bank 6 follows after. Also open: the `$68d7`/`$6d6d`
+11-entry question (live `[$c10a]` watch) and the A 197–207 hole
+(live record-byte1 values).
+
+## Slice 22 — DONE, byte-matching (2026-11-24)
+
+§1 **Bank 4 CLOSED — tile graphics data, not code.** `src/` now 72,096
+lines (was 71,189 after slice 21). New files `src/bank4.asm` (906
+lines, 875 tiles), `tools/gen_slice22.py`, `tools/survey22_bank4.py`.
+
+**Survey (reproducible: `python3 tools/survey22_bank4.py`).** Bank 4 is
+2bpp tile data, $4000-$76af = 14,000 bytes = 875 tiles of 16 bytes;
+last non-`$ff` byte at `$76af`, `$76b0-$7fff` all `$ff` padding (stays
+INCBIN). Evidence:
+- Only two `ld a,$04; rst $10` sites exist in the whole ROM, both in
+  bank 0, and both use bank 4 purely as a copy source, never as code.
+  No `call`/`jp`/`jr`/table target into bank 4 exists anywhere; both
+  mappings are transient copy windows (bank restored immediately
+  after), so no bank-4 byte can ever execute. The immediate-bank
+  survey (whole ROM: `ld a,imm; rst $10` sites) selects bank 4
+  exactly twice; the 882 other `rst $10` bytes are mostly data
+  (the `pop af; rst $10` bank-restores excepted, which restore the
+  previously mapped bank and can never introduce bank 4).
+- The bytes are tiles: `$4000` starts with a blank tile, then clean
+  glyphs (tiles 1-7 render as digit shapes 0/1/2/3/4/5/6); `$5f30`
+  and `$67b0` are 16-byte aligned (tiles 499 and 635). Opcode counts
+  per 4 KiB are at noise level (ret 0-6, call 0-1, jp 0-6, no `jp
+  (hl)`); `gb_rd` walks from `$4000`/`$5f30`/`$67b0` hit invalid
+  opcodes (`$fc`/`$10`) within 102-1,393 instructions — linear
+  decode of tile bytes, not code.
+- **CORRECTIONS to the slice-22 task brief.** `$106e` is MemcpyC
+  (copy C bytes), not MemcpyBC; and `$356f` is NOT a 128-byte copy
+  via `$106e`: `LoadTilesFromBank4` (`$356f`, called from bank-1
+  `$4e20`) does HL=`$67b0`, DE=`$8000`, BC=`$0300`, `call MemcpyBC`
+  — 768 bytes = 48 tiles to VRAM `$8000`. Only the `$2d2d` copy is
+  128 bytes via `$106e` (routine `$2cc1`, called from bank-0
+  `$0e72`: HL=`$5f30`, DE=`$8480`, C=`$80`, `call $106e` — 8 tiles
+  to VRAM `$8480`).
+- The `$1832`-handler `ld hl,$5f30` sites (bank-0
+  `$18aa`/`$1965`/`$198e`/`$1b72`) only STORE the address `$5f30`
+  into the `$da71` pointer table (`$18cf` writes HL as a 16-bit
+  value, it does not dereference it); which bank is mapped when
+  that pointer is consumed is unresolved, and the `$10dd` consumer
+  maps bank `$0b`/`$1d`, so those are NOT claimed as bank-4 reads.
+  The only proven bank-4 reads are the two VRAM copies above.
+
+**Carve.** `src/bank4.asm` emits `$4000-$76af` as `db`, one 16-byte
+tile per line with a tile-number comment, split into five sections
+at the two proven copy sources (`Bank4_Tiles_5F30`,
+`Bank4_Tiles_67B0` labels on the 128-byte and 768-byte blocks).
+No code is claimed anywhere in the bank. `tools/gen_banks.py`
+CARVED gained `4: [(0x4000, 0x76B0)]` — diff checked BEFORE building
+(insertion only, 0 dropped); `src/banks.asm` regenerated (bank 4's
+only remaining INCBIN is the `$76b0-$7fff` `$ff` tail);
+`INCLUDE "bank4.asm"` added to `src/main.asm`. What the byte-match
+check caught: the generator's own assertion caught an arithmetic
+slip in its docstring before any build ran (14,000 bytes = 875
+tiles, not 14,256/891).
+
+§2 **The `$68d7`/`$6d6d` 11-entry question — SETTLED live (slice 21
+CORRECTED).** Slice 21 said the `$664a`/`$6d33` tables are 10 entries
+because no `[$c10a]`=10 writer exists in carved code. That is now
+overturned: `[$c10a]` DOES reach 10 live.
+- `tools/gb_watch … c10a=0a`: 0 hits in 6000f of 1-1 gameplay
+  (progress-1 save, Start+A+A); **3 hits in the 30000f idle attract
+  run** (frames 7720, 25053, 25061, all state 18 timer 6).
+- Pass-2 refine of frame 7720: the writer is bank-0 `$2a39`
+  (`ld [de],a` in the `$2a38` 32-byte copy loop that copies a `$c200`
+  record to `$c0f7` — `[$c10a]` is the record's byte 19). The value
+  10 comes from stage data via that copy, not from any carved bank-9
+  routine — which is why slice 21's carved-code writer search found
+  nothing. At the write, HL=`$c234` (source byte `$c233`, record 1
+  byte 19), A=`$0a`.
+- The readers (`$6642`/`$6d27`) index by `[$c10a]`*2 with no bounds
+  check (slice 21), and both trailing words are real routine starts
+  with identical prologues (`ld hl,$c112; ld a,$10; ld [hl+],a; …`,
+  `$68d7` in slice 18's `$684f` carve, `$6d6d` in slice 21). So the
+  tables are **11 entries**, entry 10 = `$68d7` / `$6d6d`. Remaining
+  gap (small): no direct observation of the entry-10 jump itself —
+  that would need a PC watch on the `$6642`/`$6d27` dispatch; the
+  live value + unbounded index + routine starts is the evidence.
+
+§3 **Record byte1 `$f5`+ — SETTLED for sampled flows (slice 21's A
+197-207 hole).** `tools/gb_wramdump` scans of `$db15` byte1 (32
+records, dumps in `build/nacre-test/slice22/play/`):
+- 1-1 run (6000f, progress-1 save, dumps every 500f): max byte1 =
+  `$00` — `$db15` records are all zero in 1-1, as slice 9 found.
+- Idle attract run (30000f, dumps every 1000f): genuine record
+  byte1s max at `$b0` (176 → A = 128, inside the 197-entry table);
+  values seen {`$42`, `$59`, `$5a`, `$5e`, `$7f`, `$b0`} (frames
+  13000/14000/17000, state 18 timer 8).
+- The only byte1 values ≥ `$f5` are the `$ff` fill at frame 16000
+  (state 18, timer 29): 508 of the 512 `$db15-$dd14` bytes are `$ff`
+  (only records 3/12 keep real byte1s, `$b0`/`$7f`) — a transient
+  fill, not record data. And `$0bff`'s only caller chain is `$0862`
+  ← `$0841` (a state-16 timer step: `$083e` IncStateTimer, `call
+  $0862`, `jp $1528`), so the fill in state 18 is never dispatched
+  on. **Verdict: the A 197-207 hole is not reachable via live
+  records in the sampled flows** (1-1 + 30000f attract) — stated
+  for those flows, not as a universal impossibility.
+
+§4 **Door / clear-chain entry: still NOT found (NO-GO, no new door
+lead).** Bank 4 has no code, so it writes no hStateTimer (`$ff90`)
+and no `[$c105]`; nothing in this slice touches the clear chain.
+No completion attempt was run (same NO-GO as slices 15-21). Slice
+22's contribution to the door hunt is the two slice-21 notes closed
+above (§2/§3), not a new lead.
+
+§5 **Byte-match proof.** Clean `make` (`rm build/game.gb` first)
+rebuilds SHA-1 `397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero
+diffs vs `roms/Donkey_Kong_World_Rev1_SGB.gb` — **first try, no
+build failures.** `git status` clean of build artifacts / `.gb` /
+`.sav` / binaries / `__pycache__` (only `.py`/`.asm` sources
+changed/added).
+
+§6 **Nacre results.** `tools/run_slice5_regression.sh` and
+`tools/run_slice7_cases.sh` on the final build, original vs rebuilt
+identical in every case (framebuffer hash + state trace + save):
+slice-5 suite ALL IDENTICAL (600f `1cf92679…`, 900f `39ffd5ee…`,
+3600f `88515f4e…`, 12000f `92d2e185…`, s8 `92d2e185…`, f0
+`3390d763…`, f1 `1cf92679…` — all match the slice-19/20/21
+reference hashes); slice-7 suite ALL IDENTICAL (retry 15000f
+`0d835d95…`, mid5000 `2ab1bb5d…`, play-right `b3cb6c8b…`, death
+3000f `632b2eaf…` — all match).
+
+§7 **Verified vs inferred.** VERIFIED: bank 4 is tile data (survey
+numbers above + the two VRAM-copy readers + zero code entries);
+the `$356f` 768-byte / `$2d2d` 128-byte copy facts (ROM bytes +
+carved callers); `[$c10a]` reaches 10 live (3 hits, writer pinned
+to bank-0 `$2a39` by cycle-step refine); genuine `$db15` byte1s
+max `$b0` in sampled flows; byte-match + both regression suites on
+the final build. INFERRED (not verified): the entry-10 dispatch
+jump itself was not directly observed (live value + unbounded
+index + routine starts is the evidence); which bank's `$5f30` the
+`$1832`-stored pointers address when dereferenced; the `$ff` fill
+at frame 16000's writer (transient, state 18 timer 29 — not
+traced); bank 4's internal tile-set boundaries (no clean split
+found in the zero%/distinct profile; emitted as one run split
+only at the two proven copy sources).
+
+§8 **What the next slice should do.** Bank 4 filled this slice, so
+the next bank is slice 23's job — **bank 15 first.** Justification
+(surveyed this slice): bank 15 has the clearest entry of the
+13/14/15 set — bank-0 `$1d82` `TransferTable0F` (slice 2) selects
+bank `$0f` and reads its `$4000` table, a known reader with known
+table semantics — and the highest code-like opcode density of the
+three (whole-bank ret 22 / call 18 / `jp (hl)` 19 / `rst $08` 23,
+vs 13: 3/5/6/25 and 14: 2/5/5/19), so it may hold code as well as
+tables. Banks 13/14 are level-data streams (bank 13 selected at
+bank-0 `$24a2`, then bytes read via HL into the `$257f`
+decompressor; bank 14 at `$2477`, a byte read as a bank number then
+bank-12 `$4a3e`) with no table structure — mostly `db` when their
+turn comes. Bank 6 stays after them (run-1 stage data, slice 4's
+decision: stays INCBIN as data).
+
+## Slice 23 — DONE, byte-matching (2026-11-24)
+
+§1 **Banks 15, 13, and 14 CLOSED — all transfer/stream data, no
+code.** `src/` now 75,209 lines (was 72,096 after slice 22).
+New files `src/bank15.asm` (1,256 lines, 12,229 bytes),
+`src/bank13.asm` (567 lines, 8,975 bytes), `src/bank14.asm`
+(1,287 lines, 16,292 bytes); `tools/gen_slice23.py`,
+`tools/survey23_bank15.py`, `tools/survey23_banks1314.py`.
+Curated: 194,287 / 524,288 bytes (37.1%, was 29.9%).
+
+**Bank 15 — the `$4000` table, carved first.** `tools/
+survey23_bank15.py` reproduces the numbers. The bank has
+exactly ONE entry point in the whole ROM: bank-0 `$1d82`
+`TransferTable0F` (slice 2) is the only `ld a,$0f; rst $10`
+site anywhere. It maps bank `$0f`, reads the `$4000` table
+at A*2, follows the block pointer, and for each of the
+block's count sub-pointers calls `$16c2` `FrameCopy16c2`
+(bank 0, already carved). No `call`/`jp`/`jr`/table target
+into bank 15 exists anywhere else, so no bank-15 byte can
+ever execute. The table is **74 entries** (dw, `$4000`–
+`$4093`): entry 74 would read `$4094`, which is block
+8/15/31's start (count byte `$01`, then `dw $4097`) — the
+partition test, same pattern as slice 21's bank-9 `$418b`
+boundary. 58 distinct blocks (`[count][count x dw
+sub-pointer]`), 105 distinct sub-specs: 6-byte `$16c2`
+headers `[dst lo, dst hi, B=rows, C=cols, src lo, src hi]`
+— B rows × C bytes copied from src, dst advancing `$20`
+per row (VRAM tilemap stride). Zero fill specs (D==0 never
+occurs). Two specs copy FROM VRAM instead of ROM: `$48c4`
+(dst `$9b80`, src `$9a20`, 1×32) and `$56bb` (dst `$9a40`,
+src `$98a0`, 7×32) — tilemap-to-tilemap copies, no ROM data
+span. The union of table + blocks + headers + src data
+spans covers `$4000`–`$6fc4` with **zero gaps** (12,229
+bytes); shared blocks (e.g. `$40c8` for entries 1–7 and 9)
+and shared data spans are the same bytes, never
+conflicting owners. Last non-`$ff` byte at `$6fc4`;
+`$6fc5`–`$7fff` all `$ff` padding (stays INCBIN). The
+opcode-density counts that made bank 15 look code-like
+(whole-bank ret 22 / call 18 / `jp (hl)` 19) are data
+bytes: the `$4000`–`$5fff` windows hold all of them,
+`$6000`–`$6fff` holds none, and a `gb_rd` walk from the
+sub-targets "succeeds" (11,993 instrs) only by decoding
+tilemap data as instructions. Known literal
+`TransferTable0F` indices (`ld a,imm` before `call $1d82`):
+`$09`/`$0a`/`$0b`/`$0c`/`$0d`/`$0e`/`$1d`/`$1e`/`$20`/`$21`/
+`$23`/`$3f` (bank 0/1/12); other callers pass A from a
+register. All < 74, inside the table. The carve emits the
+table as `dw` lines (symbolic, one label per distinct
+block), each block as a count byte + `dw` lines (one label
+per distinct spec), each spec header as a 6-byte `db` line
+with dst/rows/cols/src decoded in a comment, and the src
+data as plain `db` lines. No code is claimed anywhere in
+the bank.
+
+**Banks 13/14 — the fill (bank 15 closed on the first
+build).** `tools/survey23_banks1314.py` reproduces the
+numbers. Each has exactly ONE `ld a,$xx; rst $10` site in
+the whole ROM, both inside bank-0 `$2470` (the stream
+routine): bank 13 at `$24a2` (B in `[$80,$af)`,
+decompressor input via `$257f`), bank 14 at `$2477`
+(H >= `$7e`, the `$7e00` record table). Opcode counts at
+noise level; `gb_rd` walks from `$4000` derail in 11
+(bank 13) / 7 (bank 14) instructions. Bank 13:
+`$4000`–`$630e` stream data as plain `db`, `$630f`–`$7fff`
+`$ff` padding (stays INCBIN). Bank 14: `$4000`–`$7dff`
+stream data as plain `db`, then `$7e00`–`$7fa3` a
+**140-entry table of 3-byte records `[bank][ptr lo][ptr
+hi]`**, all 140 plausible at alignment `$7e00` and zero at
+`$7e01`/`$7e02` — the table `$2470` reads (record banks
+{`$13`,`$14`,`$15`,`$16`,`$18`}, ptrs `$4000`–`$7c7c`),
+emitted as structured `db bank` / `dw ptr` lines;
+`$7fa4`–`$7fff` `$ff` padding (stays INCBIN). Bank 14's
+low region shares bank 13's 16-byte opening (`81 81 42 42
+24 24 18 18…`) but is otherwise different bytes (only
+6,592/15,872 identical). **Honest gap:** no reader was
+found for bank 14's `$4000`–`$7dff` region — the only
+bank-14 mapping is the transient `$2470` one, gated on
+H >= `$7e`, and the record banks never include `$0e` —
+so it is carved as plain `db` with the reader unknown,
+not papered over with a claimed consumer.
+
+§2 **Byte-match proof.** Clean `make` (`rm build/game.gb`
+first) rebuilds SHA-1
+`397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero diffs
+vs `roms/Donkey_Kong_World_Rev1_SGB.gb` — **first try, no
+build failures, for the bank-15-only build and again for
+the final three-bank build.** `tools/gen_banks.py` CARVED
+diff checked BEFORE each build (3 tuples added total,
+insertion only, 0 dropped). `src/banks.asm` regenerated
+(68 INCBIN lines left — each closed bank keeps only its
+`$ff` tail as INCBIN). `git status` clean of build
+artifacts / `.gb` / `.sav` / binaries / `__pycache__`
+(only `.py`/`.asm` sources changed/added). One generator
+bug caught by its own run before any build: `emit_db_bank`
+referenced `rom` without taking it as a parameter
+(`NameError`); fixed by passing it in.
+
+§3 **Door / clear-chain entry: still NOT found (NO-GO, no new
+door lead).** Banks 13/14/15 contain no code, so they write
+no hStateTimer (`$ff90`) and no `[$c105]`; nothing in this
+slice touches the clear chain. No completion attempt was
+run (same NO-GO as slices 15–22).
+
+§4 **Nacre results.** `tools/run_slice5_regression.sh` and
+`tools/run_slice7_cases.sh` on the final build, original vs
+rebuilt identical in every case (framebuffer hash + state
+trace + save): slice-5 suite ALL IDENTICAL (600f
+`1cf92679…`, 900f `39ffd5ee…`, 3600f `88515f4e…`, 12000f
+`92d2e185…`, s8 `92d2e185…`, f0 `3390d763…`, f1 `1cf92679…`
+— all match the slice-19/20/21/22 reference hashes);
+slice-7 suite ALL IDENTICAL (retry 15000f `0d835d95…`,
+mid5000 `2ab1bb5d…`, play-right `b3cb6c8b…`, death 3000f
+`632b2eaf…` — all match).
+
+§5 **Verified vs inferred.** VERIFIED: bank 15's 74-entry
+table extent (partition test at `$4094`); the 58-block /
+105-spec structure (every pointer in-bank, every count
+1–9, zero-gap union coverage `$4000`–`$6fc4`); the two
+VRAM-src specs (`$48c4`/`$56bb`); the single-entry-point
+facts for all three banks (whole-ROM `ld a,$xx; rst $10`
+surveys: one site each); bank 14's 140-record table
+(140/140 plausible at one alignment, 0/140 at the other
+two); byte-match + both regression suites on the final
+build. INFERRED (not verified): bank 13/14's `$4000`+
+regions are decompressor/stream data (reader + content
+shape, no per-stream boundaries established — emitted as
+plain `db`, no stream starts claimed); bank 14's
+`$4000`–`$7dff` reader is unknown (no reader found, stated
+as a gap, not a claim); the `$16c2` "rows × cols" reading
+of B/C (from the carved bank-0 routine, not from a live
+transfer watch).
+
+§6 **What the next slice should do.** Banks 13/14/15 are
+closed, so the next bank is slice 24's job — **bank 6
+first** (run-1 stage data, 35 stage pointers from the
+bank-5 table, `$4000`–`$71a1`, last non-`$ff` at `$7364`;
+slice 4's decision stands: mostly `db`, compressed level
+data with the 5-byte header + RLE + LZ + patch-list shape
+— carve it as structured `db` if the header/record
+boundaries can be pinned, plain `db` if not). Then banks
+17, 19–22, 25–28, 30, by whatever the `$2b48` handler /
+stage-table dependencies point at. The door hunt's open
+item is unchanged: the clear chain's ENTRY (timer 33/42)
+and the parasol collection (hand-written schedule).
+
+## Slice 24 — DONE, byte-matching (2026-11-24)
+
+§1 **Eleven banks CLOSED — all data, no code.** `src/` now 86,569
+lines (was 75,209 after slice 23). Curated: 344,932 / 524,288
+bytes (65.8%, was 37.1%) — this slice alone adds 150,645 bytes.
+New files `src/bank6.asm` (947 lines, 13,157 bytes),
+`src/bank17.asm` (751 lines, 10,736 bytes), `src/bank19.asm`
+(960 lines, 15,232 bytes), `src/bank20.asm` (964 lines, 15,290
+bytes), `src/bank21.asm` (930 lines, 14,737 bytes),
+`src/bank22.asm` (1,017 lines, 16,140 bytes), `src/bank25.asm`
+(647 lines, 10,210 bytes), `src/bank26.asm` (782 lines, 12,381
+bytes), `src/bank27.asm` (1,280 lines, 16,041 bytes),
+`src/bank28.asm` (876 lines, 11,335 bytes), `src/bank30.asm`
+(2,195 lines, 15,386 bytes); `tools/gen_slice24.py`,
+`tools/survey24_bank6.py`, `tools/survey24_bank17.py`,
+`tools/survey24_banks1922.py`, `tools/survey24_banks2530.py`,
+`tools/survey24_bank27.py`, `tools/survey24_bank28.py`.
+Banks closed so far (18): 4, 6, 9, 10, 13, 14, 15, 17, 19, 20,
+21, 22, 25, 26, 27, 28, 30, 31. Each closed bank keeps only its
+`$ff` tail as INCBIN (68 INCBIN lines left in `src/banks.asm`).
+
+**Bank 6 — run-1 stage data, $4000-$7364.** `tools/
+survey24_bank6.py` reproduces the numbers. Stages 45–79 from
+the bank-5 pointer table (slice 4); the 35 starts tile the bank
+contiguously (sizes 213–555 bytes), stage 79 ($71a1) running 451
+bytes to the last non-`$ff` byte at $7364 ($00); $7365–$7fff
+all `$ff` padding (stays INCBIN). The ONLY `ld a,$06; rst $10`
+site in the whole ROM is bank-0 $2615, inside SwitchBankByE
+($2611: E < $2d → ret, else bank 6; E >= $50 → bank $12) — bank
+6 is reached only via LoadStage ($24e7) → SwitchBankByE, as
+decompressor input; no bank-6 byte can ever execute. `gb_rd`
+walk from $4000 derails in 101 instructions; dw values pointing
+in-bank are 1,304/16,383 (~8%, below the ~25% random rate), so
+no embedded pointer table. The 5-byte stage header is VERIFIED
+from LoadStage itself: after mapping the stage bank it reads 5
+bytes from the stage start into [$c705], [$da45], [$da4b],
+[$c711], [$c712] in order ($2516–$2527), and only then is the
+rest decompressed. Header value sets across the 35 stages:
+byte0 {0,1,2,3}, byte1 {7..35}, byte2
+{1,2,4,6,7,9,11,17,18,22,26,31}, byte3
+{0x96,0xc8,0xfa,0x2c,0x64}, byte4 mostly $00 (a few $01). The
+carve emits one label per stage (Bank6_Stage45..79), the 5 header
+bytes as one `db` line with the WRAM destinations in a comment,
+then the body as plain `db`.
+
+**Bank 17 — tile data, $4000-$69ef.** `tools/
+survey24_bank17.py` reproduces the numbers. Three `ld a,$11;
+rst $10` sites, all in bank-0 $3202–$32fc (state-16 tile-load
+routines). $4000: 8-entry dw table, read by $3202 ($4000+B*2,
+B = queue B from QueueFetchBC $0dda, gated on C==3); entries
+$4070,$4070,$4530,$4870,$4d30,$4070,$4070,$4070; the $3202 copy
+is $04c0 bytes to VRAM $8040 (MemcpyBC $1065). Entry 8 would
+read $4010 = $0001, an invalid pointer — the partition test.
+C==3 queue B values are {0,1,2,4} (enumerated from the bank-12
+queue table $4f97, 331 pairs), all inside the 8-entry table.
+$4010–$406f: 24 4-byte records [flag][00][dw block ptr] in 3
+groups of 8 ($4010 by $323d, $4030 by $3291 which sets
+[$c809]=$4030, $4050 by $32fc — `ld de,$4050; jr $3294`, the
+only such site in the ROM). Each reader does base+B*4, tests
+the flag byte (0 = skip via $1778), and copies 16 bytes
+(MemcpyC $106e) from ptr+counter*8 ($323d, slots at $8040) or
+ptr+counter*16 ($3291/$32fc, slots at $8500) to $c809 — the
+pointer arithmetic was re-checked by hand after a first
+misread (the popped HL is counter*8/16 WITHOUT the $8040/
+$8500 base, which is added only for the saved [$da71] pointer;
+the record dw IS the bank-17 pointer). All 24 records are
+plausible (flag in {0,1}, b1 $00, dw in
+{$5110,$55d0,$5970,$5e30,$6530}); flags repeat per group as
+[1,1,1,1,1,1,0,0]; groups 1 and 2 have identical dw sequences.
+Record 24 ($4070) breaks the pattern (dw $0000) — the
+partition test. $4070–$69ef: data blocks as plain `db` with
+labels at the 9 starts the tables reference ($4070/$4530/
+$4870/$4d30 from the $4000 table; $5110/$55d0/$5970/$5e30/
+$6530 from the records). `gb_rd` from $4000 derails in 42
+instructions.
+
+**Banks 19–22 — stream data.** `tools/
+survey24_banks1922.py` reproduces the numbers. No `ld a,$xx;
+rst $10` site for any of them anywhere in the ROM; the only
+mapping is bank-0 $2470's H >= $7e branch, which reads a
+bank-14 record [bank][ptr], maps the record bank, and follows
+ptr+DE as a Decompress $257f / MemcpyC $106e source (bank-12
+$4a3e beforehand only reads a $4eeb table byte into E, never
+jumps into the record bank). Record counts / ptr ranges: bank
+19: 25 records $4000–$7ade; bank 20: 36 records $4000–$79a8;
+bank 21: 28 records $4000–$77c6; bank 22: 28 records
+$4000–$7c7c. `gb_rd` walks from $4000 derail in 75 / 24 / 43 /
+192 instructions; the code-like opcode counts (bank 19 $5000:
+ret 21 / rst $08 87; bank 22 $6000: jp 45) are data bytes, as
+in slice 23's bank 15 — no call/jp/jr/table target into any of
+these banks exists. Carved as plain `db` $4000 to the last
+non-`$ff` byte (19: $7b7f; 20: $7bb9; 21: $7990; 22: $7f0b);
+`$ff` tails stay INCBIN. No per-stream boundaries claimed.
+
+**Banks 25/26 — transfer data.** `tools/
+survey24_banks2530.py` reproduces the numbers. No `ld a,$xx;
+rst $10` site for either bank anywhere; the only mapping is
+bank-0 $1da7 TransferTable1E, whose 7-byte items name the
+source bank (bank-30 $74e5 table: 3 items from bank $19, src
+$6103/$642c/$65cc, all decompress, len $0000; 14 items from
+bank $1a, src $4000–$698a). `gb_rd` walks derail in 27 / 32
+instructions. Carved as plain `db` $4000 to the last non-`$ff`
+byte (25: $67e1; 26: $705c); `$ff` tails stay INCBIN.
+
+**Bank 30 — SGB packets + tables, $40e0-$7cf9.** `tools/
+survey24_banks2530.py` reproduces the numbers. $40e0–$470f:
+SGB packets — the slice-3 $4000 table has 112 entries / 98
+distinct ptrs; each packet is 16*n bytes (n = first byte & 7;
+97 x n=1, 1 x n=2 at $4590, spanning 32 bytes to $45b0);
+spans tile $40e0–$4710 with zero gaps; emitted as `db` with a
+label per distinct packet start. $4710–$64e4 and $6de5–$74e4:
+plain `db`, no reader pinned (honest gap, cf. slice 23's
+bank-14 low region). $64e5–$6de4: 10 pages x 256 bytes, read by
+LoadStagePtr ($1c91/$1cd9: HL=$64e5+DE, DE=(D<<8)|E, D in 0..9
+from the $1c9c/$1cca branch logic, E a byte from the caller's
+table; 16 bytes copied to $da61). $74e5–$7546: 49-entry dw
+table (TransferTable1E index; (0x7547-0x74e5)/2 = 49 exactly).
+$7547–$7cf9: 39 distinct lists [count][count x 7-byte items:
+bank, src dw, dst dw, len lo, len hi+flags] (bit 7 of the last
+byte selects Decompress $257f, len $0000 means
+DecompressPrefixed); 276 items total; lists tile $7547–$7cfa
+with zero gaps; source banks
+{$04,$0d,$0e,$11,$13,$14,$16,$18,$19,$1a,$1b,$1c}. Counts run
+1..17 (the $7987 list has 17 — a first probe's <=16 cap was
+wrong; all 17 items parse cleanly: bank bytes <= $1f, src
+in-bank, dst in VRAM $8c00–$94e0 increasing). This table is
+also what pins banks 25/26's readers (above) and 91 of bank
+27's items (below). $7cfa–$7fff `$ff` padding stays INCBIN.
+
+**Bank 27 — sprite data + table, $4000-$7ea8.** `tools/
+survey24_bank27.py` reproduces the numbers. $4000–$7917:
+plain `db` (tile/sprite data; 91 TransferTable1E items from
+bank $1b, 43 distinct srcs $4000–$732b). $7918–$7971: 45-entry
+dw table read by BuildSpriteEntries ($1dfd: $7918 + A*2 →
+list ptr); entry 45 would read $7972 = $0009 (the first list's
+count byte) — the partition test. $7972–$7ea8: 45 lists
+[count][count x 6-byte items] — [index][b0][b1][b2][b3][b4];
+the index byte selects the $c200 + index*32 slot, the other 5
+bytes fill the 12-byte record (bytes 0–3, byte 7); 215 items
+total; lists tile $7972–$7ea9 with zero gaps. (A first probe
+used 5-byte items and showed phantom gaps; the reader consumes
+1 index + 5 data bytes = 6 per item — the loop at $1e10 reads
+the index byte from the list, then 5 bytes from [DE].) Index
+byte values are 0–14 (15 distinct). `gb_rd` from $4000 derails
+in 1 instruction. $7ea9–$7fff `$ff` padding stays INCBIN.
+
+**Bank 28 — stream-record table + pool, $4000-$6c46.**
+`tools/survey24_bank28.py` reproduces the numbers.
+$4000–$409b: 78-entry dw table, read by bank-0 $143e
+StreamDispatchRecordD ($4000 + C*2 → stream base, C = record
+byte0 & $7f; +B, B = record byte1*2), reached via
+StreamIterateDual $13e7 (which maps bank $1c). Entry 78
+(@$409c) would read $f100 — implausible — so the table is 78
+entries; min plausible target is $409e; entries 0–77 give 56
+distinct targets, all in [$409e, $43b2]. The pool head
+$409c–$409d is `00 f1`, a marker pair, confirming those bytes
+are pool, not table. $409c–$6c46: stream pool as plain `db`,
+labelled at the 56 distinct table targets. The $143e loop walks
+2-byte values with $f0/$f1 high-byte markers ($f0 x71, $f1 x85
+in the pool) and never jumps/calls into the pool. Second
+mapping: bank-0 $2470 B >= $af branch (Decompress $257f input).
+`gb_rd` from $4000 derails in 11 instructions. $6c47–$7fff
+`$ff` padding stays INCBIN.
+
+§2 **Byte-match proof.** Clean `make` (`rm build/game.gb`
+first) rebuilds SHA-1
+`397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero diffs
+vs `roms/Donkey_Kong_World_Rev1_SGB.gb` — **first try, no
+build failures, for the bank-6-only build, the bank-6+17 build,
+the +19–22 build, the +25/26/30 build, and the final 11-bank
+build.** `tools/gen_banks.py` CARVED diff checked BEFORE each
+build (insertion-only each time, 0 dropped). `git status`
+clean of build artifacts / `.gb` / `.sav` / binaries /
+`__pycache__` (only `.py`/`.asm` sources changed/added). Two
+generator bugs caught by their own runs before any build: (a)
+a duplicate `30:` key in CARVED (the slice-3 entry at the
+bottom of the dict) silently overrode the new slice-24 entry,
+so `src/banks.asm` did not move for bank 30 — fixed by
+editing the original line instead, and a duplicate-key check
+is now part of the pre-build verification; (b) `tools/
+gen_slice24.py` grew by appending, which nested the emitter
+calls (main → emit_bank17 → emit_stream_banks → …) and left
+the `if __name__` guard ahead of the emit_bank27/28
+definitions (`NameError` on the first bank-27/28 run) — fixed
+by flattening main()'s call chain and moving the guard to the
+end of the file. Neither bug reached a build.
+
+§3 **Door / clear-chain entry: still NOT found (NO-GO, no new
+door lead).** None of the 11 banks contains code, so none
+writes hStateTimer (`$ff90`) or `[$c105]`; nothing in this
+slice touches the clear chain. No completion attempt was run
+(same NO-GO as slices 15–23).
+
+§4 **Nacre results.** `tools/run_slice5_regression.sh` and
+`tools/run_slice7_cases.sh` on the final build, original vs
+rebuilt identical in every case (framebuffer hash + state
+trace + save): slice-5 suite ALL IDENTICAL (600f
+`1cf92679…`, 900f `39ffd5ee…`, 3600f `88515f4e…`, 12000f
+`92d2e185…`, s8 `92d2e185…`, f0 `3390d763…`, f1 `1cf92679…`
+— all match the slice-19/20/21/22/23 reference hashes);
+slice-7 suite ALL IDENTICAL (retry 15000f `0d835d95…`,
+mid5000 `2ab1bb5d…`, play-right `b3cb6c8b…`, death 3000f
+`632b2eaf…` — all match).
+
+§5 **Verified vs inferred.** VERIFIED: bank 6's 35-stage tiling
+(zero gaps, $4000–$7364) and its single entry point (the $2615
+SwitchBankByE site); the 5-byte stage header's WRAM
+destinations (read straight from LoadStage $2516–$2527);
+bank 17's 8-entry table extent (entry 8 = $0001 partition) and
+C==3 B values {0,1,2,4} from the queue enumeration; bank 17's
+24-record extent (record 24 dw $0000 partition) and the three
+reader bases ($4010/$4030/$4050, the last via the only `ld
+de,$4050` site in the ROM, bank 0 $32fc); banks 19–22/25/26's
+readers ($2470 record banks; TransferTable1E item banks) and
+their zero literal bank-select sites; bank 30's packet tiling
+(zero gaps, $40e0–$4710), its 49-entry table extent
+(arithmetic: (0x7547-0x74e5)/2), and its 39-list zero-gap
+tiling ($7547–$7cfa, 276 items, all items validated); bank 27's
+45-entry table extent (entry 45 = $0009 partition) and its
+45-list zero-gap tiling with 6-byte items (215 items); bank
+28's 78-entry table extent (entry 78 = $f100 partition, pool
+head `00 f1`); byte-match + both regression suites on the
+final build. INFERRED (not verified): bank 6 header byte
+roles (destinations known, meanings not traced); bank 17
+record-phase B bound (8 per group rests on the three reader
+bases + the $4070 pattern break; the queue as a whole has B
+up to 203, and no live record-phase B was traced); bank 17
+block sizes (only the $04c0 copy length and the 16-byte record
+copies are verified); bank 30 $64e5 D ∈ 0..9 (from the
+$1c9c/$1cca branch logic, not verified live); bank 28 pool
+boundaries beyond the 56 table targets (targets overlap into
+a shared pool; +B offsets reach further in); bank 19–22/25/26
+per-stream boundaries (plain `db`, none claimed); bank 30
+$4710–$64e4 / $6de5–$74e4 contents (no reader pinned, stated
+as a gap, not a claim).
+
+§6 **What the next slice should do.** The task list's banks
+are done (6, 17, 19–22, 25–28, 30 all closed this slice), so
+the next slice works the remaining INCBIN: easiest first is
+**bank 5 stage data $40d4–$7fff** (runs 0 and 2 of the stage
+table, same shape as bank 6 — 45 stages in bank 5, 26 in bank
+18; bank 18's run-2 data is $4000–$61b2 plus its tail, and
+bank 24 mirrors bank 18's $4934 table region with its own
+$4000–$4933 stream region — the $2470 record table also points
+23 records at bank 24, ptrs $4000–$4832). Then bank 23
+$4000–$731e (the attract-demo code region is $731f+; the low
+region's reader is the same $2470/record family — check first),
+bank 12 $5dbc–$7fff (credits + tail), bank 1 $5a00–$7fff,
+bank 2/3 gaps ($43b0–$45a8, $48ea–$6211, $6492+), bank 7/8/16
+gaps, and the bank-0 raw regions. The door hunt's open item is
+unchanged: the clear chain's ENTRY (timer 33/42) and the
+parasol collection (hand-written schedule).
+
+## Slice 25 — DONE, byte-matching (2026-11-24)
+
+§1 **Five banks CLOSED + bank-1 code extended.** `src/` now
+90,425 lines (was 86,569 after slice 24). Curated: 397,206 /
+524,288 bytes (75.8%, was 344,932 / 65.8% — INCBIN lengths
+summed directly from src/banks.asm + src/main.asm at both
+heads; the 52,274-byte delta matches the carved bytes
+exactly. Coordinator correction 2026-11-25: the worker's
+345,541 / 397,815 figures counted banks.asm only and missed
+main.asm's 609 INCBIN bytes.) This slice alone adds 52,274 bytes. New files
+`src/bank5slice25.asm` (1,110 lines, 15,235 bytes),
+`src/bank18slice25.asm` (585 lines, 7,863 bytes),
+`src/bank24slice25.asm` (722 lines, 11,250 bytes),
+`src/bank23slice25.asm` (1,039 lines, 13,119 bytes),
+`src/bank12slice25.asm` (304 lines, 4,678 bytes),
+`src/bank1slice25.asm` (93 lines, 129 bytes);
+`tools/gen_slice25.py`, `tools/survey25_bank5.py`,
+`tools/survey25_bank14records.py`, `tools/survey25_bank23.py`,
+`tools/survey25_bank1.py`. Banks closed so far (23): 4, 5, 6,
+9, 10, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
+27, 28, 30, 31. Each closed bank keeps only its `$ff` tail as
+INCBIN.
+
+**Bank 5 — run-0 stage data, $40d4–$7c56.**
+`tools/survey25_bank5.py` reproduces the numbers. $40d4–$41ff
+is 300 bytes of repeating `b2 61` (150 pairs) between the stage
+table ($4000–$40d3, slice 4) and stage 0 ($4200). Stages 0–44
+from the bank-5 pointer table tile contiguously $4200–$7c56
+(sizes 127–640 bytes); stage 44 ($7b64) runs 243 bytes to the
+last non-`$ff` byte at $7c56 ($00); $7c57–$7fff is all `$ff`
+padding (stays INCBIN). The ONLY `ld a,$05; rst $10` site in
+the whole ROM is bank-0 $24e7 (LoadStage) — bank 5 is reached
+only via LoadStage → SwitchBankByE ($2611), as decompressor
+input; no bank-5 byte can ever execute. `gb_rd` from $4000
+derails in 119 instructions; dw values pointing in-bank are
+1,797/16,383 (~11%, below the ~25% random rate), so no embedded
+pointer table. Header value sets across the 45 stages: byte0
+{0,1,2,3,4}, byte1 {5..27}, byte2
+{0,3,5,10,12,13,14,16,19,21,22,28,30,32}, byte3
+{100,150,200,250} ($64,$96,$c8,$fa), byte4 all $00. The carve
+emits one label per stage (Bank5_Stage0..44), the 5 header bytes
+as one `db` line with the WRAM destinations in a comment, then
+the body as plain `db`.
+
+**Bank 18 — run-2 stage data, $4000–$6206.**
+Stages 80–105 from the bank-5 table tile $4000–$6206 (sizes
+85–622 bytes); stage 105 ($61b2) runs 85 bytes to the last
+non-`$ff` byte at $6206 ($00); $6207–$7fff is all `$ff`
+(stays INCBIN). The $4934–$4c84 span is ALREADY carved as 106
+8-byte records in `src/bank18.asm` (slice 7's decimal/hex slip
+— those bytes are stage 87's body + stage 88's header byte 0,
+not a stage table): stages 86 ($49b7–$4b17) and 87
+($4b18–$4c82) lie entirely inside that span, so the stage carve
+skips $4934–$4c84 (section 1 covers $4000–$4933, section 2
+covers $4c84–$6206 with stage 88 continued from its 2nd byte).
+The ONLY `ld a,$12; rst $10` site is bank-0 $261c (inside
+SwitchBankByE, E >= $50 → bank $12) — bank 18 is decompressor
+input only, no bank-18 byte can execute. `gb_rd` from $4000
+derails in 17 instructions. Header value sets: byte0 {0..4},
+byte1 {5..28}, byte2 {3,4,6,8,9,15,20,24,26,33}, byte3
+{100,150,200,250}, byte4 all $00.
+
+**Bank 24 — stream data, $4000–$4933 + $4c84–$6f41.**
+`tools/survey25_bank14records.py` reproduces the record counts.
+$4000–$4933: 23 bank-14 $7e00 records (indices 117–139) point
+here, ptrs $4000–$4832 in 96-byte steps (last $4832, 14 short of
+the stride); read by bank-0 $2470 (H >= $7e branch) as
+Decompress $257f / MemcpyC $106e input. The bank is mapped only
+by bank-0 $26f6/$2773/$289e, all followed by ROM0 calls or data
+reads — no call/jp into bank 24 exists. `gb_rd` from $4000
+walks 1,684 instructions through data bytes (spurious; opcode
+density in $4000–$4fff is ret 0 / call 0). $4c84–$6f41: plain
+`db`, NO reader pinned (honest gap — the $2470 records stop at
+$4832; what reads $4c84–$6f41 is unknown); `gb_rd` walks from
+$4c84/$5000/$6000/$6f00 derail in 10–16 instructions.
+$6f42–$7fff is all `$ff` (stays INCBIN). No per-stream
+boundaries are claimed for either span.
+
+**Bank 23 — attract-demo data, $4000–$731e + $7e12–$7e31.**
+`tools/survey25_bank23.py` reproduces the numbers.
+$4000–$4035: 27-entry dw table read by bank-23 $7387 ($4000 +
+[$ca66]*2; [$ca66] is the queue B byte, written by C-dispatch
+entry 20 $0d6f). Entries 0–26 strictly increasing
+($4036–$41d6); entry 27 would read $0004 (the first block's
+bytes $04 $00) — the partition break. C==20 queue B values
+(enumerated from the bank-12 queue table $4f97, 331 pairs) are
+{0..24, 26} (max 26), so every queue index lands inside the
+27-entry table; B=25 has no queue entry. $4036–$41e5: 27 blocks
+[count][count × 3-byte items: slot, b0, b1], 135 items total;
+every block's slot bytes run 0..count-1 sequentially; blocks
+tile with zero gaps (each block is 1+3*count bytes, ending
+exactly at the next target). The reader ($7395–$73ae) stores
+each item's 2 data bytes to $c20c + slot*32. $41e6–$731e: plain
+`db`, no reader pinned (honest gap); `gb_rd` walks from
+$4000/$5000/$6000/$7000 derail in 7–193 instructions; no carved
+bank-23 code targets this span (own-file control-flow check:
+NONE). $7e12–$7e31: $7e12/$7e18 are 6-byte blocks copied by
+MemcpyC $106e to $d76d/$d77d ($7586/$7591); $7e1e/$7e28 are
+10-byte tables (even/odd counting sequences $30..$42 /
+$31..$43) indexed by a byte ($75f1 / $749e, A = [$c80b]).
+$7e32–$7fff is all `$ff` (stays INCBIN). Bank 23 is mapped by
+state 30 ($290a, dispatches into the carved $731f+ code), by
+$293a (map-then-return, called from bank-23 $7325), and by
+LoadStagePtrWrapper $1c8a (called from bank-23 $76dc) — none of
+those paths jumps into $4000–$731e. (Slice 24 §6's guess that
+the low region's reader is "the same $2470/record family" was
+wrong: NO bank-14 record points at bank 23 — the 140 records
+target only banks 19, 20, 21, 22, and 24.)
+
+**Bank 12 — data, $5dbc–$7001 (4,678 bytes).** Plain `db`.
+Opens with credits-pattern text (spaces + "defgh" / "jklmnof"
+at $5dbc, continuing the $5917–$5dbb credits carve), then binary
+data to the last non-`$ff` byte at $7001 ($04); $7002–$7fff is
+all `$ff` (stays INCBIN). No reader pinned (honest gap); no
+carved bank-12 code targets this span (own-file check: NONE);
+`gb_rd` walks from $5dbc/$6000/$6c00 derail in 4–254
+instructions.
+
+**Bank 1 — code, $5a00–$5a80 (129 bytes, 78 instructions).**
+`tools/survey25_bank1.py` reproduces the numbers. The carved
+bank-1 code ends at $59ff; its last routine ($59c4 loop) falls
+through at $59fd into $5a00, and calls $5a45/$5a76 from
+$59d6/$59dd — the only two control-flow targets into
+$5a00–$79ff anywhere in `src/bank1.asm`. `gb_rd` walk from
+$5a00/$5a45/$5a76 covers $5a00–$5a80 with zero gaps (116
+instructions, no `rst $08`): $5a00–$5a20 loop body (`jr $59c4`
+back into the carved routine), $5a3b helper (called 3× from
+$5a32/$5a35/$5a38), $5a45 (called from $59d6), $5a76 (called
+from $59dd/$5a11) + $5a7c (called from $5a0e/$5a76/$5a79).
+The $5a07/$5a26/$5a70 `call $201d` sites are bank-0 routines.
+$5a81+ is NOT carved here: no walk reaches it, and the only
+ld-pointers past it ($5d48+ tables, $7308 count) are data reads.
+Bank 1's remaining gap is now $5a81–$7fff (9,599 bytes).
+
+§2 **Byte-match proof.** Clean `make` (`rm build/game.gb`
+first) rebuilds SHA-1
+`397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero diffs
+vs `roms/Donkey_Kong_World_Rev1_SGB.gb` — first try for the
+five-bank build, and first try again after adding the bank-1
+code carve. `tools/gen_banks.py` CARVED diff checked BEFORE
+each build (insertion-only each time, 0 dropped; duplicate-key
+check: 31 keys, NONE). `git status` clean of build artifacts /
+`.gb` / `.sav` / binaries / `__pycache__` (only `.py`/`.asm`
+sources changed/added). Two generator bugs caught by their own
+runs before any build: (a) `emit_stages` skipped to the next
+window's END instead of its START, dropping stage 88's
+$4c84–$4e20 remainder (caught by the emitted-byte assertion:
+7,450 != 7,863); (b) the title-block slice was off by one
+(`lines[11:]` instead of `lines[10:]`), dropping stage 80's
+SECTION header so its bytes attached to the bank-18 records
+section and the link failed on overlap — fixed, and the
+five-bank build then byte-matched first try. A first
+`survey25_bank5.py` run caught a hand-typed run-2 stage list
+that was wrong (the table assert failed before any carve) —
+the list now comes from `src/bank5.asm`, verified against the
+ROM.
+
+§3 **Door / clear-chain entry: still NOT found (NO-GO, no new
+door lead).** None of this slice's carves writes hStateTimer
+(`$ff90`), `hGameState` (`$ff8e`), or `[$c105]` — verified by
+grep over all six new files (zero hits). Banks 5/18/24/23/12
+are data; the bank-1 $5a00–$5a80 code touches only
+$[$c809]–$[$c80c] and WRAM $c81c/$c81d. No completion attempt
+was run (same NO-GO as slices 15–24).
+
+§4 **Nacre results.** `tools/run_slice5_regression.sh` and
+`tools/run_slice7_cases.sh` on the final build, original vs
+rebuilt identical in every case (framebuffer hash + state
+trace + save): slice-5 suite ALL IDENTICAL (600f
+`1cf92679…`, 900f `39ffd5ee…`, 3600f `88515f4e…`, 12000f
+`92d2e185…`, s8 `92d2e185…`, f0 `3390d763…`, f1 `1cf92679…`
+— all match the slice-19/20/21/22/23/24 reference hashes);
+slice-7 suite ALL IDENTICAL (retry 15000f `0d835d95…`,
+mid5000 `2ab1bb5d…`, play-right `b3cb6c8b…`, death 3000f
+`632b2eaf…` — all match).
+
+§5 **Verified vs inferred.** VERIFIED: bank 5's 45-stage tiling
+(zero gaps, $4200–$7c56) and its single entry point (the $24e7
+LoadStage site); bank 5's $40d4–$41ff repeating `b2 61`
+pattern (asserted byte-by-byte in the generator); bank 18's
+26-stage tiling (zero gaps modulo the already-carved
+$4934–$4c84 span) and its single entry point (the $261c
+SwitchBankByE site); bank 24's 23-record pinning (indices
+117–139, ptrs $4000–$4832) and its three mapping sites (all
+followed by ROM0 calls/data reads); bank 23's 27-entry table
+extent (partition break at entry 27 + C==20 queue B max 26)
+and its 27-block zero-gap tiling with sequential slots (135
+items); bank 23's $7e12–$7e31 readers (MemcpyC copies and
+byte-table indexes, pinned to carved code); bank 12's
+$5dbc–$7001 extent (last non-`$ff` at $7001); bank 1's
+$5a00–$5a80 code (zero-gap `gb_rd` walk, both call sites in
+carved code, fall-through from $59fd); byte-match on the final
+build. INFERRED (not verified): bank 5/18 header byte roles
+(destinations known from LoadStage, meanings not traced);
+bank 23 $4000-table index range beyond the queue enumeration
+([$ca66] max 26 comes from the queue table, not a live trace);
+bank 23 $7e1e/$7e28 index ranges (unverified); bank 24
+$4c84–$6f41 contents (no reader pinned, stated as a gap);
+bank 12 $5dbc–$7001 contents (no reader pinned, stated as a
+gap); bank 23 $41e6–$731e contents (no reader pinned, stated
+as a gap); bank 1 $5a81+ contents (tables at $5d48+ are
+ld-pointer reads, the rest unanalyzed).
+
+§6 **What the next slice should do.** Banks 5, 12, 18, 23, 24
+are now CLOSED (only `$ff` tails remain as INCBIN); bank 1 is
+extended to $5a80. The remaining INCBIN, by size: bank 3
+$4943–$76ea (11,688 B, the big uncarved block) and bank 2
+$48ea–$6211 (6,440 B) + $6492–$7fff (7,022 B) — the bank-2/3
+gaps are now the largest code-or-data unknowns (survey with
+`gb_rd` seeded at gap starts and check call/jp targets from
+carved code before carving, as slice 25 did for bank 1);
+bank 16 $5fd3–$7fff (8,237 B) + $4044–$4992 (2,383 B); bank 1
+$5a81–$7fff (9,599 B, tables at $5d48+ are ld-pointer reads —
+survey the $5a81–$5d47 span first, then the tables); bank 7/8
+gaps (largest: bank 8 $781a–$7fff 2,022 B, bank 8 $5809–$5e36
+1,582 B, bank 7 $71ba–$7509 848 B); bank 0 raw regions; and the
+`$ff`-padding tails everywhere (no work — they stay INCBIN).
+The door hunt's open item is unchanged: the clear chain's
+ENTRY (timer 33/42) and the parasol collection (hand-written
+schedule).
+
+## Slice 26 — DONE, byte-matching (2026-11-25)
+
+§1 **Four banks CLOSED: 3, 2, 16, 1.** `src/` now
+95,458 lines (was 90,425). Curated: 439,888 /
+524,288 bytes (83.9%, was 397,206 / 75.8% — INCBIN lengths
+summed directly from src/banks.asm + src/main.asm via the new
+`tools/count_curated.py`; the 42,682-byte delta matches the
+carved bytes exactly: 12,417 + 11,254 + 10,982 + 8,029).
+New files `src/bank3slice26.asm` (924 lines, 12,417 bytes),
+`src/bank2slice26.asm` (1,017 lines, 11,254 bytes),
+`src/bank16slice26.asm` (2,202 lines, 10,982 bytes),
+`src/bank1slice26.asm` (910 lines, 8,029 bytes);
+`tools/survey26_bank3.py`, `tools/survey26_bank2.py`,
+`tools/survey26_bank16.py`, `tools/survey26_bank1.py`,
+`tools/gen_slice26.py`, `tools/gen_slice26_bank16.py`,
+`tools/gen_slice26_bank1.py`, `tools/count_curated.py`.
+Banks closed so far (27): 1, 2, 3, 4, 5, 6, 9, 10, 12, 13,
+14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+30, 31. Each closed bank keeps only its `$ff` tail as INCBIN.
+
+**Bank 3 — song data + stream table, $43b0–$45a9 + $4943–$798f.**
+`$43b0–$45a9` (505 B) is byte-identical in bank 2: an 86-entry
+dw offset table `$43b0–$445a` (strictly increasing $0000–$07f1;
+breaks at `$445c`), read by stream-op `$4098` (`ld hl,$43b0`),
+plus `$445c–$45a8` stream-command data (4-byte-addressed
+entries from the `$4102` branch, `ld hl,$445c`; dispatcher at
+`$4730`). `$4943–$76ea` (11,688 B) is **song data**, plain `db`
+with a label at each unique song-table entry (32 in-span
+labels): the slice-12 song table at `$48f1` (41 dw entries)
+points into it; the tick at `$45f2` loads DE = table[index]
+(index `[$c837]`, gated < $29) and copies a 10-byte header
+(2 → `$df07`/`$df08`, 8 → `$df12–$df19`); `$46e5` treats the
+`$df12` words as 4 channel-stream pointers (high byte 0 =
+channel off; `$ff` in the note byte = follow-pointer jump at
+`$4726`). Songs share phrase data: entries unsorted, `$4941`
+(×7) is the all-zero-channel "silent" song whose first 2 bytes
+are the table's own last dw (`$454b`), `$49b8`/`$4ac3` are 11
+bytes apart. No call/jp/jr target into the span exists in any
+carved code; `gb_rd` from `$4943` derails in 10 instrs, from
+`$4ac3` in 6. `$78b0–$78f` (224 B) is wave/volume-table-like
+data, labels at `$78b0`/`$78d2`/`$78e8`/`$7942` (`$78d2`/
+`$7942` share a 15-byte prefix); **no reader pinned** (the
+wave-RAM copy at `$781e` reads via `$df05`/`$df0c` pointers,
+which are only read, never written, in carved bank-3 code).
+Last non-`$ff` at `$798f`; `$7990–$7fff` all `$ff` stays
+INCBIN. `$400c–$4010` (4 bytes `$ff`) also stays INCBIN.
+
+**Bank 2 — SFX data + songs 41–64, $43b0–$45a9 + $48ea–$7566.**
+`$43b0–$45a9` (505 B) is byte-identical to bank 3 (0 differing
+bytes); same 86-entry dw table + `$445c` stream data, read by
+bank 2's own stream-op `$4098` and `$4102` branch.
+`$48ea–$6211` (6,440 B) is **SFX data**, plain `db` with labels
+at each unique `$47fc` entry (118 unique of 119): the slice-12
+sound table (`$47fc`, 119 dw) points here — all entries in
+`$4904–$6196`. The tick at `$4694` reads each entry as an
+8-byte header of 4 channel pointers (stored to `$df1a`/`$df35`/
+`$df50`/`$df6b` with `[$df0e]`–`[$df11]` priority checks; high
+byte 0 = channel off). Verified: all 119×4 channel pointers
+are `$0000` or in `$48ea–$6211`. No per-SFX extents claimed
+(streams share phrase data via `$ff`-jumps, as in bank 3).
+`$6492–$64c1` (48 B) is a **24-entry dw song table, songs
+41–64**: the bank-2 restart at `$6257` reads it (`ld
+hl,$6492`, index = `[$c837]`−41, gated `[$c837]` ≥ $29). All
+24 entries point into `$64c2–$7566`; entry 24 would read
+`$452c` — the first song's own header word at `$64c2`
+(partition break, same pattern as slice 25's bank-23 table).
+`$64c2` (7 entries) is the all-zero-channel silent song, like
+bank 3's `$4941`. `$64c2–$7566` (4,261 B) is song data, songs
+41–64; 10-byte headers (same format as bank 3, read at
+`$6263`); verified every unique entry's 4 channel pointers
+are `$0000` or in `$64c2–$7566`; 17 unique-entry labels (first
+table index wins). Last non-`$ff` at `$7566`; `$7567–$7fff`
+all `$ff` stays INCBIN. `$4000–$4003` and `$4009–$4010` (all
+`$ff`) stay INCBIN.
+
+**Bank 16 ($10) — dispatcher + tables + record helper,
+$4000–$4030 + $4044–$4992 + $4eb2–$51c7 + $59f1–$5a10 +
+$5fd3–$7e02.** `$4000`: `jp $4044`; `$4003–$4011` is the
+fall-through chain `call $43d7; call $45e5; call $46a8; call
+$48c4; call $4928`. **`$4031–$4043` is already carved in
+`src/bank10.asm` as `Bank10_4031` (hex bank $10, slice 8) —
+this carve skips it.** `$4044` reads hStateTimer (`$ff90`):
+==$11 (17) → `$4003` chain; `[$c0a4]`==0 → `$4345`;
+`[$dd1a]`==4 → `$4003`; else `[$c133]`/`[$c141]` checks →
+`$409f` → `$40b0`, ending in `jp hl` through the dw table at
+`$4ebf` (index `[$dd18]`*2). `$40bf` reads the `[$ddaa]`
+record pointer (+$0b==$0a, +$10 in {3,4}), sets `[$ff91]`
+bits, clears `$c205` records / `$dd72` slots, and dispatches
+again through the `$4eb2` byte table + `$413e` dw table.
+Tables (all `dw`, readers pinned): `$413e` 3 entries (`$4144`,
+`$41db`, `$41de`; read at `$4136`, index = `$4eb2[[DE]]`*2;
+`$41db`/`$41de` are mid-routine entries); `$4354` 4 entries
+(`$435c`, `$4381`, `$4394`, `$43c9`; read at `$434c`, index
+`[$c0a5]`*2); `$444a` 9 entries (`$4aef`, `$4460`, `$4498`,
+`$44b7`, `$44cf`, `$44f3`, `$4526`, `$456a`, `$459f`; read at
+`$4442`, index from a byte table at `$4edd`/`$4fdd`/`$4fe5`
+chosen at `$442a`/`$442f`/`$4434`); `$46b7` 6 entries (`$4aef`,
+`$4721`, `$47ce`, `$47e0`, `$482d`, `$484d`; read at `$46af`,
+index `[$c21f]`*2). `$445c–$445f` (`00 00 40 00`) are 4
+unaccounted bytes after the `$444a` table (plain `db`, gap).
+Code spans (all `gb_rd` walks, no `rst $08`): `$4144–$4353`
+(`$413e`-table routines; `$4342` is `jp $4003`; `$4345` is the
+second dispatcher via `$4354`); `$435c–$4449` (`$4354`-table
+routines incl. `$43d7`); `$4460–$459d` (`$444a`-table
+routines); `$459e` lone `ret` (`$c9`); `$459f–$46b6` (`$444a`
+entry 9 + `$45e5` + `$46a8`); `$4721–$4992` (`$46b7`-table
+routines incl. `$48c4`/`$4928` chain targets and `$4889`
+`call $7dbe`; ends at `$4992`, `$4993+` already carved as
+`Bank16_4993`). `$46c3–$4720` (94 B) is small-value data after
+the `$46b7` table; no reader pinned (gap). `$4eb2–$51c7`
+(790 B) is plain `db` with labels at known bases — `$4eb2`
+(13-byte table for the `$413e` dispatch, read at `$412d`),
+`$4ebf` (11-entry dw table, index `[$dd18]` 0–10, matching the
+`$0a` scan-gate value), `$4edd`/`$4fdd`/`$4fe5` (byte-table
+bases for the `$444a` dispatch, read at `$4437`).
+`$4ed5–$4edc` (8 bytes) unaccounted inside the span.
+`$59f1–$5a10` (32 B) is ASCII-coincident bytes; `gb_rd` from
+`$59f1` walks spuriously into carved code — data, no reader
+pinned. `$5fd3–$7dbd` (7,659 B) is dense varied data (242
+distinct byte values, no 16-byte structure); walks from
+`$5fd3`/`$6000`/`$7000`/`$7800` are spurious data-decoding.
+No reader pinned (gap). `$5fd3–$605d` is 139 zero bytes.
+`$7dbe–$7e02` (69 B) is a record-write helper, called from
+`$4889` (`call $7dbe`); writes `$42`/`$7b` markers, `call
+$33a7`, builds a record at `$c7f7`, `call $169c`, ends `jp
+$0e29` (bank-0). `$7e02` is the last non-`$ff` byte in the
+bank; `$7e03–$7fff` all `$ff` stays INCBIN. Generator note:
+the first run emitted `$4342–$4353` as `db` because the
+seeds missed `$4342`/`$4345` — caught by the generator's own
+no-`db`-in-code check, fixed by adding both seeds.
+
+**Bank 1 — [$c809] dispatch code + tables, $5a81–$79dd.**
+`$5a81–$5d47` (711 B) is code, one continuous `gb_rd` span
+from seeds `[$5a81, $5b71, $5ceb, $5d21]` (417 instrs, zero
+unreached, no `rst $08`). Entries, all verified: `$5a81`
+(`call $5a81` at bank-0 `$0b3a`, inside State16Table[41]
+`$0b28`, which maps bank 1 and calls `$5a81` when
+`[$c860]`!=0 and `[$c858]`!=$ff); `$5b71` (`call $5b71` at
+bank-0 `$0b3f`, the same `$0b28` else-branch); `$5ceb`
+(`call $5ceb` at bank-0 `$22b3`, stream area — bank-1
+mapping at that point unpinned, gap); `$5d21` (`jp $5d21`
+at bank-0 `$1c7a`, BuildAttrMap tail — TransitionStep1 maps
+bank 1 before calling BuildAttrMap). `$5a81`/`$5b71` are
+parallel `[$c809]` dispatches ($11/$12 vs $0b/$0c
+thresholds; MemcpyC sources `$5fd3` vs `$5f69`, both copied
+to `$d76d`). `$5d48–$79dd` (7,318 B) is data, plain `db` with
+labels at 22 ld-pointer targets read by carved bank-1 code
+(`$5d48`, `$5d5e`, `$5d74`, `$5d8a`, `$5d9e`, `$5dae`,
+`$5db4`, `$5e80`, `$5e92`, `$5e96`, `$5e99`, `$5ecb`,
+`$5f0d`, `$5f21`, `$609d`, `$60c5`, `$60fd`, `$610d`,
+`$6114`, `$7308`) plus the MemcpyC sources `$5f69`/`$5fd3`.
+The `$5d48` walk (219 instrs) is spurious: the `$5d48` bytes
+are digit-like table data read by `ld`, and the walk jumps
+back into `$5d10` only through data-decoding. The
+`$6000`/`$7000`/`$7800` walks are spurious too: no call/jp/ld
+entry to `$7000`/`$7800`/`$5e54` anywhere in the ROM (byte
+search), and `$7000–$704d` / `$7800–$7903` contain ZERO `ret`
+(`$c9`) bytes. Last non-`$ff` at `$79dd`; `$79de–$7fff` all
+`$ff` stays INCBIN. The `$5bd1` timer restore is in §3.
+
+§3 **Door / clear-chain entry: still NOT found (NO-GO, no new
+door lead) — but the `[$c70b]` timer save/restore mechanism is
+now fully mapped.** Banks 2 and 3 are all data — zero
+`$ff90`/`$ff8e`/`$c105` hits (grep-verified). Bank 16 has
+**five hStateTimer (`$ff90`) writes, all writing `$19` (25
+decimal)**: `$4126` (in the `$40bf` routine), `$437c`,
+`$438f`, `$43ae`, `$43cb` (in the four `$4354`-table handlers).
+Timer 25 is State16Table[25] = `$09c6` (the state-16
+queue-advance area) — transition machinery, not a clear-chain
+entry. **Bank 1 has one hStateTimer write, at `$5bd1`: `ld
+a,[$c70b]; ldh [$ff90],a` — a RESTORE of the timer saved in
+`[$c70b]`, not a literal 33/42 write.** The mechanism (all 6
+writers / 4 readers now pinned): a routine saves the current
+hStateTimer into `[$c70b]`, switches to a sub-sequence timer,
+and a later routine restores it. Writers: `$08bd`/`$08c6`
+(bank-0 `$0859`, State16Table[6] — save timer, set timer 41
+`$29`, the save that launches the `$5a81` sequence),
+`$6d2a`/`$405a` (bank 7: save, set `$11`), `$66b5` (bank 7:
+save, set `$10`), `$55b6` (bank 31: save, set `$10`).
+Readers: `$0a2c` (bank-0, the slice-13 restore), `$4e0f`
+(bank 1), `$6fc4` (bank 7), `$5bd1` (bank 1, this slice).
+The normal restored value is 6 (saved by `$08bd` when timer 6
+launches the sequence). `$5c55`/`$5cbf` READ hGameState and
+compare with `$1e` (30 = attract demo): the `$5c61`/`$5ce6`
+writes are skipped during the demo. `$5ceb` writes
+`[$c80d]`=$54/$01. No `[$c105]` writes in any new file.
+**Live (`gb_pcwatch`, 15000f retry flow, progress-1 save):**
+`$5a81@1` 0, `$5b71@1` 0, `$5bd1@1` 0, `$08bd` 0, `$0b28` 0 —
+the `$5a81` sequence NEVER fires in this flow. `$0859` fires
+2,262× but in STATE 18 timer 6 (the routine is shared between
+states 16 and 18), and its `$08bd` save branch is never taken:
+the gate (`[$ff8b]`&$0c, `[$da4b]`!=$21, `$c712`/`$c711`
+check) fails throughout. So the `$5a81` sequence is gated on
+a flow the retry run never takes — which flow (map entry with
+input?) is an OPEN QUESTION for a later slice, and the
+restored value at `$5bd1` is unresolved live (statically
+normally 6). VERIFIED LIVE in the same run: `$5d21@1` 23×
+and `$5ceb@1` 6×, both state 18 timer 1 — the BuildAttrMap
+tail-jump and the `$22b3` stream call run on every stage
+load. (Tool check: `gb_pcwatch` validated on a 600f idle run
+— `$0100` 1×, `$0040` 3,792×, `$06bd` 1× at frame 234 — before
+trusting the zeros; the binary is git-ignored, source
+`tools/gb_pcwatch.c`.) No completion attempt was run (same
+NO-GO as slices 15–25).
+
+§4 **Nacre results.** `tools/run_slice5_regression.sh` and
+`tools/run_slice7_cases.sh` on the final combined build
+(banks 2+3+16+1), original vs rebuilt identical in every case
+(framebuffer hash + state trace + save): slice-5 suite ALL
+IDENTICAL (600f `1cf92679…`, 900f `39ffd5ee…`, 3600f
+`88515f4e…`, 12000f `92d2e185…`, s8 `92d2e185…`, f0
+`3390d763…`, f1 `1cf92679…` — all match the canonical
+reference hashes); slice-7 suite ALL IDENTICAL (retry 15000f
+`0d835d95…`, mid5000 `2ab1bb5d…`, play-right `b3cb6c8b…`,
+death 3000f `632b2eaf…` — all match). The slice-5/7 runs on
+the bank-3-only build (earlier in the slice) were also all
+identical with the same hashes.
+
+§5 **Verified vs inferred.** VERIFIED: bank 3's `$43b0`
+86-entry table (strictly increasing, reader `$4098` pinned)
+and its byte-identity with bank 2's; bank 3 song-data
+identification (tick reads + channel-pointer format + no cf
+targets into the span); bank 2 SFX identification (all 119×4
+channel pointers verified `$0000` or in-span); bank 2 song
+table 41–64 + partition break at entry 24; bank 16's
+dispatcher + all four dw tables with readers pinned; bank
+16's five timer-25 writes (all `$19`, grep-verified); bank 1's
+`$5a81–$5d47` code (zero-gap walk, all four entries pinned to
+carved callers / ROM byte search); bank 1 `$5d21`/`$5ceb`
+live (23×/6×, state 18 timer 1); bank 1 `$5a81`/`$5b71`/
+`$5bd1` never firing in the retry flow (`gb_pcwatch`, 0 hits);
+the `[$c70b]` mechanism (6 writers / 4 readers, all pinned);
+the count (42,682 delta = INCBIN reduction exactly);
+byte-match on the final build. INFERRED (not verified): bank 3
+`$78b0` wave/volume-table role (no reader pinned); bank 3 song
+extents (streams share phrase data, no per-song extents
+claimed); bank 2 song-table upper index bound (unverified);
+bank 16 `$46c3–$4720`, `$4ed5–$4edc`, `$445c–$445f`,
+`$59f1–$5a10`, `$5fd3–$7dbd` contents (no readers pinned);
+bank 1 `$5d48–$79dd` contents beyond the 22 labelled reader
+targets (no per-entry extents claimed); the `$5a81` sequence's
+firing flow and the `$5bd1` restored value (statically
+normally 6, unresolved live); bank-1 mapping at `$22b3` for
+the `$5ceb` call (call exists, mapping unpinned).
+
+§6 **What the next slice should do.** Banks 1, 2, 3, 16 are
+now CLOSED (only `$ff` tails remain as INCBIN). The remaining
+INCBIN is 84,400 bytes, of which the only non-`$ff` work is
+the bank 7 gaps (3,379 B: `$6581–$664d` 205, `$67a1–$68ac`
+268, `$68c4–$695a` 151, `$6ed2–$6f05` 52, `$7001–$714b` 331,
+`$71ba–$7509` 848, `$7610–$77a8` 409, `$7abb–$7d5d` 675,
+`$7e18–$7edc` 197, `$7f0d–$7fff` 243) and the bank 8 gaps
+(6,395 B: `$5809–$5e36` 1,582, `$611f–$6273` 341,
+`$6283–$63b4` 306, `$6669–$67bc` 340, `$67cc–$68b7` 236,
+`$68ef–$69ae` 192, `$69be–$6a24` 103, `$6a34–$6aba` 135,
+`$6aca–$6d89` 704, `$7292–$730f` 126, `$74f4–$7525` 50,
+`$7588–$7601` 122, `$762a–$7684` 91, `$76b6–$76e2` 45,
+`$781a–$7fff` 2,022), plus the bank-0 tail `$3947–$3fff`
+(1,721 B, SGB code tail — raw region) and bank 11
+`$7e3d–$7fff` (451 B). Everything else remaining is `$ff`
+padding (stays INCBIN). The door hunt's open items: which flow fires the
+`$5a81` sequence / what `$5bd1` restores live (a scripted
+run that takes the `$0859` gate — map entry with input —
+then `gb_pcwatch` on `$5bd1@1`); the clear chain's
+ENTRY (timer 33/42) unchanged; the parasol collection
+(hand-written schedule) unchanged. SLICE 27 UPDATE: the
+clear-chain ENTRY is now FOUND statically — the `$75ea`
+handlers invoke the `$7abb`-family blobs via `$6e54`,
+which save the timer to `[$c70b]` and set timer 22, and
+state-16 timer 22 (`$098c`) goes to state 24, the bank-1
+`$4000` stage-clear dispatch (slice 27 §3). What remains
+live is WHICH `$75ea` handler index (which tile) fires
+one of them in real gameplay — needs a run where Mario
+actually reaches the door. The `$0859` gate flow is
+STILL unfound live: four `gb_pcwatch` runs (baseline,
+Start@835, Start@2501, Select@835) all show gate 1
+(`$0894`) at 0 — the gate never opens, and `$5bd1`'s
+live restore is still unresolved (statically the
+`$08bd` save, normally 6). The bank-16 pockets
+(`$617c`/`$61b2`/`$6b32`/`$6b85` — slice 26's "pure
+data" was wrong there) are uncarved, blocked on
+`$0fd9` (slice 27 §2). The parasol collection
+(hand-written schedule) unchanged.
+
+## Slice 27 — DONE, byte-matching (2026-11-25)
+
+§1 **Two banks CLOSED: 7, 8.** `src/` now
+99,814 lines (was 95,458). Curated: 449,550 /
+524,288 bytes (85.7%, was 439,888 / 83.9% — INCBIN lengths
+summed directly from src/banks.asm + src/main.asm via
+`tools/count_curated.py`; the 9,662-byte delta matches the
+carved bytes exactly: 3,267 + 6,395). New files
+`src/bank7slice27.asm` (1,585 lines, 3,267 bytes),
+`src/bank8slice27.asm` (2,841 lines, 6,395 bytes);
+`tools/survey27_gaps.py`, `survey27b.py`, `survey27c.py`,
+`survey27d.py`, `survey27e.py`, `survey27f.py`,
+`survey27g.py`, `tools/gen_slice27.py`. Banks closed so
+far (29): 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15,
+16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30,
+31. Each closed bank keeps only its `$ff` tail as INCBIN.
+Bank 0 is 85% done; its tail `$3947–$3fff` (1,721 B) is
+confirmed all `$ff` (the task's "SGB code tail" premise
+was wrong — it is `$ff` padding continuing from
+`$392b–$3946`, which `src/sgb.asm` already notes) and
+stays INCBIN. Bank 11 `$7e3d–$7fff` (451 B) is confirmed
+all `$ff` and stays INCBIN.
+
+**Bank 7 — `$6581–$664d`, `$67a1–$68ac`, `$68c4–$695a`,
+`$6ed2–$6f05`, `$7001–$714b`, `$71ba–$7509`,
+`$7610–$77a8`, `$7abb–$7d5d`, `$7e18–$7edc`,
+`$7f0d–$7f8f`.** `$6581–$6584` is a 2-entry dw jump
+table (`$6585`, `$65cd`); reader `$6572` (slice 5:
+`ld a,[$dd1e]; add a; ld c,a; ld b,$00; ld hl,$6581;
+add hl,bc; ld a,[hl+]; ld h,[hl]; ld l,a; jp hl`). The
+2-entry reading is a judgment call: the bytes at `$6585+`
+decode as a coherent routine (`ld a,[$0efa];
+jp nz,$6f26; nop; add hl,hl` ×5; …) flowing into the
+verified `$65a3` span, and entry 0 (`$6585`) pointing
+into its own table would be self-referential under a
+4-entry reading. `$6585–$664d` code (337 instrs, 0
+uncovered); `$662a` REAL (9 same-bank `jp z` from carved
+`$47xx–$58xx`). `$67a1–$67de` code (38 instrs, entry
+`$67a1` from bank-7 `$4000` call); `$67df–$67ee` an
+8-entry dw jump table (`$67ef`, `$6b09`, `$68a5`,
+`$688e`, `$6b09`, `$67fd` ×3), reader `$67d6`
+(`ld hl,$67df; add hl,bc; ld a,[hl+]; ld h,[hl];
+ld l,a; jp hl`, index from the `$73xx` data table);
+`$67ef–$68ac` code (271 instrs, 0 uncovered; `$67fa`
+`jp $768a` and `$68a2` `jp $771e` real; boundary clean:
+`$68ab` `inc [hl]`, `$68ac` `ret`, carved `$68ad` starts
+`ld a,[$dd1b]`). `$68c4–$695a` data (table base,
+`ld hl,$68c4` at `$68b7`). `$6ed2–$6f05` code (48
+instrs, entry-unverified — carved `$6ed1` ends
+`jp $6f2e`, no fall-through; tail jumps into carved
+`$6f2e–$6f3f`). `$7001–$701a` a 13-entry dw jump table
+(`$701b`, `$706c`, `$7068`, `$708f`, `$70c2`, `$70e4`,
+`$70f0`, `$701b`, `$70f0`, `$70f1`, `$7107`, `$7124`,
+`$7125`), reader `$6fe8` in the `$6f62` dispatch area;
+`$701b–$714b` code (207 instrs, 0 uncovered).
+`$71ba–$7509` data (31 ld-ptr labels; `$7394` read by
+the `$7169` stage-RAM clear, 16-byte copy
+`$7394→$dd59`). `$7610–$7688` data (`$3f`-fill with
+sparse `$7f`/`$80–$88` markers; `$7610` a data base,
+`ld bc,$7610`); `$7689` a 1-byte `ret` (entry via
+`$6e54` Handler10, B=`$2e` — `$6e54` `jp hl` lands on
+it and it returns to the handler's caller);
+`$768a–$77a8` code (205 instrs, 0 uncovered; `$768a`
+from `$67fa` jp VERIFIED; `$76c5` record-builder
+family, entry UNVERIFIED; `$771e` entry UNVERIFIED —
+see §6). `$7abb–$7d5d` code (481 instrs, 0 uncovered)
+— the door finding, see §3. `$7e18–$7ed2` code (122
+instrs, 0 uncovered); `$7ed3–$7edc` data (label
+`$7ed3`, read by the `$76c5`/`$7abb`/`$7d03`
+record-builders and by `bank7.asm`). `$7f0d–$7f8f`
+data (dw-table-like pattern, no reader pinned);
+`$7f90–$7fff` all `$ff` stays INCBIN.
+
+**Bank 8 — `$5809–$5e36`, `$611f–$6273`,
+`$6283–$63b4`, `$6669–$67bc`, `$67cc–$68b7`,
+`$68ef–$69ae`, `$69be–$6a24`, `$6a34–$6aba`,
+`$6aca–$6d89`, `$7292–$730f`, `$74f4–$7525`,
+`$7588–$7601`, `$762a–$7684`, `$76b6–$76e2`,
+`$781a–$7fff`.** `$5809–$5904` data (63 × 4-byte class
+records, continuing the `$5409–$5808` table:
+`$5409 + 256*4 = $5809` exactly; no reader pinned for
+`$5809+`). `$5905–$5e36` code (802 instrs, 0 uncovered):
+11 parallel position-math routines (`ld hl,$dd98`;
+`xor a`; `ld [hl+],a` ×5; …; writes
+`[$c1f3]`/`[$c1f4]`/`[$c1f5]`/`[$c1f6]`), ending
+`ldh a,[$ff8d]; jp $0fe5` (bank-switch return) or
+`jp $5e1b` (shared tail). 8 entries verified via the
+bank-0 `$2a0a` dispatch tail (`$5a5e`/`$5ab4`/`$5905`/
+`$5962`/`$59cb`/`$5a32`/`$5c51`/`$5d07`); `$5bec`/
+`$5c9e`/`$5d59` entry UNVERIFIED (no `$2a`-tail/table/
+cf entry) but `$5bec` ends `jp $5d59` (internal link)
+and all three decode as perfect family members.
+`$611f–$612c` a 7-entry dw table (`$6473`, `$612d`,
+`$609d`, `$7310`, `$63b5`, `$6646`, `$63f0`), reader
+`$6117`; `$612d–$6273` code (192 instrs). `$6283–$6290`
+a 7-entry dw table (`$7310`, `$6291`, `$6360`, `$6386`,
+`$63b5`, `$7310`, `$63f0`), reader `$627b`;
+`$6291–$63b4` code (160 instrs). NOTE on both tables:
+the walk's "`$6290`/`$612c`: `ld h,e`" is a MISALIGNED
+decode of the `$63f0` high byte; real code starts
+`$6291`/`$612d` (`call $2acd`). `$7310` is the shared
+sentinel (also the `$6a34` table). `$6669–$67aa` code
+(194 instrs; `$66fd` countdown helper, targeted from
+`$6670`/`$6675`/`$667a`/`$67a8`; entry into `$6669`
+UNVERIFIED — `$6668` is a 1-byte `ret`) + db
+`$67ab–$67bc` (18 B). `$67cc–$68b7` code (224 instrs,
+0 uncovered; `$67cc` a table base, `ld hl,$67cc` at
+`$67c4`). `$68ef–$69ae` code (154 instrs) + db
+`$68f6–$68fa` (5 B; `$6902` from same-bank `$69ac` jp,
+circular). `$69be–$6a24` code (110 instrs) + db
+`$6a02–$6a04` (3 B; entry UNVERIFIED — ld-ptr `$69be`
+only; walk starts `jp nz,$0269`). `$6a34–$6a3b` a
+4-entry dw table (`$7310`, `$6a3c`, `$6a57`, `$6aa7`),
+reader `$6a2c`; `$6a57–$6a58` is `ld a,[$c0f8]` (the
+walk's "`$6a59`: `ret nz`" was the misaligned low byte
+`$c0`); `$6a3c–$6aba` code (196 instrs, 0 uncovered).
+`$6aca–$6ad5` a 6-entry dw table (`$6ad6`, `$6b7c`,
+`$6ba1`, `$6cc5`, `$6d16`, `$6d20`), reader `$6ac2`;
+`$6ba1`/`$6d16` are TABLE ENTRIES (code starts there),
+not data pockets — the earlier "uncovered" reading was
+the walk missing the table seeds; `$6ad6–$6d89` code
+(570 instrs, 0 uncovered). `$7292–$730f` code (127
+instrs), `$74f4–$7525` code (33 instrs), `$7588–$7601`
+code (97 instrs; `$7588` VERIFIED by bank-0 `$08d2`
+call with bank 8 mapped; `$75e5` routine entry
+UNVERIFIED and contains a `$75f6` self-loop trap
+(`jr $75f6`) when its inner scan exhausts E without
+finding a zero byte), `$762a–$7684` code (68 instrs),
+`$76b6–$76e2` code (28 instrs). `$781a–$7fff` data
+(2,022 B): NO verified entries — every bank-0 hit is
+a phantom or an other-bank target (`$78ba`→bank 7,
+`$7909`/`$790d` phantoms, `$7ae5`/`$7b6c`/`$7c57`/
+`$7c88`/`$7cb0`→bank 10, `$7e35` phantom,
+`$7e44`→bank 31; same-bank `$7e09`/`$7ee5` phantoms
+straddling `ld hl,$c200`/`$c220`) — walks from those
+seeds are spurious. Plain `db`, no labels.
+
+§2 **CORRECTION — bank 16 `$5fd3–$7dbd` is NOT pure
+data (slice 26 §1).** Bank-0 callers verified this
+slice map bank 16 and call `$617c` (`$08fd`/`$0974`),
+`$61b2` (`$28e5`/`$321f`), `$6b32` (`$0aaf`/`$2904`),
+`$6b85` (`$0b0f`) — so slice 26's classification is
+wrong at those four points (bank 16 vs bank 8 bytes
+differ almost entirely there: 42/42, 116/116, 74/74,
+27/28). Walks (survey27f `b16`, 216 instrs): `$617c`
+clean (`call $72e4`; `ld a,[$c160]` … `jp hl`) + the
+`$72e4–$733a` routine; `$61b2`/`$6b32`/`$6b85` derail
+at `call $0fd9` (bank-0 raw region, uncarved — the
+bytes after the call decode as garbage: `$61b5–$61c0`,
+`$6b39–$6b44`, `$6b8c–$6b8f`; the `$61c1–$622a` and
+`$6b45–$6b56` tails recover into clean record-write
+code). NOT carved this slice (out of scope — bank 7/8
++ bank-0 tail): carving the pockets is blocked on
+`$0fd9` first. Left for a later slice with `$0fd9`
+as the prerequisite.
+
+§3 **Door / clear-chain ENTRY — FOUND statically; the
+`$0859` gate — NOT FOUND live.** The `$7abb–$7d5d`
+carve adds FIVE `[$c70b]` writers (the `[$c70b]` list
+grows 6 → 11). Each saves `hStateTimer` into `[$c70b]`
+and sets timer 22 (`$16`):
+`$7b6e` (in the `$7b14` routine, entered via `$6e54`
+Handler02), `$7c34`, `$7c97`, `$7cfa` (in the
+`$7bda–$7d02` span, entered via `$6e54` Handlers
+04/08/09 at `$7bda`/`$7c3d`/`$7ca0`), `$7bd1` (in the
+`$7b77` routine, entry UNVERIFIED). The entries are
+via `$6e54` (bank7slice10 handlers `jp $6e54` with
+HL=blob; `$6e54` ends `pop hl; jp hl`, so the blobs
+EXECUTE as code — this is what resolves the old
+`$7abb` data-vs-code tension: the "code-like" bytes
+are `$6e54` blobs, and the `$7e43`/`$7e55`/`$7e67`/
+`$7e79` blobs are likewise code, entered the same way
+by Handlers 14/15/16/13). The chain from there is
+fully mapped in carved code: state-16 timer 22 is
+`$098c` (`ld a,$01; rst $10; ld a,$18; ldh [$ff8e],a;
+xor a; ldh [$ff90],a` — `hGameState`=24, timer 0),
+and state 24 is the banked entry `$4000` (bank 1,
+mapped by `$098c` itself): `Bank1_State24Dispatch`
+(`ldh a,[$ff90]; rst $08`, 5-entry table `$400d`,
+`$406c`, `$41cf`, `$411b`, `$4142`) — the stage-clear
+sequence. So the clear-chain ENTRY slice 24 was
+missing is: a `$75ea` interaction handler (tile
+interaction) → `$6e54` → a `$7abb`-family blob →
+save timer to `[$c70b]`, set timer 22 → state 24.
+The `$7e79` routine writes `[$c70c]` (not `$c70b`) —
+adjacent, same family. LIVE: the five new writers
+never fire in the retry flow (15000f, all 0) or the
+play-right flow (5000f, all 0) — Mario never reaches
+the door in either flow, so the entry is verified
+statically but NOT yet observed live. The remaining
+live question is which `$75ea` handler index (which
+tile) fires one of them in real gameplay.
+The `$0859` gate (State16Table[6], bank-0 `$0859`) is
+a SEPARATE mechanism, now mapped statically in full:
+it saves the timer and sets timer 41 when the player
+presses Select/Start (`hJoypadNew & $0c` — low nibble
+bit 2 = Select, bit 3 = Start, per `ReadJoypad`
+`$1022`) on a state-16/18 timer-6 frame, with
+`[$da4b]!=$21` and (`$c712!=0` or `$c711!=1`); the
+bit-3 branch (`$08c4`) saves and calls `AdvanceState`,
+the bit-2 branch (`$08bd`) saves and sets timer 41
+(launching the `$5a81` sequence via State16Table[41]
+`$0b28`). LIVE (gb_pcwatch, validated first on the
+600f idle run: `$0100` 1×, `$0040` 3,792×, `$06bd` 1×
+at frame 234 — identical to slice 26): the gate
+NEVER opens in four runs — baseline retry 15000f
+(`$0859` 2,262×, all state 18 timer 6; `$088d`
+18,066×; `$0894`/`$089e`/`$089f`/`$08bd`/`$08c4`/
+`$0b28` all 0), retry + Start 835:847 (2,208×; all
+gate points 0), retry + Start 2501:2513 (2,262×, gate
+points 0), retry + Select 835:847 (2,208×, gate
+points 0). The Start/Select presses at 835–847 are
+consumed by FileSelectLoop (the `$0859` count drops
+2,262→2,208 and the first hits move 835→1130); the
+2501 press lands on no `$0859` firing at all in the
+pcwatch flow. The `$5a81` sequence never fires in any
+run (`$5a81@1`/`$5b71@1`/`$5bd1@1` all 0), so what
+`$5bd1` restores live is still UNRESOLVED — statically
+it is the `$08bd` save, normally 6. HARNESS CAVEAT:
+`gb_pcwatch` reads state mid-frame (at the PC hit)
+while `gb_headless`'s trace reads it end-of-frame,
+and `DispatchState` runs ~6×/frame (`$01a9` 5,673× in
+900f) — so the two disagree on which state a frame is
+"in" (pcwatch: state 18 timer 6 at frames 835–842;
+trace: state 3 timer 1 at 839–842). The pcwatch counts
+are self-consistent and match slice 26 exactly; the
+trace is the end-of-frame view. Do not mix the two
+when timing an input.
+
+§4 **Byte-match proof.** Clean `make` (`rm
+build/game.gb` first) rebuilds SHA-1
+`397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp`
+zero diffs vs
+`roms/Donkey_Kong_World_Rev1_SGB.gb`.
+
+§5 **Nacre results.** Slice-5 regression: 600f
+`1cf92679…`, 900f `39ffd5ee…`, 3600f `88515f4e…`,
+12000f `92d2e185…`, s8 `92d2e185…`, f0 `3390d763…`,
+f1 `1cf92679…` — ALL REGRESSION CASES IDENTICAL.
+Slice-7 cases: retry 15000f `0d835d95…`, mid5000
+`2ab1bb5d…`, play-right `b3cb6c8b…`, death `632b2eaf…`
+— ALL SLICE-7 CASES IDENTICAL. All canonical hashes
+match.
+
+§6 **Verified vs inferred.** VERIFIED: every
+region's byte coverage (generator asserts the
+uncovered set equals exactly the expected db
+pockets); all table entries and readers named in §1;
+the `$6e54` blob-execution mechanism (`$6e54` ends
+`pop hl; jp hl`, handlers `jp $6e54` with HL=blob);
+the timer-22 → state-24 → bank-1 `$4000` chain
+(all carved code); the `$0859` gate's static
+conditions and its never-opening in four live runs.
+INFERRED / ENTRY-UNVERIFIED (code by decode +
+family, entry not pinned): bank 7 `$76c5`, `$771e`,
+`$7abb` head, `$7b77`, `$7d03` head, `$6ed2`,
+`$7ecb`; bank 8 `$5bec`/`$5c9e`/`$5d59`, `$6669`,
+`$69be`, `$75e5`, `$6b32`/`$6b85` (bank-8 bytes).
+JUDGMENT CALLS: `$6581` is a 2-entry table (see §1);
+`$6b77` "entry" DISPROVED (raw bytes `$6b70–$6b80`
+are `sub [hl]; ld a,$19; ld [$c0f9],a; ld a,$03;
+ld [$c10a],a; ret; …` — `$6b77` is the `$03` operand
+byte); `$7e22`/`$7ecb`/`$7722`/`$773a`/`$773d`/`$7786`
+"jp from carved" hits do NOT exist in carved bank-7
+source (grep) — ROM byte-search phantoms in data
+bytes; `$7e20` `ld de,$0080` spans `$7e20–$7e22`
+(the `$7e22` entry was a phantom); `$7e51–$7e54`
+is NOT a 4-byte orphan — the walk shows `$7e50`:
+`ld a,$01`, `$7e52`: `jp $0df4` (earlier mis-index
+corrected); `$6a57–$6a58` is `ld a,[$c0f8]` (the
+walk's "`$6a59`: `ret nz`" was the misaligned low
+byte `$c0`); `$612c`/`$6290` "`ld h,e`" are misaligned
+decodes of the `$63f0` table high byte. Bank 16
+pockets: NOT carved (see §2).
+
+## Slice 28 — DONE, byte-matching (2026-11-25)
+
+§1 **Bank 16 CLOSED for real; bank 0's main.asm INCBINs all gone.**
+`src/` now 102,996 lines (was 99,814). Curated: 450,159 / 524,288
+bytes (85.9%, was 449,550 / 85.7% — the 609-byte delta is exactly
+the bank-0 carve; bank 16's 7,659 bytes were already counted as
+curated, because slice 26 had emitted them as `db` — this slice
+replaces that `db` with real code/tables/data, so bank 16's count
+does not move). New files `src/bank16slice28.asm` (3,368 lines,
+7,659 bytes), `src/bank0slice28.asm` (306 lines, 609 bytes);
+`tools/survey28_b16.py`, `tools/survey28_bank0.py`,
+`tools/gen_slice28.py`. `src/bank16slice26.asm` truncated (its
+`$5fd3-$7dbd` db block, lines 1722-EOF, deleted with a pointer
+comment); `src/main.asm` has ZERO INCBIN left — the only bank-0
+INCBIN remaining is the `$3947-$3fff` `$ff` tail in `src/banks.asm`
+(1,721 B). Remaining INCBIN overall: 74,129 B, all `$ff` padding
+tails in `src/banks.asm` (per-bank: 0: 1,721; 1: 1,570; 2: 2,723;
+3: 1,652; 4: 2,384; 5: 937; 6: 3,227; 7: 112; 9: 4,180; 11: 451;
+12: 4,094; 13: 7,409; 14: 92; 15: 4,155; 16: 509; 17: 5,648;
+18: 7,673; 19: 1,152; 20: 1,094; 21: 1,647; 22: 244; 23: 462;
+24: 4,286; 25: 6,174; 26: 4,003; 27: 343; 28: 5,049; 29: 364;
+30: 774). Banks closed so far (29, unchanged): 1, 2, 3, 4, 5, 6, 7,
+8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
+26, 27, 28, 30, 31. Bank 16 is now closed for real (slice 26's
+"CLOSED" was premature — the `$5fd3-$7dbd` span was `db`, not
+code). Only bank 11 remains unclosed and it is `$ff` padding only.
+
+**CORRECTION — bank-0 `$0fd9` is NOT raw (slice-27 task premise
+wrong).** `$0fd9` (DispatchViaRST8) has been carved in `src/main.asm`
+since slice 1. What slice 27 actually found is the `call $0fd9`
+INLINE-TABLE idiom: `$0fd9` pops the return address (= the address
+just after the call), adds A*2, and jumps to the dw stored there —
+so the bytes after `call $0fd9` are a dw jump table, not code (same
+family as `rst $08` tables, entered via call). The table-entry
+routines `ret` to whatever the caller pushed (or to the call's
+return address when nothing was pushed). `gb_rd` does not know this
+— it falls through the call into the table bytes and decodes garbage
+— so the generator walks ONLY from table-entry targets, emits each
+inline table as `dw`, and linear-decodes dispatch heads stopping at
+the `call $0fd9`. The six `call $0fd9` sites in bank 16
+`$5fd3-$7dbd` are `$61b2`, `$649e`, `$6b36`, `$6b89`, `$6bcc`,
+`$6d64` (whole-ROM byte search; no `rst $08` in the span).
+
+**Bank 16 — `$5fd3-$7dbd` (7,659 B).** `$5fd3-$617b` data (no
+reader pinned; `$5fd3-$605d` zeros; the `$6118` words look like
+`$61xx` pointers but their targets decode as data noise —
+`ld [$0808],sp` ×4 — so the span is data). `$617c-$619b` code
+(83 instrs; bank-0 `$09cc` call, bank 16 mapped) + `$619c` dw
+table, 2 entries (`$61a0`, `$61a6`; reader `$6194`, index
+`[$c213]`*2) + `$61a0-$61b1` code (26 instrs; `$61ac` by
+fall-through from `$61a6`). `$61b2` head (`call $0fd9`; bank-0
+`$28e5`/`$321f` call, A=B) + `$61b5` dw table, 6 entries
+(`$61c1`, `$622b`, `$633c`, `$63d7`, `$63d8`, `$649d`) +
+`$61c1-$6484` code (424 instrs; db `$6335-$633b`, 7 B) +
+`$6485-$649c` data (24 B, record-looking, no reader pinned) +
+`$649d` 1-byte `ret` (entry 5, a no-op entry). `$649e` head
+(`call $0fd9`; bank-0 `$0af7` call, A=B) + `$64a1` dw table, 8
+entries (`$64b1`, `$661a`, `$67bc`, `$692a`, `$69ba`, `$6a3c`,
+`$6b30`, `$6b31`; entries 6/7 are 1-byte rets) + `$64b1-$6b31`
+code (1,029 instrs, one continuous span, 0 uncovered).
+`$6b32` head (`ld hl,$72e4; push hl; call $0fd9`; bank-0
+`$0aaf`/`$2904` call, A=B; the pushed `$72e4` is the
+continuation the table routines `ret` to via `$6d52`/`$6db7`)
++ `$6b39` dw table, 6 entries (`$6b45`, `$6b57`, `$6b69`,
+`$6b6f`, `$6b70`, `$6b84`; entry 5 is a 1-byte `ret`) +
+`$6b45-$6b84` code (48 instrs). `$6b85` head (same shape;
+bank-0 `$0b0f` call, A=B) + `$6b8c` dw table, 8 entries
+(`$6b9c`, `$6bae`, `$6cfc`, `$6d14`, `$6d2c`, `$6d3e`, `$6d50`,
+`$6d51`; entries 6/7 are 1-byte rets) + `$6b9c-$6bce` code (18
+instrs, incl. the `$6bc9` nested head `ld a,[$c213];
+call $0fd9`) + `$6bcf` dw table, 4 entries (`$6bd7`, `$6bfe`,
+`$6c2a`, `$6ce5`) + `$6bd7-$6d51` code (234 instrs).
+`$6d52` head (`ld de,$c161; ld a,[de]; res 0,a; ld [de],a;
+push hl; ld e,[hl]; inc hl; ld d,[hl]; ld c,l; ld b,h;
+ld a,[de]; ld hl,$6db7; push hl; call $0fd9`) + `$6d67` dw
+table, **40 entries — ONE table, not two**: entries 0–20
+(`$6dbf-$6fe9`) and 21–39 (`$6ff5-$72c5`) are contiguous
+(`$6d67+2k`, k=0..39); the "$6d91 table" is entries 21–39 of
+the same table. Index A = `[$c161]` & ~1, so A ranges 0..78.
+No separate reader exists (no `ld hl,$6d91` anywhere in the
+ROM — whole-ROM byte search, zero hits; no `ld h,$6d` /
+`ld l,$91` in bank 16 either); the reader is `$6d52` itself.
+`$6db7-$6dbe` continuation (`pop hl; ld a,[$c161]; rra;
+jr nc,$6d59` — loops back into `$6d52` while bit 0 clear —
+`ret`). `$6dbf-$7280` code (867 instrs, entries 0–36) +
+`$7281-$7290` data (16 B; `$7281` is a data base,
+`ld hl,$7281` at `$7274`) + `$7291-$72e3` code (61 instrs,
+entries 37–39, incl. the `$72dd` shared tail: `add a,l;
+ld l,a; inc de; ld [hl],e; inc hl; ld [hl],d; ret`) +
+`$72e4-$733a` code (64 instrs; the record-scan routine, reads
+the `$7b86` pointer table; called from `$617c` and pushed as
+the `$6b32`/`$6b85` continuation). `$733b-$7dbd` data (labels
+`$7343` = signed-offset table read at `$6ee3`, `$735d` read at
+`$718b`, `$7b86` = pointer table read at `$72f8`; the post-ret
+walk over this span decodes as data noise — `ld a,e;
+ret z` ×10, `ld bc,$0b02`, `jp nz,$0380` — and the `$7b86`
+entries point at data records, not code, so the whole span is
+data). `$7dbe-$7e02` was already carved (slice 26).
+
+**Bank 0 — `$0674-$067f`, `$0df4-$0f08`, `$0f74-$0f94`,
+`$0fa1-$0fc0`, `$1075-$10aa`, `$1e6b-$1e85`, `$3689-$3736`
+(609 B).** `$0674-$067f` code (14 instrs; `$0674-$067a` is the
+tail of STAT_0673: `ldh [$ff45],a; ld a,$35; jp $03e9`;
+`$067b` called from `$04fc`: `ld hl,$ce1d; jr $0683`).
+`$0df4-$0f08` code (entries `$0df4`, `$0e29`, `$0e64`, `$0ea9`,
+`$0ecd`; `$0df4` jp'd from bank-7 `$7e52`/`$7e64`/`$7e76` and
+called from bank-1 `$50ef` / bank-12 `$564e`; `$0e29` jp'd
+from `$0bcd`/`$0bdb` + bank-16 `$7e00`, called from bank-16
+`$481a`; `$0e64` called from bank-1 `$4e0c` / `$074a`; `$0ea9`
+called from bank-1 `$4142`; `$0ecd` called from `$3548`).
+`$0f74-$0f94` code (18 instrs; 3× memcpy via `$106e`, ends
+`jp $106e`). `$0fa1-$0fc0` data (labels `$0fa1` — `ld de,$0fa1`
+at `$0c9c`, source for a `$169c` transfer — and `$0fae` —
+`ld hl,$0fae` at `$07f1`; the "code" decode is noise: `daa;
+sbc h; ld bc,$a707…`). `$1075-$10aa` code (39 instrs;
+`$1075` = 16-bit division helper, `$1092` = 5-byte add-HL-A
+helper, `$1097` = `$c220` record scan). `$1e6b-$1e85` code (15
+instrs; called from bank-1 `$411e`/`$5148`). `$3689-$3736`
+data (labels `$370f` — read at `$338f`/`$33a7`/`$33c3` — and
+`$3723` = PutNumberTiles digit table; ASCII digit / tile
+data, `"//////02468:<>@B13579;=?AC"` at `$3723`).
+
+§2 **Generator lesson — post-ret seeds need TRUE ret opcodes.**
+Earlier survey scripts' `RET_OPS` also listed `0xE0`/`0xE8`/
+`0xF0`/`0xF8`, which are LDH / ADD-SP / LDH / LD-HL-SP, NOT
+rets — that seeds garbage decodes overlapping real
+instructions (the spurious `"$0e6c: adc a"` over `$0e6b`'s
+`ldh [$ff8f],a`). `tools/gen_slice28.py` uses only
+`{C9,C0,C8,D0,D8}` and additionally filters post-ret seeds
+that land inside an expected-`db` gap (a ret-terminated code
+span followed by data would otherwise seed a garbage decode
+that "covers" the gap — e.g. `$6335`, where `xor b` /
+`ld hl,sp+$a8` chains through the 7 gap bytes to `$633c`).
+Same lesson applies to any future `post_ret` use: check the
+set before trusting it.
+
+§3 **Door — static mapping narrowed; still NO live firing.**
+The timer-22 `$75ea` handlers are entries **02, 04, 08, 09**
+(`$6c7a`, `$6c8f`, `$6ca4`, `$6cb9` → the `$7b14`/`$7bda`/
+`$7c3d`/`$7ca0` routines with the `$7b6e`/`$7c34`/`$7c97`/
+`$7cfa` timer-22 writers). Handlers 13/14/15/16 are NOT
+timer-22 (their blobs set sound IDs and `jp $0df4`; `$7e79`
+writes `[$c70c]`, not `$c70b`). The `$750a` byte map gives the
+record byte-1 values that select them: index 2 ← byte-1
+16–19, index 4 ← 24–27, index 8 ← 38–41, index 9 ← 42–45.
+So the live question is now precise: which interaction makes
+the `$c117` record's byte 1 land in {16–19, 24–27, 38–41,
+42–45}. LIVE (`gb_pcwatch`, bank-qualified, validated first
+on the 600f idle run: `$0100` 1×, `$06bd` 1× at frame 234 —
+identical to slices 26/27): in the play-right 5000f flow the
+ONLY `$75ea` handler that fires is entry 0, the key pickup
+(`$6b55`, 1× at frame 860, state 18 timer 8 — before any
+player input, i.e. the attract demo's Mario, not the
+player's); entries 01/02/04/06/07/08/09 are all 0. In the
+idle 30000f attract run the demo picks up the key 12× (one
+per attract cycle: frames 1196, 3748, 6298, 8859, 11420,
+13971, 16523, 19075, 21638, 24201, …) and STILL never fires
+a timer-22 handler or a door writer (`$6c7a`/`$6c8f`/`$6ca4`/
+`$6cb9`/`$7c34`/`$7b6e`/`$7bd1` all 0). The attract demo
+reaches the key every cycle but never the door — it dies or
+loops first, or the demo's key pickup does not lead to the
+door at all. The `$0859` gate was not re-run this slice
+(slice 27's four runs stand: never opens). NO live door
+firing in any run; the chain stays statically complete and
+live-unobserved. The `$7b77`/`$7bd1` writer's entry is still
+unverified (no handler pinned to `$7b77`).
+
+§4 **Live validation of the carve.** Retry flow 15000f
+(`gb_pcwatch`, bank-qualified): `$61b2@16` 17× (state 18
+timer 1, frames 1188/1579/3486/3876/4359/6037/6427/6910/8590/
+8982…), `$6b32@16` 5,036×, `$6d52@16` 15,426×, `$72e4@16`
+5,033× — the pockets are live code, not dead bytes. `$617c`,
+`$6b85`, `$649e` are 0× in this flow: real routines with
+verified bank-0 callers (`$09cc`, `$0b0f`, `$0af7`) whose
+paths do not run in the retry flow; live-or-dead unknown.
+`$7c34@7` (door writer) 0×, as in slice 27.
+
+§5 **Byte-match proof.** Clean `make` (`rm build/game.gb`
+first) rebuilds SHA-1
+`397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero diffs
+vs `roms/Donkey_Kong_World_Rev1_SGB.gb`. First-try match.
+
+§6 **Nacre results.** Slice-5 regression: 600f `1cf92679…`,
+900f `39ffd5ee…`, 3600f `88515f4e…`, 12000f `92d2e185…`, s8
+`92d2e185…`, f0 `3390d763…`, f1 `1cf92679…` — ALL REGRESSION
+CASES IDENTICAL. Slice-7 cases: retry 15000f `0d835d95…`,
+mid5000 `2ab1bb5d…`, play-right `b3cb6c8b…`, death `632b2eaf…`
+— ALL SLICE-7 CASES IDENTICAL. All canonical hashes match.
+
+§7 **Verified vs inferred.** VERIFIED: every region's byte
+coverage (generator asserts the uncovered set equals exactly
+the expected db pockets); all six `call $0fd9` inline tables
+and their entries; the `$6d67` table is ONE 40-entry table
+(contiguity + no separate `$6d91` reader anywhere in the
+ROM); the `$733b-$7dbd` data verdict (post-ret walks decode
+as noise; `$7b86` entries point at data); the bank-0 carves
+(all entries pinned by carved callers except as noted);
+`$61b2`/`$6b32`/`$6d52`/`$72e4` firing live in the retry flow.
+INFERRED / ENTRY-UNVERIFIED (code by decode + family, entry
+not pinned): bank 16 `$61ac` (fall-through only), `$63d7`
+(1-byte entry — `ret` — inside the `$61c1` span), `$6b6f`/
+`$6b70` (1-byte-apart entries in the `$6b45` span), `$6b84`
+(1-byte `ret` entry), `$1092` (5-byte helper, post-ret seed
+only), `$7b77`/`$7bd1` (door writer, no handler pinned);
+`$6485-$649c` / `$6335-$633b` / `$5fd3-$617b` internal
+structure (plain `db`, no reader pinned). JUDGMENT CALLS:
+`$61b5`/`$64a1`/`$6b39`/`$6b8c` table extents rest on the
+entry-count reading (6/8/6/8 — the trailing entries are
+1-byte `ret`s, which is what makes the extent checkable);
+`$6d50`/`$6d51`/`$6b30`/`$6b31` as no-op `ret` entries rather
+than data; `$0674-$067a` as the tail of STAT_0673 (STAT_0673
+itself is 1 byte, `xor a`, at `$0673`).
+
+## Slice 29 — DONE, byte-matching (2026-11-25) — THE FINISH: ZERO INCBIN
+
+**`src/` has ZERO INCBIN.** `tools/count_curated.py` reports
+524,288 / 524,288 (100.0%), remaining 0. Every byte of the
+512 KiB ROM is now hand-labelled RGBDS source (code, data,
+tables, or labelled `$ff` padding) — the loop's definition of
+done. `src/` is 103,031 lines.
+
+§1 **INCBIN conversion (32 ranges, 74,129 bytes).**
+`tools/gen_slice29.py` reads every INCBIN line in
+`src/banks.asm`, verifies FIRST from the ROM bytes that the
+range is all `$ff` (refuses — exit 1, file untouched — any
+range that is not), then rewrites each as a labelled
+`ds $len, $ff` with a comment naming the bank and range
+(e.g. `; Bank 4 $76b0-$7fff $ff padding`). Verified
+32/32 ranges, 74,129 bytes, all `$ff` — independently
+re-verified here, not taken on the coordinator's word.
+`grep INCBIN src/*.asm` now matches only comments (stale
+prose in older slice files + the conversion note in
+`banks.asm` itself); zero INCBIN directives remain.
+`tools/gen_banks.py` was patched the same day so a future
+regen emits `ds` lines instead of INCBIN (verified:
+`python3 tools/gen_banks.py` output is byte-identical to
+the new `src/banks.asm`). No carved code or data was
+touched; the conversion is purely the padding tails
+(bank 0 `$3947-$3fff` + one tail per bank in 1, 2, 3, 4,
+5, 6, 7, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+22, 23, 24, 25, 26, 27, 28, 29, 30 — 32 ranges; banks 8,
+10, 31 have no tail because they were already 100%
+carved). Bank 11 is closed by this conversion (its only
+remainder was the `$7e3d-$7fff` `$ff` tail) — all 32 banks
+are now closed.
+
+§2 **Byte-match proof.** Clean `make` (`rm build/game.gb`
+first) rebuilds SHA-1
+`397ad2ff25627b83e02c71b54c72bb4deb39e0c0`, `cmp` zero diffs
+vs `roms/Donkey_Kong_World_Rev1_SGB.gb`. First-try match.
+
+§3 **Nacre results.** Slice-5 regression: 600f `1cf92679…`,
+900f `39ffd5ee…`, 3600f `88515f4e…`, 12000f `92d2e185…`, s8
+`92d2e185…`, f0 `3390d763…`, f1 `1cf92679…` — ALL REGRESSION
+CASES IDENTICAL. Slice-7 cases: retry 15000f `0d835d95…`,
+mid5000 `2ab1bb5d…`, play-right `b3cb6c8b…`, death `632b2eaf…`
+— ALL SLICE-7 CASES IDENTICAL. All canonical hashes match.
+Both suites were re-run on the final build after the
+harness rebuild (§6) — same hashes.
+
+§4 **Door — live attempt, NO-GO (honest, with new evidence).**
+No live door firing in any run; the chain stays statically
+complete and live-unobserved. What this slice adds is a
+precise static verdict on WHY the timer-22 handlers never
+fire in 1-1, plus the harness work that unblocks future
+replays (§6).
+
+(a) **The static verdict: no timer-22 `$0b` cell exists in
+1-1.** `$6b0a` (bank 7) dispatches into `$75ea` ONLY when a
+`$c117`-family record's byte 0 (type) is `$0b`; byte 1
+(subtype) then indexes `$750a`. Live WRAM-map surveys
+(`tools/survey29_map.py`, `tools/survey29b_map.py`) of the
+1-1 map (`$c86d-$d86d`) at frame 2500 (idle), frame 3100
+(play-right), and every 25 chunks of two `gb_play` runs
+plus key collection: the ONLY type-`$0b` cells in 1-1 are
+the parasol (subtypes 34–37 → handler 7), the top-right
+pickup (32–33 → handler 6), the key (74–77 → handler 17),
+and the `$5b` trigger (91 → handler 0) — 12 cells, none in
+the timer-22 subtype ranges {16–19, 24–27, 38–41, 42–45}.
+Timer-22-range subtypes DO exist in the map (24 cells,
+subtypes 39/40, the two ladder columns at OAM x=32 and
+x=96) but their type is `$00`, which `$6b0a` never
+dispatches on. Zero `($82,$37)` cells at every observed
+time, so the `$6331` post-key scan stays inert in 1-1.
+The door trigger cell is therefore NOT in the 1-1 map as
+loaded or as observed through key collection: either it is
+written later (after all three pickups — the parasol was
+never collected), or the timer-22 entry is not a map cell
+at all in 1-1.
+
+(b) **The map changes during play — the `$41` block.**
+Diffing the map between frame 2500 and key collection
+(`tools/survey29c_diff.py`) shows the key cells cleared
+to `0001` (handler 17), one `$5b` cell consumed (`$c560`
+1→0, `$c858` 3→2), and a NEW 7-cell block of type-`$0b`
+subtype 65 (`$41`) at rows 5–7, cols 6–8 (OAM 48–64,
+48–64 — the ladder top by the key niche). Subtype 65 →
+`$750a[65]` = handler 14 (`$6d9f`), whose target `$7e43`
+plays sound `$37`, builds a record via `$7e18`, and
+`jp $0df4` (a score routine, +1) — NOT a door, and NOT
+timer-22. Its writer is unidentified (not handler 0's
+`$6b55` chain, not handler 17's `$7dbe` — neither writes
+`$41` cells; it appears between `gb_play` chunks 50–75
+in one run and not at all in the slice-29 run, so it is
+not a pure function of the `$5b` trigger). The block is
+never consumed in any dump, and handler 14 (`$6d9f`) is 0
+in both slice-29 pcwatch replays — consistent with it never
+firing, though no pcwatch run has yet watched it along an
+autopilot run that actually reaches the block. The `$41`
+block is a side mystery, not a door lead.
+
+(c) **Fresh `gb_play` run (new post-key route).**
+`gb_play orig save-prog1.sav 400 "" "56,136;56,56;88,60"
+"56,56;40,56;32,56;32,32;16,32;8,32"` — post-key route
+revised off the rendered map (`tools/survey29d_render.py`):
+back along the key girder, UP the left ladder (x=32) to
+the parasol, instead of the slice-11/12 pit route via
+(24,72). Log: `build/nacre-test/slice29/play29.log`.
+Key collected chunk 103 at (73,63). Post-key waypoints
+0–2 (56,56 → 40,56 → 32,56) reached repeatedly, but
+waypoint 3 (32,32) NEVER reached: Mario keeps falling
+from the girder to (24–32, 88) and backtracking (14
+backtracks, chunks 135–356). Final: 356 chunks, done=0.
+No STAGE CLEAR. Same failure mode as slices 11/12 — the
+climb from (32,56) up the col-4 ladder to (32,32) is what
+the greedy cannot do; it falls instead. The parasol (and
+whatever follows `$c858`→0) is still uncollected live.
+
+(d) **pcwatch replays of the autopilot schedule.**
+`gb_pcwatch` (validated first on 600f idle: `$0100` 1×,
+`$06bd` 1× at frame 234, identical to slices 26–28),
+8500f, play29 schedule, watching `$6c7a`/`$6c8f`/`$6ca4`/
+`$6cb9` (timer-22 entries, bank 7), `$6d9f` (handler 14),
+`$6b55` (handler 0), `$6dcf` (handler 17, key), `$7c34`
+(door writer): ALL ZERO except `$6b55` 1× at frame 860
+(the attract demo's `$5b` trigger, as in slice 28). The
+key handler is 0 because the replay diverges before the
+key (see §6) — the replay's Mario never reaches it, so
+these zeroes are replay-divergence zeroes, NOT evidence
+about the autopilot's own run. Do not cite them as "the
+autopilot route fires no timer-22 handler" — the
+autopilot's own firings were not instrumented (pcwatch
+cannot watch a gb_play run in-process).
+
+(e) **`$0859` gate (secondary target).** pcwatch on the
+play29 schedule's exact-replay prefix (3400f, chunks
+0–57), watching `$0859`@0, `$5a81`/`$5b71`/`$5bd1`@1,
+`$08bd`/`$0b28`@0: ALL ZERO. The `$0859`/[$c809]-
+dispatch sequence does not run at all on the player
+route in 1-1; slice 26's finding stands (it runs only
+in the state-18 attract flow, where its save branch is
+never taken).
+
+§5 **Verified vs inferred.** VERIFIED: the 32-range
+all-`$ff` check (this script, from ROM bytes); zero
+INCBIN directives; 100.0% curated; byte-match + both
+Nacre suites on the final build; the 12-cell `$0b`
+inventory of 1-1 at frames 2500/3100 and across two
+`gb_play` runs (no timer-22 subtype among them);
+subtypes 39/40 exist only in type-`$00` ladder cells;
+zero `($82,$37)` cells at all observed times; handler
+14/15/16 are score pickups (`$0df4` is a score routine —
+read the code, not just the sound ID); the `$41` block
+exists (7 cells, rows 5–7 cols 6–8) in one run's dumps
+and never fires; the play29 autopilot outcome (key
+chunk 103, done=0, waypoint 3 never reached). INFERRED:
+that the `$41` block's writer is `$627b`/`$6331`-family
+(no writer pinned — the `$6b55`/`$7dbe` exclusions are
+verified, the positive attribution is not); that the
+door cell appears only after all three pickups (no run
+has collected the parasol, so this is a guess, not a
+finding); the exact mechanism of the §6 sub-pixel
+nondeterminism (1px split observed twice, cause not
+pinned). CORRECTED this slice: slice 11 §5's "the
+slice-11 run's key pickup fired with the `$5b` trigger
+never having fired" does not match the on-disk dump —
+the surviving `key_wram.bin` (overwritten by the
+slice-12 run; the slice-11 dump is gone) shows `$c560`
+1→0 and one `$5b` cell consumed by key collection, i.e.
+the trigger HAD fired in that run. The prose was read
+off play12's dump; the disk now holds the later run's.
+
+§6 **Harness — two real fixes, one open problem.**
+(1) **Window caps raised.** `tools/gb_headless.c`
+(16 → 512 windows, spec buffer 512 → 8192) and
+`tools/gb_pcwatch.c` (32 → 512, buffer 1024 → 8192).
+A `gb_play` schedule runs to ~250 merged windows; the
+old caps SILENTLY dropped the rest, so every schedule
+replay before this slice was replaying a truncated
+schedule. This is a likely contributor to the slice-8
+replay divergence. Short specs are unaffected (windows
+still OR per frame); both Nacre suites re-run clean on
+the rebuilt `gb_headless` (§3). (2) **The +1 frame
+shift.** Replaying play29's printed schedule unshifted
+diverges at chunk 1 (auto (37,136) vs replay (38,136));
+shifting every schedule window +1 frame (intro windows
+unchanged) reproduces the autopilot EXACTLY through
+chunk 57 — verified position-by-position at every chunk
+boundary to frame 3369. So `gb_play`'s printed `f0` is
+one frame ahead of the replay tools' frame counting; a
+future replay must shift +1. (3) **Open: residual
+sub-pixel nondeterminism.** Even with +1, the replay
+diverges at chunk 58: auto (87,88) vs replay (96,88).
+Worse, `gb_play`'s OWN backtrack replay disagrees with
+its first pass — `left` from (96,88) gives (87,88) the
+first time and (88,88) after the backtrack, same integer
+position, same action. So the state that matters (Mario's
+sub-pixel position, or an RNG/enemy phase) differs
+between passes that look identical at integer precision.
+Cause NOT pinned (candidates: sub-pixel phase from the
+±1 frame alignment, an RNG state that is not reset by
+`gb_create`, or an enemy/record phase). Consequence: no
+fixed open-loop schedule can be replayed exactly past
+~chunk 57, and a winning door schedule cannot be verified
+by replay until this is found. The fix belongs in the
+harness (dump full Mario-record bytes at chunk ends, or
+find the nondeterministic state), not in more waypoints.
+`tools/gb_pcwatch` binary was deleted after use (not
+git-ignored), as in slices 26–28. New tools this slice:
+`tools/gen_slice29.py`, `tools/survey29_map.py`,
+`tools/survey29b_map.py`, `tools/survey29c_diff.py`,
+`tools/survey29d_render.py`. The play29 schedule is saved
+at `build/nacre-test/slice29/play29.spec` (+1 variant
+`play29.spec+1`); the slice-12 `play/` dumps it overwrote
+were backed up first to `build/nacre-test/slice29/
+play12-backup/`.
+
 ## Next slices (priority order)
 
 1. **Gameplay: complete stage 1-1 live (key -> door).**
@@ -3529,7 +6893,156 @@ callers, not observed live — no run has reached timer
    question. The `$0f15` SRAM stage-record writer (called
    from timer 23/26) is carved and is what the game does
    WHEN a stage clears — but its callers are unreachable
-   via known paths.
+   via known paths. Slice 15 carved the `$2a0a` dispatch
+   whole (bank 0 `$2b48` table, decimal bank 10 `$7730`
+   + tables + spawn, bank 8 `$5e37`/`$7311`/`$7526` and
+   the `$2b48`-entry handlers) and CLOSED timer 13 as a
+   1-1 clear-chain entry: its only `$2b48` setters are
+   entry 34 (bank 8 `$6d8a`→`$6ecd`) and entry 53 (bank
+   `$0a` `$5cd8`→`$5c4f`/`$5c97`), both gated on
+   `[$c109]` bit 3, and no 1-1 record has `[$c105]`=34
+   or 53 (live values {0,1,2,3,6,7,32,45,72}); and its
+   body `$0968` runs bank-16 `$5a11`, which sets only
+   timers 1/12 — so timer 13 resolves to resume or
+   death, never to 23/26/33/42 (slice 15 §3). The new
+   lead (slice 15 §8): the bank-`$1f` `$2b48` handlers
+   actually firing every frame in 1-1 (entries 7/32/45/
+   72: `$40e1`/`$48e3`/`$49b0`/`$58e2`) plus bank-8
+   `$5f5c` (entry 1), then the decimal-bank-`$0a`
+   handler set (`$4000-$7072`, incl. the `[$c109]`-bit-3
+   setters `$4add`/`$4d58` and what arms a record, and
+   which stages spawn 34/53 records).
+   Slice 16 carved all of that (bank `$1f` entries 7/32/
+   45/72 + 73 — `$58e2` is entry 73, not 72, see slice 16
+   §2 — bank-8 entry 1's table + routines, the full
+   bank-`$0a` handler set, bank-16 `$5a11`/`$4e89`) and
+   CLOSED it as a door lead: none of the carved handlers
+   writes a clear-chain timer (bank-16 `$5a11` sets only
+   timers 1/12, verified from the carved code), the
+   sound writes are sound IDs (`$64`/`$42`/`$12`), and
+   the `[$c109]`-bit-3 setters `$4add`/`$4d58` have no
+   direct caller anywhere in the ROM. Slice 17 finished
+   the table — 94/94 carved — and CLOSED it as a door
+   lead too: no handler in bank 9 or bank `$1f` writes
+   timer 23/26/33/42 (the only two `ldh [$ff90],a`
+   sites in the whole bank-31 carve are `$4b70`/
+   `$7847`, both literal 13; bank 9 has none), timer 13
+   still resolves only to timer 1 or 12, and entries
+   66/67 are a real path (bank-0 trampolines → bank 12),
+   not a quirk. What slice 17 DID pin: timer 13 has
+   FOUR `$2b48` setters, not two (slice 15's "exactly
+   two" was wrong — entry 46 `$4aee` disarms bit 3 and
+   sets timer 13, entry 92 `$780b` sets timer 13 on a
+   position gate near the key niche), and the arming
+   half is entry 91 `$6c60` (bit 2 set + bit 3 clear →
+   fall through to `$6ca9`, `set 3,[$c109]` — inline,
+   not a subroutine). The open link: whether a 91-armed
+   record ever becomes a 46 record (no `[$c105]`
+   rewrite to 46 exists; 1-1 never shows 46/91 live).
+   Slice 18 CLOSED the 91→46 link as DEAD (proven: no
+   `[$c105]` rewrite to 46 exists anywhere in the ROM;
+   the `$7730` table writes only `$3f`/`$36`; type-46
+   lives only in B1 and type-91 nowhere in the 101
+   surveyed stages; `$7378`'s variable path is a no-op
+   for 46 and its routine is orphaned) and carved the
+   bank-9/bank-31 gaps (bank 9 `$684f-$6907`, bank 31
+   `$4499-$4566`, `$506c-$5200`, `$6244-$64ed`,
+   `$6fde-$704f`, `$708f-$70de`, `$7a12-$7bf5`).
+   Slice 19 CLOSED the three remaining leads from slice 18:
+   bank 29's sprite table + blocks are carved (121 blocks)
+   and its selector is PINNED (state-16 steps call `$10d5`
+   → bank 29; everything else calls `$10dd` → bank 11;
+   live probe 1770 vs 21756 executions in a 6000f run);
+   the `$7378` routine's entry is RESOLVED ([$c10a]=4 of
+   the `$7073` table, read by the `$2b48`-entry-63 handler
+   `$705f`; live in stage B55: `$705f` 66×, `$7369` 8×,
+   `$7378` 2× with bank=10) and the `$70df-$723d` remainder
+   is carved (entries 14–18 of the `$6a98` table, which is
+   19 entries, not 9 as slice 17 had it). None of the
+   slice-19 carves writes a clear-chain timer, so the
+   door/clear-chain entry is still NOT found and no
+   completion attempt was run (NO-GO, no new door lead).
+   Slice 20 CLOSED both of those leads as carves — bank 31's
+   26 gaps (978 bytes) and bank 10's `$480a-$705e` region
+   (10,344 bytes) are now carved, both banks 100% — and
+   neither writes a clear-chain timer, so the door /
+   clear-chain entry is still NOT found (slice 20 §4).
+   Remaining door leads: a fresh look at what actually
+   sets `[$c105]`=63 records in play (only B55 is known
+   to carry one), and the `$7e3c` table's unidentified
+   reader in bank 10 (slice 20 §4). Slice 21 adds: no
+   handler in bank 9 writes a clear-chain timer; the
+   `$68d7`/`$6d6d` entry question and the A 197–207 table
+   hole are the new open notes (slice 21 §3/§5). Slice 22
+   SETTLES both: the `$664a`/`$6d33` tables are 11 entries, not 10
+   — `[$c10a]` reaches 10 live (3 hits in a 30000f idle run, writer
+   pinned to the bank-0 `$2a39` `$c200`-record copy loop), so
+   `$68d7`/`$6d6d` are entry 10; and genuine `$db15` byte1s max at
+   `$b0` in sampled flows (the only ≥`$f5` values are a transient
+   `$ff` fill in state 18 that `$0bff` never sees, since its only
+   caller chain runs in state 16) — the A 197–207 hole is not
+   reachable via live records in those flows. Bank 4 itself writes
+   no clear-chain timer (it has no code), so the door/clear-chain
+   entry is still NOT found and no completion attempt was run (NO-GO,
+   no new door lead). Slice 26 maps the `[$c70b]` timer
+   save/restore mechanism whole (6 writers / 4 readers) and finds
+   its newest reader at bank-1 `$5bd1`, in the `$5a81`/`$5b71`
+   [$c809]-dispatch sequence entered from State16Table[41]: the
+   `$0859` routine (State16Table[6], shared with state 18) saves
+   the current timer and sets timer 41, the sequence steps
+   `[$c809]` through its phases, and `$5bd1` restores the saved
+   timer (statically normally 6). It is NOT a timer-33/42 lead:
+   live `gb_pcwatch` (15000f retry flow) shows the sequence
+   never fires there (`$5a81`/`$5b71`/`$5bd1`/`$08bd`/`$0b28`
+   all 0 hits; `$0859` fires 2,262× in state 18 timer 6 but its
+   save branch is never taken), while `$5d21` (23×) and `$5ceb`
+   (6×) run on every stage load in state 18 timer 1. Open: which
+   flow takes the `$0859` gate, and what `$5bd1` restores live.
+   Slice 28 narrows the door statically and tests it live: the
+   timer-22 `$75ea` handlers are entries 02/04/08/09, selected
+   by `$c117` record byte-1 values {16–19, 24–27, 38–41, 42–45}
+   via the `$750a` map (handlers 13/14/15/16 are NOT timer-22 —
+   sound IDs + `jp $0df4`). Live, the ONLY `$75ea` handler that
+   ever fires is entry 0, the key pickup (`$6b55`): 1× in
+   play-right 5000f (frame 860, before player input — the
+   attract demo), 12× in idle 30000f (once per attract cycle);
+   entries 02/04/08/09 and the door writers `$7c34`/`$7b6e`/
+   `$7bd1` are 0 in retry 15000f, play-right 5000f, and idle
+   30000f. The attract demo reaches the key every cycle but
+   never the door. The remaining static link is what makes the
+   `$c117` record's byte 1 land in the timer-22 ranges — i.e.
+   which tile interaction that is — and the live link is any
+   run (player or demo) that gets Mario from the key to the
+   door.
+   Slice 29 CLOSES the static link in the negative and leaves
+   the live link open: a live-map survey of 1-1 (frames 2500/
+   3100, two full `gb_play` runs, key collection) proves NO
+   type-`$0b` cell in 1-1 carries a timer-22 subtype — the
+   only `$0b` cells are the parasol (34–37), top-right
+   (32–33), key (74–77), and `$5b` trigger (91); the
+   timer-22 subtypes 39/40 exist only in type-`$00` ladder
+   cells `$6b0a` never dispatches on; `($82,$37)` cells are
+   0 everywhere. A fresh `gb_play` run with a revised
+   post-key route (up the left ladder to the parasol, not
+   the pit route) collected the key at chunk 103 but never
+   reached the (32,32) ladder waypoint — same failure mode
+   as slices 11/12, done=0. The door trigger cell is not in
+   the 1-1 map as observed: it is written later (after all
+   three pickups — parasol still uncollected, guess not
+   finding) or it is not a map cell in 1-1 at all. The
+   `$0859` gate is 0 on the player route too (slice 29 §4).
+   The map DOES change during play (a 7-cell `$0b`/`$41`
+   block appears at the ladder top in one run — handler-14
+   score cells, writer unidentified, never fired). Harness
+   state after slice 29: press-window caps raised 16/32 →
+   512 (old caps silently truncated every schedule replay
+   before this slice); a +1 frame shift aligns a replay
+   exactly through chunk 57; a residual sub-pixel
+   nondeterminism (gb_play's own backtrack replay gives
+   (87,88) vs (88,88) for the same action from the same
+   integer position) blocks exact open-loop replay past
+   ~chunk 57 — that, not waypoints, is now the blocker for
+   verifying any winning door schedule by replay.
    Once a run completes, verify the winning schedule by
    replaying it with `gb_headless` on both the original
    and rebuilt ROMs (framebuffer hash + state trace +
@@ -3542,10 +7055,11 @@ callers, not observed live — no run has reached timer
    is 6px (slice 12: slower pre-key route, key at chunk
    88 not 31 — the radius is not the fix; the greedy
    needs ladder/ledge awareness).
-2. **Bank-11 sprite blocks.** The bank-11 table's pointed-to
-   sprite blocks ($42xx-$71xx) are still raw data, and the
-   table's extent (128 entries) is inferred, not verified
-   against live record[0] values. (The stage-table layout is
+2. **Bank-29 sprite blocks — DONE (slice 19).** Table + 121
+   blocks carved (`src/bank29.asm`, `src/bank29slice19.asm`);
+   selector PINNED (state-16 steps → bank 29 via `$10d5`,
+   everything else → bank 11 via `$10dd`; live probe counts
+   1770 vs 21756). (The stage-table layout is
    RESOLVED — slice 8 §1 — and the death->timer-12
    instruction is PINNED — slice 8 §2. The `$56c3` entry
    mechanism is RESOLVED — slice 10 §1 — and the key pickup
@@ -3557,27 +7071,44 @@ callers, not observed live — no run has reached timer
    bank 7 `$4794`, `$77a9`/`$78ba` roles from slice 4; the
    `$3414` dispatcher and the `$b4ca-$b927` SRAM writer are resolved
    (slice 6 §2, §4).
-4. **Further carves.** Whole banks 4, 6, 9–10, 13–15, 17,
-   19–22, 25–31 still largely raw (bank 16 and bank 24 are
-   now partially carved — slices 8/11; bank 7 is now
+4. **Further carves.** Whole banks 6, 17,
+   19–22, 25–28, 30 are now CLOSED (slice 24 — 11 banks in one
+   slice, all data, no code; curated 65.8%). **Banks 5, 12, 18,
+   23, and 24 are now CLOSED (slice 25 — stage / stream /
+   attract / credits data; curated 75.9%).** Banks closed so
+   far (27): 1, 2, 3, 4, 5, 6, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+   22, 23, 24, 25, 26, 27, 28, 30, 31 (slice 26 adds 1, 2, 3, 16).
+   Bank 7 is now
    extensively carved — slices 4/5/10/11; bank 8 is now
-   partially carved — slice 11). Next candidate by
-   dependency (slice 14 §5): **bank 10 first, not banks
-   4/6** — bank 10 is 100% raw like 4/6, but it has a
-   known per-frame gameplay entry (`$7730`, via `$2a45`
-   from the `$2a0a` tick) and five `[$dd18]` write sites
-   (`$4ff2`/`$5021`/`$5ca8`/`$759a`/`$7825`), while banks
-   4/6 have no known gameplay entry (frame-end samples:
-   4–5 frames each in 12000f of play, noise-level).
-   Carve bank 10 from `$7730` plus its `[$dd18]` sites,
-   and bank 8 `$7526` + `$644a`/`$65fc`/`$68b8`/`$6f26`,
-   then trace what the handler-17 `$c200` record does in
-   the `$2a0a` dispatch. After that: bank-8
-   `$4b63-$5408` (the byte tables the `$4aed`/`$4b23`
-   entries point at), then the bank-11 sprite blocks the
-   `$4000` table points at. Bank 11 `$4000`,
-   bank 18 `$4934`, bank 24 `$4934`, bank 10 `$51c8-$59f1`,
-   bank 12 `$5917-$5dbc`, bank 9
+   substantially carved — slices 11/12/15; **bank 9 is now CLOSED
+   except the `$ff` padding tail — slice 21**; **decimal bank 10 and
+   bank 31 are now CLOSED, 100% carved — slice 20**; **bank 4 is now
+   CLOSED as tile data except the `$ff` padding tail — slice 22**;
+   **banks 13, 14, and 15 are now CLOSED as transfer/stream data
+   except their `$ff` padding tails — slice 23**;
+   **banks 6, 17, 19–22, 25–28, and 30 are now CLOSED as stage /
+   tile / stream / transfer / sprite / packet data except their
+   `$ff` padding tails — slice 24**;
+   **banks 5, 12, 18, 23, and 24 are now CLOSED as stage /
+   stream / attract / credits data except their `$ff` padding
+   tails — slice 25**; **bank 1 code now reaches $5a80 — slice 25**;
+   **banks 1, 2, 3, and 16 are now CLOSED — slice 26 (song/SFX
+   data, the bank-16 dispatcher, and the bank-1 [$c809] dispatch
+   code; curated 83.9%)**. Banks closed so far (27): 1, 2, 3, 4,
+   5, 6, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+   24, 25, 26, 27, 28, 30, 31. Next candidate by dependency
+   (slice 26 §6): the bank 7 gaps (3,379 B) and bank 8 gaps
+   (6,395 B) — the only non-`$ff` work left — then the bank-0
+   tail `$3947–$3fff` and bank 11 `$7e3d–$7fff`. The `$2b48` table is DONE (94/94, slice 17) — it is no
+   longer a lead. The 91→46 link is DEAD (slice 18 §1).
+   The bank-11 sprite blocks are DONE (slice 18 §2). The
+   bank-9/bank-31 gaps are DONE (slice 18 §3). Bank 29's
+   sprite table + blocks are DONE (slice 19 §2). The
+   `$7378` routine's entry is RESOLVED (slice 19 §3) and
+   the `$70df-$723d` remainder is carved (slice 19 §4).
+   Bank 31's 26 gaps and bank 10's `$480a-$705e` region
+   are DONE (slice 20 §1–§2). Bank 11 `$4000`, bank 18 `$4934`, bank 24
+   `$4934`, bank 10 `$51c8-$59f1`, bank 12 `$5917-$5dbc`, bank 9
    `$4000-$4020`/`$418b-$4690`/`$63f3-$6401`/`$6480-$6484`,
    bank 0 `$17eb-$1d06`, bank 7
    `$63c4`/`$6b55-$6e8b`/`$750a-$75ea`, bank 8
@@ -3587,7 +7118,88 @@ callers, not observed live — no run has reached timer
    (sound table), bank 3 `$48f1-$4942` (song table), bank 7
    `$4827-$4840`/`$627b-$63c3`/`$63f4-$643e`/`$643f-$6452`/
    `$664e-$66c9`/`$714c-$7167`, bank 8 `$4b63-$5408` (class
-   byte tables).
+   byte tables). Slice 15 adds: bank 8
+   `$5e37-$5efd`/`$5efe-$5f5b`/`$5f5c-$5f6a`/`$609d-$60e8`/
+   `$6110-$611e`/`$6274-$6282`/`$63b5-$63ef`/`$6443-$6466`/
+   `$6467-$646c`/`$6473-$6667`/`$6668`/`$67bd-$67cb`/
+   `$68b8-$68ee`/`$69af-$69bd`/`$6a25-$6a33`/`$6abb-$6ac9`/
+   `$6d8a-$6da9`/`$6daa-$6db5`/`$6db6-$6f64`/`$6f65-$6f7a`/
+   `$6f7b-$7291`/`$7310-$74f3`/`$7526-$7587`/`$7602-$7629`/
+   `$7685-$76b5`/`$76e3-$7740`/`$7741-$7746`/`$7747-$77d9`/
+   `$77da-$7819`, decimal bank 10 `$4ff2-$4ffe`/
+   `$5021-$5084`/`$5c4f-$5cf7`/`$5cf8-$5d07`/`$759a-$75af`/
+   `$7730-$7814`/`$7815`/`$7816-$787c`/`$787d-$789e`/
+   `$7c57-$7caf`/`$7e50-$7ead`/`$7eae-$7f43`, bank 0
+   `$2b48-$2c61` (the `$2a0a` dispatch table). Slice 16
+   adds: bank 31 (`$1f`) `$40e1-$40ef`/`$40f0-$40f5`/
+   `$40f6-$414d`/`$48e3-$4931`/`$49b0-$49be`/`$49bf-$49c2`/
+   `$49c3-$4a94`/`$589c-$58aa`/`$58ab-$58ae`/`$58af-$58e1`/
+   `$58e2-$58fd`/`$58fe-$590d`/`$590e-$5a3b`/`$7ca1-$7ce1`/
+   `$7d83-$7db8`/`$7e07-$7e43`/`$7e7e-$7ea5`/`$7f01-$7f5e`,
+   bank 8 `$5f6b-$5f7a`/`$5f7b-$609c`/`$60e9-$610f`/
+   `$63f0-$6442`, decimal bank 10 `$4000-$46e2`/
+   `$46e3-$47a2`/`$47a3-$4809`/`$4add-$4ae2`/`$4d58-$4d5d`/
+   `$4dbe-$4e55`/`$5192-$51a0`/`$51e0-$5211`/`$522b-$524a`/
+   `$532b-$534a`/`$5412-$5420`/`$568c-$56b0`/`$56db-$56fa`/
+   `$57bb-$5893`/`$5909-$5917`/`$5d08-$5d5d`/`$5d86-$5e09`/
+   `$5e88-$5ec9`/`$60f3-$612d`/`$63a3-$6413`/`$6582-$65a1`/
+   `$678c-$67ab`/`$69be-$69dd`/`$6af9-$6b07`/`$6d77-$6d99`/
+   `$6e42-$6e61`/`$6f3d-$6f65`/`$705f-$7072`/`$7951-$79e9`/
+   `$7ab8-$7b11`/`$7b3f-$7b6b`/`$7c24-$7c56`, bank 16
+   `$4993-$49c3`/`$49c4-$49c7`/`$49c8-$4a17`/`$4a18-$4aee`/
+   `$4aef`/`$4e89-$4eb1`/`$5a11-$5a17`/`$5a18-$5a25`/
+   `$5a26-$5a4e`/`$5a4f-$5a58`/`$5a59-$5b3f`/`$5b40-$5b45`/
+   `$5b46-$5c05`/`$5c06-$5c15`/`$5c16-$5d51`/`$5d52-$5d57`/
+   `$5d58-$5e03`/`$5e04-$5e0d`/`$5e0e-$5f16`/`$5f17-$5f1e`/
+   `$5f1f-$5fd2`. Slice 17 adds: bank 9 `$6490-$64ca`/
+   `$6574-$6649`/`$664a-$6659`/`$6660-$6695`/`$6696-$66b6`/
+   `$66b7-$684e`/`$6908-$6961`/`$696b-$6999`/`$69ac-$6a07`/
+   `$6a11-$6a3f`/`$6a53-$6a7c`/`$6a9c-$6ac7`/`$6ae7-$6b42`/
+   `$6b4c-$6b7a`/`$6b8d-$6be8`/`$6bf2-$6c20`/`$6c34-$6c5e`/
+   `$6c7e-$6ca9`/`$6cb7-$6d32`/`$6d33-$6d42`/`$6d49-$6d58`/
+   `$6d5b-$6d6a`/`$6d8b-$6d99`/`$6d9a-$6d9d`/`$6d9e-$6dd3`/
+   `$6dd4-$6ddf`/`$6de0-$6e62`/`$6e6a-$6e93`/`$6eb1-$6ed8`/
+   `$6f34-$6f64`/`$6f9b`/`$6f9c-$6fab`, bank 31 (`$1f`)
+   `$4000-$4052`/`$4053-$4058`/`$4059-$40e0`/`$414e-$4161`/
+   `$4162-$416b`/`$416c-$41fa`/`$41fb-$4204`/`$4205-$4498`/
+   `$4567-$4575`/`$4576-$457b`/`$457c-$467e`/`$4689-$46bf`/
+   `$46c0-$46c7`/`$46c8-$48c6`/`$4932-$4940`/`$4941-$4944`/
+   `$4945-$49af`/`$4a95-$4aa3`/`$4aa4-$4aa9`/`$4aaa-$4c9b`/
+   `$4cd4-$4ce3`/`$4ce4-$4ce9`/`$4cea-$4d89`/`$4da6-$4db4`/
+   `$4db5-$4dba`/`$4dbb-$4e3f`/`$4e40-$4e47`/`$4e48-$4f9a`/
+   `$4fb9-$4fd2`/`$503c-$506b`/`$5201-$520f`/`$5210-$5217`/
+   `$5218-$53d9`/`$53da-$53df`/`$53e0-$5406`/`$540e-$5444`/
+   `$544b-$5463`/`$5464-$5467`/`$5468-$55d7`/`$55d8-$55dd`/
+   `$55de-$56c4`/`$56c5-$56ce`/`$56cf-$57a0`/`$57c1-$589b`/
+   `$5a3c-$5a8a`/`$5a8b-$5a90`/`$5a91-$5b5a`/`$5b5b-$5b6c`/
+   `$5b6d-$5e81`/`$5e82-$5e87`/`$5e88-$5f37`/`$5f38-$5f49`/
+   `$5f4a-$6151`/`$616e-$6187`/`$61a5-$6243`/`$64ee-$64fd`/
+   `$64fe-$650b`/`$650c-$66b1`/`$66b2-$66bb`/`$66bc-$67f7`/
+   `$68dc-$68f9`/`$68fa-$68ff`/`$6900-$6a97`/`$6a98-$6aa9`/
+   `$6abe-$6b52`/`$6b6f-$6cc1`/`$6cc2-$6cc6`/`$6cc7-$6d8d`/
+   `$6d8e-$6da1`/`$6daa-$6df5`/`$6e0a-$6e83`/`$6e95-$6eb9`/
+   `$6f89-$6fdd`/`$7050-$708e`/`$723e-$7305`/`$7316-$7324`/
+   `$7325-$7350`/`$7351-$7370`/`$7374-$73d0`/`$73d4-$7433`/
+   `$7437-$74d4`/`$74d8-$775e`/`$7775-$792d`/`$7934-$7a11`/
+   `$7bf6-$7ca0`/`$7ce2-$7d82`/`$7de4-$7e06`/`$7ea6-$7f00`,
+   bank 0 `$0f95-$0fa0`. Slice 28 adds: bank 16
+   `$5fd3-$7dbd` is now carved for real (code + six
+   `call $0fd9` inline tables + data — slice 26's "pure
+   data" verdict was wrong at `$617c`/`$61b2`/`$6b32`/`$6b85`,
+   and the `$6d67` table is ONE 40-entry table, not two),
+   and bank 0's last `main.asm` INCBINs are gone (`$0674`,
+   `$0df4`, `$0f74`, `$0fa1`, `$1075`, `$1e6b`, `$3689` —
+   609 B). What remains is the door (§1) and the `$0859`
+   gate, plus the replay-nondeterminism blocker (§1, slice 29
+   §6) — there is NO non-`$ff` carve left anywhere and NO
+   INCBIN left anywhere. Slice 29 closed the last of it:
+   all 74,129 B of `$ff` padding tails are now labelled
+   `ds $len, $ff`, `src/` is 524,288/524,288 (100%), and all
+   32 banks are closed (bank 11's only remainder was its
+   `$ff` tail). The disassembly as a byte-coverage project
+   is DONE; what is left is the scientific item (the door,
+   live) and the harness item (exact replay).
+   The `$2b48` table is DONE (94/94, slice 17) — it is no
 
 ## Not done / blocked
 
@@ -3627,7 +7239,22 @@ callers, not observed live — no run has reached timer
   but its callers are unreachable via known paths); the
   clear chain's ENTRY (timer 33/42) is now the open
   question; the next lead is the per-frame `$2a0a` dispatch
-  into bank 8 `$7526` / bank 10 `$7730` (slice 14 §5). The
+  into bank 8 `$7526` / bank 10 `$7730` (slice 14 §5). Slice
+  15 adds: timer 13 VERIFIED unreachable in 1-1 as a
+  clear-chain entry (slice 15 §3 — its only `$2b48`
+  setters, entry 34 → bank 8 `$6d8a`→`$6ecd` and entry 53
+  → bank `$0a` `$5cd8`→`$5c4f`/`$5c97`, both gated on
+  `[$c109]` bit 3, need a `[$c105]`=34/53 record no 1-1
+  record carries; and its body `$0968` runs bank-16
+  `$5a11`, which sets only timers 1/12); the `[$c109]`
+  bit-3 setters (`$4add`/`$4d58` bank `$0a`, `$6ca9` bank
+  31) sit in the uncarved bank-`$0a` handler set / bank 31;
+  the `$5cf8`-table routines `$5d08`/`$5d48`/`$5d86`/`$5d9f`/
+  `$5e88`/`$5e97` are uncarved; bank `$1f` (entries
+  7/32/45/72, the per-frame behavior actually firing in
+  1-1) is almost entirely uncarved; the 2990-frame `$0a`
+  re-set of `[$dd18]` in the slice-15 replay is
+  unexplained (open loose end, not the door). The
   `$29c0`/`$29ee` queue scans are orphaned (no caller). No
   run has completed 1-1 yet (key collected,
   play12/13/14 all end at the block, done=0; the slice-11
@@ -3643,6 +7270,47 @@ callers, not observed live — no run has reached timer
   (world,stage) pattern — role unresolved. The bank-10
   `$4031` routine's entry mechanism is unverified.
   Slice 12 NOT pushed (coordinator handles pushes).
+- Slice 16 adds: the bank-`$0a` handler set is DONE
+  (2,304 instrs; `$2b48` entries 66/67 excepted — ROM0
+  targets `$33e3`/`$33ef`); the `$5cf8`-table routines
+  `$5d08`/`$5d48`/`$5d86`/`$5d9f`/`$5e88`/`$5e97` are
+  carved; bank `$1f` entries 7/32/45/72 (+73 — `$58e2`
+  is entry 73, not 72, correcting slice 15 §8) are
+  carved; bank-16 `$5a11`/`$4e89` is carved and slice
+  15's "sets only timers 1/12" is VERIFIED from the
+  carved code (all 13 literal writes are `$01`/`$0c`).
+  The `[$c109]`-bit-3 setters `$4add`/`$4d58` have NO
+  direct caller anywhere in the ROM (whole-ROM byte
+  search, zero hits) — what arms a record is still
+  open. The `$2b48` table is 54/94 carved; the remaining
+  40 (bank 9's 3, bank `$0a` 66/67, bank `$1f`'s 35) are
+  the next door lead. `$5d48`'s `$33` to `[$c836]`
+  (music-request field) exceeds the 41-song table —
+  role unverified.
+- Slice 17 adds: the `$2b48` table is DONE (94/94) —
+  bank 9's three entries, bank `$0a` 66/67 RESOLVED as
+  a real path (bank-0 trampolines → bank 12, not a
+  table quirk), and bank `$1f`'s remaining 35 are
+  carved; bank 0 `$0f95-$0fa0` is carved. Timer 13 has
+  FOUR `$2b48` setters, not two (slice 15's "exactly
+  two" was wrong): entry 46 `$4aee` (disarms bit 3,
+  sets timer 13) and entry 92 `$780b` (position gate
+  near the key niche, sets timer 13) join entries 34
+  and 53. The arming half is entry 91 `$6c60` — bit 2
+  set + bit 3 clear falls through to `$6ca9`
+  (`set 3,[$c109]`, INLINE, not a subroutine —
+  slice 15's "third setter" framing was wrong) — and
+  entry 91's return `$5b55` clears bit 3. Whether a
+  91-armed record ever becomes a 46 record is OPEN (no
+  `[$c105]` rewrite to 46 exists; 1-1 never shows 46/91
+  live). `$4add`/`$4d58` STILL have no direct caller
+  (re-verified: `$4add` zero hits anywhere, `$4d58` one
+  hit inside bank-29 data). No handler in this slice
+  writes timer 23/26/33/42 — the door/clear-chain entry
+  is still NOT found, and no completion attempt was run
+  (NO-GO, no new door lead). The `$6dd4` 12-byte blob's
+  meaning and the `$80`/`$33` to `[$c836]` (both out of
+  the 41-song range) are unverified.
 - Pushed: slice 1 `62d9e52c`, slice 2 `6a21aa7f`, slice 3
   `e8d923ee858b188e2aa4ec229d0aae4f5156bc0f` (16 files, 887,317
   bytes; sync record `~/workspace/mike-monorepo.muse-github-snapshot-sync.json`),

@@ -2532,243 +2532,102 @@ jr_000_2ab3:
     ld a, $07                                        ; $2b42
     rst $10                                          ; $2b44
     jp $4794                                         ; $2b45
-    ld a, [bc]                                       ; $2b48
-    and e                                            ; $2b49
-    ld b, a                                          ; $2b4a
-    ld [$5f5c], sp                                   ; $2b4b
-    ld [$6110], sp                                   ; $2b4e
-    ld [$7310], sp                                   ; $2b51
-    ld [$6274], sp                                   ; $2b54
-    rra                                              ; $2b57
-    nop                                              ; $2b58
-    ld b, b                                          ; $2b59
-    ld [$6443], sp                                   ; $2b5a
-    rra                                              ; $2b5d
-    pop hl                                           ; $2b5e
-    ld b, b                                          ; $2b5f
-    ld [$6668], sp                                   ; $2b60
-    ld [$67bd], sp                                   ; $2b63
-    ld a, [bc]                                       ; $2b66
-    ld [hl], $4e                                     ; $2b67
-    ld a, [bc]                                       ; $2b69
-    sub d                                            ; $2b6a
-    ld d, c                                          ; $2b6b
-    rra                                              ; $2b6c
-    xor $64                                          ; $2b6d
-    ld a, [bc]                                       ; $2b6f
-    dec hl                                           ; $2b70
-    ld d, d                                          ; $2b71
-    ld a, [bc]                                       ; $2b72
-    dec hl                                           ; $2b73
-    ld d, e                                          ; $2b74
-    rra                                              ; $2b75
-    ld c, [hl]                                       ; $2b76
-    ld b, c                                          ; $2b77
-    ld a, [bc]                                       ; $2b78
-    ld [de], a                                       ; $2b79
-    ld d, h                                          ; $2b7a
-    ld a, [bc]                                       ; $2b7b
-    adc h                                            ; $2b7c
-    ld d, [hl]                                       ; $2b7d
-    rra                                              ; $2b7e
-    db $ec                                           ; $2b7f
-    ld b, c                                          ; $2b80
-    rra                                              ; $2b81
-    cpl                                              ; $2b82
-    ld b, h                                          ; $2b83
-    rra                                              ; $2b84
-    ld h, a                                          ; $2b85
-    ld b, l                                          ; $2b86
-    ld a, [bc]                                       ; $2b87
-    adc $41                                          ; $2b88
-    ld a, [bc]                                       ; $2b8a
-    inc bc                                           ; $2b8b
-    ld b, d                                          ; $2b8c
-    ld a, [bc]                                       ; $2b8d
-    inc l                                            ; $2b8e
-    ld b, d                                          ; $2b8f
-    ld a, [bc]                                       ; $2b90
-    ld d, d                                          ; $2b91
-    ld b, d                                          ; $2b92
-    ld a, [bc]                                       ; $2b93
-    ld a, e                                          ; $2b94
-    ld b, d                                          ; $2b95
-    add hl, bc                                       ; $2b96
-    ld [hl], h                                       ; $2b97
-    ld h, l                                          ; $2b98
-    ld [$6a25], sp                                   ; $2b99
-    rra                                              ; $2b9c
-    or c                                             ; $2b9d
-    ld b, [hl]                                       ; $2b9e
-    ld [$6abb], sp                                   ; $2b9f
-    rra                                              ; $2ba2
-    ld c, e                                          ; $2ba3
-    ld c, b                                          ; $2ba4
-    ld a, [bc]                                       ; $2ba5
-    db $db                                           ; $2ba6
-    ld d, [hl]                                       ; $2ba7
-    rra                                              ; $2ba8
-    db $e3                                           ; $2ba9
-    ld c, b                                          ; $2baa
-    ld a, [bc]                                       ; $2bab
-    cp e                                             ; $2bac
-    ld d, a                                          ; $2bad
-    ld [$6d8a], sp                                   ; $2bae
-    rra                                              ; $2bb1
-    ld [hl-], a                                      ; $2bb2
-    ld c, c                                          ; $2bb3
-    ld a, [bc]                                       ; $2bb4
-    add hl, bc                                       ; $2bb5
-    ld e, c                                          ; $2bb6
-    ld [$6f56], sp                                   ; $2bb7
-    ld [$69af], sp                                   ; $2bba
-    ld a, [bc]                                       ; $2bbd
-    and b                                            ; $2bbe
-    ld b, d                                          ; $2bbf
-    ld a, [bc]                                       ; $2bc0
-    ld b, l                                          ; $2bc1
-    ld b, e                                          ; $2bc2
-    ld a, [bc]                                       ; $2bc3
-    or $43                                           ; $2bc4
-    ld a, [bc]                                       ; $2bc6
-    jp $0a44                                         ; $2bc7
-    adc d                                            ; $2bca
-    ld b, l                                          ; $2bcb
-    ld a, [bc]                                       ; $2bcc
-    ld a, $46                                        ; $2bcd
-    rra                                              ; $2bcf
-    or b                                             ; $2bd0
-    ld c, c                                          ; $2bd1
-    rra                                              ; $2bd2
-    sub l                                            ; $2bd3
-    ld c, d                                          ; $2bd4
-    rra                                              ; $2bd5
-    push de                                          ; $2bd6
-    ld c, h                                          ; $2bd7
-    rra                                              ; $2bd8
-    and [hl]                                         ; $2bd9
-    ld c, l                                          ; $2bda
-    ld a, [bc]                                       ; $2bdb
-    ld [hl], a                                       ; $2bdc
-    ld l, l                                          ; $2bdd
-    rra                                              ; $2bde
-    ld sp, $1f4e                                     ; $2bdf
-    inc a                                            ; $2be2
-    ld d, b                                          ; $2be3
-    rra                                              ; $2be4
-    db $ec                                           ; $2be5
-    ld a, c                                          ; $2be6
-    ld a, [bc]                                       ; $2be7
-    ret c                                            ; $2be8
-    ld e, h                                          ; $2be9
-    ld a, [bc]                                       ; $2bea
-    sbc b                                            ; $2beb
-    ld e, [hl]                                       ; $2bec
-    ld a, [bc]                                       ; $2bed
-    and e                                            ; $2bee
-    ld h, e                                          ; $2bef
-    add hl, bc                                       ; $2bf0
-    adc $6c                                          ; $2bf1
-    ld a, [bc]                                       ; $2bf3
-    db $f4                                           ; $2bf4
-    ld h, e                                          ; $2bf5
-    ld a, [bc]                                       ; $2bf6
-    add d                                            ; $2bf7
-    ld h, l                                          ; $2bf8
-    rra                                              ; $2bf9
-    ld bc, $1f52                                     ; $2bfa
-    bit 2, e                                         ; $2bfd
-    ld a, [bc]                                       ; $2bff
-    db $dd                                           ; $2c00
-    ld b, b                                          ; $2c01
-    ld a, [bc]                                       ; $2c02
-    adc h                                            ; $2c03
-    ld h, a                                          ; $2c04
-    ld a, [bc]                                       ; $2c05
-    ld e, a                                          ; $2c06
-    ld [hl], b                                       ; $2c07
-    ld a, [bc]                                       ; $2c08
-    nop                                              ; $2c09
-    ld b, b                                          ; $2c0a
-    ld a, [bc]                                       ; $2c0b
-    jp nz, $0a41                                     ; $2c0c
-    db $e3                                           ; $2c0f
-    inc sp                                           ; $2c10
-    ld a, [bc]                                       ; $2c11
-    rst $28                                          ; $2c12
-    inc sp                                           ; $2c13
-    rra                                              ; $2c14
-    ld d, l                                          ; $2c15
-    ld d, h                                          ; $2c16
-    ld [$7310], sp                                   ; $2c17
-    rra                                              ; $2c1a
-    ret                                              ; $2c1b
-    ld d, l                                          ; $2c1c
-    rra                                              ; $2c1d
-    or [hl]                                          ; $2c1e
-    ld d, [hl]                                       ; $2c1f
-    rra                                              ; $2c20
-    sbc h                                            ; $2c21
-    ld e, b                                          ; $2c22
-    rra                                              ; $2c23
-    ldh [c], a                                       ; $2c24
-    ld e, b                                          ; $2c25
-    rra                                              ; $2c26
-    inc a                                            ; $2c27
-    ld e, d                                          ; $2c28
-    rra                                              ; $2c29
-    ld b, d                                          ; $2c2a
-    ld e, e                                          ; $2c2b
-    rra                                              ; $2c2c
-    cp c                                             ; $2c2d
-    ld c, a                                          ; $2c2e
-    rra                                              ; $2c2f
-    ld [hl], e                                       ; $2c30
-    ld e, [hl]                                       ; $2c31
-    rra                                              ; $2c32
-    add hl, hl                                       ; $2c33
-    ld e, a                                          ; $2c34
-    rra                                              ; $2c35
-    ld l, [hl]                                       ; $2c36
-    ld h, c                                          ; $2c37
-    rra                                              ; $2c38
-    and l                                            ; $2c39
-    ld h, c                                          ; $2c3a
-    rra                                              ; $2c3b
-    rst $28                                          ; $2c3c
-    ld h, h                                          ; $2c3d
-    rra                                              ; $2c3e
-    and e                                            ; $2c3f
-    ld h, [hl]                                       ; $2c40
-    rra                                              ; $2c41
-    cp h                                             ; $2c42
-    ld h, a                                          ; $2c43
-    ld a, [bc]                                       ; $2c44
-    cp [hl]                                          ; $2c45
-    ld l, c                                          ; $2c46
-    ld a, [bc]                                       ; $2c47
-    ld sp, hl                                        ; $2c48
-    ld l, d                                          ; $2c49
-    ld a, [bc]                                       ; $2c4a
-    ld b, d                                          ; $2c4b
-    ld l, [hl]                                       ; $2c4c
-    ld a, [bc]                                       ; $2c4d
-    dec a                                            ; $2c4e
-    ld l, a                                          ; $2c4f
-    rra                                              ; $2c50
-    call c, $0968                                    ; $2c51
-    adc e                                            ; $2c54
-    ld l, l                                          ; $2c55
-    rra                                              ; $2c56
-    db $eb                                           ; $2c57
-    ld l, b                                          ; $2c58
-    rra                                              ; $2c59
-    adc c                                            ; $2c5a
-    ld l, d                                          ; $2c5b
-    rra                                              ; $2c5c
-    ld d, $73                                        ; $2c5d
-    rra                                              ; $2c5f
-    or $7b                                           ; $2c60
+; Slice 15: the $2a0a $2b48 dispatch table -- 94 entries x 3 bytes (bank, lo, hi). Was mis-decoded as code
+; (ld a,[bc] / ld [$5f5c],sp ...) in bank0slice3.asm; carved as data here. Total 282 bytes, $2b48-$2c61.
+    db $0a, $a3, $47  ; $2b48 entry 0 -> bank $0a $47a3
+    db $08, $5c, $5f  ; $2b48 entry 1 -> bank $08 $5f5c
+    db $08, $10, $61  ; $2b48 entry 2 -> bank $08 $6110
+    db $08, $10, $73  ; $2b48 entry 3 -> bank $08 $7310
+    db $08, $74, $62  ; $2b48 entry 4 -> bank $08 $6274
+    db $1f, $00, $40  ; $2b48 entry 5 -> bank $1f $4000
+    db $08, $43, $64  ; $2b48 entry 6 -> bank $08 $6443
+    db $1f, $e1, $40  ; $2b48 entry 7 -> bank $1f $40e1
+    db $08, $68, $66  ; $2b48 entry 8 -> bank $08 $6668
+    db $08, $bd, $67  ; $2b48 entry 9 -> bank $08 $67bd
+    db $0a, $36, $4e  ; $2b48 entry 10 -> bank $0a $4e36
+    db $0a, $92, $51  ; $2b48 entry 11 -> bank $0a $5192
+    db $1f, $ee, $64  ; $2b48 entry 12 -> bank $1f $64ee
+    db $0a, $2b, $52  ; $2b48 entry 13 -> bank $0a $522b
+    db $0a, $2b, $53  ; $2b48 entry 14 -> bank $0a $532b
+    db $1f, $4e, $41  ; $2b48 entry 15 -> bank $1f $414e
+    db $0a, $12, $54  ; $2b48 entry 16 -> bank $0a $5412
+    db $0a, $8c, $56  ; $2b48 entry 17 -> bank $0a $568c
+    db $1f, $ec, $41  ; $2b48 entry 18 -> bank $1f $41ec
+    db $1f, $2f, $44  ; $2b48 entry 19 -> bank $1f $442f
+    db $1f, $67, $45  ; $2b48 entry 20 -> bank $1f $4567
+    db $0a, $ce, $41  ; $2b48 entry 21 -> bank $0a $41ce
+    db $0a, $03, $42  ; $2b48 entry 22 -> bank $0a $4203
+    db $0a, $2c, $42  ; $2b48 entry 23 -> bank $0a $422c
+    db $0a, $52, $42  ; $2b48 entry 24 -> bank $0a $4252
+    db $0a, $7b, $42  ; $2b48 entry 25 -> bank $0a $427b
+    db $09, $74, $65  ; $2b48 entry 26 -> bank $09 $6574
+    db $08, $25, $6a  ; $2b48 entry 27 -> bank $08 $6a25
+    db $1f, $b1, $46  ; $2b48 entry 28 -> bank $1f $46b1
+    db $08, $bb, $6a  ; $2b48 entry 29 -> bank $08 $6abb
+    db $1f, $4b, $48  ; $2b48 entry 30 -> bank $1f $484b
+    db $0a, $db, $56  ; $2b48 entry 31 -> bank $0a $56db
+    db $1f, $e3, $48  ; $2b48 entry 32 -> bank $1f $48e3
+    db $0a, $bb, $57  ; $2b48 entry 33 -> bank $0a $57bb
+    db $08, $8a, $6d  ; $2b48 entry 34 -> bank $08 $6d8a
+    db $1f, $32, $49  ; $2b48 entry 35 -> bank $1f $4932
+    db $0a, $09, $59  ; $2b48 entry 36 -> bank $0a $5909
+    db $08, $56, $6f  ; $2b48 entry 37 -> bank $08 $6f56
+    db $08, $af, $69  ; $2b48 entry 38 -> bank $08 $69af
+    db $0a, $a0, $42  ; $2b48 entry 39 -> bank $0a $42a0
+    db $0a, $45, $43  ; $2b48 entry 40 -> bank $0a $4345
+    db $0a, $f6, $43  ; $2b48 entry 41 -> bank $0a $43f6
+    db $0a, $c3, $44  ; $2b48 entry 42 -> bank $0a $44c3
+    db $0a, $8a, $45  ; $2b48 entry 43 -> bank $0a $458a
+    db $0a, $3e, $46  ; $2b48 entry 44 -> bank $0a $463e
+    db $1f, $b0, $49  ; $2b48 entry 45 -> bank $1f $49b0
+    db $1f, $95, $4a  ; $2b48 entry 46 -> bank $1f $4a95
+    db $1f, $d5, $4c  ; $2b48 entry 47 -> bank $1f $4cd5
+    db $1f, $a6, $4d  ; $2b48 entry 48 -> bank $1f $4da6
+    db $0a, $77, $6d  ; $2b48 entry 49 -> bank $0a $6d77
+    db $1f, $31, $4e  ; $2b48 entry 50 -> bank $1f $4e31
+    db $1f, $3c, $50  ; $2b48 entry 51 -> bank $1f $503c
+    db $1f, $ec, $79  ; $2b48 entry 52 -> bank $1f $79ec
+    db $0a, $d8, $5c  ; $2b48 entry 53 -> bank $0a $5cd8
+    db $0a, $98, $5e  ; $2b48 entry 54 -> bank $0a $5e98
+    db $0a, $a3, $63  ; $2b48 entry 55 -> bank $0a $63a3
+    db $09, $ce, $6c  ; $2b48 entry 56 -> bank $09 $6cce
+    db $0a, $f4, $63  ; $2b48 entry 57 -> bank $0a $63f4
+    db $0a, $82, $65  ; $2b48 entry 58 -> bank $0a $6582
+    db $1f, $01, $52  ; $2b48 entry 59 -> bank $1f $5201
+    db $1f, $cb, $53  ; $2b48 entry 60 -> bank $1f $53cb
+    db $0a, $dd, $40  ; $2b48 entry 61 -> bank $0a $40dd
+    db $0a, $8c, $67  ; $2b48 entry 62 -> bank $0a $678c
+    db $0a, $5f, $70  ; $2b48 entry 63 -> bank $0a $705f
+    db $0a, $00, $40  ; $2b48 entry 64 -> bank $0a $4000
+    db $0a, $c2, $41  ; $2b48 entry 65 -> bank $0a $41c2
+    db $0a, $e3, $33  ; $2b48 entry 66 -> bank $0a $33e3
+    db $0a, $ef, $33  ; $2b48 entry 67 -> bank $0a $33ef
+    db $1f, $55, $54  ; $2b48 entry 68 -> bank $1f $5455
+    db $08, $10, $73  ; $2b48 entry 69 -> bank $08 $7310
+    db $1f, $c9, $55  ; $2b48 entry 70 -> bank $1f $55c9
+    db $1f, $b6, $56  ; $2b48 entry 71 -> bank $1f $56b6
+    db $1f, $9c, $58  ; $2b48 entry 72 -> bank $1f $589c
+    db $1f, $e2, $58  ; $2b48 entry 73 -> bank $1f $58e2
+    db $1f, $3c, $5a  ; $2b48 entry 74 -> bank $1f $5a3c
+    db $1f, $42, $5b  ; $2b48 entry 75 -> bank $1f $5b42
+    db $1f, $b9, $4f  ; $2b48 entry 76 -> bank $1f $4fb9
+    db $1f, $73, $5e  ; $2b48 entry 77 -> bank $1f $5e73
+    db $1f, $29, $5f  ; $2b48 entry 78 -> bank $1f $5f29
+    db $1f, $6e, $61  ; $2b48 entry 79 -> bank $1f $616e
+    db $1f, $a5, $61  ; $2b48 entry 80 -> bank $1f $61a5
+    db $1f, $ef, $64  ; $2b48 entry 81 -> bank $1f $64ef
+    db $1f, $a3, $66  ; $2b48 entry 82 -> bank $1f $66a3
+    db $1f, $bc, $67  ; $2b48 entry 83 -> bank $1f $67bc
+    db $0a, $be, $69  ; $2b48 entry 84 -> bank $0a $69be
+    db $0a, $f9, $6a  ; $2b48 entry 85 -> bank $0a $6af9
+    db $0a, $42, $6e  ; $2b48 entry 86 -> bank $0a $6e42
+    db $0a, $3d, $6f  ; $2b48 entry 87 -> bank $0a $6f3d
+    db $1f, $dc, $68  ; $2b48 entry 88 -> bank $1f $68dc
+    db $09, $8b, $6d  ; $2b48 entry 89 -> bank $09 $6d8b
+    db $1f, $eb, $68  ; $2b48 entry 90 -> bank $1f $68eb
+    db $1f, $89, $6a  ; $2b48 entry 91 -> bank $1f $6a89
+    db $1f, $16, $73  ; $2b48 entry 92 -> bank $1f $7316
+    db $1f, $f6, $7b  ; $2b48 entry 93 -> bank $1f $7bf6
     ldh a, [$ff8c]                                   ; $2c62
     push af                                          ; $2c64
     ld a, $0c                                        ; $2c65

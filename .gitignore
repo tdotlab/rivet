@@ -1,4 +1,4 @@
-# The ROM is the user's own dump. Never committed, never pushed, never uploaded.
+# The ROM is T's own dump. Never committed, never pushed, never uploaded.
 roms/
 build/
 *.gb
