@@ -1,8 +1,7 @@
 # Donkey Kong '94 — Game Boy disassembly (fresh, from scratch)
 
 A byte-matching disassembly of **Donkey Kong (World) (Rev 1) (SGB Enhanced)**
-for the original Game Boy, built with RGBDS. This is T's first decompilation
-project, done fresh in this repo — not a copy of an existing disassembly.
+for the original Game Boy, built with RGBDS. This is not a copy of an existing disassembly.
 
 ## The ROM (bring your own)
 
