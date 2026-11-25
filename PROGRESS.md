@@ -1,5 +1,9 @@
 # Progress — Donkey Kong '94 disassembly
 
+> Research log: entries are historical and may contain superseded findings or
+> paths from before the source and tools were reorganized. For the current
+> layout and build instructions, see [README.md](README.md).
+
 Started 2026-11-21. Target ROM SHA-1 `397ad2ff25627b83e02c71b54c72bb4deb39e0c0`.
 
 **Move (2026-11-21):** project moved from `~/workspace/donkey-kong-decomp/` into

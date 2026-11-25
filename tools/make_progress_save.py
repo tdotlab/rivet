@@ -5,7 +5,7 @@ Reads a known-good save (slice-4 f1 save), patches the file-0 slot's
 progress byte in BOTH copies (primary $bfbe.. and backup $bfdc..) and
 fixes both nibble-sum checksums, so ValidateSave ($1ed2) still passes.
 
-Save layout (from src/transfer.asm ValidateSave + $4d21):
+Save layout (from src/core/transfer.asm ValidateSave + $4d21):
   $bfbe: file index (selected file, 0)
   $bfbf: validity (01)
   $bfc0: lives BCD low  ([$da43] = (([$bfc1]&$0f)<<4)|([$bfc0]&$0f))

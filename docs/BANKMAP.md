@@ -1,8 +1,8 @@
-file: /home/hatch/workspace/mike-monorepo/donkey-kong-decomp/roms/Donkey_Kong_World_Rev1_SGB.gb  size=524288 (0x80000)
+file: roms/Donkey_Kong_World_Rev1_SGB.gb  size=524288 (0x80000)
 sha1=397ad2ff25627b83e02c71b54c72bb4deb39e0c0
 md5 =4859ec2b18c4fabf489eb570c1d7d326
 nintendo logo 0x104-0x133 ok: True
-entry 0x100: 00 c3 50 01  (jp $50c3 if nop+jp)
+entry 0x100: 00 c3 50 01  (jp $0150 if nop+jp)
 title 0x134: b'DONKEY KONG\x00\x00\x00\x00\x00'
 CGB flag 0x143: 0x00  SGB flag 0x146: 0x03
 cart type 0x147: 0x03  ROM size 0x148: 0x04 -> 512 KiB, 32 banks x 16 KiB

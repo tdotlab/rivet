@@ -167,7 +167,7 @@ SetupTimerAndSTAT::
 ; table below (table entry = 16-bit address, index = A * 2). Most
 ; states just call AdvanceState ($1d22): increment hGameState and
 ; clear hStateTimer. States with real work have their own handlers,
-; curated in slice 2 in src/states.asm (each handler is itself a
+; curated in slice 2 in src/core/states.asm (each handler is itself a
 ; `rst $08` sub-dispatch on hStateTimer). Two entries are flagged:
 ;   entry 12 -> $c1fe (WRAM -- no code is copied there, no direct
 ;     writer of 12 to hGameState exists anywhere in the ROM; see
@@ -411,7 +411,7 @@ TimerHandler::
 ; (0-59), not 16 -- entry 0's code sets hSTATState=$39 (57), entries
 ; 16-59 live at $030f-$0366 (they were "raw" in slice 1), and the chain
 ; runs 57 ($0397) -> 58 ($03a2) -> 59 ($03ad) -> 1 (STAT_03ad sets
-; hSTATState=1). Targets are curated in src/stat.asm.
+; hSTATState=1). Targets are curated in src/core/stat.asm.
 ; =====================================================================
 SECTION "STATDispatch", ROM0[$02ec]
 STATDispatch::
@@ -481,9 +481,9 @@ STATJumpTable::
 
 
 ; Bank 0 $0df4-$0f08, $0f74-$0fc0 carved in slice 28
-; (src/bank0slice28.asm). $0f09-$0f73 carved in slice 14
-; (src/bank0slice14.asm). $0f95-$0fa0 carved in slice 17
-; (src/bank0slice17.asm).
+; (src/banks/bank0slice28.asm). $0f09-$0f73 carved in slice 14
+; (src/banks/bank0slice14.asm). $0f95-$0fa0 carved in slice 17
+; (src/banks/bank0slice17.asm).
 
 ; =====================================================================
 ; $0fc1-$0fce -- CopyDMARoutine. Copies the 10-byte OAM DMA routine
@@ -695,11 +695,11 @@ ClearTilemaps_Fill:
     jp MemsetBC             ; $10bf: tail call
 
 ; Bank 0 $10c2-$1642 (sprite-stream engine) is curated in slice 6:
-; see src/bank0slice6.asm (INCLUDEd below with the other slice files).
+; see src/banks/bank0slice6.asm (INCLUDEd below with the other slice files).
 
 ; Bank 0 $17eb-$1d06 (sprite-record dispatchers, $1832 rst-$08 table,
 ; BuildAttrMap, LoadStagePtr) is curated in slice 7:
-; see src/bank0slice7.asm (INCLUDEd below with the other slice files).
+; see src/banks/bank0slice7.asm (INCLUDEd below with the other slice files).
 
 ; =====================================================================
 ; $1d07-$1d2e -- InitStatePtrs and the state helpers.
@@ -739,7 +739,7 @@ IncStateTimer::
     ret                     ; $1d2e
 
 ; (Raw bank 0 C, $1d2f-$1e4e, is fully curated in slice 2: see
-; src/transfer.asm -- SeedMul, TransferTable0F/1E, LoadSpriteTable,
+; src/core/transfer.asm -- SeedMul, TransferTable0F/1E, LoadSpriteTable,
 ; ResetWindowPos, HideWindow.)
 
 ; =====================================================================
@@ -777,92 +777,92 @@ LoadPalette::
 ; routines (transfer.asm); $257b-$266b decompressor (decomp.asm);
 ; $266c-$26b4 state-20 prologue+table, $28a8-$291f states 4+30,
 ; $340e-$3688 state-handler cluster (states.asm).
-; Curated in slice 3 (src/bank0slice3.asm): $1f9a-$257a save/stream code,
+; Curated in slice 3 (src/banks/bank0slice3.asm): $1f9a-$257a save/stream code,
 ; $26b5-$28a7 state-20 step 0, $2920-$340d mid code.
 ; Bank-0 raw fragments $1e6b-$1e85, $3689-$3736 carved in slice 28
-; (src/bank0slice28.asm).
+; (src/banks/bank0slice28.asm).
 
-INCLUDE "sgb.asm"
-INCLUDE "stat.asm"
-INCLUDE "transfer.asm"
-INCLUDE "decomp.asm"
-INCLUDE "frame.asm"
-INCLUDE "states.asm"
-INCLUDE "bank0slice3.asm"
-INCLUDE "bank0slice6.asm"
-INCLUDE "bank0slice7.asm"
-INCLUDE "bank0slice28.asm"
-INCLUDE "bank0slice14.asm"
-INCLUDE "bank0slice17.asm"
-INCLUDE "bank1.asm"
-INCLUDE "bank1slice25.asm"
-INCLUDE "bank1slice26.asm"
-INCLUDE "bank12.asm"
-INCLUDE "bank12slice9.asm"
-INCLUDE "bank12slice25.asm"
-INCLUDE "bank23.asm"
-INCLUDE "bank23slice5.asm"
-INCLUDE "bank23slice25.asm"
-INCLUDE "bank2.asm"
-INCLUDE "bank2slice12.asm"
-INCLUDE "bank2slice26.asm"
-INCLUDE "bank3.asm"
-INCLUDE "bank3slice12.asm"
-INCLUDE "bank3slice26.asm"
-INCLUDE "bank5.asm"
-INCLUDE "bank5slice25.asm"
-INCLUDE "bank4.asm"
-INCLUDE "bank13.asm"
-INCLUDE "bank14.asm"
-INCLUDE "bank15.asm"
-INCLUDE "bank6.asm"
-INCLUDE "bank17.asm"
-INCLUDE "bank19.asm"
-INCLUDE "bank20.asm"
-INCLUDE "bank21.asm"
-INCLUDE "bank22.asm"
-INCLUDE "bank25.asm"
-INCLUDE "bank26.asm"
-INCLUDE "bank27.asm"
-INCLUDE "bank28.asm"
-INCLUDE "bank30.asm"
-INCLUDE "bank7.asm"
-INCLUDE "bank7slice5.asm"
-INCLUDE "bank7slice10.asm"
-INCLUDE "bank7slice11.asm"
-INCLUDE "bank7slice12.asm"
-INCLUDE "bank7slice13.asm"
-INCLUDE "bank7slice14.asm"
-INCLUDE "bank7slice27.asm"
-INCLUDE "bank8.asm"
-INCLUDE "bank8slice15.asm"
-INCLUDE "bank8slice16.asm"
-INCLUDE "bank8slice27.asm"
-INCLUDE "bank11.asm"
-INCLUDE "bank11slice18.asm"
-INCLUDE "bank29.asm"
-INCLUDE "bank29slice19.asm"
-INCLUDE "bank10.asm"
-INCLUDE "bank10slice19.asm"
-INCLUDE "bank10slice20.asm"
-INCLUDE "bank0a.asm"
-INCLUDE "bank0aslice16.asm"
-INCLUDE "bank31.asm"
-INCLUDE "bank31slice17.asm"
-INCLUDE "bank31slice18.asm"
-INCLUDE "bank31slice19.asm"
-INCLUDE "bank31slice20.asm"
-INCLUDE "bank16slice11.asm"
-INCLUDE "bank16slice16.asm"
-INCLUDE "bank16slice26.asm"
-INCLUDE "bank16slice28.asm"
-INCLUDE "bank9.asm"
-INCLUDE "bank9slice17.asm"
-INCLUDE "bank9slice18.asm"
-INCLUDE "bank9slice21.asm"
-INCLUDE "bank18.asm"
-INCLUDE "bank18slice25.asm"
-INCLUDE "bank24.asm"
-INCLUDE "bank24slice25.asm"
-INCLUDE "sgbpackets.asm"
+INCLUDE "core/sgb.asm"
+INCLUDE "core/stat.asm"
+INCLUDE "core/transfer.asm"
+INCLUDE "core/decomp.asm"
+INCLUDE "core/frame.asm"
+INCLUDE "core/states.asm"
+INCLUDE "banks/bank0slice3.asm"
+INCLUDE "banks/bank0slice6.asm"
+INCLUDE "banks/bank0slice7.asm"
+INCLUDE "banks/bank0slice28.asm"
+INCLUDE "banks/bank0slice14.asm"
+INCLUDE "banks/bank0slice17.asm"
+INCLUDE "banks/bank1.asm"
+INCLUDE "banks/bank1slice25.asm"
+INCLUDE "banks/bank1slice26.asm"
+INCLUDE "banks/bank12.asm"
+INCLUDE "banks/bank12slice9.asm"
+INCLUDE "banks/bank12slice25.asm"
+INCLUDE "banks/bank23.asm"
+INCLUDE "banks/bank23slice5.asm"
+INCLUDE "banks/bank23slice25.asm"
+INCLUDE "banks/bank2.asm"
+INCLUDE "banks/bank2slice12.asm"
+INCLUDE "banks/bank2slice26.asm"
+INCLUDE "banks/bank3.asm"
+INCLUDE "banks/bank3slice12.asm"
+INCLUDE "banks/bank3slice26.asm"
+INCLUDE "banks/bank5.asm"
+INCLUDE "banks/bank5slice25.asm"
+INCLUDE "banks/bank4.asm"
+INCLUDE "banks/bank13.asm"
+INCLUDE "banks/bank14.asm"
+INCLUDE "banks/bank15.asm"
+INCLUDE "banks/bank6.asm"
+INCLUDE "banks/bank17.asm"
+INCLUDE "banks/bank19.asm"
+INCLUDE "banks/bank20.asm"
+INCLUDE "banks/bank21.asm"
+INCLUDE "banks/bank22.asm"
+INCLUDE "banks/bank25.asm"
+INCLUDE "banks/bank26.asm"
+INCLUDE "banks/bank27.asm"
+INCLUDE "banks/bank28.asm"
+INCLUDE "banks/bank30.asm"
+INCLUDE "banks/bank7.asm"
+INCLUDE "banks/bank7slice5.asm"
+INCLUDE "banks/bank7slice10.asm"
+INCLUDE "banks/bank7slice11.asm"
+INCLUDE "banks/bank7slice12.asm"
+INCLUDE "banks/bank7slice13.asm"
+INCLUDE "banks/bank7slice14.asm"
+INCLUDE "banks/bank7slice27.asm"
+INCLUDE "banks/bank8.asm"
+INCLUDE "banks/bank8slice15.asm"
+INCLUDE "banks/bank8slice16.asm"
+INCLUDE "banks/bank8slice27.asm"
+INCLUDE "banks/bank11.asm"
+INCLUDE "banks/bank11slice18.asm"
+INCLUDE "banks/bank29.asm"
+INCLUDE "banks/bank29slice19.asm"
+INCLUDE "banks/bank10.asm"
+INCLUDE "banks/bank10slice19.asm"
+INCLUDE "banks/bank10slice20.asm"
+INCLUDE "banks/bank0a.asm"
+INCLUDE "banks/bank0aslice16.asm"
+INCLUDE "banks/bank31.asm"
+INCLUDE "banks/bank31slice17.asm"
+INCLUDE "banks/bank31slice18.asm"
+INCLUDE "banks/bank31slice19.asm"
+INCLUDE "banks/bank31slice20.asm"
+INCLUDE "banks/bank16slice11.asm"
+INCLUDE "banks/bank16slice16.asm"
+INCLUDE "banks/bank16slice26.asm"
+INCLUDE "banks/bank16slice28.asm"
+INCLUDE "banks/bank9.asm"
+INCLUDE "banks/bank9slice17.asm"
+INCLUDE "banks/bank9slice18.asm"
+INCLUDE "banks/bank9slice21.asm"
+INCLUDE "banks/bank18.asm"
+INCLUDE "banks/bank18slice25.asm"
+INCLUDE "banks/bank24.asm"
+INCLUDE "banks/bank24slice25.asm"
+INCLUDE "core/sgbpackets.asm"
 INCLUDE "banks.asm"

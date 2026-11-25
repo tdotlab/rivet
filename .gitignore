@@ -4,9 +4,9 @@ build/
 *.gb
 *.sav
 __pycache__/
-tools/gb_headless
-tools/gb_play
-tools/gb_probe17
-tools/gb_sramwatch
-tools/gb_watch
-tools/gb_wramdump
+tools/harnesses/gb_headless
+tools/harnesses/gb_play
+tools/harnesses/gb_probe17
+tools/harnesses/gb_sramwatch
+tools/harnesses/gb_watch
+tools/harnesses/gb_wramdump

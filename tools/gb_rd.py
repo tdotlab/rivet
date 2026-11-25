@@ -28,9 +28,11 @@ API:
   walk(bank, seeds) -> (reached {addr: (len, text, kind, target)},
                         rst08 {site: [entries]}, notes [str])
 """
+import os
 import sys
+from pathlib import Path
 
-sys.path.insert(0, "/home/hatch/workspace/tools/mgbdis")
+sys.path.insert(0, os.environ.get("MGBDIS_DIR", str(Path.home() / "workspace/tools/mgbdis")))
 from instruction_set import instructions, cb_instructions  # noqa: E402
 
 ROM = "roms/Donkey_Kong_World_Rev1_SGB.gb"
