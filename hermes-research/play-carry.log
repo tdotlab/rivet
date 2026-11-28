@@ -1,0 +1,3066 @@
+post-key waypoints: (96,88) (88,136) (120,136)
+PREFIX carry flag dd18=03 pos=120,93
+playable at frame 2990
+  try wait     -> (120,108) key=0 dead=0 term=0 score=9742.6
+  try right    -> (120,108) key=0 dead=0 term=0 score=9742.6
+  try left     -> (120,108) key=0 dead=0 term=0 score=9742.6
+  try up       -> (120,108) key=0 dead=0 term=0 score=9742.6
+  try down     -> (120,108) key=0 dead=0 term=0 score=9742.6
+  try right+A  -> (120,108) key=0 dead=0 term=0 score=9742.6
+  try left+A   -> (120,108) key=0 dead=0 term=0 score=9742.6
+  try A        -> (120,108) key=0 dead=0 term=0 score=9742.6
+  try B        -> (120,108) key=0 dead=0 term=0 score=9742.6
+  try right+B  -> (120,108) key=0 dead=0 term=0 score=9742.6
+chunk 0: choose wait score=9742.6 stall=0
+  dumped chunk000/* to build/nacre-test/slice12/play\nchunk 0: wait -> (120,108) key=0 lives=4 state=16 timer=5
+  try wait     -> (120,112) key=0 dead=0 term=0 score=9707.6
+  try right    -> (125,112) key=0 dead=0 term=0 score=9670.6
+  try left     -> (115,112) key=0 dead=0 term=0 score=9740.9
+  try up       -> (120,112) key=0 dead=0 term=0 score=9707.6
+  try down     -> (120,112) key=0 dead=0 term=0 score=9707.6
+  try right+A  -> (125,112) key=0 dead=0 term=0 score=9670.6
+  try left+A   -> (115,112) key=0 dead=0 term=0 score=9740.9
+  try A        -> (120,112) key=0 dead=0 term=0 score=9707.6
+  try B        -> (120,112) key=0 dead=0 term=0 score=9707.6
+  try right+B  -> (120,112) key=0 dead=0 term=0 score=9707.6
+chunk 1: choose left score=9740.9 stall=1
+chunk 1: left -> (115,112) key=0 lives=4 state=16 timer=4
+  try wait     -> (109,112) key=0 dead=0 term=0 score=9774.1
+  try right    -> (109,112) key=0 dead=0 term=0 score=9774.1
+  try left     -> (104,112) key=0 dead=0 term=0 score=9794.0
+  try up       -> (109,112) key=0 dead=0 term=0 score=9774.1
+  try down     -> (109,112) key=0 dead=0 term=0 score=9774.1
+  try right+A  -> (107,112) key=0 dead=0 term=0 score=9783.0
+  try left+A   -> (104,112) key=0 dead=0 term=0 score=9794.0
+  try A        -> (107,112) key=0 dead=0 term=0 score=9783.0
+  try B        -> (109,112) key=0 dead=0 term=0 score=9774.1
+  try right+B  -> (109,112) key=0 dead=0 term=0 score=9774.1
+chunk 2: choose left score=9794.0 stall=0
+chunk 2: left -> (104,112) key=0 lives=4 state=16 timer=3
+  try wait     -> ( 98,118) key=0 dead=0 term=0 score=9734.3
+  try right    -> ( 98,118) key=0 dead=0 term=0 score=9734.3
+  try left     -> ( 93,119) key=0 dead=0 term=0 score=9721.6
+  try up       -> ( 98,118) key=0 dead=0 term=0 score=9734.3
+  try down     -> ( 98,118) key=0 dead=0 term=0 score=9734.3
+  try right+A  -> ( 96, 96) key=0 dead=0 term=0 score=9999.0
+  try left+A   -> ( 93, 96) key=0 dead=0 term=0 score=9993.6
+  try A        -> ( 96, 96) key=0 dead=0 term=0 score=9999.0
+  try B        -> ( 98,118) key=0 dead=0 term=0 score=9734.3
+  try right+B  -> ( 98,118) key=0 dead=0 term=0 score=9734.3
+chunk 3: choose right+A score=9999.0 stall=0
+chunk 3: right+A -> (96,96) key=0 lives=4 state=16 timer=10
+  try wait     -> ( 94,101) key=0 dead=0 term=0 score=9937.5
+  try right    -> ( 94,101) key=0 dead=0 term=0 score=9937.5
+  try left     -> ( 86,101) key=0 dead=0 term=0 score=9905.0
+  try up       -> ( 94,101) key=0 dead=0 term=0 score=9937.5
+  try down     -> ( 94,101) key=0 dead=0 term=0 score=9937.5
+  try right+A  -> ( 94,101) key=0 dead=0 term=0 score=9937.5
+  try left+A   -> ( 86,101) key=0 dead=0 term=0 score=9905.0
+  try A        -> ( 94,101) key=0 dead=0 term=0 score=9937.5
+  try B        -> ( 94,101) key=0 dead=0 term=0 score=9937.5
+  try right+B  -> ( 94,101) key=0 dead=0 term=0 score=9937.5
+chunk 4: choose wait score=9937.5 stall=1
+chunk 4: wait -> (94,101) key=0 lives=4 state=16 timer=9
+  try wait     -> ( 94,120) key=0 dead=0 term=0 score=9710.4
+  try right    -> (103,120) key=0 dead=0 term=0 score=9703.4
+  try left     -> ( 84,120) key=0 dead=0 term=0 score=9689.2
+  try up       -> ( 94,120) key=0 dead=0 term=0 score=9710.4
+  try down     -> ( 94,120) key=0 dead=0 term=0 score=9710.4
+  try right+A  -> (103,120) key=0 dead=0 term=0 score=9703.4
+  try left+A   -> ( 84,120) key=0 dead=0 term=0 score=9689.2
+  try A        -> ( 94,120) key=0 dead=0 term=0 score=9710.4
+  try B        -> ( 94,120) key=0 dead=0 term=0 score=9710.4
+  try right+B  -> ( 94,120) key=0 dead=0 term=0 score=9710.4
+chunk 5: choose wait score=9710.4 stall=2
+chunk 5: wait -> (94,120) key=0 lives=4 state=16 timer=8
+  try wait     -> ( 93,124) key=0 dead=0 term=0 score=9601.8
+  try right    -> (104,136) key=0 dead=0 term=0 score=9512.4
+  try left     -> ( 84,124) key=0 dead=0 term=0 score=9643.5
+  try up       -> ( 93,124) key=0 dead=0 term=0 score=9601.8
+  try down     -> ( 93,124) key=0 dead=0 term=0 score=9601.8
+  try right+A  -> (104,136) key=0 dead=0 term=0 score=9512.4
+  try left+A   -> ( 84,124) key=0 dead=0 term=0 score=9643.5
+  try A        -> ( 93,124) key=0 dead=0 term=0 score=9601.8
+  try B        -> ( 93,124) key=0 dead=0 term=0 score=9601.8
+  try right+B  -> ( 93,124) key=0 dead=0 term=0 score=9601.8
+chunk 6: choose left score=9643.5 stall=3
+chunk 6: left -> (84,124) key=0 lives=4 state=16 timer=7
+  try wait     -> ( 77,133) key=0 dead=0 term=0 score=9516.5
+  try right    -> ( 77,133) key=0 dead=0 term=0 score=9516.5
+  try left     -> ( 73,134) key=0 dead=0 term=0 score=9488.7
+  try up       -> ( 77,133) key=0 dead=0 term=0 score=9516.5
+  try down     -> ( 77,133) key=0 dead=0 term=0 score=9516.5
+  try right+A  -> ( 76,108) key=0 dead=0 term=0 score=9772.2
+  try left+A   -> ( 73,108) key=0 dead=0 term=0 score=9750.2
+  try A        -> ( 76,108) key=0 dead=0 term=0 score=9772.2
+  try B        -> ( 77,133) key=0 dead=0 term=0 score=9516.5
+  try right+B  -> ( 77,133) key=0 dead=0 term=0 score=9516.5
+chunk 7: choose right+A score=9772.2 stall=4
+chunk 7: right+A -> (76,108) key=0 lives=4 state=16 timer=6
+  try wait     -> ( 73,113) key=0 dead=0 term=0 score=9705.3
+  try right    -> ( 73,113) key=0 dead=0 term=0 score=9705.3
+  try left     -> ( 65,113) key=0 dead=0 term=0 score=9646.8
+  try up       -> ( 73,113) key=0 dead=0 term=0 score=9705.3
+  try down     -> ( 73,113) key=0 dead=0 term=0 score=9705.3
+  try right+A  -> ( 73,113) key=0 dead=0 term=0 score=9705.3
+  try left+A   -> ( 65,113) key=0 dead=0 term=0 score=9646.8
+  try A        -> ( 73,113) key=0 dead=0 term=0 score=9705.3
+  try B        -> ( 73,113) key=0 dead=0 term=0 score=9705.3
+  try right+B  -> ( 73,113) key=0 dead=0 term=0 score=9705.3
+chunk 8: choose wait score=9705.3 stall=5
+chunk 8: wait -> (73,113) key=0 lives=4 state=16 timer=5
+  try wait     -> ( 73,132) key=0 dead=0 term=0 score=9510.5
+  try right    -> ( 82,124) key=0 dead=0 term=0 score=9576.7
+  try left     -> ( 64,132) key=0 dead=0 term=0 score=9462.9
+  try up       -> ( 73,132) key=0 dead=0 term=0 score=9510.5
+  try down     -> ( 73,132) key=0 dead=0 term=0 score=9510.5
+  try right+A  -> ( 82,124) key=0 dead=0 term=0 score=9576.7
+  try left+A   -> ( 64,132) key=0 dead=0 term=0 score=9462.9
+  try A        -> ( 73,132) key=0 dead=0 term=0 score=9510.5
+  try B        -> ( 73,132) key=0 dead=0 term=0 score=9510.5
+  try right+B  -> ( 73,132) key=0 dead=0 term=0 score=9510.5
+chunk 9: choose right score=9576.7 stall=6
+chunk 9: right -> (82,124) key=0 lives=4 state=16 timer=4
+  try wait     -> ( 83,124) key=0 dead=0 term=0 score=9520.2
+  try right    -> ( 91,128) key=0 dead=0 term=0 score=9611.9
+  try left     -> ( 83,124) key=0 dead=0 term=0 score=9520.2
+  try up       -> ( 83,124) key=0 dead=0 term=0 score=9520.2
+  try down     -> ( 83,124) key=0 dead=0 term=0 score=9520.2
+  try right+A  -> ( 93,108) key=0 dead=0 term=0 score=9852.8
+  try left+A   -> ( 87,108) key=0 dead=0 term=0 score=9835.7
+  try A        -> ( 87,108) key=0 dead=0 term=0 score=9835.7
+  try B        -> ( 83,124) key=0 dead=0 term=0 score=9520.2
+  try right+B  -> ( 83,124) key=0 dead=0 term=0 score=9520.2
+chunk 10: choose right+A score=9852.8 stall=7
+chunk 10: right+A -> (93,108) key=0 lives=4 state=16 timer=3
+  try wait     -> (101,113) key=0 dead=0 term=0 score=9790.0
+  try right    -> (104,113) key=0 dead=0 term=0 score=9722.5
+  try left     -> (101,113) key=0 dead=0 term=0 score=9790.0
+  try up       -> (101,113) key=0 dead=0 term=0 score=9790.0
+  try down     -> (101,113) key=0 dead=0 term=0 score=9790.0
+  try right+A  -> (104,113) key=0 dead=0 term=0 score=9722.5
+  try left+A   -> (101,113) key=0 dead=0 term=0 score=9790.0
+  try A        -> (101,113) key=0 dead=0 term=0 score=9790.0
+  try B        -> (101,113) key=0 dead=0 term=0 score=9790.0
+  try right+B  -> (101,113) key=0 dead=0 term=0 score=9790.0
+chunk 11: choose wait score=9790.0 stall=8
+chunk 11: wait -> (101,113) key=0 lives=4 state=16 timer=10
+  try wait     -> (102,112) key=0 dead=0 term=0 score=9739.6
+  try right    -> (110,112) key=0 dead=0 term=0 score=9709.2
+  try left     -> ( 99,114) key=0 dead=0 term=0 score=9721.3
+  try up       -> (102,112) key=0 dead=0 term=0 score=9739.6
+  try down     -> (102,112) key=0 dead=0 term=0 score=9739.6
+  try right+A  -> (110,112) key=0 dead=0 term=0 score=9709.2
+  try left+A   -> ( 99,114) key=0 dead=0 term=0 score=9721.3
+  try A        -> (102,112) key=0 dead=0 term=0 score=9739.6
+  try B        -> (102,112) key=0 dead=0 term=0 score=9739.6
+  try right+B  -> (102,112) key=0 dead=0 term=0 score=9739.6
+chunk 12: choose wait score=9739.6 stall=9
+chunk 12: wait -> (102,112) key=0 lives=4 state=16 timer=9
+  try wait     -> (102,112) key=0 dead=0 term=0 score=9679.6
+  try right    -> (112,112) key=0 dead=0 term=0 score=9698.6
+  try left     -> ( 93,120) key=0 dead=0 term=0 score=9649.6
+  try up       -> (102,112) key=0 dead=0 term=0 score=9679.6
+  try down     -> (102,112) key=0 dead=0 term=0 score=9679.6
+  try right+A  -> (112,112) key=0 dead=0 term=0 score=9698.6
+  try left+A   -> ( 92, 96) key=0 dead=0 term=0 score=9929.6
+  try A        -> (100, 96) key=0 dead=0 term=0 score=9929.6
+  try B        -> (102,112) key=0 dead=0 term=0 score=9679.6
+  try right+B  -> (102,112) key=0 dead=0 term=0 score=9679.6
+chunk 13: choose left+A score=9929.6 stall=10
+backtracking to chunk 12 (was at 13)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 12
+  try right    -> (110,112) key=0 dead=0 term=0 score=9709.2
+  try left     -> ( 99,114) key=0 dead=0 term=0 score=9721.3
+  try up       -> (102,112) key=0 dead=0 term=0 score=9739.6
+  try down     -> (102,112) key=0 dead=0 term=0 score=9739.6
+  try right+A  -> (110,112) key=0 dead=0 term=0 score=9709.2
+  try left+A   -> ( 99,114) key=0 dead=0 term=0 score=9721.3
+  try A        -> (102,112) key=0 dead=0 term=0 score=9739.6
+  try B        -> (102,112) key=0 dead=0 term=0 score=9739.6
+  try right+B  -> (102,112) key=0 dead=0 term=0 score=9739.6
+chunk 12: choose up score=9739.6 stall=0
+chunk 12: up -> (102,112) key=0 lives=4 state=16 timer=9
+  try wait     -> (102,112) key=0 dead=0 term=0 score=9679.6
+  try right    -> (112,112) key=0 dead=0 term=0 score=9698.6
+  try left     -> ( 93,120) key=0 dead=0 term=0 score=9649.6
+  try up       -> (102,112) key=0 dead=0 term=0 score=9679.6
+  try down     -> (102,112) key=0 dead=0 term=0 score=9679.6
+  try right+A  -> (112,112) key=0 dead=0 term=0 score=9698.6
+  try left+A   -> ( 92, 96) key=0 dead=0 term=0 score=9929.6
+  try A        -> (100, 96) key=0 dead=0 term=0 score=9929.6
+  try B        -> (102,112) key=0 dead=0 term=0 score=9679.6
+  try right+B  -> (102,112) key=0 dead=0 term=0 score=9679.6
+chunk 13: choose left+A score=9929.6 stall=0
+chunk 13: left+A -> (92,96) key=0 lives=4 state=16 timer=8
+  try wait     -> ( 84,101) key=0 dead=0 term=0 score=9892.1
+  try right    -> ( 84,101) key=0 dead=0 term=0 score=9892.1
+  try left     -> ( 82,101) key=0 dead=0 term=0 score=9878.0
+  try up       -> ( 84,101) key=0 dead=0 term=0 score=9892.1
+  try down     -> ( 84,101) key=0 dead=0 term=0 score=9892.1
+  try right+A  -> ( 84,101) key=0 dead=0 term=0 score=9892.1
+  try left+A   -> ( 82,101) key=0 dead=0 term=0 score=9878.0
+  try A        -> ( 84,101) key=0 dead=0 term=0 score=9892.1
+  try B        -> ( 84,101) key=0 dead=0 term=0 score=9892.1
+  try right+B  -> ( 84,101) key=0 dead=0 term=0 score=9892.1
+chunk 14: choose wait score=9892.1 stall=1
+chunk 14: wait -> (84,101) key=0 lives=4 state=16 timer=7
+  try wait     -> ( 82,120) key=0 dead=0 term=0 score=9561.7
+  try right    -> ( 82,120) key=0 dead=0 term=0 score=9561.7
+  try left     -> ( 74,120) key=0 dead=0 term=0 score=9642.7
+  try up       -> ( 82,120) key=0 dead=0 term=0 score=9561.7
+  try down     -> ( 82,120) key=0 dead=0 term=0 score=9561.7
+  try right+A  -> ( 82,120) key=0 dead=0 term=0 score=9561.7
+  try left+A   -> ( 74,120) key=0 dead=0 term=0 score=9642.7
+  try A        -> ( 82,120) key=0 dead=0 term=0 score=9561.7
+  try B        -> ( 82,120) key=0 dead=0 term=0 score=9561.7
+  try right+B  -> ( 82,120) key=0 dead=0 term=0 score=9561.7
+chunk 15: choose left score=9642.7 stall=2
+chunk 15: left -> (74,120) key=0 lives=4 state=16 timer=6
+  try wait     -> ( 66,124) key=0 dead=0 term=0 score=9554.4
+  try right    -> ( 66,124) key=0 dead=0 term=0 score=9554.4
+  try left     -> ( 63,124) key=0 dead=0 term=0 score=9534.6
+  try up       -> ( 66,124) key=0 dead=0 term=0 score=9554.4
+  try down     -> ( 66,124) key=0 dead=0 term=0 score=9554.4
+  try right+A  -> ( 66,124) key=0 dead=0 term=0 score=9554.4
+  try left+A   -> ( 63,124) key=0 dead=0 term=0 score=9534.6
+  try A        -> ( 66,124) key=0 dead=0 term=0 score=9554.4
+  try B        -> ( 66,124) key=0 dead=0 term=0 score=9554.4
+  try right+B  -> ( 66,124) key=0 dead=0 term=0 score=9554.4
+chunk 16: choose wait score=9554.4 stall=3
+chunk 16: wait -> (66,124) key=0 lives=4 state=16 timer=5
+  try wait     -> ( 65,124) key=0 dead=0 term=0 score=9487.9
+  try right    -> ( 72,124) key=0 dead=0 term=0 score=9530.3
+  try left     -> ( 55,131) key=0 dead=0 term=0 score=9414.9
+  try up       -> ( 65,124) key=0 dead=0 term=0 score=9487.9
+  try down     -> ( 65,124) key=0 dead=0 term=0 score=9487.9
+  try right+A  -> ( 70,108) key=0 dead=0 term=0 score=9727.0
+  try left+A   -> ( 56,108) key=0 dead=0 term=0 score=9607.8
+  try A        -> ( 66,108) key=0 dead=0 term=0 score=9694.4
+  try B        -> ( 65,124) key=0 dead=0 term=0 score=9487.9
+  try right+B  -> ( 65,124) key=0 dead=0 term=0 score=9487.9
+chunk 17: choose right+A score=9727.0 stall=4
+chunk 17: right+A -> (70,108) key=0 lives=4 state=16 timer=4
+  try wait     -> ( 78,113) key=0 dead=0 term=0 score=9676.9
+  try right    -> ( 81,113) key=0 dead=0 term=0 score=9753.5
+  try left     -> ( 78,113) key=0 dead=0 term=0 score=9676.9
+  try up       -> ( 78,113) key=0 dead=0 term=0 score=9676.9
+  try down     -> ( 78,113) key=0 dead=0 term=0 score=9676.9
+  try right+A  -> ( 81,113) key=0 dead=0 term=0 score=9753.5
+  try left+A   -> ( 78,113) key=0 dead=0 term=0 score=9676.9
+  try A        -> ( 78,113) key=0 dead=0 term=0 score=9676.9
+  try B        -> ( 78,113) key=0 dead=0 term=0 score=9676.9
+  try right+B  -> ( 78,113) key=0 dead=0 term=0 score=9676.9
+chunk 18: choose right score=9753.5 stall=5
+chunk 18: right -> (81,113) key=0 lives=4 state=16 timer=3
+  try wait     -> ( 89,132) key=0 dead=0 term=0 score=9561.5
+  try right    -> ( 92,132) key=0 dead=0 term=0 score=9565.2
+  try left     -> ( 89,132) key=0 dead=0 term=0 score=9561.5
+  try up       -> ( 89,132) key=0 dead=0 term=0 score=9561.5
+  try down     -> ( 89,132) key=0 dead=0 term=0 score=9561.5
+  try right+A  -> ( 92,132) key=0 dead=0 term=0 score=9565.2
+  try left+A   -> ( 89,132) key=0 dead=0 term=0 score=9561.5
+  try A        -> ( 89,132) key=0 dead=0 term=0 score=9561.5
+  try B        -> ( 89,132) key=0 dead=0 term=0 score=9561.5
+  try right+B  -> ( 89,132) key=0 dead=0 term=0 score=9561.5
+chunk 19: choose right score=9565.2 stall=6
+chunk 19: right -> (92,132) key=0 lives=4 state=16 timer=10
+  try wait     -> ( 99,136) key=0 dead=0 term=0 score=9518.1
+  try right    -> (102,136) key=0 dead=0 term=0 score=9515.3
+  try left     -> ( 99,136) key=0 dead=0 term=0 score=9518.1
+  try up       -> ( 99,136) key=0 dead=0 term=0 score=9518.1
+  try down     -> ( 99,136) key=0 dead=0 term=0 score=9518.1
+  try right+A  -> (102,136) key=0 dead=0 term=0 score=9515.3
+  try left+A   -> ( 99,136) key=0 dead=0 term=0 score=9518.1
+  try A        -> ( 99,136) key=0 dead=0 term=0 score=9518.1
+  try B        -> ( 99,136) key=0 dead=0 term=0 score=9518.1
+  try right+B  -> ( 99,136) key=0 dead=0 term=0 score=9518.1
+chunk 20: choose wait score=9518.1 stall=7
+chunk 20: wait -> (99,136) key=0 lives=4 state=16 timer=9
+  try wait     -> ( 99,136) key=0 dead=0 term=0 score=9458.1
+  try right    -> (109,136) key=0 dead=0 term=0 score=9501.7
+  try left     -> ( 93,136) key=0 dead=0 term=0 score=9518.1
+  try up       -> ( 99,136) key=0 dead=0 term=0 score=9458.1
+  try down     -> ( 99,136) key=0 dead=0 term=0 score=9458.1
+  try right+A  -> (109,120) key=0 dead=0 term=0 score=9685.6
+  try left+A   -> ( 95,120) key=0 dead=0 term=0 score=9650.8
+  try A        -> ( 99,120) key=0 dead=0 term=0 score=9709.6
+  try B        -> ( 99,136) key=0 dead=0 term=0 score=9458.1
+  try right+B  -> ( 99,136) key=0 dead=0 term=0 score=9458.1
+chunk 21: choose A score=9709.6 stall=8
+chunk 21: A -> (99,120) key=0 lives=4 state=16 timer=8
+  try wait     -> ( 99,125) key=0 dead=0 term=0 score=9589.8
+  try right    -> (109,125) key=0 dead=0 term=0 score=9628.8
+  try left     -> ( 90,125) key=0 dead=0 term=0 score=9586.2
+  try up       -> ( 99,125) key=0 dead=0 term=0 score=9589.8
+  try down     -> ( 99,125) key=0 dead=0 term=0 score=9589.8
+  try right+A  -> (109,125) key=0 dead=0 term=0 score=9628.8
+  try left+A   -> ( 90,125) key=0 dead=0 term=0 score=9586.2
+  try A        -> ( 99,125) key=0 dead=0 term=0 score=9589.8
+  try B        -> ( 99,125) key=0 dead=0 term=0 score=9589.8
+  try right+B  -> ( 99,125) key=0 dead=0 term=0 score=9589.8
+chunk 22: choose right score=9628.8 stall=9
+chunk 22: right -> (109,125) key=0 lives=4 state=16 timer=7
+  try wait     -> (118,136) key=0 dead=0 term=0 score=9471.0
+  try right    -> (119,136) key=0 dead=0 term=0 score=9466.7
+  try left     -> (118,136) key=0 dead=0 term=0 score=9471.0
+  try up       -> (118,136) key=0 dead=0 term=0 score=9471.0
+  try down     -> (118,136) key=0 dead=0 term=0 score=9471.0
+  try right+A  -> (119,136) key=0 dead=0 term=0 score=9466.7
+  try left+A   -> (118,136) key=0 dead=0 term=0 score=9471.0
+  try A        -> (118,136) key=0 dead=0 term=0 score=9471.0
+  try B        -> (118,136) key=0 dead=0 term=0 score=9471.0
+  try right+B  -> (118,136) key=0 dead=0 term=0 score=9471.0
+chunk 23: choose wait score=9471.0 stall=10
+backtracking to chunk 22 (was at 23)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 22
+  try wait     -> ( 99,125) key=0 dead=0 term=0 score=9589.8
+  try left     -> ( 90,125) key=0 dead=0 term=0 score=9586.2
+  try up       -> ( 99,125) key=0 dead=0 term=0 score=9589.8
+  try down     -> ( 99,125) key=0 dead=0 term=0 score=9589.8
+  try right+A  -> (109,125) key=0 dead=0 term=0 score=9628.8
+  try left+A   -> ( 90,125) key=0 dead=0 term=0 score=9586.2
+  try A        -> ( 99,125) key=0 dead=0 term=0 score=9589.8
+  try B        -> ( 99,125) key=0 dead=0 term=0 score=9589.8
+  try right+B  -> ( 99,125) key=0 dead=0 term=0 score=9589.8
+chunk 22: choose right+A score=9628.8 stall=0
+chunk 22: right+A -> (109,125) key=0 lives=4 state=16 timer=7
+  try wait     -> (118,136) key=0 dead=0 term=0 score=9471.0
+  try right    -> (119,136) key=0 dead=0 term=0 score=9466.7
+  try left     -> (118,136) key=0 dead=0 term=0 score=9471.0
+  try up       -> (118,136) key=0 dead=0 term=0 score=9471.0
+  try down     -> (118,136) key=0 dead=0 term=0 score=9471.0
+  try right+A  -> (119,136) key=0 dead=0 term=0 score=9466.7
+  try left+A   -> (118,136) key=0 dead=0 term=0 score=9471.0
+  try A        -> (118,136) key=0 dead=0 term=0 score=9471.0
+  try B        -> (118,136) key=0 dead=0 term=0 score=9471.0
+  try right+B  -> (118,136) key=0 dead=0 term=0 score=9471.0
+chunk 23: choose wait score=9471.0 stall=1
+chunk 23: wait -> (118,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (121,136) key=0 dead=0 term=0 score=9457.8
+  try right    -> (121,136) key=0 dead=0 term=0 score=9457.8
+  try left     -> (121,136) key=0 dead=0 term=0 score=9457.8
+  try up       -> (121,136) key=0 dead=0 term=0 score=9457.8
+  try down     -> (121,136) key=0 dead=0 term=0 score=9457.8
+  try right+A  -> (121,136) key=0 dead=0 term=0 score=9457.8
+  try left+A   -> (121,136) key=0 dead=0 term=0 score=9457.8
+  try A        -> (121,136) key=0 dead=0 term=0 score=9457.8
+  try B        -> (121,136) key=0 dead=0 term=0 score=9457.8
+  try right+B  -> (121,136) key=0 dead=0 term=0 score=9457.8
+chunk 24: choose wait score=9457.8 stall=2
+chunk 24: wait -> (121,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (121,136) key=0 dead=0 term=0 score=9397.8
+  try right    -> (121,136) key=0 dead=0 term=0 score=9397.8
+  try left     -> (121,136) key=0 dead=0 term=0 score=9397.8
+  try up       -> (121,136) key=0 dead=0 term=0 score=9397.8
+  try down     -> (121,136) key=0 dead=0 term=0 score=9397.8
+  try right+A  -> (121,136) key=0 dead=0 term=0 score=9397.8
+  try left+A   -> (121,136) key=0 dead=0 term=0 score=9397.8
+  try A        -> (121,136) key=0 dead=0 term=0 score=9397.8
+  try B        -> (121,136) key=0 dead=0 term=0 score=9397.8
+  try right+B  -> (121,136) key=0 dead=0 term=0 score=9397.8
+chunk 25: choose wait score=9397.8 stall=3
+  dumped chunk025/* to build/nacre-test/slice12/play\nchunk 25: wait -> (121,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (121,136) key=0 dead=0 term=0 score=9337.8
+  try right    -> (121,136) key=0 dead=0 term=0 score=9337.8
+  try left     -> (121,136) key=0 dead=0 term=0 score=9337.8
+  try up       -> (121,136) key=0 dead=0 term=0 score=9337.8
+  try down     -> (121,136) key=0 dead=0 term=0 score=9337.8
+  try right+A  -> (121,136) key=0 dead=0 term=0 score=9337.8
+  try left+A   -> (121,136) key=0 dead=0 term=0 score=9337.8
+  try A        -> (121,136) key=0 dead=0 term=0 score=9337.8
+  try B        -> (121,136) key=0 dead=0 term=0 score=9337.8
+  try right+B  -> (121,136) key=0 dead=0 term=0 score=9337.8
+chunk 26: choose wait score=9337.8 stall=4
+chunk 26: wait -> (121,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (121,136) key=0 dead=0 term=0 score=9277.8
+  try right    -> (121,136) key=0 dead=0 term=0 score=9277.8
+  try left     -> (121,136) key=0 dead=0 term=0 score=9277.8
+  try up       -> (121,136) key=0 dead=0 term=0 score=9277.8
+  try down     -> (121,136) key=0 dead=0 term=0 score=9277.8
+  try right+A  -> (121,136) key=0 dead=0 term=0 score=9277.8
+  try left+A   -> (121,136) key=0 dead=0 term=0 score=9277.8
+  try A        -> (121,136) key=0 dead=0 term=0 score=9277.8
+  try B        -> (121,136) key=0 dead=0 term=0 score=9277.8
+  try right+B  -> (121,136) key=0 dead=0 term=0 score=9277.8
+chunk 27: choose wait score=9277.8 stall=5
+chunk 27: wait -> (121,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (121,136) key=0 dead=0 term=0 score=9217.8
+  try right    -> (121,136) key=0 dead=0 term=0 score=9217.8
+  try left     -> (121,136) key=0 dead=0 term=0 score=9217.8
+  try up       -> (121,136) key=0 dead=0 term=0 score=9217.8
+  try down     -> (121,136) key=0 dead=0 term=0 score=9217.8
+  try right+A  -> (121,136) key=0 dead=0 term=0 score=9217.8
+  try left+A   -> (121,136) key=0 dead=0 term=0 score=9217.8
+  try A        -> (121,136) key=0 dead=0 term=0 score=9217.8
+  try B        -> (121,136) key=0 dead=0 term=0 score=9217.8
+  try right+B  -> (121,136) key=0 dead=0 term=0 score=9217.8
+chunk 28: choose wait score=9217.8 stall=6
+chunk 28: wait -> (121,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (121,136) key=0 dead=0 term=0 score=9157.8
+  try right    -> (121,136) key=0 dead=0 term=0 score=9157.8
+  try left     -> (121,136) key=0 dead=0 term=0 score=9157.8
+  try up       -> (121,136) key=0 dead=0 term=0 score=9157.8
+  try down     -> (121,136) key=0 dead=0 term=0 score=9157.8
+  try right+A  -> (121,136) key=0 dead=0 term=0 score=9157.8
+  try left+A   -> (121,136) key=0 dead=0 term=0 score=9157.8
+  try A        -> (121,136) key=0 dead=0 term=0 score=9157.8
+  try B        -> (121,136) key=0 dead=0 term=0 score=9157.8
+  try right+B  -> (121,136) key=0 dead=0 term=0 score=9157.8
+chunk 29: choose wait score=9157.8 stall=7
+chunk 29: wait -> (121,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (121,136) key=0 dead=0 term=0 score=9097.8
+  try right    -> (121,136) key=0 dead=0 term=0 score=9097.8
+  try left     -> (121,136) key=0 dead=0 term=0 score=9097.8
+  try up       -> (121,136) key=0 dead=0 term=0 score=9097.8
+  try down     -> (121,136) key=0 dead=0 term=0 score=9097.8
+  try right+A  -> (121,136) key=0 dead=0 term=0 score=9097.8
+  try left+A   -> (121,136) key=0 dead=0 term=0 score=9097.8
+  try A        -> (121,136) key=0 dead=0 term=0 score=9097.8
+  try B        -> (121,136) key=0 dead=0 term=0 score=9097.8
+  try right+B  -> (121,136) key=0 dead=0 term=0 score=9097.8
+chunk 30: choose wait score=9097.8 stall=8
+chunk 30: wait -> (121,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try right    -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try left     -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try up       -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try down     -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try right+A  -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try left+A   -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try A        -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try B        -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try right+B  -> (121,136) key=0 dead=0 term=0 score=9037.8
+chunk 31: choose wait score=9037.8 stall=9
+chunk 31: wait -> (121,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try right    -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try left     -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try up       -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try down     -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try right+A  -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try left+A   -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try A        -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try B        -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try right+B  -> (121,136) key=0 dead=0 term=0 score=8977.8
+chunk 32: choose wait score=8977.8 stall=10
+backtracking to chunk 31 (was at 32)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 31
+  try right    -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try left     -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try up       -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try down     -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try right+A  -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try left+A   -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try A        -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try B        -> (121,136) key=0 dead=0 term=0 score=9037.8
+  try right+B  -> (121,136) key=0 dead=0 term=0 score=9037.8
+chunk 31: choose right score=9037.8 stall=0
+chunk 31: right -> (121,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try right    -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try left     -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try up       -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try down     -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try right+A  -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try left+A   -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try A        -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try B        -> (121,136) key=0 dead=0 term=0 score=8977.8
+  try right+B  -> (121,136) key=0 dead=0 term=0 score=8977.8
+chunk 32: choose wait score=8977.8 stall=1
+chunk 32: wait -> (121,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (105,136) key=0 dead=0 term=0 score=9510.6
+  try right    -> (105,136) key=0 dead=0 term=0 score=9510.6
+  try left     -> (105,136) key=0 dead=0 term=0 score=9510.6
+  try up       -> (105,136) key=0 dead=0 term=0 score=9510.6
+  try down     -> (105,136) key=0 dead=0 term=0 score=9510.6
+  try right+A  -> (105,136) key=0 dead=0 term=0 score=9510.6
+  try left+A   -> (105,136) key=0 dead=0 term=0 score=9510.6
+  try A        -> (105,136) key=0 dead=0 term=0 score=9510.6
+  try B        -> (105,136) key=0 dead=0 term=0 score=9510.6
+  try right+B  -> (105,136) key=0 dead=0 term=0 score=9510.6
+chunk 33: choose wait score=9510.6 stall=0
+chunk 33: wait -> (105,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (105,136) key=0 dead=0 term=0 score=9450.6
+  try right    -> (105,136) key=0 dead=0 term=0 score=9450.6
+  try left     -> (105,136) key=0 dead=0 term=0 score=9450.6
+  try up       -> (105,136) key=0 dead=0 term=0 score=9450.6
+  try down     -> (105,136) key=0 dead=0 term=0 score=9450.6
+  try right+A  -> (105,136) key=0 dead=0 term=0 score=9450.6
+  try left+A   -> (105,136) key=0 dead=0 term=0 score=9450.6
+  try A        -> (105,136) key=0 dead=0 term=0 score=9450.6
+  try B        -> (105,136) key=0 dead=0 term=0 score=9450.6
+  try right+B  -> (105,136) key=0 dead=0 term=0 score=9450.6
+chunk 34: choose wait score=9450.6 stall=1
+chunk 34: wait -> (105,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (105,136) key=0 dead=0 term=0 score=9390.6
+  try right    -> (105,136) key=0 dead=0 term=0 score=9390.6
+  try left     -> (105,136) key=0 dead=0 term=0 score=9390.6
+  try up       -> (105,136) key=0 dead=0 term=0 score=9390.6
+  try down     -> (105,136) key=0 dead=0 term=0 score=9390.6
+  try right+A  -> (105,136) key=0 dead=0 term=0 score=9390.6
+  try left+A   -> (105,136) key=0 dead=0 term=0 score=9390.6
+  try A        -> (105,136) key=0 dead=0 term=0 score=9390.6
+  try B        -> (105,136) key=0 dead=0 term=0 score=9390.6
+  try right+B  -> (105,136) key=0 dead=0 term=0 score=9390.6
+chunk 35: choose wait score=9390.6 stall=2
+chunk 35: wait -> (105,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (120,136) key=0 dead=0 term=0 score=8922.3
+  try right    -> (120,136) key=0 dead=0 term=0 score=8922.3
+  try left     -> (120,136) key=0 dead=0 term=0 score=8922.3
+  try up       -> (120,136) key=0 dead=0 term=0 score=8922.3
+  try down     -> (120,136) key=0 dead=0 term=0 score=8922.3
+  try right+A  -> (120,136) key=0 dead=0 term=0 score=8922.3
+  try left+A   -> (120,136) key=0 dead=0 term=0 score=8922.3
+  try A        -> (120,136) key=0 dead=0 term=0 score=8922.3
+  try B        -> (120,136) key=0 dead=0 term=0 score=8922.3
+  try right+B  -> (120,136) key=0 dead=0 term=0 score=8922.3
+chunk 36: choose wait score=8922.3 stall=3
+chunk 36: wait -> (120,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (123,136) key=0 dead=0 term=0 score=8848.3
+  try right    -> (123,136) key=0 dead=0 term=0 score=8848.3
+  try left     -> (123,136) key=0 dead=0 term=0 score=8848.3
+  try up       -> (123,136) key=0 dead=0 term=0 score=8848.3
+  try down     -> (123,136) key=0 dead=0 term=0 score=8848.3
+  try right+A  -> (123,136) key=0 dead=0 term=0 score=8848.3
+  try left+A   -> (123,136) key=0 dead=0 term=0 score=8848.3
+  try A        -> (123,136) key=0 dead=0 term=0 score=8848.3
+  try B        -> (123,136) key=0 dead=0 term=0 score=8848.3
+  try right+B  -> (123,136) key=0 dead=0 term=0 score=8848.3
+chunk 37: choose wait score=8848.3 stall=4
+chunk 37: wait -> (123,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (123,136) key=0 dead=0 term=0 score=8788.3
+  try right    -> (123,136) key=0 dead=0 term=0 score=8788.3
+  try left     -> (123,136) key=0 dead=0 term=0 score=8788.3
+  try up       -> (123,136) key=0 dead=0 term=0 score=8788.3
+  try down     -> (123,136) key=0 dead=0 term=0 score=8788.3
+  try right+A  -> (123,136) key=0 dead=0 term=0 score=8788.3
+  try left+A   -> (123,136) key=0 dead=0 term=0 score=8788.3
+  try A        -> (123,136) key=0 dead=0 term=0 score=8788.3
+  try B        -> (123,136) key=0 dead=0 term=0 score=8788.3
+  try right+B  -> (123,136) key=0 dead=0 term=0 score=8788.3
+chunk 38: choose wait score=8788.3 stall=5
+chunk 38: wait -> (123,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (123,136) key=0 dead=0 term=0 score=8728.3
+  try right    -> (123,136) key=0 dead=0 term=0 score=8728.3
+  try left     -> (123,136) key=0 dead=0 term=0 score=8728.3
+  try up       -> (123,136) key=0 dead=0 term=0 score=8728.3
+  try down     -> (123,136) key=0 dead=0 term=0 score=8728.3
+  try right+A  -> (123,136) key=0 dead=0 term=0 score=8728.3
+  try left+A   -> (123,136) key=0 dead=0 term=0 score=8728.3
+  try A        -> (123,136) key=0 dead=0 term=0 score=8728.3
+  try B        -> (123,136) key=0 dead=0 term=0 score=8728.3
+  try right+B  -> (123,136) key=0 dead=0 term=0 score=8728.3
+chunk 39: choose wait score=8728.3 stall=6
+chunk 39: wait -> (123,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (123,136) key=0 dead=0 term=0 score=8668.3
+  try right    -> (123,136) key=0 dead=0 term=0 score=8668.3
+  try left     -> (123,136) key=0 dead=0 term=0 score=8668.3
+  try up       -> (123,136) key=0 dead=0 term=0 score=8668.3
+  try down     -> (123,136) key=0 dead=0 term=0 score=8668.3
+  try right+A  -> (123,136) key=0 dead=0 term=0 score=8668.3
+  try left+A   -> (123,136) key=0 dead=0 term=0 score=8668.3
+  try A        -> (123,136) key=0 dead=0 term=0 score=8668.3
+  try B        -> (123,136) key=0 dead=0 term=0 score=8668.3
+  try right+B  -> (123,136) key=0 dead=0 term=0 score=8668.3
+chunk 40: choose wait score=8668.3 stall=7
+chunk 40: wait -> (123,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (123,136) key=0 dead=0 term=0 score=8608.3
+  try right    -> (123,136) key=0 dead=0 term=0 score=8608.3
+  try left     -> (123,136) key=0 dead=0 term=0 score=8608.3
+  try up       -> (123,136) key=0 dead=0 term=0 score=8608.3
+  try down     -> (123,136) key=0 dead=0 term=0 score=8608.3
+  try right+A  -> (123,136) key=0 dead=0 term=0 score=8608.3
+  try left+A   -> (123,136) key=0 dead=0 term=0 score=8608.3
+  try A        -> (123,136) key=0 dead=0 term=0 score=8608.3
+  try B        -> (123,136) key=0 dead=0 term=0 score=8608.3
+  try right+B  -> (123,136) key=0 dead=0 term=0 score=8608.3
+chunk 41: choose wait score=8608.3 stall=8
+chunk 41: wait -> (123,136) key=0 lives=4 state=16 timer=25
+  try wait     -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try right    -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try left     -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try up       -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try down     -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try right+A  -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try left+A   -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try A        -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try B        -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try right+B  -> (123,136) key=0 dead=0 term=0 score=8548.3
+chunk 42: choose wait score=8548.3 stall=9
+chunk 42: wait -> (123,136) key=0 lives=4 state=16 timer=43
+  try wait     -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try right    -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try left     -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try up       -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try down     -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try right+A  -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try left+A   -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try A        -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try B        -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try right+B  -> (123,136) key=0 dead=0 term=0 score=8488.3
+chunk 43: choose wait score=8488.3 stall=10
+backtracking to chunk 42 (was at 43)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 42
+  try right    -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try left     -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try up       -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try down     -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try right+A  -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try left+A   -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try A        -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try B        -> (123,136) key=0 dead=0 term=0 score=8548.3
+  try right+B  -> (123,136) key=0 dead=0 term=0 score=8548.3
+chunk 42: choose right score=8548.3 stall=0
+chunk 42: right -> (123,136) key=0 lives=4 state=16 timer=43
+  try wait     -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try right    -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try left     -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try up       -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try down     -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try right+A  -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try left+A   -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try A        -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try B        -> (123,136) key=0 dead=0 term=0 score=8488.3
+  try right+B  -> (123,136) key=0 dead=0 term=0 score=8488.3
+chunk 43: choose wait score=8488.3 stall=1
+chunk 43: wait -> (123,136) key=0 lives=4 state=16 timer=44
+  try wait     -> (123,136) key=0 dead=0 term=0 score=8428.3
+  try right    -> (123,136) key=0 dead=0 term=0 score=8428.3
+  try left     -> (123,136) key=0 dead=0 term=0 score=8428.3
+  try up       -> (123,136) key=0 dead=0 term=0 score=8428.3
+  try down     -> (123,136) key=0 dead=0 term=0 score=8428.3
+  try right+A  -> (123,136) key=0 dead=0 term=0 score=8428.3
+  try left+A   -> (123,136) key=0 dead=0 term=0 score=8428.3
+  try A        -> (123,136) key=0 dead=0 term=0 score=8428.3
+  try B        -> (123,136) key=0 dead=0 term=0 score=8428.3
+  try right+B  -> (123,136) key=0 dead=0 term=0 score=8428.3
+chunk 44: choose wait score=8428.3 stall=2
+chunk 44: wait -> (123,136) key=0 lives=4 state=16 timer=44
+  try wait     -> (123,136) key=0 dead=0 term=0 score=8368.3
+  try right    -> (123,136) key=0 dead=0 term=0 score=8368.3
+  try left     -> (123,136) key=0 dead=0 term=0 score=8368.3
+  try up       -> (123,136) key=0 dead=0 term=0 score=8368.3
+  try down     -> (123,136) key=0 dead=0 term=0 score=8368.3
+  try right+A  -> (123,136) key=0 dead=0 term=0 score=8368.3
+  try left+A   -> (123,136) key=0 dead=0 term=0 score=8368.3
+  try A        -> (123,136) key=0 dead=0 term=0 score=8368.3
+  try B        -> (123,136) key=0 dead=0 term=0 score=8368.3
+  try right+B  -> (123,136) key=0 dead=0 term=0 score=8368.3
+chunk 45: choose wait score=8368.3 stall=3
+chunk 45: wait -> (123,136) key=0 lives=4 state=16 timer=44
+  try wait     -> (123,136) key=0 dead=0 term=0 score=8308.3
+  try right    -> (123,136) key=0 dead=0 term=0 score=8308.3
+  try left     -> (123,136) key=0 dead=0 term=0 score=8308.3
+  try up       -> (123,136) key=0 dead=0 term=0 score=8308.3
+  try down     -> (123,136) key=0 dead=0 term=0 score=8308.3
+  try right+A  -> (123,136) key=0 dead=0 term=0 score=8308.3
+  try left+A   -> (123,136) key=0 dead=0 term=0 score=8308.3
+  try A        -> (123,136) key=0 dead=0 term=0 score=8308.3
+  try B        -> (123,136) key=0 dead=0 term=0 score=8308.3
+  try right+B  -> (123,136) key=0 dead=0 term=0 score=8308.3
+chunk 46: choose wait score=8308.3 stall=4
+chunk 46: wait -> (123,136) key=0 lives=4 state=16 timer=45
+  try wait     -> (123,136) key=0 dead=0 term=0 score=8248.3
+  try right    -> (176, 16) key=0 dead=0 term=0 score=9162.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=9162.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=9162.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=9162.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=9162.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=9162.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=9162.7
+  try B        -> (123,136) key=0 dead=0 term=0 score=8248.3
+  try right+B  -> (123,136) key=0 dead=0 term=0 score=8248.3
+chunk 47: choose right score=9162.7 stall=0
+chunk 47: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=9102.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=9102.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=9102.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=9102.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=9102.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=9102.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=9102.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=9102.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=9102.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=9102.7
+chunk 48: choose wait score=9102.7 stall=1
+chunk 48: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=9042.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=9042.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=9042.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=9042.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=9042.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=9042.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=9042.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=9042.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=9042.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=9042.7
+chunk 49: choose wait score=9042.7 stall=2
+chunk 49: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8982.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8982.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8982.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8982.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8982.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8982.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8982.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8982.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8982.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8982.7
+chunk 50: choose wait score=8982.7 stall=3
+  dumped chunk050/* to build/nacre-test/slice12/play\nchunk 50: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8922.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8922.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8922.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8922.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8922.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8922.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8922.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8922.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8922.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8922.7
+chunk 51: choose wait score=8922.7 stall=4
+chunk 51: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8862.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8862.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8862.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8862.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8862.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8862.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8862.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8862.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8862.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8862.7
+chunk 52: choose wait score=8862.7 stall=5
+chunk 52: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8802.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8802.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8802.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8802.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8802.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8802.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8802.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8802.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8802.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8802.7
+chunk 53: choose wait score=8802.7 stall=6
+chunk 53: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8742.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8742.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8742.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8742.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8742.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8742.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8742.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8742.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8742.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8742.7
+chunk 54: choose wait score=8742.7 stall=7
+chunk 54: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8682.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8682.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8682.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8682.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8682.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8682.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8682.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8682.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8682.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8682.7
+chunk 55: choose wait score=8682.7 stall=8
+chunk 55: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8622.7
+chunk 56: choose wait score=8622.7 stall=9
+chunk 56: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8562.7
+chunk 57: choose wait score=8562.7 stall=10
+backtracking to chunk 56 (was at 57)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 56
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8622.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8622.7
+chunk 56: choose right score=8622.7 stall=0
+chunk 56: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8562.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8562.7
+chunk 57: choose wait score=8562.7 stall=1
+chunk 57: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8502.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8502.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8502.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8502.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8502.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8502.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8502.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8502.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8502.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8502.7
+chunk 58: choose wait score=8502.7 stall=2
+chunk 58: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8442.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8442.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8442.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8442.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8442.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8442.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8442.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8442.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8442.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8442.7
+chunk 59: choose wait score=8442.7 stall=3
+chunk 59: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8382.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8382.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8382.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8382.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8382.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8382.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8382.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8382.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8382.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8382.7
+chunk 60: choose wait score=8382.7 stall=4
+chunk 60: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8322.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8322.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8322.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8322.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8322.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8322.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8322.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8322.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8322.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8322.7
+chunk 61: choose wait score=8322.7 stall=5
+chunk 61: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8262.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8262.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8262.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8262.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8262.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8262.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8262.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8262.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8262.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8262.7
+chunk 62: choose wait score=8262.7 stall=6
+chunk 62: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8202.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8202.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8202.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8202.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8202.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8202.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8202.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8202.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8202.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8202.7
+chunk 63: choose wait score=8202.7 stall=7
+chunk 63: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8142.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8142.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8142.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8142.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8142.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8142.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8142.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8142.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8142.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8142.7
+chunk 64: choose wait score=8142.7 stall=8
+chunk 64: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8082.7
+chunk 65: choose wait score=8082.7 stall=9
+chunk 65: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8022.7
+chunk 66: choose wait score=8022.7 stall=10
+backtracking to chunk 65 (was at 66)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 65
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8082.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8082.7
+chunk 65: choose right score=8082.7 stall=0
+chunk 65: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=8022.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=8022.7
+chunk 66: choose wait score=8022.7 stall=1
+chunk 66: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7962.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7962.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7962.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7962.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7962.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7962.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7962.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7962.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7962.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7962.7
+chunk 67: choose wait score=7962.7 stall=2
+chunk 67: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7902.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7902.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7902.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7902.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7902.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7902.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7902.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7902.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7902.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7902.7
+chunk 68: choose wait score=7902.7 stall=3
+chunk 68: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7842.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7842.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7842.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7842.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7842.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7842.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7842.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7842.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7842.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7842.7
+chunk 69: choose wait score=7842.7 stall=4
+chunk 69: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7782.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7782.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7782.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7782.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7782.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7782.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7782.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7782.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7782.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7782.7
+chunk 70: choose wait score=7782.7 stall=5
+chunk 70: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7722.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7722.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7722.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7722.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7722.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7722.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7722.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7722.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7722.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7722.7
+chunk 71: choose wait score=7722.7 stall=6
+chunk 71: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7662.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7662.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7662.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7662.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7662.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7662.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7662.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7662.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7662.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7662.7
+chunk 72: choose wait score=7662.7 stall=7
+chunk 72: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7602.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7602.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7602.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7602.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7602.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7602.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7602.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7602.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7602.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7602.7
+chunk 73: choose wait score=7602.7 stall=8
+chunk 73: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7542.7
+chunk 74: choose wait score=7542.7 stall=9
+chunk 74: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7482.7
+chunk 75: choose wait score=7482.7 stall=10
+backtracking to chunk 74 (was at 75)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 74
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7542.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7542.7
+chunk 74: choose right score=7542.7 stall=0
+chunk 74: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7482.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7482.7
+chunk 75: choose wait score=7482.7 stall=1
+  dumped chunk075/* to build/nacre-test/slice12/play\nchunk 75: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7422.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7422.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7422.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7422.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7422.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7422.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7422.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7422.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7422.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7422.7
+chunk 76: choose wait score=7422.7 stall=2
+chunk 76: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7362.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7362.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7362.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7362.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7362.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7362.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7362.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7362.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7362.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7362.7
+chunk 77: choose wait score=7362.7 stall=3
+chunk 77: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7302.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7302.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7302.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7302.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7302.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7302.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7302.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7302.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7302.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7302.7
+chunk 78: choose wait score=7302.7 stall=4
+chunk 78: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7242.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7242.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7242.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7242.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7242.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7242.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7242.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7242.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7242.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7242.7
+chunk 79: choose wait score=7242.7 stall=5
+chunk 79: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7182.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7182.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7182.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7182.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7182.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7182.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7182.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7182.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7182.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7182.7
+chunk 80: choose wait score=7182.7 stall=6
+chunk 80: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7122.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7122.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7122.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7122.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7122.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7122.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7122.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7122.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7122.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7122.7
+chunk 81: choose wait score=7122.7 stall=7
+chunk 81: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7062.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7062.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7062.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7062.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7062.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7062.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7062.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7062.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7062.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7062.7
+chunk 82: choose wait score=7062.7 stall=8
+chunk 82: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7002.7
+chunk 83: choose wait score=7002.7 stall=9
+chunk 83: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6942.7
+chunk 84: choose wait score=6942.7 stall=10
+backtracking to chunk 83 (was at 84)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 83
+  try right    -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=7002.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=7002.7
+chunk 83: choose right score=7002.7 stall=0
+chunk 83: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6942.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6942.7
+chunk 84: choose wait score=6942.7 stall=1
+chunk 84: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6882.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6882.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6882.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6882.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6882.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6882.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6882.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6882.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6882.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6882.7
+chunk 85: choose wait score=6882.7 stall=2
+chunk 85: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6822.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6822.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6822.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6822.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6822.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6822.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6822.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6822.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6822.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6822.7
+chunk 86: choose wait score=6822.7 stall=3
+chunk 86: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6762.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6762.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6762.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6762.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6762.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6762.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6762.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6762.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6762.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6762.7
+chunk 87: choose wait score=6762.7 stall=4
+chunk 87: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6702.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6702.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6702.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6702.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6702.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6702.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6702.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6702.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6702.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6702.7
+chunk 88: choose wait score=6702.7 stall=5
+chunk 88: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6642.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6642.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6642.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6642.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6642.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6642.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6642.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6642.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6642.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6642.7
+chunk 89: choose wait score=6642.7 stall=6
+chunk 89: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6582.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6582.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6582.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6582.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6582.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6582.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6582.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6582.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6582.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6582.7
+chunk 90: choose wait score=6582.7 stall=7
+chunk 90: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6522.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6522.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6522.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6522.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6522.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6522.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6522.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6522.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6522.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6522.7
+chunk 91: choose wait score=6522.7 stall=8
+chunk 91: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6462.7
+chunk 92: choose wait score=6462.7 stall=9
+chunk 92: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6402.7
+chunk 93: choose wait score=6402.7 stall=10
+backtracking to chunk 92 (was at 93)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 92
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6462.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6462.7
+chunk 92: choose right score=6462.7 stall=0
+chunk 92: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6402.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6402.7
+chunk 93: choose wait score=6402.7 stall=1
+chunk 93: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6342.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6342.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6342.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6342.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6342.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6342.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6342.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6342.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6342.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6342.7
+chunk 94: choose wait score=6342.7 stall=2
+chunk 94: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6282.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6282.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6282.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6282.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6282.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6282.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6282.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6282.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6282.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6282.7
+chunk 95: choose wait score=6282.7 stall=3
+chunk 95: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6222.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6222.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6222.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6222.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6222.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6222.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6222.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6222.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6222.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6222.7
+chunk 96: choose wait score=6222.7 stall=4
+chunk 96: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6162.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6162.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6162.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6162.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6162.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6162.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6162.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6162.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6162.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6162.7
+chunk 97: choose wait score=6162.7 stall=5
+chunk 97: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6102.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6102.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6102.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6102.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6102.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6102.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6102.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6102.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6102.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6102.7
+chunk 98: choose wait score=6102.7 stall=6
+chunk 98: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=6042.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=6042.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=6042.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=6042.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=6042.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=6042.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=6042.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=6042.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=6042.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=6042.7
+chunk 99: choose wait score=6042.7 stall=7
+chunk 99: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5982.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5982.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5982.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5982.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5982.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5982.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5982.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5982.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5982.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5982.7
+chunk 100: choose wait score=5982.7 stall=8
+  dumped chunk100/* to build/nacre-test/slice12/play\nchunk 100: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5922.7
+chunk 101: choose wait score=5922.7 stall=9
+chunk 101: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5862.7
+chunk 102: choose wait score=5862.7 stall=10
+backtracking to chunk 101 (was at 102)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 101
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5922.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5922.7
+chunk 101: choose right score=5922.7 stall=0
+chunk 101: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5862.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5862.7
+chunk 102: choose wait score=5862.7 stall=1
+chunk 102: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5802.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5802.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5802.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5802.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5802.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5802.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5802.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5802.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5802.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5802.7
+chunk 103: choose wait score=5802.7 stall=2
+chunk 103: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5742.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5742.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5742.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5742.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5742.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5742.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5742.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5742.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5742.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5742.7
+chunk 104: choose wait score=5742.7 stall=3
+chunk 104: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5682.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5682.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5682.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5682.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5682.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5682.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5682.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5682.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5682.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5682.7
+chunk 105: choose wait score=5682.7 stall=4
+chunk 105: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5622.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5622.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5622.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5622.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5622.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5622.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5622.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5622.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5622.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5622.7
+chunk 106: choose wait score=5622.7 stall=5
+chunk 106: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5562.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5562.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5562.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5562.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5562.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5562.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5562.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5562.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5562.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5562.7
+chunk 107: choose wait score=5562.7 stall=6
+chunk 107: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5502.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5502.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5502.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5502.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5502.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5502.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5502.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5502.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5502.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5502.7
+chunk 108: choose wait score=5502.7 stall=7
+chunk 108: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5442.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5442.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5442.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5442.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5442.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5442.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5442.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5442.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5442.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5442.7
+chunk 109: choose wait score=5442.7 stall=8
+chunk 109: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5382.7
+chunk 110: choose wait score=5382.7 stall=9
+chunk 110: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5322.7
+chunk 111: choose wait score=5322.7 stall=10
+backtracking to chunk 110 (was at 111)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 110
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5382.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5382.7
+chunk 110: choose right score=5382.7 stall=0
+chunk 110: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5322.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5322.7
+chunk 111: choose wait score=5322.7 stall=1
+chunk 111: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5262.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5262.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5262.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5262.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5262.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5262.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5262.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5262.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5262.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5262.7
+chunk 112: choose wait score=5262.7 stall=2
+chunk 112: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5202.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5202.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5202.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5202.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5202.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5202.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5202.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5202.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5202.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5202.7
+chunk 113: choose wait score=5202.7 stall=3
+chunk 113: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5142.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5142.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5142.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5142.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5142.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5142.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5142.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5142.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5142.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5142.7
+chunk 114: choose wait score=5142.7 stall=4
+chunk 114: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5082.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5082.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5082.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5082.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5082.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5082.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5082.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5082.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5082.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5082.7
+chunk 115: choose wait score=5082.7 stall=5
+chunk 115: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=5022.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=5022.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=5022.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=5022.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=5022.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=5022.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=5022.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=5022.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=5022.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=5022.7
+chunk 116: choose wait score=5022.7 stall=6
+chunk 116: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4962.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4962.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4962.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4962.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4962.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4962.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4962.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4962.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4962.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4962.7
+chunk 117: choose wait score=4962.7 stall=7
+chunk 117: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4902.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4902.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4902.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4902.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4902.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4902.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4902.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4902.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4902.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4902.7
+chunk 118: choose wait score=4902.7 stall=8
+chunk 118: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4842.7
+chunk 119: choose wait score=4842.7 stall=9
+chunk 119: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4782.7
+chunk 120: choose wait score=4782.7 stall=10
+backtracking to chunk 119 (was at 120)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 119
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4842.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4842.7
+chunk 119: choose right score=4842.7 stall=0
+chunk 119: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4782.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4782.7
+chunk 120: choose wait score=4782.7 stall=1
+chunk 120: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4722.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4722.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4722.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4722.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4722.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4722.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4722.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4722.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4722.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4722.7
+chunk 121: choose wait score=4722.7 stall=2
+chunk 121: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4662.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4662.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4662.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4662.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4662.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4662.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4662.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4662.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4662.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4662.7
+chunk 122: choose wait score=4662.7 stall=3
+chunk 122: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4602.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4602.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4602.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4602.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4602.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4602.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4602.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4602.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4602.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4602.7
+chunk 123: choose wait score=4602.7 stall=4
+chunk 123: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4542.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4542.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4542.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4542.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4542.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4542.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4542.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4542.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4542.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4542.7
+chunk 124: choose wait score=4542.7 stall=5
+chunk 124: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4482.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4482.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4482.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4482.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4482.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4482.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4482.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4482.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4482.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4482.7
+chunk 125: choose wait score=4482.7 stall=6
+  dumped chunk125/* to build/nacre-test/slice12/play\nchunk 125: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4422.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4422.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4422.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4422.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4422.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4422.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4422.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4422.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4422.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4422.7
+chunk 126: choose wait score=4422.7 stall=7
+chunk 126: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4362.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4362.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4362.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4362.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4362.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4362.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4362.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4362.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4362.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4362.7
+chunk 127: choose wait score=4362.7 stall=8
+chunk 127: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4302.7
+chunk 128: choose wait score=4302.7 stall=9
+chunk 128: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4242.7
+chunk 129: choose wait score=4242.7 stall=10
+backtracking to chunk 128 (was at 129)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 128
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4302.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4302.7
+chunk 128: choose right score=4302.7 stall=0
+chunk 128: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4242.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4242.7
+chunk 129: choose wait score=4242.7 stall=1
+chunk 129: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4182.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4182.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4182.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4182.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4182.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4182.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4182.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4182.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4182.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4182.7
+chunk 130: choose wait score=4182.7 stall=2
+chunk 130: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4122.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4122.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4122.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4122.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4122.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4122.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4122.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4122.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4122.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4122.7
+chunk 131: choose wait score=4122.7 stall=3
+chunk 131: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4062.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4062.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4062.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4062.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4062.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4062.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4062.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4062.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4062.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4062.7
+chunk 132: choose wait score=4062.7 stall=4
+chunk 132: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=4002.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=4002.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=4002.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=4002.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=4002.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=4002.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=4002.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=4002.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=4002.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=4002.7
+chunk 133: choose wait score=4002.7 stall=5
+chunk 133: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3942.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3942.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3942.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3942.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3942.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3942.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3942.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3942.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3942.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3942.7
+chunk 134: choose wait score=3942.7 stall=6
+chunk 134: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3882.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3882.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3882.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3882.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3882.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3882.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3882.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3882.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3882.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3882.7
+chunk 135: choose wait score=3882.7 stall=7
+chunk 135: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3822.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3822.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3822.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3822.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3822.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3822.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3822.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3822.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3822.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3822.7
+chunk 136: choose wait score=3822.7 stall=8
+chunk 136: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3762.7
+chunk 137: choose wait score=3762.7 stall=9
+chunk 137: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3702.7
+chunk 138: choose wait score=3702.7 stall=10
+backtracking to chunk 137 (was at 138)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 137
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3762.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3762.7
+chunk 137: choose right score=3762.7 stall=0
+chunk 137: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3702.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3702.7
+chunk 138: choose wait score=3702.7 stall=1
+chunk 138: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3642.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3642.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3642.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3642.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3642.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3642.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3642.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3642.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3642.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3642.7
+chunk 139: choose wait score=3642.7 stall=2
+chunk 139: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3582.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3582.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3582.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3582.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3582.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3582.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3582.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3582.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3582.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3582.7
+chunk 140: choose wait score=3582.7 stall=3
+chunk 140: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3522.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3522.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3522.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3522.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3522.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3522.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3522.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3522.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3522.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3522.7
+chunk 141: choose wait score=3522.7 stall=4
+chunk 141: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3462.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3462.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3462.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3462.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3462.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3462.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3462.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3462.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3462.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3462.7
+chunk 142: choose wait score=3462.7 stall=5
+chunk 142: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3402.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3402.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3402.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3402.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3402.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3402.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3402.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3402.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3402.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3402.7
+chunk 143: choose wait score=3402.7 stall=6
+chunk 143: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3342.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3342.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3342.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3342.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3342.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3342.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3342.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3342.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3342.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3342.7
+chunk 144: choose wait score=3342.7 stall=7
+chunk 144: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3282.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3282.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3282.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3282.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3282.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3282.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3282.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3282.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3282.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3282.7
+chunk 145: choose wait score=3282.7 stall=8
+chunk 145: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3222.7
+chunk 146: choose wait score=3222.7 stall=9
+chunk 146: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3162.7
+chunk 147: choose wait score=3162.7 stall=10
+backtracking to chunk 146 (was at 147)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 146
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3222.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3222.7
+chunk 146: choose right score=3222.7 stall=0
+chunk 146: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3162.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3162.7
+chunk 147: choose wait score=3162.7 stall=1
+chunk 147: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3102.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3102.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3102.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3102.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3102.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3102.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3102.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3102.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3102.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3102.7
+chunk 148: choose wait score=3102.7 stall=2
+chunk 148: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=3042.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=3042.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=3042.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=3042.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=3042.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=3042.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=3042.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=3042.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=3042.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=3042.7
+chunk 149: choose wait score=3042.7 stall=3
+chunk 149: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2982.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2982.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2982.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2982.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2982.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2982.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2982.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2982.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2982.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2982.7
+chunk 150: choose wait score=2982.7 stall=4
+  dumped chunk150/* to build/nacre-test/slice12/play\nchunk 150: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2922.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2922.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2922.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2922.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2922.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2922.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2922.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2922.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2922.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2922.7
+chunk 151: choose wait score=2922.7 stall=5
+chunk 151: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2862.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2862.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2862.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2862.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2862.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2862.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2862.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2862.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2862.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2862.7
+chunk 152: choose wait score=2862.7 stall=6
+chunk 152: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2802.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2802.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2802.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2802.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2802.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2802.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2802.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2802.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2802.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2802.7
+chunk 153: choose wait score=2802.7 stall=7
+chunk 153: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2742.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2742.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2742.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2742.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2742.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2742.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2742.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2742.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2742.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2742.7
+chunk 154: choose wait score=2742.7 stall=8
+chunk 154: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2682.7
+chunk 155: choose wait score=2682.7 stall=9
+chunk 155: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2622.7
+chunk 156: choose wait score=2622.7 stall=10
+backtracking to chunk 155 (was at 156)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 155
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2682.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2682.7
+chunk 155: choose right score=2682.7 stall=0
+chunk 155: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2622.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2622.7
+chunk 156: choose wait score=2622.7 stall=1
+chunk 156: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2562.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2562.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2562.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2562.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2562.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2562.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2562.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2562.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2562.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2562.7
+chunk 157: choose wait score=2562.7 stall=2
+chunk 157: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2502.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2502.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2502.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2502.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2502.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2502.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2502.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2502.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2502.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2502.7
+chunk 158: choose wait score=2502.7 stall=3
+chunk 158: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2442.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2442.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2442.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2442.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2442.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2442.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2442.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2442.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2442.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2442.7
+chunk 159: choose wait score=2442.7 stall=4
+chunk 159: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2382.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2382.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2382.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2382.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2382.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2382.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2382.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2382.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2382.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2382.7
+chunk 160: choose wait score=2382.7 stall=5
+chunk 160: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2322.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2322.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2322.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2322.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2322.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2322.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2322.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2322.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2322.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2322.7
+chunk 161: choose wait score=2322.7 stall=6
+chunk 161: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2262.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2262.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2262.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2262.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2262.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2262.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2262.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2262.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2262.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2262.7
+chunk 162: choose wait score=2262.7 stall=7
+chunk 162: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2202.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2202.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2202.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2202.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2202.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2202.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2202.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2202.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2202.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2202.7
+chunk 163: choose wait score=2202.7 stall=8
+chunk 163: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2142.7
+chunk 164: choose wait score=2142.7 stall=9
+chunk 164: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2082.7
+chunk 165: choose wait score=2082.7 stall=10
+backtracking to chunk 164 (was at 165)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 164
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2142.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2142.7
+chunk 164: choose right score=2142.7 stall=0
+chunk 164: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2082.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2082.7
+chunk 165: choose wait score=2082.7 stall=1
+chunk 165: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=2022.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=2022.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=2022.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=2022.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=2022.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=2022.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=2022.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=2022.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=2022.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=2022.7
+chunk 166: choose wait score=2022.7 stall=2
+chunk 166: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1962.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1962.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1962.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1962.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1962.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1962.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1962.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1962.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1962.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1962.7
+chunk 167: choose wait score=1962.7 stall=3
+chunk 167: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1902.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1902.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1902.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1902.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1902.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1902.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1902.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1902.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1902.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1902.7
+chunk 168: choose wait score=1902.7 stall=4
+chunk 168: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1842.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1842.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1842.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1842.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1842.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1842.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1842.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1842.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1842.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1842.7
+chunk 169: choose wait score=1842.7 stall=5
+chunk 169: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1782.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1782.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1782.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1782.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1782.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1782.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1782.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1782.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1782.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1782.7
+chunk 170: choose wait score=1782.7 stall=6
+chunk 170: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1722.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1722.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1722.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1722.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1722.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1722.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1722.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1722.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1722.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1722.7
+chunk 171: choose wait score=1722.7 stall=7
+chunk 171: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1662.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1662.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1662.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1662.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1662.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1662.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1662.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1662.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1662.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1662.7
+chunk 172: choose wait score=1662.7 stall=8
+chunk 172: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1602.7
+chunk 173: choose wait score=1602.7 stall=9
+chunk 173: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1542.7
+chunk 174: choose wait score=1542.7 stall=10
+backtracking to chunk 173 (was at 174)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 173
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1602.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1602.7
+chunk 173: choose right score=1602.7 stall=0
+chunk 173: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1542.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1542.7
+chunk 174: choose wait score=1542.7 stall=1
+chunk 174: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1482.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1482.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1482.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1482.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1482.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1482.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1482.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1482.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1482.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1482.7
+chunk 175: choose wait score=1482.7 stall=2
+  dumped chunk175/* to build/nacre-test/slice12/play\nchunk 175: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1422.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1422.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1422.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1422.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1422.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1422.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1422.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1422.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1422.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1422.7
+chunk 176: choose wait score=1422.7 stall=3
+chunk 176: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1362.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1362.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1362.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1362.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1362.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1362.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1362.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1362.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1362.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1362.7
+chunk 177: choose wait score=1362.7 stall=4
+chunk 177: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1302.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1302.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1302.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1302.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1302.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1302.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1302.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1302.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1302.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1302.7
+chunk 178: choose wait score=1302.7 stall=5
+chunk 178: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1242.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1242.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1242.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1242.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1242.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1242.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1242.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1242.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1242.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1242.7
+chunk 179: choose wait score=1242.7 stall=6
+chunk 179: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1182.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1182.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1182.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1182.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1182.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1182.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1182.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1182.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1182.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1182.7
+chunk 180: choose wait score=1182.7 stall=7
+chunk 180: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1122.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1122.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1122.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1122.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1122.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1122.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1122.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1122.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1122.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1122.7
+chunk 181: choose wait score=1122.7 stall=8
+chunk 181: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1062.7
+chunk 182: choose wait score=1062.7 stall=9
+chunk 182: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1002.7
+chunk 183: choose wait score=1002.7 stall=10
+backtracking to chunk 182 (was at 183)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 182
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1062.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1062.7
+chunk 182: choose right score=1062.7 stall=0
+chunk 182: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=1002.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=1002.7
+chunk 183: choose wait score=1002.7 stall=1
+chunk 183: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=942.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=942.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=942.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=942.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=942.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=942.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=942.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=942.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=942.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=942.7
+chunk 184: choose wait score=942.7 stall=2
+chunk 184: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=882.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=882.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=882.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=882.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=882.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=882.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=882.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=882.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=882.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=882.7
+chunk 185: choose wait score=882.7 stall=3
+chunk 185: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=822.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=822.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=822.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=822.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=822.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=822.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=822.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=822.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=822.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=822.7
+chunk 186: choose wait score=822.7 stall=4
+chunk 186: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=762.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=762.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=762.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=762.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=762.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=762.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=762.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=762.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=762.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=762.7
+chunk 187: choose wait score=762.7 stall=5
+chunk 187: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=702.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=702.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=702.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=702.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=702.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=702.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=702.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=702.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=702.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=702.7
+chunk 188: choose wait score=702.7 stall=6
+chunk 188: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=642.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=642.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=642.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=642.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=642.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=642.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=642.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=642.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=642.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=642.7
+chunk 189: choose wait score=642.7 stall=7
+chunk 189: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=582.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=582.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=582.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=582.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=582.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=582.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=582.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=582.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=582.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=582.7
+chunk 190: choose wait score=582.7 stall=8
+chunk 190: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=522.7
+chunk 191: choose wait score=522.7 stall=9
+chunk 191: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=462.7
+chunk 192: choose wait score=462.7 stall=10
+backtracking to chunk 191 (was at 192)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 191
+  try right    -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=522.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=522.7
+chunk 191: choose right score=522.7 stall=0
+chunk 191: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=462.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=462.7
+chunk 192: choose wait score=462.7 stall=1
+chunk 192: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=402.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=402.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=402.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=402.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=402.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=402.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=402.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=402.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=402.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=402.7
+chunk 193: choose wait score=402.7 stall=2
+chunk 193: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=342.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=342.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=342.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=342.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=342.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=342.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=342.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=342.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=342.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=342.7
+chunk 194: choose wait score=342.7 stall=3
+chunk 194: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=282.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=282.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=282.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=282.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=282.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=282.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=282.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=282.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=282.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=282.7
+chunk 195: choose wait score=282.7 stall=4
+chunk 195: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=222.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=222.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=222.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=222.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=222.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=222.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=222.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=222.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=222.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=222.7
+chunk 196: choose wait score=222.7 stall=5
+chunk 196: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=162.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=162.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=162.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=162.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=162.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=162.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=162.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=162.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=162.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=162.7
+chunk 197: choose wait score=162.7 stall=6
+chunk 197: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=102.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=102.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=102.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=102.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=102.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=102.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=102.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=102.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=102.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=102.7
+chunk 198: choose wait score=102.7 stall=7
+chunk 198: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=42.7
+  try right    -> (176, 16) key=0 dead=0 term=0 score=42.7
+  try left     -> (176, 16) key=0 dead=0 term=0 score=42.7
+  try up       -> (176, 16) key=0 dead=0 term=0 score=42.7
+  try down     -> (176, 16) key=0 dead=0 term=0 score=42.7
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=42.7
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=42.7
+  try A        -> (176, 16) key=0 dead=0 term=0 score=42.7
+  try B        -> (176, 16) key=0 dead=0 term=0 score=42.7
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=42.7
+chunk 199: choose wait score=42.7 stall=8
+chunk 199: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try right    -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try left     -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try up       -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try down     -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try A        -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try B        -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=-17.3
+chunk 200: choose wait score=-17.3 stall=9
+  dumped chunk200/* to build/nacre-test/slice12/play\nchunk 200: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try right    -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try left     -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try up       -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try down     -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try A        -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try B        -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=-77.3
+chunk 201: choose wait score=-77.3 stall=10
+backtracking to chunk 200 (was at 201)
+PREFIX carry flag dd18=03 pos=120,93
+replayed to chunk 200
+  try right    -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try left     -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try up       -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try down     -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try A        -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try B        -> (176, 16) key=0 dead=0 term=0 score=-17.3
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=-17.3
+chunk 200: choose right score=-17.3 stall=0
+  dumped chunk200/* to build/nacre-test/slice12/play\nchunk 200: right -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try right    -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try left     -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try up       -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try down     -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try A        -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try B        -> (176, 16) key=0 dead=0 term=0 score=-77.3
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=-77.3
+chunk 201: choose wait score=-77.3 stall=1
+chunk 201: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=-137.3
+  try right    -> (176, 16) key=0 dead=0 term=0 score=-137.3
+  try left     -> (176, 16) key=0 dead=0 term=0 score=-137.3
+  try up       -> (176, 16) key=0 dead=0 term=0 score=-137.3
+  try down     -> (176, 16) key=0 dead=0 term=0 score=-137.3
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=-137.3
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=-137.3
+  try A        -> (176, 16) key=0 dead=0 term=0 score=-137.3
+  try B        -> (176, 16) key=0 dead=0 term=0 score=-137.3
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=-137.3
+chunk 202: choose wait score=-137.3 stall=2
+chunk 202: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=-197.3
+  try right    -> (176, 16) key=0 dead=0 term=0 score=-197.3
+  try left     -> (176, 16) key=0 dead=0 term=0 score=-197.3
+  try up       -> (176, 16) key=0 dead=0 term=0 score=-197.3
+  try down     -> (176, 16) key=0 dead=0 term=0 score=-197.3
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=-197.3
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=-197.3
+  try A        -> (176, 16) key=0 dead=0 term=0 score=-197.3
+  try B        -> (176, 16) key=0 dead=0 term=0 score=-197.3
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=-197.3
+chunk 203: choose wait score=-197.3 stall=3
+chunk 203: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=-257.3
+  try right    -> (176, 16) key=0 dead=0 term=0 score=-257.3
+  try left     -> (176, 16) key=0 dead=0 term=0 score=-257.3
+  try up       -> (176, 16) key=0 dead=0 term=0 score=-257.3
+  try down     -> (176, 16) key=0 dead=0 term=0 score=-257.3
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=-257.3
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=-257.3
+  try A        -> (176, 16) key=0 dead=0 term=0 score=-257.3
+  try B        -> (176, 16) key=0 dead=0 term=0 score=-257.3
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=-257.3
+chunk 204: choose wait score=-257.3 stall=4
+chunk 204: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=-317.3
+  try right    -> (176, 16) key=0 dead=0 term=0 score=-317.3
+  try left     -> (176, 16) key=0 dead=0 term=0 score=-317.3
+  try up       -> (176, 16) key=0 dead=0 term=0 score=-317.3
+  try down     -> (176, 16) key=0 dead=0 term=0 score=-317.3
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=-317.3
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=-317.3
+  try A        -> (176, 16) key=0 dead=0 term=0 score=-317.3
+  try B        -> (176, 16) key=0 dead=0 term=0 score=-317.3
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=-317.3
+chunk 205: choose wait score=-317.3 stall=5
+chunk 205: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=-377.3
+  try right    -> (176, 16) key=0 dead=0 term=0 score=-377.3
+  try left     -> (176, 16) key=0 dead=0 term=0 score=-377.3
+  try up       -> (176, 16) key=0 dead=0 term=0 score=-377.3
+  try down     -> (176, 16) key=0 dead=0 term=0 score=-377.3
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=-377.3
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=-377.3
+  try A        -> (176, 16) key=0 dead=0 term=0 score=-377.3
+  try B        -> (176, 16) key=0 dead=0 term=0 score=-377.3
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=-377.3
+chunk 206: choose wait score=-377.3 stall=6
+chunk 206: wait -> (176,16) key=0 lives=4 state=20 timer=1
+  try wait     -> (176, 16) key=0 dead=0 term=0 score=-437.3
+  try right    -> (176, 16) key=0 dead=0 term=0 score=-437.3
+  try left     -> (176, 16) key=0 dead=0 term=0 score=-437.3
+  try up       -> (176, 16) key=0 dead=0 term=0 score=-437.3
+  try down     -> (176, 16) key=0 dead=0 term=0 score=-437.3
+  try right+A  -> (176, 16) key=0 dead=0 term=0 score=-437.3
+  try left+A   -> (176, 16) key=0 dead=0 term=0 score=-437.3
+  try A        -> (176, 16) key=0 dead=0 term=0 score=-437.3
+  try B        -> (176, 16) key=0 dead=0 term=0 score=-437.3
+  try right+B  -> (176, 16) key=0 dead=0 term=0 score=-437.3
+chunk 207: choose wait score=-437.3 stall=7
+chunk 207: wait -> (176,16) key=0 lives=4 state=20 timer=1
+final: 208 chunks, done=0
+SCHEDULE f0=2990 chunks=208:
+  left:3005:3035
+  right:3035:3050
+  a:3035:3050
+  left:3080:3095
+  right:3095:3110
+  a:3095:3110
+  right:3125:3140
+  right:3140:3155
+  a:3140:3155
+  up:3170:3185
+  left:3185:3200
+  a:3185:3200
+  left:3215:3230
+  right:3245:3260
+  a:3245:3260
+  right:3260:3290
+  a:3305:3320
+  right:3320:3335
+  a:3320:3335
+  right:3455:3470
+  right:3620:3635
+  right:3695:3710
+  right:3830:3845
+  right:3965:3980
+  right:4100:4115
+  right:4235:4250
+  right:4370:4385
+  right:4505:4520
+  right:4640:4655
+  right:4775:4790
+  right:4910:4925
+  right:5045:5060
+  right:5180:5195
+  right:5315:5330
+  right:5450:5465
+  right:5585:5600
+  right:5720:5735
+  right:5855:5870
+  right:5990:6005
+ACTIONS: 0 2 2 5 0 0 2 5 0 1 5 0 3 6 0 2 0 5 1 1 0 7 5 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0

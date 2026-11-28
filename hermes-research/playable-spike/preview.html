@@ -1,0 +1,14 @@
+<!doctype html><meta charset="utf-8"><title>Key & Door — monochrome study</title>
+<style>body{margin:0;background:#202020;color:#ededed;font:16px system-ui,sans-serif;text-align:center}canvas{display:block;width:min(640px,94vw,calc(82vh * 160 / 144));height:auto;image-rendering:pixelated;border:3px solid #777;margin:12px auto}p{margin:.7em;padding:0 8px}</style>
+<p>← → Move &nbsp; Z / Space Jump &nbsp; X Pick up &nbsp; R Reset</p><canvas width="160" height="144" aria-label="Game preview"></canvas><p id="status">Carry the key to the door.</p>
+<script>
+const ctx=document.querySelector('canvas').getContext('2d');let keys={},state=null,busy=false;
+const fields={ArrowLeft:'left',ArrowRight:'right',KeyZ:'jump',Space:'jump',KeyX:'action'};
+addEventListener('keydown',e=>{if(fields[e.code]||e.code==='KeyR')e.preventDefault();keys[e.code]=true;if(e.code==='KeyR'&&!e.repeat)reset()});
+addEventListener('keyup',e=>{keys[e.code]=false});addEventListener('blur',()=>{keys={}});
+function draw(g){let bytes=atob(g.pixels),img=ctx.createImageData(160,144),grey=[252,188,104,24];for(let i=0;i<bytes.length;i++){let c=grey[bytes.charCodeAt(i)],j=i*4;img.data[j]=c;img.data[j+1]=c;img.data[j+2]=c;img.data[j+3]=255}ctx.putImageData(img,0,0);document.querySelector('#status').textContent=g.won?'Key delivered! Press R to restart.':'Carry the key to the door.'}
+async function post(path,body){return await (await fetch(path,{method:'POST',body:JSON.stringify(body)})).json()}
+async function reset(){state=await post('/reset',{});draw(state)}
+async function tick(){if(busy)return;busy=true;try{state=await post('/tick',{left:!!keys.ArrowLeft,right:!!keys.ArrowRight,jump:!!(keys.KeyZ||keys.Space),action:!!keys.KeyX});draw(state)}finally{busy=false}}
+reset().then(()=>setInterval(tick,17));
+</script>

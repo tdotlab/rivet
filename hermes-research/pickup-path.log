@@ -1,0 +1,45 @@
+CHUNK 0 frame=2499 x=17 y=136 key=1
+CHUNK 1 frame=2514 x=26 y=120 key=1
+CHUNK 2 frame=2529 x=37 y=124 key=1
+CHUNK 3 frame=2544 x=48 y=136 key=1
+CHUNK 4 frame=2559 x=58 y=120 key=1
+CHUNK 5 frame=2574 x=69 y=124 key=1
+CHUNK 6 frame=2589 x=80 y=136 key=1
+CHUNK 7 frame=2604 x=90 y=136 key=1
+CHUNK 8 frame=2619 x=101 y=136 key=1
+CHUNK 9 frame=2634 x=112 y=136 key=1
+CHUNK 10 frame=2649 x=122 y=120 key=1
+CHUNK 11 frame=2664 x=133 y=124 key=1
+CHUNK 12 frame=2679 x=144 y=124 key=1
+CHUNK 13 frame=2694 x=140 y=101 key=1
+CHUNK 14 frame=2709 x=149 y=95 key=1
+CHUNK 15 frame=2724 x=155 y=108 key=1
+CHUNK 16 frame=2739 x=153 y=112 key=1
+CHUNK 17 frame=2754 x=153 y=96 key=1
+CHUNK 18 frame=2769 x=153 y=100 key=1
+CHUNK 19 frame=2784 x=144 y=112 key=1
+CHUNK 20 frame=2799 x=152 y=89 key=1
+CHUNK 21 frame=2814 x=151 y=83 key=1
+CHUNK 22 frame=2829 x=140 y=88 key=1
+CHUNK 23 frame=2844 x=148 y=65 key=1
+CHUNK 24 frame=2859 x=156 y=59 key=1
+CHUNK 25 frame=2874 x=146 y=64 key=1
+CHUNK 26 frame=2889 x=137 y=48 key=1
+CHUNK 27 frame=2904 x=127 y=48 key=1
+CHUNK 28 frame=2919 x=120 y=57 key=1
+CHUNK 29 frame=2934 x=119 y=72 key=1
+CHUNK 30 frame=2949 x=120 y=72 key=1
+PC $4a51 frame 2949 state=16 timer=6 bank=7
+PC $4a75 frame 2949 state=16 timer=6 bank=7
+PC $4a8b frame 2949 state=16 timer=6 bank=7
+PC $4b47 frame 2949 state=16 timer=6 bank=7
+CHUNK 31 frame=2964 x=120 y=72 key=1
+CHUNK 32 frame=2979 x=120 y=82 key=1
+TOTAL PC $4a51: 1
+TOTAL PC $4a75: 1
+TOTAL PC $4a8b: 1
+TOTAL PC $4b47: 1
+TOTAL PC $6dcf: 0
+TOTAL PC $7b6e: 0
+TOTAL PC $6c7a: 0
+TOTAL PC $6c8f: 0

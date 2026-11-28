@@ -1,0 +1,2019 @@
+waypoints: (56,136) (56,56) (88,60)
+post-key waypoints: (56,56) (40,56) (32,56) (32,32) (16,32) (8,32)
+playable at frame 2499
+  try wait     -> ( 17,136) key=1 dead=0 term=0 score=-391.0
+  try right    -> ( 27,136) key=1 dead=0 term=0 score=-291.0
+  try left     -> (  8,136) key=1 dead=0 term=0 score=-481.0
+  try up       -> ( 17,136) key=1 dead=0 term=0 score=-391.0
+  try down     -> ( 17,136) key=1 dead=0 term=0 score=-391.0
+  try right+A  -> ( 27,120) key=1 dead=0 term=0 score=-332.2
+  try left+A   -> (  7,120) key=1 dead=0 term=0 score=-516.5
+  try A        -> ( 17,120) key=1 dead=0 term=0 score=-422.5
+  try B        -> ( 17,136) key=1 dead=0 term=0 score=-391.0
+  try right+B  -> ( 27,136) key=1 dead=0 term=0 score=-291.0
+chunk 0: choose right score=-291.0 stall=0
+  dumped chunk000/* to build/nacre-test/slice12/play\nchunk 0: right -> (27,136) key=1 lives=4 state=16 timer=10
+  try wait     -> ( 32,136) key=1 dead=0 term=0 score=-241.0
+  try right    -> ( 37,136) key=1 dead=0 term=0 score=-191.0
+  try left     -> ( 32,136) key=1 dead=0 term=0 score=-241.0
+  try up       -> ( 32,136) key=1 dead=0 term=0 score=-241.0
+  try down     -> ( 32,136) key=1 dead=0 term=0 score=-241.0
+  try right+A  -> ( 38,120) key=1 dead=0 term=0 score=-241.8
+  try left+A   -> ( 18,111) key=1 dead=0 term=0 score=-455.9
+  try A        -> ( 34,120) key=1 dead=0 term=0 score=-273.0
+  try B        -> ( 32,136) key=1 dead=0 term=0 score=-241.0
+  try right+B  -> ( 37,136) key=1 dead=0 term=0 score=-191.0
+chunk 1: choose right score=-191.0 stall=0
+chunk 1: right -> (37,136) key=1 lives=4 state=16 timer=9
+  try wait     -> ( 43,136) key=1 dead=0 term=0 score=-131.0
+  try right    -> ( 48,136) key=1 dead=0 term=0 score=-81.0
+  try left     -> ( 43,136) key=1 dead=0 term=0 score=-131.0
+  try up       -> ( 44,130) key=1 dead=0 term=0 score=-135.2
+  try down     -> ( 43,136) key=1 dead=0 term=0 score=-131.0
+  try right+A  -> ( 48,120) key=1 dead=0 term=0 score=-179.9
+  try left+A   -> ( 28,111) key=1 dead=0 term=0 score=-376.4
+  try A        -> ( 45,120) key=1 dead=0 term=0 score=-195.2
+  try B        -> ( 43,136) key=1 dead=0 term=0 score=-131.0
+  try right+B  -> ( 48,136) key=1 dead=0 term=0 score=-81.0
+chunk 2: choose right score=-81.0 stall=0
+chunk 2: right -> (48,136) key=1 lives=4 state=16 timer=8
+  try wait     -> ( 53,136) key=1 dead=0 term=0 score=-91.0
+  try right    -> ( 58,136) key=1 dead=0 term=0 score=-21.0
+  try left     -> ( 53,136) key=1 dead=0 term=0 score=-91.0
+  try up       -> ( 53,136) key=1 dead=0 term=0 score=-91.0
+  try down     -> ( 53,136) key=1 dead=0 term=0 score=-91.0
+  try right+A  -> ( 59,120) key=1 dead=0 term=0 score=-163.8
+  try left+A   -> ( 39,111) key=1 dead=0 term=0 score=-303.3
+  try A        -> ( 56,120) key=1 dead=0 term=0 score=-161.0
+  try B        -> ( 53,136) key=1 dead=0 term=0 score=-91.0
+  try right+B  -> ( 58,136) key=1 dead=0 term=0 score=-21.0
+chunk 3: choose right score=-21.0 stall=0
+  waypoint 0 (56,136) reached
+chunk 3: right -> (58,136) key=1 lives=4 state=16 timer=7
+  try wait     -> ( 64,136) key=1 dead=0 term=0 score=-805.0
+  try right    -> ( 69,136) key=1 dead=0 term=0 score=-811.5
+  try left     -> ( 64,136) key=1 dead=0 term=0 score=-805.0
+  try up       -> ( 64,136) key=1 dead=0 term=0 score=-805.0
+  try down     -> ( 64,136) key=1 dead=0 term=0 score=-805.0
+  try right+A  -> ( 69,120) key=1 dead=0 term=0 score=-654.1
+  try left+A   -> ( 49,111) key=1 dead=0 term=0 score=-555.4
+  try A        -> ( 66,120) key=1 dead=0 term=0 score=-648.8
+  try B        -> ( 64,136) key=1 dead=0 term=0 score=-805.0
+  try right+B  -> ( 69,136) key=1 dead=0 term=0 score=-811.5
+chunk 4: choose left+A score=-555.4 stall=1
+chunk 4: left+A -> (49,111) key=1 lives=4 state=16 timer=6
+  try wait     -> ( 41,107) key=1 dead=0 term=0 score=-532.6
+  try right    -> ( 41,107) key=1 dead=0 term=0 score=-532.6
+  try left     -> ( 38,107) key=1 dead=0 term=0 score=-541.8
+  try up       -> ( 41,107) key=1 dead=0 term=0 score=-532.6
+  try down     -> ( 41,107) key=1 dead=0 term=0 score=-532.6
+  try right+A  -> ( 41,107) key=1 dead=0 term=0 score=-532.6
+  try left+A   -> ( 38,107) key=1 dead=0 term=0 score=-541.8
+  try A        -> ( 41,107) key=1 dead=0 term=0 score=-532.6
+  try B        -> ( 41,107) key=1 dead=0 term=0 score=-532.6
+  try right+B  -> ( 41,107) key=1 dead=0 term=0 score=-532.6
+chunk 5: choose wait score=-532.6 stall=2
+chunk 5: wait -> (41,107) key=1 lives=4 state=16 timer=5
+  try wait     -> ( 39,112) key=1 dead=0 term=0 score=-586.2
+  try right    -> ( 39,112) key=1 dead=0 term=0 score=-586.2
+  try left     -> ( 31,112) key=1 dead=0 term=0 score=-614.3
+  try up       -> ( 39,112) key=1 dead=0 term=0 score=-586.2
+  try down     -> ( 39,112) key=1 dead=0 term=0 score=-586.2
+  try right+A  -> ( 39,112) key=1 dead=0 term=0 score=-586.2
+  try left+A   -> ( 31,112) key=1 dead=0 term=0 score=-614.3
+  try A        -> ( 39,112) key=1 dead=0 term=0 score=-586.2
+  try B        -> ( 39,112) key=1 dead=0 term=0 score=-586.2
+  try right+B  -> ( 39,112) key=1 dead=0 term=0 score=-586.2
+chunk 6: choose wait score=-586.2 stall=3
+chunk 6: wait -> (39,112) key=1 lives=4 state=16 timer=4
+  try wait     -> ( 39,112) key=1 dead=0 term=0 score=-646.2
+  try right    -> ( 48,112) key=1 dead=0 term=0 score=-566.7
+  try left     -> ( 29,112) key=1 dead=0 term=0 score=-622.7
+  try up       -> ( 39,112) key=1 dead=0 term=0 score=-646.2
+  try down     -> ( 39,112) key=1 dead=0 term=0 score=-646.2
+  try right+A  -> ( 49, 96) key=1 dead=0 term=0 score=-407.1
+  try left+A   -> ( 29, 96) key=1 dead=0 term=0 score=-483.6
+  try A        -> ( 39, 96) key=1 dead=0 term=0 score=-435.6
+  try B        -> ( 39,112) key=1 dead=0 term=0 score=-646.2
+  try right+B  -> ( 48,112) key=1 dead=0 term=0 score=-566.7
+chunk 7: choose right+A score=-407.1 stall=4
+chunk 7: right+A -> (49,96) key=1 lives=4 state=16 timer=3
+  try wait     -> ( 57,101) key=1 dead=0 term=0 score=-451.1
+  try right    -> ( 60,101) key=1 dead=0 term=0 score=-452.8
+  try left     -> ( 57,101) key=1 dead=0 term=0 score=-451.1
+  try up       -> ( 57,101) key=1 dead=0 term=0 score=-451.1
+  try down     -> ( 57,101) key=1 dead=0 term=0 score=-451.1
+  try right+A  -> ( 60,101) key=1 dead=0 term=0 score=-452.8
+  try left+A   -> ( 57,101) key=1 dead=0 term=0 score=-451.1
+  try A        -> ( 57,101) key=1 dead=0 term=0 score=-451.1
+  try B        -> ( 57,101) key=1 dead=0 term=0 score=-451.1
+  try right+B  -> ( 60,101) key=1 dead=0 term=0 score=-452.8
+chunk 8: choose wait score=-451.1 stall=5
+chunk 8: wait -> (57,101) key=1 lives=4 state=16 timer=10
+  try wait     -> ( 59,112) key=1 dead=0 term=0 score=-561.8
+  try right    -> ( 67,113) key=1 dead=0 term=0 score=-581.5
+  try left     -> ( 59,112) key=1 dead=0 term=0 score=-561.8
+  try up       -> ( 59,112) key=1 dead=0 term=0 score=-561.8
+  try down     -> ( 59,112) key=1 dead=0 term=0 score=-561.8
+  try right+A  -> ( 67,113) key=1 dead=0 term=0 score=-581.5
+  try left+A   -> ( 59,112) key=1 dead=0 term=0 score=-561.8
+  try A        -> ( 59,112) key=1 dead=0 term=0 score=-561.8
+  try B        -> ( 59,112) key=1 dead=0 term=0 score=-561.8
+  try right+B  -> ( 67,113) key=1 dead=0 term=0 score=-581.5
+chunk 9: choose wait score=-561.8 stall=6
+chunk 9: wait -> (59,112) key=1 lives=4 state=16 timer=9
+  try wait     -> ( 59,112) key=1 dead=0 term=0 score=-621.8
+  try right    -> ( 69,115) key=1 dead=0 term=0 score=-605.2
+  try left     -> ( 50,112) key=1 dead=0 term=0 score=-564.2
+  try up       -> ( 59,112) key=1 dead=0 term=0 score=-621.8
+  try down     -> ( 59,112) key=1 dead=0 term=0 score=-621.8
+  try right+A  -> ( 69, 96) key=1 dead=0 term=0 score=-421.6
+  try left+A   -> ( 50, 96) key=1 dead=0 term=0 score=-465.5
+  try A        -> ( 59, 96) key=1 dead=0 term=0 score=-462.1
+  try B        -> ( 59,112) key=1 dead=0 term=0 score=-621.8
+  try right+B  -> ( 69,115) key=1 dead=0 term=0 score=-605.2
+chunk 10: choose right+A score=-421.6 stall=7
+chunk 10: right+A -> (69,96) key=1 lives=4 state=16 timer=8
+  try wait     -> ( 77,101) key=1 dead=0 term=0 score=-497.6
+  try right    -> ( 80,101) key=1 dead=0 term=0 score=-511.0
+  try left     -> ( 77,101) key=1 dead=0 term=0 score=-497.6
+  try up       -> ( 77,101) key=1 dead=0 term=0 score=-497.6
+  try down     -> ( 77,101) key=1 dead=0 term=0 score=-497.6
+  try right+A  -> ( 80,101) key=1 dead=0 term=0 score=-511.0
+  try left+A   -> ( 77,101) key=1 dead=0 term=0 score=-497.6
+  try A        -> ( 77,101) key=1 dead=0 term=0 score=-497.6
+  try B        -> ( 77,101) key=1 dead=0 term=0 score=-497.6
+  try right+B  -> ( 80,101) key=1 dead=0 term=0 score=-511.0
+chunk 11: choose wait score=-497.6 stall=8
+chunk 11: wait -> (77,101) key=1 lives=4 state=16 timer=7
+  try wait     -> ( 80,120) key=1 dead=0 term=0 score=-684.5
+  try right    -> ( 88,120) key=1 dead=0 term=0 score=-716.5
+  try left     -> ( 80,120) key=1 dead=0 term=0 score=-684.5
+  try up       -> ( 80,120) key=1 dead=0 term=0 score=-684.5
+  try down     -> ( 80,120) key=1 dead=0 term=0 score=-684.5
+  try right+A  -> ( 88,120) key=1 dead=0 term=0 score=-716.5
+  try left+A   -> ( 80,120) key=1 dead=0 term=0 score=-684.5
+  try A        -> ( 80,120) key=1 dead=0 term=0 score=-684.5
+  try B        -> ( 80,120) key=1 dead=0 term=0 score=-684.5
+  try right+B  -> ( 88,120) key=1 dead=0 term=0 score=-716.5
+chunk 12: choose wait score=-684.5 stall=9
+chunk 12: wait -> (80,120) key=1 lives=4 state=16 timer=6
+  try wait     -> ( 80,136) key=1 dead=0 term=0 score=-836.2
+  try right    -> ( 90,136) key=1 dead=0 term=0 score=-870.3
+  try left     -> ( 71,136) key=1 dead=0 term=0 score=-814.9
+  try up       -> ( 80,136) key=1 dead=0 term=0 score=-836.2
+  try down     -> ( 80,136) key=1 dead=0 term=0 score=-836.2
+  try right+A  -> ( 90,136) key=1 dead=0 term=0 score=-870.3
+  try left+A   -> ( 71,136) key=1 dead=0 term=0 score=-814.9
+  try A        -> ( 80,136) key=1 dead=0 term=0 score=-836.2
+  try B        -> ( 80,136) key=1 dead=0 term=0 score=-836.2
+  try right+B  -> ( 90,136) key=1 dead=0 term=0 score=-870.3
+chunk 13: choose left score=-814.9 stall=10
+backtracking to chunk 12 (was at 13)
+  waypoint 0 (56,136) reached
+replayed to chunk 12
+  try right    -> ( 88,120) key=1 dead=0 term=0 score=-716.5
+  try left     -> ( 80,120) key=1 dead=0 term=0 score=-684.5
+  try up       -> ( 80,120) key=1 dead=0 term=0 score=-684.5
+  try down     -> ( 80,120) key=1 dead=0 term=0 score=-684.5
+  try right+A  -> ( 88,120) key=1 dead=0 term=0 score=-716.5
+  try left+A   -> ( 80,120) key=1 dead=0 term=0 score=-684.5
+  try A        -> ( 80,120) key=1 dead=0 term=0 score=-684.5
+  try B        -> ( 80,120) key=1 dead=0 term=0 score=-684.5
+  try right+B  -> ( 88,120) key=1 dead=0 term=0 score=-716.5
+chunk 12: choose left score=-684.5 stall=0
+chunk 12: left -> (80,120) key=1 lives=4 state=16 timer=6
+  try wait     -> ( 80,136) key=1 dead=0 term=0 score=-836.2
+  try right    -> ( 90,136) key=1 dead=0 term=0 score=-870.3
+  try left     -> ( 71,136) key=1 dead=0 term=0 score=-814.9
+  try up       -> ( 80,136) key=1 dead=0 term=0 score=-836.2
+  try down     -> ( 80,136) key=1 dead=0 term=0 score=-836.2
+  try right+A  -> ( 90,136) key=1 dead=0 term=0 score=-870.3
+  try left+A   -> ( 71,136) key=1 dead=0 term=0 score=-814.9
+  try A        -> ( 80,136) key=1 dead=0 term=0 score=-836.2
+  try B        -> ( 80,136) key=1 dead=0 term=0 score=-836.2
+  try right+B  -> ( 90,136) key=1 dead=0 term=0 score=-870.3
+chunk 13: choose left score=-814.9 stall=1
+chunk 13: left -> (71,136) key=1 lives=4 state=16 timer=5
+  try wait     -> ( 64,136) key=1 dead=0 term=0 score=-865.0
+  try right    -> ( 64,136) key=1 dead=0 term=0 score=-865.0
+  try left     -> ( 64,136) key=1 dead=0 term=0 score=-865.0
+  try up       -> ( 64,136) key=1 dead=0 term=0 score=-865.0
+  try down     -> ( 64,136) key=1 dead=0 term=0 score=-865.0
+  try right+A  -> ( 64,136) key=1 dead=0 term=0 score=-865.0
+  try left+A   -> ( 64,136) key=1 dead=0 term=0 score=-865.0
+  try A        -> ( 64,136) key=1 dead=0 term=0 score=-865.0
+  try B        -> ( 64,136) key=1 dead=0 term=0 score=-865.0
+  try right+B  -> ( 64,136) key=1 dead=0 term=0 score=-865.0
+chunk 14: choose wait score=-865.0 stall=2
+chunk 14: wait -> (64,136) key=1 lives=4 state=16 timer=4
+  try wait     -> ( 57,136) key=1 dead=0 term=0 score=-861.1
+  try right    -> ( 57,136) key=1 dead=0 term=0 score=-861.1
+  try left     -> ( 57,136) key=1 dead=0 term=0 score=-861.1
+  try up       -> ( 57,136) key=1 dead=0 term=0 score=-861.1
+  try down     -> ( 57,136) key=1 dead=0 term=0 score=-861.1
+  try right+A  -> ( 57,136) key=1 dead=0 term=0 score=-861.1
+  try left+A   -> ( 57,136) key=1 dead=0 term=0 score=-861.1
+  try A        -> ( 57,136) key=1 dead=0 term=0 score=-861.1
+  try B        -> ( 57,136) key=1 dead=0 term=0 score=-861.1
+  try right+B  -> ( 57,136) key=1 dead=0 term=0 score=-861.1
+chunk 15: choose wait score=-861.1 stall=3
+chunk 15: wait -> (57,136) key=1 lives=4 state=16 timer=3
+  try wait     -> ( 55,136) key=1 dead=0 term=0 score=-861.1
+  try right    -> ( 56,136) key=1 dead=0 term=0 score=-921.0
+  try left     -> ( 47,136) key=1 dead=0 term=0 score=-806.0
+  try up       -> ( 55,136) key=1 dead=0 term=0 score=-861.1
+  try down     -> ( 55,136) key=1 dead=0 term=0 score=-861.1
+  try right+A  -> ( 56,136) key=1 dead=0 term=0 score=-921.0
+  try left+A   -> ( 47,136) key=1 dead=0 term=0 score=-806.0
+  try A        -> ( 55,136) key=1 dead=0 term=0 score=-861.1
+  try B        -> ( 55,136) key=1 dead=0 term=0 score=-861.1
+  try right+B  -> ( 56,136) key=1 dead=0 term=0 score=-921.0
+chunk 16: choose left score=-806.0 stall=4
+chunk 16: left -> (47,136) key=1 lives=4 state=16 timer=10
+  try wait     -> ( 42,136) key=1 dead=0 term=0 score=-873.2
+  try right    -> ( 42,136) key=1 dead=0 term=0 score=-873.2
+  try left     -> ( 37,136) key=1 dead=0 term=0 score=-883.3
+  try up       -> ( 44,129) key=1 dead=0 term=0 score=-740.8
+  try down     -> ( 42,136) key=1 dead=0 term=0 score=-873.2
+  try right+A  -> ( 56,111) key=1 dead=0 term=0 score=-551.0
+  try left+A   -> ( 36,120) key=1 dead=0 term=0 score=-671.5
+  try A        -> ( 40,120) key=1 dead=0 term=0 score=-660.7
+  try B        -> ( 42,136) key=1 dead=0 term=0 score=-873.2
+  try right+B  -> ( 42,136) key=1 dead=0 term=0 score=-873.2
+chunk 17: choose right+A score=-551.0 stall=0
+chunk 17: right+A -> (56,111) key=1 lives=4 state=16 timer=9
+  try wait     -> ( 64,107) key=1 dead=0 term=0 score=-517.2
+  try right    -> ( 67,107) key=1 dead=0 term=0 score=-522.7
+  try left     -> ( 64,107) key=1 dead=0 term=0 score=-517.2
+  try up       -> ( 64,107) key=1 dead=0 term=0 score=-517.2
+  try down     -> ( 64,107) key=1 dead=0 term=0 score=-517.2
+  try right+A  -> ( 67,107) key=1 dead=0 term=0 score=-522.7
+  try left+A   -> ( 64,107) key=1 dead=0 term=0 score=-517.2
+  try A        -> ( 64,107) key=1 dead=0 term=0 score=-517.2
+  try B        -> ( 64,107) key=1 dead=0 term=0 score=-517.2
+  try right+B  -> ( 67,107) key=1 dead=0 term=0 score=-522.7
+chunk 18: choose wait score=-517.2 stall=0
+chunk 18: wait -> (64,107) key=1 lives=4 state=16 timer=8
+  try wait     -> ( 67,122) key=1 dead=0 term=0 score=-670.1
+  try right    -> ( 75,122) key=1 dead=0 term=0 score=-687.8
+  try left     -> ( 67,122) key=1 dead=0 term=0 score=-670.1
+  try up       -> ( 67,122) key=1 dead=0 term=0 score=-670.1
+  try down     -> ( 67,122) key=1 dead=0 term=0 score=-670.1
+  try right+A  -> ( 75,122) key=1 dead=0 term=0 score=-687.8
+  try left+A   -> ( 67,122) key=1 dead=0 term=0 score=-670.1
+  try A        -> ( 67,122) key=1 dead=0 term=0 score=-670.1
+  try B        -> ( 67,122) key=1 dead=0 term=0 score=-670.1
+  try right+B  -> ( 75,122) key=1 dead=0 term=0 score=-687.8
+chunk 19: choose wait score=-670.1 stall=1
+chunk 19: wait -> (67,122) key=1 lives=4 state=16 timer=7
+  try wait     -> ( 67,136) key=1 dead=0 term=0 score=-928.5
+  try right    -> ( 77,136) key=1 dead=0 term=0 score=-828.1
+  try left     -> ( 59,124) key=1 dead=0 term=0 score=-681.7
+  try up       -> ( 67,136) key=1 dead=0 term=0 score=-928.5
+  try down     -> ( 67,136) key=1 dead=0 term=0 score=-928.5
+  try right+A  -> ( 77,136) key=1 dead=0 term=0 score=-828.1
+  try left+A   -> ( 59,124) key=1 dead=0 term=0 score=-681.7
+  try A        -> ( 67,136) key=1 dead=0 term=0 score=-928.5
+  try B        -> ( 67,136) key=1 dead=0 term=0 score=-928.5
+  try right+B  -> ( 77,136) key=1 dead=0 term=0 score=-828.1
+chunk 20: choose left score=-681.7 stall=2
+chunk 20: left -> (59,124) key=1 lives=4 state=16 timer=6
+  try wait     -> ( 53,124) key=1 dead=0 term=0 score=-681.7
+  try right    -> ( 53,124) key=1 dead=0 term=0 score=-681.7
+  try left     -> ( 48,124) key=1 dead=0 term=0 score=-685.7
+  try up       -> ( 53,124) key=1 dead=0 term=0 score=-681.7
+  try down     -> ( 53,124) key=1 dead=0 term=0 score=-681.7
+  try right+A  -> ( 68, 99) key=1 dead=0 term=0 score=-507.4
+  try left+A   -> ( 48,108) key=1 dead=0 term=0 score=-587.1
+  try A        -> ( 51,108) key=1 dead=0 term=0 score=-583.4
+  try B        -> ( 59,124) key=1 dead=0 term=0 score=-741.7
+  try right+B  -> ( 59,124) key=1 dead=0 term=0 score=-741.7
+chunk 21: choose right+A score=-507.4 stall=0
+chunk 21: right+A -> (68,99) key=1 lives=4 state=16 timer=5
+  try wait     -> ( 76, 95) key=1 dead=1 term=0 score=-1000001.0
+  try right    -> ( 77, 94) key=1 dead=1 term=0 score=-1000001.0
+  try left     -> ( 76, 95) key=1 dead=1 term=0 score=-1000001.0
+  try up       -> ( 76, 95) key=1 dead=1 term=0 score=-1000001.0
+  try down     -> ( 76, 95) key=1 dead=1 term=0 score=-1000001.0
+  try right+A  -> ( 77, 94) key=1 dead=1 term=0 score=-1000001.0
+  try left+A   -> ( 76, 95) key=1 dead=1 term=0 score=-1000001.0
+  try A        -> ( 76, 95) key=1 dead=1 term=0 score=-1000001.0
+  try B        -> ( 76, 95) key=1 dead=1 term=0 score=-1000001.0
+  try right+B  -> ( 77, 94) key=1 dead=1 term=0 score=-1000001.0
+chunk 22: ALL actions die -- backtracking
+backtracking to chunk 21 (was at 22)
+  waypoint 0 (56,136) reached
+replayed to chunk 21
+  try wait     -> ( 53,124) key=1 dead=0 term=0 score=-681.7
+  try right    -> ( 53,124) key=1 dead=0 term=0 score=-681.7
+  try left     -> ( 48,124) key=1 dead=0 term=0 score=-685.7
+  try up       -> ( 53,124) key=1 dead=0 term=0 score=-681.7
+  try down     -> ( 53,124) key=1 dead=0 term=0 score=-681.7
+  try left+A   -> ( 48,108) key=1 dead=0 term=0 score=-587.1
+  try A        -> ( 51,108) key=1 dead=0 term=0 score=-583.4
+  try B        -> ( 59,124) key=1 dead=0 term=0 score=-741.7
+  try right+B  -> ( 59,124) key=1 dead=0 term=0 score=-741.7
+chunk 21: choose A score=-583.4 stall=0
+chunk 21: A -> (51,108) key=1 lives=4 state=16 timer=5
+  try wait     -> ( 49,113) key=1 dead=0 term=0 score=-575.3
+  try right    -> ( 49,113) key=1 dead=0 term=0 score=-575.3
+  try left     -> ( 40,113) key=1 dead=0 term=0 score=-593.0
+  try up       -> ( 49,113) key=1 dead=0 term=0 score=-575.3
+  try down     -> ( 49,113) key=1 dead=0 term=0 score=-575.3
+  try right+A  -> ( 49,113) key=1 dead=0 term=0 score=-575.3
+  try left+A   -> ( 40,113) key=1 dead=0 term=0 score=-593.0
+  try A        -> ( 49,113) key=1 dead=0 term=0 score=-575.3
+  try B        -> ( 49,113) key=1 dead=0 term=0 score=-575.3
+  try right+B  -> ( 49,113) key=1 dead=0 term=0 score=-575.3
+chunk 22: choose wait score=-575.3 stall=0
+chunk 22: wait -> (49,113) key=1 lives=4 state=16 timer=4
+  try wait     -> ( 49,112) key=1 dead=0 term=0 score=-625.4
+  try right    -> ( 54,112) key=1 dead=0 term=0 score=-621.4
+  try left     -> ( 42,112) key=1 dead=0 term=0 score=-578.2
+  try up       -> ( 49,112) key=1 dead=0 term=0 score=-625.4
+  try down     -> ( 49,112) key=1 dead=0 term=0 score=-625.4
+  try right+A  -> ( 54,112) key=1 dead=0 term=0 score=-621.4
+  try left+A   -> ( 42,112) key=1 dead=0 term=0 score=-578.2
+  try A        -> ( 49,112) key=1 dead=0 term=0 score=-625.4
+  try B        -> ( 49,112) key=1 dead=0 term=0 score=-625.4
+  try right+B  -> ( 54,112) key=1 dead=0 term=0 score=-621.4
+chunk 23: choose left score=-578.2 stall=1
+chunk 23: left -> (42,112) key=1 lives=4 state=16 timer=3
+  try wait     -> ( 37,112) key=1 dead=0 term=0 score=-652.4
+  try right    -> ( 37,112) key=1 dead=0 term=0 score=-652.4
+  try left     -> ( 32,112) key=1 dead=0 term=0 score=-670.3
+  try up       -> ( 37,112) key=1 dead=0 term=0 score=-652.4
+  try down     -> ( 44,119) key=1 dead=0 term=0 score=-702.3
+  try right+A  -> ( 51, 87) key=1 dead=0 term=0 score=-315.0
+  try left+A   -> ( 31, 96) key=1 dead=0 term=0 score=-472.7
+  try A        -> ( 35, 96) key=1 dead=0 term=0 score=-452.8
+  try B        -> ( 37,112) key=1 dead=0 term=0 score=-652.4
+  try right+B  -> ( 37,112) key=1 dead=0 term=0 score=-652.4
+chunk 24: choose right+A score=-315.0 stall=0
+chunk 24: right+A -> (51,87) key=1 lives=4 state=16 timer=10
+  try wait     -> ( 60, 83) key=1 dead=0 term=0 score=-273.9
+  try right    -> ( 62, 83) key=1 dead=0 term=0 score=-277.6
+  try left     -> ( 60, 83) key=1 dead=0 term=0 score=-273.9
+  try up       -> ( 60, 83) key=1 dead=0 term=0 score=-273.9
+  try down     -> ( 60, 83) key=1 dead=0 term=0 score=-273.9
+  try right+A  -> ( 62, 83) key=1 dead=0 term=0 score=-277.6
+  try left+A   -> ( 60, 83) key=1 dead=0 term=0 score=-273.9
+  try A        -> ( 60, 83) key=1 dead=0 term=0 score=-273.9
+  try B        -> ( 60, 83) key=1 dead=0 term=0 score=-273.9
+  try right+B  -> ( 62, 83) key=1 dead=0 term=0 score=-277.6
+chunk 25: choose wait score=-273.9 stall=0
+  dumped chunk025/* to build/nacre-test/slice12/play\nchunk 25: wait -> (60,83) key=1 lives=4 state=16 timer=9
+  try wait     -> ( 62, 88) key=1 dead=0 term=0 score=-326.6
+  try right    -> ( 67, 89) key=1 dead=1 term=0 score=-1000001.0
+  try left     -> ( 62, 88) key=1 dead=0 term=0 score=-326.6
+  try up       -> ( 62, 88) key=1 dead=0 term=0 score=-326.6
+  try down     -> ( 62, 88) key=1 dead=0 term=0 score=-326.6
+  try right+A  -> ( 67, 89) key=1 dead=1 term=0 score=-1000001.0
+  try left+A   -> ( 62, 88) key=1 dead=0 term=0 score=-326.6
+  try A        -> ( 62, 88) key=1 dead=0 term=0 score=-326.6
+  try B        -> ( 62, 88) key=1 dead=0 term=0 score=-326.6
+  try right+B  -> ( 67, 89) key=1 dead=1 term=0 score=-1000001.0
+chunk 26: choose wait score=-326.6 stall=1
+chunk 26: wait -> (62,88) key=1 lives=4 state=16 timer=8
+  try wait     -> ( 62, 88) key=1 dead=0 term=0 score=-386.6
+  try right    -> ( 66, 89) key=1 dead=1 term=0 score=-1000001.0
+  try left     -> ( 53, 88) key=1 dead=0 term=0 score=-322.4
+  try up       -> ( 62, 88) key=1 dead=0 term=0 score=-386.6
+  try down     -> ( 62, 88) key=1 dead=0 term=0 score=-386.6
+  try right+A  -> ( 73, 68) key=1 dead=0 term=0 score=-209.1
+  try left+A   -> ( 52, 72) key=1 dead=0 term=0 score=-165.9
+  try A        -> ( 62, 72) key=1 dead=0 term=0 score=-171.9
+  try B        -> ( 62, 88) key=1 dead=0 term=0 score=-386.6
+  try right+B  -> ( 66, 89) key=1 dead=1 term=0 score=-1000001.0
+chunk 27: choose left+A score=-165.9 stall=0
+chunk 27: left+A -> (52,72) key=1 lives=4 state=16 timer=7
+  try wait     -> ( 44, 77) key=1 dead=0 term=0 score=-242.9
+  try right    -> ( 44, 77) key=1 dead=0 term=0 score=-242.9
+  try left     -> ( 41, 77) key=1 dead=0 term=0 score=-259.1
+  try up       -> ( 44, 77) key=1 dead=0 term=0 score=-242.9
+  try down     -> ( 44, 77) key=1 dead=0 term=0 score=-242.9
+  try right+A  -> ( 44, 77) key=1 dead=0 term=0 score=-242.9
+  try left+A   -> ( 41, 77) key=1 dead=0 term=0 score=-259.1
+  try A        -> ( 44, 77) key=1 dead=0 term=0 score=-242.9
+  try B        -> ( 44, 77) key=1 dead=0 term=0 score=-242.9
+  try right+B  -> ( 44, 77) key=1 dead=0 term=0 score=-242.9
+chunk 28: choose wait score=-242.9 stall=1
+chunk 28: wait -> (44,77) key=1 lives=4 state=16 timer=6
+  try wait     -> ( 41, 88) key=1 dead=0 term=0 score=-354.4
+  try right    -> ( 41, 88) key=1 dead=0 term=0 score=-354.4
+  try left     -> ( 34, 88) key=1 dead=0 term=0 score=-389.3
+  try up       -> ( 41, 88) key=1 dead=0 term=0 score=-354.4
+  try down     -> ( 41, 88) key=1 dead=0 term=0 score=-354.4
+  try right+A  -> ( 41, 88) key=1 dead=0 term=0 score=-354.4
+  try left+A   -> ( 34, 88) key=1 dead=0 term=0 score=-389.3
+  try A        -> ( 41, 88) key=1 dead=0 term=0 score=-354.4
+  try B        -> ( 41, 88) key=1 dead=0 term=0 score=-354.4
+  try right+B  -> ( 41, 88) key=1 dead=0 term=0 score=-354.4
+chunk 29: choose wait score=-354.4 stall=2
+chunk 29: wait -> (41,88) key=1 lives=4 state=16 timer=5
+  try wait     -> ( 41, 88) key=1 dead=0 term=0 score=-414.4
+  try right    -> ( 51, 88) key=1 dead=0 term=0 score=-324.9
+  try left     -> ( 32, 88) key=1 dead=0 term=0 score=-401.0
+  try up       -> ( 41, 88) key=1 dead=0 term=0 score=-414.4
+  try down     -> ( 41, 88) key=1 dead=0 term=0 score=-414.4
+  try right+A  -> ( 51, 88) key=1 dead=0 term=0 score=-324.9
+  try left+A   -> ( 32, 88) key=1 dead=0 term=0 score=-401.0
+  try A        -> ( 41, 88) key=1 dead=0 term=0 score=-414.4
+  try B        -> ( 41, 88) key=1 dead=0 term=0 score=-414.4
+  try right+B  -> ( 51, 88) key=1 dead=0 term=0 score=-324.9
+chunk 30: choose right score=-324.9 stall=3
+chunk 30: right -> (51,88) key=1 lives=4 state=16 timer=4
+  try wait     -> ( 56, 88) key=1 dead=0 term=0 score=-381.0
+  try right    -> ( 61, 88) key=1 dead=0 term=0 score=-384.9
+  try left     -> ( 56, 88) key=1 dead=0 term=0 score=-381.0
+  try up       -> ( 56, 88) key=1 dead=0 term=0 score=-381.0
+  try down     -> ( 56, 88) key=1 dead=0 term=0 score=-381.0
+  try right+A  -> ( 61, 88) key=1 dead=0 term=0 score=-384.9
+  try left+A   -> ( 56, 88) key=1 dead=0 term=0 score=-381.0
+  try A        -> ( 56, 88) key=1 dead=0 term=0 score=-381.0
+  try B        -> ( 56, 88) key=1 dead=0 term=0 score=-381.0
+  try right+B  -> ( 61, 88) key=1 dead=0 term=0 score=-384.9
+chunk 31: choose wait score=-381.0 stall=4
+chunk 31: wait -> (56,88) key=1 lives=4 state=16 timer=16
+  try wait     -> ( 56, 88) key=1 dead=0 term=0 score=-441.0
+  try right    -> ( 56, 88) key=1 dead=0 term=0 score=-441.0
+  try left     -> ( 56, 88) key=1 dead=0 term=0 score=-441.0
+  try up       -> ( 56, 88) key=1 dead=0 term=0 score=-441.0
+  try down     -> ( 56, 88) key=1 dead=0 term=0 score=-441.0
+  try right+A  -> ( 56, 88) key=1 dead=0 term=0 score=-441.0
+  try left+A   -> ( 56, 88) key=1 dead=0 term=0 score=-441.0
+  try A        -> ( 56, 88) key=1 dead=0 term=0 score=-441.0
+  try B        -> ( 56, 88) key=1 dead=0 term=0 score=-441.0
+  try right+B  -> ( 56, 88) key=1 dead=0 term=0 score=-441.0
+chunk 32: choose wait score=-441.0 stall=5
+chunk 32: wait -> (56,88) key=1 lives=4 state=16 timer=16
+  try wait     -> ( 56, 88) key=1 dead=0 term=0 score=-501.0
+  try right    -> ( 56, 88) key=1 dead=0 term=0 score=-501.0
+  try left     -> ( 56, 88) key=1 dead=0 term=0 score=-501.0
+  try up       -> ( 56, 88) key=1 dead=0 term=0 score=-501.0
+  try down     -> ( 56, 88) key=1 dead=0 term=0 score=-501.0
+  try right+A  -> ( 56, 88) key=1 dead=0 term=0 score=-501.0
+  try left+A   -> ( 56, 88) key=1 dead=0 term=0 score=-501.0
+  try A        -> ( 56, 88) key=1 dead=0 term=0 score=-501.0
+  try B        -> ( 56, 88) key=1 dead=0 term=0 score=-501.0
+  try right+B  -> ( 56, 88) key=1 dead=0 term=0 score=-501.0
+chunk 33: choose wait score=-501.0 stall=6
+chunk 33: wait -> (56,88) key=1 lives=4 state=16 timer=16
+  try wait     -> ( 56, 88) key=1 dead=0 term=0 score=-561.0
+  try right    -> ( 56, 88) key=1 dead=0 term=0 score=-561.0
+  try left     -> ( 56, 88) key=1 dead=0 term=0 score=-561.0
+  try up       -> ( 56, 88) key=1 dead=0 term=0 score=-561.0
+  try down     -> ( 56, 88) key=1 dead=0 term=0 score=-561.0
+  try right+A  -> ( 56, 88) key=1 dead=0 term=0 score=-561.0
+  try left+A   -> ( 56, 88) key=1 dead=0 term=0 score=-561.0
+  try A        -> ( 56, 88) key=1 dead=0 term=0 score=-561.0
+  try B        -> ( 56, 88) key=1 dead=0 term=0 score=-561.0
+  try right+B  -> ( 56, 88) key=1 dead=0 term=0 score=-561.0
+chunk 34: choose wait score=-561.0 stall=7
+chunk 34: wait -> (56,88) key=1 lives=4 state=16 timer=16
+  try wait     -> ( 56, 88) key=1 dead=0 term=0 score=-621.0
+  try right    -> ( 56, 88) key=1 dead=0 term=0 score=-621.0
+  try left     -> ( 56, 88) key=1 dead=0 term=0 score=-621.0
+  try up       -> ( 56, 88) key=1 dead=0 term=0 score=-621.0
+  try down     -> ( 56, 88) key=1 dead=0 term=0 score=-621.0
+  try right+A  -> ( 56, 88) key=1 dead=0 term=0 score=-621.0
+  try left+A   -> ( 56, 88) key=1 dead=0 term=0 score=-621.0
+  try A        -> ( 56, 88) key=1 dead=0 term=0 score=-621.0
+  try B        -> ( 56, 88) key=1 dead=0 term=0 score=-621.0
+  try right+B  -> ( 56, 88) key=1 dead=0 term=0 score=-621.0
+chunk 35: choose wait score=-621.0 stall=8
+chunk 35: wait -> (56,88) key=1 lives=4 state=16 timer=16
+  try wait     -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try right    -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try left     -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try up       -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try down     -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try right+A  -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try left+A   -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try A        -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try B        -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try right+B  -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+chunk 36: choose wait score=-681.0 stall=9
+chunk 36: wait -> (56,88) key=1 lives=4 state=16 timer=16
+  try wait     -> ( 56, 88) key=1 dead=0 term=0 score=-741.0
+  try right    -> ( 57, 88) key=1 dead=0 term=0 score=-741.2
+  try left     -> ( 56, 88) key=1 dead=0 term=0 score=-741.0
+  try up       -> ( 56, 88) key=1 dead=0 term=0 score=-741.0
+  try down     -> ( 56, 88) key=1 dead=0 term=0 score=-741.0
+  try right+A  -> ( 57, 88) key=1 dead=0 term=0 score=-741.2
+  try left+A   -> ( 56, 88) key=1 dead=0 term=0 score=-741.0
+  try A        -> ( 56, 88) key=1 dead=0 term=0 score=-741.0
+  try B        -> ( 56, 88) key=1 dead=0 term=0 score=-741.0
+  try right+B  -> ( 57, 88) key=1 dead=0 term=0 score=-741.2
+chunk 37: choose wait score=-741.0 stall=10
+backtracking to chunk 36 (was at 37)
+  waypoint 0 (56,136) reached
+replayed to chunk 36
+  try right    -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try left     -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try up       -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try down     -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try right+A  -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try left+A   -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try A        -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try B        -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+  try right+B  -> ( 56, 88) key=1 dead=0 term=0 score=-681.0
+chunk 36: choose right score=-681.0 stall=0
+chunk 36: right -> (56,88) key=1 lives=4 state=16 timer=16
+  try wait     -> ( 56, 88) key=1 dead=0 term=0 score=-741.0
+  try right    -> ( 57, 88) key=1 dead=0 term=0 score=-741.2
+  try left     -> ( 56, 88) key=1 dead=0 term=0 score=-741.0
+  try up       -> ( 56, 88) key=1 dead=0 term=0 score=-741.0
+  try down     -> ( 56, 88) key=1 dead=0 term=0 score=-741.0
+  try right+A  -> ( 57, 88) key=1 dead=0 term=0 score=-741.2
+  try left+A   -> ( 56, 88) key=1 dead=0 term=0 score=-741.0
+  try A        -> ( 56, 88) key=1 dead=0 term=0 score=-741.0
+  try B        -> ( 56, 88) key=1 dead=0 term=0 score=-741.0
+  try right+B  -> ( 57, 88) key=1 dead=0 term=0 score=-741.2
+chunk 37: choose wait score=-741.0 stall=1
+chunk 37: wait -> (56,88) key=1 lives=4 state=16 timer=5
+  try wait     -> ( 56, 88) key=1 dead=0 term=0 score=-801.0
+  try right    -> ( 65, 88) key=1 dead=0 term=0 score=-333.4
+  try left     -> ( 47, 88) key=1 dead=0 term=0 score=-393.4
+  try up       -> ( 56, 88) key=1 dead=0 term=0 score=-801.0
+  try down     -> ( 56, 88) key=1 dead=0 term=0 score=-801.0
+  try right+A  -> ( 65, 88) key=1 dead=0 term=0 score=-333.4
+  try left+A   -> ( 47, 88) key=1 dead=0 term=0 score=-393.4
+  try A        -> ( 56, 88) key=1 dead=0 term=0 score=-801.0
+  try B        -> ( 56, 88) key=1 dead=0 term=0 score=-801.0
+  try right+B  -> ( 65, 88) key=1 dead=0 term=0 score=-333.4
+chunk 38: choose right score=-333.4 stall=0
+chunk 38: right -> (65,88) key=1 lives=4 state=16 timer=4
+  try wait     -> ( 71, 88) key=1 dead=0 term=0 score=-414.4
+  try right    -> ( 76, 88) key=1 dead=0 term=0 score=-378.4
+  try left     -> ( 71, 88) key=1 dead=0 term=0 score=-414.4
+  try up       -> ( 71, 88) key=1 dead=0 term=0 score=-414.4
+  try down     -> ( 71, 88) key=1 dead=0 term=0 score=-414.4
+  try right+A  -> ( 76, 88) key=1 dead=0 term=0 score=-378.4
+  try left+A   -> ( 71, 88) key=1 dead=0 term=0 score=-414.4
+  try A        -> ( 71, 88) key=1 dead=0 term=0 score=-414.4
+  try B        -> ( 71, 88) key=1 dead=0 term=0 score=-414.4
+  try right+B  -> ( 76, 88) key=1 dead=0 term=0 score=-378.4
+chunk 39: choose right score=-378.4 stall=1
+chunk 39: right -> (76,88) key=1 lives=4 state=16 timer=3
+  try wait     -> ( 81, 88) key=1 dead=0 term=0 score=-407.1
+  try right    -> ( 87, 88) key=1 dead=0 term=0 score=-446.5
+  try left     -> ( 81, 88) key=1 dead=0 term=0 score=-407.1
+  try up       -> ( 81, 88) key=1 dead=0 term=0 score=-407.1
+  try down     -> ( 81, 88) key=1 dead=0 term=0 score=-407.1
+  try right+A  -> ( 87, 88) key=1 dead=0 term=0 score=-446.5
+  try left+A   -> ( 81, 88) key=1 dead=0 term=0 score=-407.1
+  try A        -> ( 81, 88) key=1 dead=0 term=0 score=-407.1
+  try B        -> ( 81, 88) key=1 dead=0 term=0 score=-407.1
+  try right+B  -> ( 87, 88) key=1 dead=0 term=0 score=-446.5
+chunk 40: choose wait score=-407.1 stall=2
+chunk 40: wait -> (81,88) key=1 lives=4 state=16 timer=10
+  try wait     -> ( 81, 88) key=1 dead=0 term=0 score=-467.1
+  try right    -> ( 91, 88) key=1 dead=0 term=0 score=-475.2
+  try left     -> ( 73, 88) key=1 dead=0 term=0 score=-423.4
+  try up       -> ( 81, 88) key=1 dead=0 term=0 score=-467.1
+  try down     -> ( 81, 88) key=1 dead=0 term=0 score=-467.1
+  try right+A  -> ( 91, 88) key=1 dead=0 term=0 score=-475.2
+  try left+A   -> ( 73, 88) key=1 dead=0 term=0 score=-423.4
+  try A        -> ( 81, 88) key=1 dead=0 term=0 score=-467.1
+  try B        -> ( 81, 88) key=1 dead=0 term=0 score=-467.1
+  try right+B  -> ( 91, 88) key=1 dead=0 term=0 score=-475.2
+chunk 41: choose left score=-423.4 stall=3
+chunk 41: left -> (73,88) key=1 lives=4 state=16 timer=9
+  try wait     -> ( 68, 88) key=1 dead=0 term=0 score=-402.8
+  try right    -> ( 68, 88) key=1 dead=0 term=0 score=-402.8
+  try left     -> ( 63, 88) key=1 dead=0 term=0 score=-808.6
+  try up       -> ( 68, 88) key=1 dead=0 term=0 score=-402.8
+  try down     -> ( 68, 88) key=1 dead=0 term=0 score=-402.8
+  try right+A  -> ( 68, 88) key=1 dead=0 term=0 score=-402.8
+  try left+A   -> ( 63, 88) key=1 dead=0 term=0 score=-808.6
+  try A        -> ( 68, 88) key=1 dead=0 term=0 score=-402.8
+  try B        -> ( 68, 88) key=1 dead=0 term=0 score=-402.8
+  try right+B  -> ( 68, 88) key=1 dead=0 term=0 score=-402.8
+chunk 42: choose wait score=-402.8 stall=4
+chunk 42: wait -> (68,88) key=1 lives=4 state=16 timer=8
+  try wait     -> ( 68, 88) key=1 dead=0 term=0 score=-462.8
+  try right    -> ( 76, 88) key=1 dead=0 term=0 score=-498.4
+  try left     -> ( 58, 91) key=1 dead=0 term=0 score=-831.6
+  try up       -> ( 68, 88) key=1 dead=0 term=0 score=-462.8
+  try down     -> ( 68, 88) key=1 dead=0 term=0 score=-462.8
+  try right+A  -> ( 76, 88) key=1 dead=0 term=0 score=-498.4
+  try left+A   -> ( 58, 91) key=1 dead=0 term=0 score=-831.6
+  try A        -> ( 68, 88) key=1 dead=0 term=0 score=-462.8
+  try B        -> ( 68, 88) key=1 dead=0 term=0 score=-462.8
+  try right+B  -> ( 76, 88) key=1 dead=0 term=0 score=-498.4
+chunk 43: choose wait score=-462.8 stall=5
+chunk 43: wait -> (68,88) key=1 lives=4 state=16 timer=7
+  try wait     -> ( 68, 88) key=1 dead=0 term=0 score=-522.8
+  try right    -> ( 77, 88) key=1 dead=0 term=0 score=-503.8
+  try left     -> ( 59, 91) key=1 dead=0 term=0 score=-832.3
+  try up       -> ( 68, 88) key=1 dead=0 term=0 score=-522.8
+  try down     -> ( 68, 88) key=1 dead=0 term=0 score=-522.8
+  try right+A  -> ( 77, 88) key=1 dead=0 term=0 score=-503.8
+  try left+A   -> ( 59, 91) key=1 dead=0 term=0 score=-832.3
+  try A        -> ( 68, 88) key=1 dead=0 term=0 score=-522.8
+  try B        -> ( 68, 88) key=1 dead=0 term=0 score=-522.8
+  try right+B  -> ( 77, 88) key=1 dead=0 term=0 score=-503.8
+chunk 44: choose right score=-503.8 stall=6
+chunk 44: right -> (77,88) key=1 lives=4 state=16 timer=6
+  try wait     -> ( 83, 88) key=1 dead=0 term=0 score=-479.7
+  try right    -> ( 88, 88) key=1 dead=0 term=0 score=-453.5
+  try left     -> ( 83, 88) key=1 dead=0 term=0 score=-479.7
+  try up       -> ( 83, 88) key=1 dead=0 term=0 score=-479.7
+  try down     -> ( 83, 88) key=1 dead=0 term=0 score=-479.7
+  try right+A  -> ( 88, 88) key=1 dead=0 term=0 score=-453.5
+  try left+A   -> ( 83, 88) key=1 dead=0 term=0 score=-479.7
+  try A        -> ( 83, 88) key=1 dead=0 term=0 score=-479.7
+  try B        -> ( 83, 88) key=1 dead=0 term=0 score=-479.7
+  try right+B  -> ( 88, 88) key=1 dead=0 term=0 score=-453.5
+chunk 45: choose right score=-453.5 stall=7
+chunk 45: right -> (88,88) key=1 lives=4 state=16 timer=5
+  try wait     -> ( 93, 88) key=1 dead=0 term=0 score=-550.2
+  try right    -> ( 99, 88) key=1 dead=0 term=0 score=-537.0
+  try left     -> ( 93, 88) key=1 dead=0 term=0 score=-550.2
+  try up       -> ( 93, 88) key=1 dead=0 term=0 score=-550.2
+  try down     -> ( 93, 88) key=1 dead=0 term=0 score=-550.2
+  try right+A  -> ( 99, 88) key=1 dead=0 term=0 score=-537.0
+  try left+A   -> ( 93, 88) key=1 dead=0 term=0 score=-550.2
+  try A        -> ( 93, 88) key=1 dead=0 term=0 score=-550.2
+  try B        -> ( 93, 88) key=1 dead=0 term=0 score=-550.2
+  try right+B  -> ( 99, 88) key=1 dead=0 term=0 score=-537.0
+chunk 46: choose right score=-537.0 stall=8
+chunk 46: right -> (99,88) key=1 lives=4 state=16 timer=4
+  try wait     -> (100, 88) key=1 dead=0 term=0 score=-605.1
+  try right    -> (100, 88) key=1 dead=0 term=0 score=-605.1
+  try left     -> ( 93, 88) key=1 dead=0 term=0 score=-550.2
+  try up       -> (100, 88) key=1 dead=0 term=0 score=-605.1
+  try down     -> (100, 88) key=1 dead=0 term=0 score=-605.1
+  try right+A  -> (100, 88) key=1 dead=0 term=0 score=-605.1
+  try left+A   -> ( 93, 88) key=1 dead=0 term=0 score=-550.2
+  try A        -> (100, 88) key=1 dead=0 term=0 score=-605.1
+  try B        -> (100, 88) key=1 dead=0 term=0 score=-605.1
+  try right+B  -> (100, 88) key=1 dead=0 term=0 score=-605.1
+chunk 47: choose left score=-550.2 stall=9
+chunk 47: left -> (93,88) key=1 lives=4 state=16 timer=3
+  try wait     -> ( 88, 88) key=1 dead=0 term=0 score=-573.5
+  try right    -> ( 88, 88) key=1 dead=0 term=0 score=-573.5
+  try left     -> ( 82, 88) key=1 dead=0 term=0 score=-473.3
+  try up       -> ( 88, 88) key=1 dead=0 term=0 score=-573.5
+  try down     -> ( 88, 88) key=1 dead=0 term=0 score=-573.5
+  try right+A  -> ( 88, 88) key=1 dead=0 term=0 score=-573.5
+  try left+A   -> ( 82, 88) key=1 dead=0 term=0 score=-473.3
+  try A        -> ( 88, 88) key=1 dead=0 term=0 score=-573.5
+  try B        -> ( 88, 88) key=1 dead=0 term=0 score=-573.5
+  try right+B  -> ( 88, 88) key=1 dead=0 term=0 score=-573.5
+chunk 48: choose left score=-473.3 stall=10
+backtracking to chunk 47 (was at 48)
+  waypoint 0 (56,136) reached
+replayed to chunk 47
+  try wait     -> (100, 88) key=1 dead=0 term=0 score=-605.1
+  try right    -> (100, 88) key=1 dead=0 term=0 score=-605.1
+  try up       -> (100, 88) key=1 dead=0 term=0 score=-605.1
+  try down     -> (100, 88) key=1 dead=0 term=0 score=-605.1
+  try right+A  -> (100, 88) key=1 dead=0 term=0 score=-605.1
+  try left+A   -> ( 93, 88) key=1 dead=0 term=0 score=-550.2
+  try A        -> (100, 88) key=1 dead=0 term=0 score=-605.1
+  try B        -> (100, 88) key=1 dead=0 term=0 score=-605.1
+  try right+B  -> (100, 88) key=1 dead=0 term=0 score=-605.1
+chunk 47: choose left+A score=-550.2 stall=0
+chunk 47: left+A -> (93,88) key=1 lives=4 state=16 timer=3
+  try wait     -> ( 88, 88) key=1 dead=0 term=0 score=-573.5
+  try right    -> ( 88, 88) key=1 dead=0 term=0 score=-573.5
+  try left     -> ( 82, 88) key=1 dead=0 term=0 score=-473.3
+  try up       -> ( 88, 88) key=1 dead=0 term=0 score=-573.5
+  try down     -> ( 88, 88) key=1 dead=0 term=0 score=-573.5
+  try right+A  -> ( 88, 88) key=1 dead=0 term=0 score=-573.5
+  try left+A   -> ( 82, 88) key=1 dead=0 term=0 score=-473.3
+  try A        -> ( 88, 88) key=1 dead=0 term=0 score=-573.5
+  try B        -> ( 88, 88) key=1 dead=0 term=0 score=-573.5
+  try right+B  -> ( 88, 88) key=1 dead=0 term=0 score=-573.5
+chunk 48: choose left score=-473.3 stall=0
+chunk 48: left -> (82,88) key=1 lives=4 state=16 timer=10
+  try wait     -> ( 77, 88) key=1 dead=0 term=0 score=-563.8
+  try right    -> ( 77, 88) key=1 dead=0 term=0 score=-563.8
+  try left     -> ( 72, 88) key=1 dead=0 term=0 score=-538.8
+  try up       -> ( 77, 88) key=1 dead=0 term=0 score=-563.8
+  try down     -> ( 77, 88) key=1 dead=0 term=0 score=-563.8
+  try right+A  -> ( 77, 88) key=1 dead=0 term=0 score=-563.8
+  try left+A   -> ( 72, 88) key=1 dead=0 term=0 score=-538.8
+  try A        -> ( 77, 88) key=1 dead=0 term=0 score=-563.8
+  try B        -> ( 77, 88) key=1 dead=0 term=0 score=-563.8
+  try right+B  -> ( 77, 88) key=1 dead=0 term=0 score=-563.8
+chunk 49: choose left score=-538.8 stall=1
+chunk 49: left -> (72,88) key=1 lives=4 state=16 timer=9
+  try wait     -> ( 66, 88) key=1 dead=0 term=0 score=-516.3
+  try right    -> ( 66, 88) key=1 dead=0 term=0 score=-516.3
+  try left     -> ( 61, 88) key=1 dead=0 term=0 score=-804.9
+  try up       -> ( 66, 88) key=1 dead=0 term=0 score=-516.3
+  try down     -> ( 66, 88) key=1 dead=0 term=0 score=-516.3
+  try right+A  -> ( 66, 88) key=1 dead=0 term=0 score=-516.3
+  try left+A   -> ( 61, 88) key=1 dead=0 term=0 score=-804.9
+  try A        -> ( 66, 88) key=1 dead=0 term=0 score=-516.3
+  try B        -> ( 66, 88) key=1 dead=0 term=0 score=-516.3
+  try right+B  -> ( 66, 88) key=1 dead=0 term=0 score=-516.3
+chunk 50: choose wait score=-516.3 stall=2
+  dumped chunk050/* to build/nacre-test/slice12/play\nchunk 50: wait -> (66,88) key=1 lives=4 state=16 timer=8
+  try wait     -> ( 66, 88) key=1 dead=0 term=0 score=-576.3
+  try right    -> ( 74, 88) key=1 dead=0 term=0 score=-608.2
+  try left     -> ( 57, 88) key=1 dead=0 term=0 score=-801.2
+  try up       -> ( 66, 88) key=1 dead=0 term=0 score=-576.3
+  try down     -> ( 66, 88) key=1 dead=0 term=0 score=-576.3
+  try right+A  -> ( 74, 88) key=1 dead=0 term=0 score=-608.2
+  try left+A   -> ( 57, 88) key=1 dead=0 term=0 score=-801.2
+  try A        -> ( 66, 88) key=1 dead=0 term=0 score=-576.3
+  try B        -> ( 66, 88) key=1 dead=0 term=0 score=-576.3
+  try right+B  -> ( 74, 88) key=1 dead=0 term=0 score=-608.2
+chunk 51: choose wait score=-576.3 stall=3
+chunk 51: wait -> (66,88) key=1 lives=4 state=16 timer=7
+  try wait     -> ( 66, 88) key=1 dead=0 term=0 score=-636.3
+  try right    -> ( 76, 88) key=1 dead=0 term=0 score=-618.4
+  try left     -> ( 57, 88) key=1 dead=0 term=0 score=-801.2
+  try up       -> ( 66, 88) key=1 dead=0 term=0 score=-636.3
+  try down     -> ( 66, 88) key=1 dead=0 term=0 score=-636.3
+  try right+A  -> ( 76, 88) key=1 dead=0 term=0 score=-618.4
+  try left+A   -> ( 57, 88) key=1 dead=0 term=0 score=-801.2
+  try A        -> ( 66, 88) key=1 dead=0 term=0 score=-636.3
+  try B        -> ( 66, 88) key=1 dead=0 term=0 score=-636.3
+  try right+B  -> ( 76, 88) key=1 dead=0 term=0 score=-618.4
+chunk 52: choose right score=-618.4 stall=4
+chunk 52: right -> (76,88) key=1 lives=4 state=16 timer=6
+  try wait     -> ( 81, 88) key=1 dead=0 term=0 score=-527.1
+  try right    -> ( 86, 88) key=1 dead=0 term=0 score=-559.6
+  try left     -> ( 81, 88) key=1 dead=0 term=0 score=-527.1
+  try up       -> ( 81, 88) key=1 dead=0 term=0 score=-527.1
+  try down     -> ( 81, 88) key=1 dead=0 term=0 score=-527.1
+  try right+A  -> ( 86, 88) key=1 dead=0 term=0 score=-559.6
+  try left+A   -> ( 81, 88) key=1 dead=0 term=0 score=-527.1
+  try A        -> ( 81, 88) key=1 dead=0 term=0 score=-527.1
+  try B        -> ( 81, 88) key=1 dead=0 term=0 score=-527.1
+  try right+B  -> ( 86, 88) key=1 dead=0 term=0 score=-559.6
+chunk 53: choose wait score=-527.1 stall=5
+chunk 53: wait -> (81,88) key=1 lives=4 state=16 timer=5
+  try wait     -> ( 81, 88) key=1 dead=0 term=0 score=-587.1
+  try right    -> ( 91, 88) key=1 dead=0 term=0 score=-595.2
+  try left     -> ( 73, 88) key=1 dead=0 term=0 score=-663.4
+  try up       -> ( 81, 88) key=1 dead=0 term=0 score=-587.1
+  try down     -> ( 81, 88) key=1 dead=0 term=0 score=-587.1
+  try right+A  -> ( 91, 88) key=1 dead=0 term=0 score=-595.2
+  try left+A   -> ( 73, 88) key=1 dead=0 term=0 score=-663.4
+  try A        -> ( 81, 88) key=1 dead=0 term=0 score=-587.1
+  try B        -> ( 81, 88) key=1 dead=0 term=0 score=-587.1
+  try right+B  -> ( 91, 88) key=1 dead=0 term=0 score=-595.2
+chunk 54: choose wait score=-587.1 stall=6
+chunk 54: wait -> (81,88) key=1 lives=4 state=16 timer=4
+  try wait     -> ( 81, 88) key=1 dead=0 term=0 score=-647.1
+  try right    -> ( 90, 88) key=1 dead=0 term=0 score=-587.9
+  try left     -> ( 72, 88) key=1 dead=0 term=0 score=-658.8
+  try up       -> ( 81, 88) key=1 dead=0 term=0 score=-647.1
+  try down     -> ( 81, 88) key=1 dead=0 term=0 score=-647.1
+  try right+A  -> ( 90, 88) key=1 dead=0 term=0 score=-587.9
+  try left+A   -> ( 72, 88) key=1 dead=0 term=0 score=-658.8
+  try A        -> ( 81, 88) key=1 dead=0 term=0 score=-647.1
+  try B        -> ( 81, 88) key=1 dead=0 term=0 score=-647.1
+  try right+B  -> ( 90, 88) key=1 dead=0 term=0 score=-587.9
+chunk 55: choose right score=-587.9 stall=7
+chunk 55: right -> (90,88) key=1 lives=4 state=16 timer=3
+  try wait     -> ( 96, 88) key=1 dead=0 term=0 score=-573.2
+  try right    -> (100, 88) key=1 dead=0 term=0 score=-605.1
+  try left     -> ( 96, 88) key=1 dead=0 term=0 score=-573.2
+  try up       -> ( 96, 88) key=1 dead=0 term=0 score=-573.2
+  try down     -> ( 96, 88) key=1 dead=0 term=0 score=-573.2
+  try right+A  -> (100, 88) key=1 dead=0 term=0 score=-605.1
+  try left+A   -> ( 96, 88) key=1 dead=0 term=0 score=-573.2
+  try A        -> ( 96, 88) key=1 dead=0 term=0 score=-573.2
+  try B        -> ( 96, 88) key=1 dead=0 term=0 score=-573.2
+  try right+B  -> (100, 88) key=1 dead=0 term=0 score=-605.1
+chunk 56: choose wait score=-573.2 stall=8
+chunk 56: wait -> (96,88) key=1 lives=4 state=16 timer=10
+  try wait     -> ( 96, 88) key=1 dead=0 term=0 score=-633.2
+  try right    -> (100, 88) key=1 dead=0 term=0 score=-665.1
+  try left     -> ( 88, 88) key=1 dead=0 term=0 score=-633.5
+  try up       -> ( 96, 88) key=1 dead=0 term=0 score=-633.2
+  try down     -> ( 96, 88) key=1 dead=0 term=0 score=-633.2
+  try right+A  -> (100, 88) key=1 dead=0 term=0 score=-665.1
+  try left+A   -> ( 88, 88) key=1 dead=0 term=0 score=-633.5
+  try A        -> ( 96, 88) key=1 dead=0 term=0 score=-633.2
+  try B        -> ( 96, 88) key=1 dead=0 term=0 score=-633.2
+  try right+B  -> (100, 88) key=1 dead=0 term=0 score=-665.1
+chunk 57: choose wait score=-633.2 stall=9
+chunk 57: wait -> (96,88) key=1 lives=4 state=16 timer=9
+  try wait     -> ( 96, 88) key=1 dead=0 term=0 score=-693.2
+  try right    -> (100, 88) key=1 dead=0 term=0 score=-725.1
+  try left     -> ( 87, 88) key=1 dead=0 term=0 score=-686.5
+  try up       -> ( 96, 88) key=1 dead=0 term=0 score=-693.2
+  try down     -> ( 96, 88) key=1 dead=0 term=0 score=-693.2
+  try right+A  -> (100, 88) key=1 dead=0 term=0 score=-725.1
+  try left+A   -> ( 87, 88) key=1 dead=0 term=0 score=-686.5
+  try A        -> ( 96, 88) key=1 dead=0 term=0 score=-693.2
+  try B        -> ( 96, 88) key=1 dead=0 term=0 score=-693.2
+  try right+B  -> (100, 88) key=1 dead=0 term=0 score=-725.1
+chunk 58: choose left score=-686.5 stall=10
+backtracking to chunk 57 (was at 58)
+  waypoint 0 (56,136) reached
+replayed to chunk 57
+  try right    -> (100, 88) key=1 dead=0 term=0 score=-665.1
+  try left     -> ( 88, 88) key=1 dead=0 term=0 score=-633.5
+  try up       -> ( 96, 88) key=1 dead=0 term=0 score=-633.2
+  try down     -> ( 96, 88) key=1 dead=0 term=0 score=-633.2
+  try right+A  -> (100, 88) key=1 dead=0 term=0 score=-665.1
+  try left+A   -> ( 88, 88) key=1 dead=0 term=0 score=-633.5
+  try A        -> ( 96, 88) key=1 dead=0 term=0 score=-633.2
+  try B        -> ( 96, 88) key=1 dead=0 term=0 score=-633.2
+  try right+B  -> (100, 88) key=1 dead=0 term=0 score=-665.1
+chunk 57: choose up score=-633.2 stall=0
+chunk 57: up -> (96,88) key=1 lives=4 state=16 timer=9
+  try wait     -> ( 96, 88) key=1 dead=0 term=0 score=-693.2
+  try right    -> (100, 88) key=1 dead=0 term=0 score=-725.1
+  try left     -> ( 87, 88) key=1 dead=0 term=0 score=-686.5
+  try up       -> ( 96, 88) key=1 dead=0 term=0 score=-693.2
+  try down     -> ( 96, 88) key=1 dead=0 term=0 score=-693.2
+  try right+A  -> (100, 88) key=1 dead=0 term=0 score=-725.1
+  try left+A   -> ( 87, 88) key=1 dead=0 term=0 score=-686.5
+  try A        -> ( 96, 88) key=1 dead=0 term=0 score=-693.2
+  try B        -> ( 96, 88) key=1 dead=0 term=0 score=-693.2
+  try right+B  -> (100, 88) key=1 dead=0 term=0 score=-725.1
+chunk 58: choose left score=-686.5 stall=1
+chunk 58: left -> (87,88) key=1 lives=4 state=16 timer=8
+  try wait     -> ( 81, 88) key=1 dead=0 term=0 score=-707.1
+  try right    -> ( 81, 88) key=1 dead=0 term=0 score=-707.1
+  try left     -> ( 76, 88) key=1 dead=0 term=0 score=-678.4
+  try up       -> ( 81, 88) key=1 dead=0 term=0 score=-707.1
+  try down     -> ( 81, 88) key=1 dead=0 term=0 score=-707.1
+  try right+A  -> ( 81, 88) key=1 dead=0 term=0 score=-707.1
+  try left+A   -> ( 76, 88) key=1 dead=0 term=0 score=-678.4
+  try A        -> ( 81, 88) key=1 dead=0 term=0 score=-707.1
+  try B        -> ( 81, 88) key=1 dead=0 term=0 score=-707.1
+  try right+B  -> ( 81, 88) key=1 dead=0 term=0 score=-707.1
+chunk 59: choose left score=-678.4 stall=2
+chunk 59: left -> (76,88) key=1 lives=4 state=16 timer=7
+  try wait     -> ( 71, 88) key=1 dead=0 term=0 score=-654.4
+  try right    -> ( 71, 88) key=1 dead=0 term=0 score=-654.4
+  try left     -> ( 65, 88) key=1 dead=0 term=0 score=-633.4
+  try up       -> ( 71, 88) key=1 dead=0 term=0 score=-654.4
+  try down     -> ( 71, 88) key=1 dead=0 term=0 score=-654.4
+  try right+A  -> ( 71, 88) key=1 dead=0 term=0 score=-654.4
+  try left+A   -> ( 65, 88) key=1 dead=0 term=0 score=-633.4
+  try A        -> ( 71, 88) key=1 dead=0 term=0 score=-654.4
+  try B        -> ( 71, 88) key=1 dead=0 term=0 score=-654.4
+  try right+B  -> ( 71, 88) key=1 dead=0 term=0 score=-654.4
+chunk 60: choose left score=-633.4 stall=3
+chunk 60: left -> (65,88) key=1 lives=4 state=16 timer=6
+  try wait     -> ( 60, 92) key=1 dead=0 term=0 score=-843.2
+  try right    -> ( 60, 92) key=1 dead=0 term=0 score=-843.2
+  try left     -> ( 55, 88) key=1 dead=0 term=0 score=-381.2
+  try up       -> ( 60, 92) key=1 dead=0 term=0 score=-843.2
+  try down     -> ( 60, 92) key=1 dead=0 term=0 score=-843.2
+  try right+A  -> ( 60, 92) key=1 dead=0 term=0 score=-843.2
+  try left+A   -> ( 55, 88) key=1 dead=0 term=0 score=-381.2
+  try A        -> ( 60, 92) key=1 dead=0 term=0 score=-843.2
+  try B        -> ( 60, 92) key=1 dead=0 term=0 score=-843.2
+  try right+B  -> ( 60, 92) key=1 dead=0 term=0 score=-843.2
+chunk 61: choose left score=-381.2 stall=0
+chunk 61: left -> (55,88) key=1 lives=4 state=16 timer=5
+  try wait     -> ( 52, 88) key=1 dead=0 term=0 score=-443.5
+  try right    -> ( 53, 88) key=1 dead=0 term=0 score=-442.4
+  try left     -> ( 45, 88) key=1 dead=0 term=0 score=-399.4
+  try up       -> ( 52, 88) key=1 dead=0 term=0 score=-443.5
+  try down     -> ( 52, 88) key=1 dead=0 term=0 score=-443.5
+  try right+A  -> ( 53, 88) key=1 dead=0 term=0 score=-442.4
+  try left+A   -> ( 45, 88) key=1 dead=0 term=0 score=-399.4
+  try A        -> ( 52, 88) key=1 dead=0 term=0 score=-443.5
+  try B        -> ( 52, 88) key=1 dead=0 term=0 score=-443.5
+  try right+B  -> ( 53, 88) key=1 dead=0 term=0 score=-442.4
+chunk 62: choose left score=-399.4 stall=1
+chunk 62: left -> (45,88) key=1 lives=4 state=16 timer=4
+  try wait     -> ( 39, 88) key=1 dead=0 term=0 score=-363.4
+  try right    -> ( 39, 88) key=1 dead=0 term=0 score=-363.4
+  try left     -> ( 34, 88) key=1 dead=0 term=0 score=-389.3
+  try up       -> ( 39, 88) key=1 dead=0 term=0 score=-363.4
+  try down     -> ( 39, 88) key=1 dead=0 term=0 score=-363.4
+  try right+A  -> ( 39, 88) key=1 dead=0 term=0 score=-363.4
+  try left+A   -> ( 34, 88) key=1 dead=0 term=0 score=-389.3
+  try A        -> ( 39, 88) key=1 dead=0 term=0 score=-363.4
+  try B        -> ( 39, 88) key=1 dead=0 term=0 score=-363.4
+  try right+B  -> ( 39, 88) key=1 dead=0 term=0 score=-363.4
+chunk 63: choose wait score=-363.4 stall=0
+chunk 63: wait -> (39,88) key=1 lives=4 state=16 timer=3
+  try wait     -> ( 39, 88) key=1 dead=0 term=0 score=-423.4
+  try right    -> ( 47, 88) key=1 dead=0 term=0 score=-453.4
+  try left     -> ( 30, 88) key=1 dead=0 term=0 score=-413.3
+  try up       -> ( 39, 88) key=1 dead=0 term=0 score=-423.4
+  try down     -> ( 39, 88) key=1 dead=0 term=0 score=-423.4
+  try right+A  -> ( 47, 88) key=1 dead=0 term=0 score=-453.4
+  try left+A   -> ( 30, 88) key=1 dead=0 term=0 score=-413.3
+  try A        -> ( 39, 88) key=1 dead=0 term=0 score=-423.4
+  try B        -> ( 39, 88) key=1 dead=0 term=0 score=-423.4
+  try right+B  -> ( 47, 88) key=1 dead=0 term=0 score=-453.4
+chunk 64: choose left score=-413.3 stall=1
+chunk 64: left -> (30,88) key=1 lives=4 state=16 timer=16
+  try wait     -> ( 30, 88) key=1 dead=0 term=0 score=-473.3
+  try right    -> ( 30, 88) key=1 dead=0 term=0 score=-473.3
+  try left     -> ( 30, 88) key=1 dead=0 term=0 score=-473.3
+  try up       -> ( 30, 88) key=1 dead=0 term=0 score=-473.3
+  try down     -> ( 30, 88) key=1 dead=0 term=0 score=-473.3
+  try right+A  -> ( 30, 88) key=1 dead=0 term=0 score=-473.3
+  try left+A   -> ( 30, 88) key=1 dead=0 term=0 score=-473.3
+  try A        -> ( 30, 88) key=1 dead=0 term=0 score=-473.3
+  try B        -> ( 30, 88) key=1 dead=0 term=0 score=-473.3
+  try right+B  -> ( 30, 88) key=1 dead=0 term=0 score=-473.3
+chunk 65: choose wait score=-473.3 stall=2
+chunk 65: wait -> (30,88) key=1 lives=4 state=16 timer=16
+  try wait     -> ( 30, 88) key=1 dead=0 term=0 score=-533.3
+  try right    -> ( 30, 88) key=1 dead=0 term=0 score=-533.3
+  try left     -> ( 30, 88) key=1 dead=0 term=0 score=-533.3
+  try up       -> ( 30, 88) key=1 dead=0 term=0 score=-533.3
+  try down     -> ( 30, 88) key=1 dead=0 term=0 score=-533.3
+  try right+A  -> ( 30, 88) key=1 dead=0 term=0 score=-533.3
+  try left+A   -> ( 30, 88) key=1 dead=0 term=0 score=-533.3
+  try A        -> ( 30, 88) key=1 dead=0 term=0 score=-533.3
+  try B        -> ( 30, 88) key=1 dead=0 term=0 score=-533.3
+  try right+B  -> ( 30, 88) key=1 dead=0 term=0 score=-533.3
+chunk 66: choose wait score=-533.3 stall=3
+chunk 66: wait -> (30,88) key=1 lives=4 state=16 timer=16
+  try wait     -> ( 30, 88) key=1 dead=0 term=0 score=-593.3
+  try right    -> ( 30, 88) key=1 dead=0 term=0 score=-593.3
+  try left     -> ( 30, 88) key=1 dead=0 term=0 score=-593.3
+  try up       -> ( 30, 88) key=1 dead=0 term=0 score=-593.3
+  try down     -> ( 30, 88) key=1 dead=0 term=0 score=-593.3
+  try right+A  -> ( 30, 88) key=1 dead=0 term=0 score=-593.3
+  try left+A   -> ( 30, 88) key=1 dead=0 term=0 score=-593.3
+  try A        -> ( 30, 88) key=1 dead=0 term=0 score=-593.3
+  try B        -> ( 30, 88) key=1 dead=0 term=0 score=-593.3
+  try right+B  -> ( 30, 88) key=1 dead=0 term=0 score=-593.3
+chunk 67: choose wait score=-593.3 stall=4
+chunk 67: wait -> (30,88) key=1 lives=4 state=16 timer=16
+  try wait     -> ( 30, 88) key=1 dead=0 term=0 score=-653.3
+  try right    -> ( 30, 88) key=1 dead=0 term=0 score=-653.3
+  try left     -> ( 30, 88) key=1 dead=0 term=0 score=-653.3
+  try up       -> ( 30, 88) key=1 dead=0 term=0 score=-653.3
+  try down     -> ( 30, 88) key=1 dead=0 term=0 score=-653.3
+  try right+A  -> ( 30, 88) key=1 dead=0 term=0 score=-653.3
+  try left+A   -> ( 30, 88) key=1 dead=0 term=0 score=-653.3
+  try A        -> ( 30, 88) key=1 dead=0 term=0 score=-653.3
+  try B        -> ( 30, 88) key=1 dead=0 term=0 score=-653.3
+  try right+B  -> ( 30, 88) key=1 dead=0 term=0 score=-653.3
+chunk 68: choose wait score=-653.3 stall=5
+chunk 68: wait -> (30,88) key=1 lives=4 state=16 timer=16
+  try wait     -> ( 30, 88) key=1 dead=0 term=0 score=-713.3
+  try right    -> ( 30, 88) key=1 dead=0 term=0 score=-713.3
+  try left     -> ( 30, 88) key=1 dead=0 term=0 score=-713.3
+  try up       -> ( 30, 88) key=1 dead=0 term=0 score=-713.3
+  try down     -> ( 30, 88) key=1 dead=0 term=0 score=-713.3
+  try right+A  -> ( 30, 88) key=1 dead=0 term=0 score=-713.3
+  try left+A   -> ( 30, 88) key=1 dead=0 term=0 score=-713.3
+  try A        -> ( 30, 88) key=1 dead=0 term=0 score=-713.3
+  try B        -> ( 30, 88) key=1 dead=0 term=0 score=-713.3
+  try right+B  -> ( 30, 88) key=1 dead=0 term=0 score=-713.3
+chunk 69: choose wait score=-713.3 stall=6
+chunk 69: wait -> (30,88) key=1 lives=4 state=16 timer=16
+  try wait     -> ( 28, 88) key=1 dead=0 term=0 score=-786.2
+  try right    -> ( 28, 88) key=1 dead=0 term=0 score=-786.2
+  try left     -> ( 28, 88) key=1 dead=0 term=0 score=-786.2
+  try up       -> ( 28, 88) key=1 dead=0 term=0 score=-786.2
+  try down     -> ( 28, 88) key=1 dead=0 term=0 score=-786.2
+  try right+A  -> ( 28, 88) key=1 dead=0 term=0 score=-786.2
+  try left+A   -> ( 28, 88) key=1 dead=0 term=0 score=-786.2
+  try A        -> ( 28, 88) key=1 dead=0 term=0 score=-786.2
+  try B        -> ( 28, 88) key=1 dead=0 term=0 score=-786.2
+  try right+B  -> ( 28, 88) key=1 dead=0 term=0 score=-786.2
+chunk 70: choose wait score=-786.2 stall=7
+chunk 70: wait -> (28,88) key=1 lives=4 state=16 timer=4
+  try wait     -> ( 25, 88) key=1 dead=0 term=0 score=-866.5
+  try right    -> ( 25, 88) key=1 dead=0 term=0 score=-866.5
+  try left     -> ( 18, 88) key=1 dead=0 term=0 score=-497.8
+  try up       -> ( 25, 88) key=1 dead=0 term=0 score=-866.5
+  try down     -> ( 25, 88) key=1 dead=0 term=0 score=-866.5
+  try right+A  -> ( 25, 88) key=1 dead=0 term=0 score=-866.5
+  try left+A   -> ( 18, 88) key=1 dead=0 term=0 score=-497.8
+  try A        -> ( 25, 88) key=1 dead=0 term=0 score=-866.5
+  try B        -> ( 25, 88) key=1 dead=0 term=0 score=-866.5
+  try right+B  -> ( 25, 88) key=1 dead=0 term=0 score=-866.5
+chunk 71: choose left score=-497.8 stall=8
+chunk 71: left -> (18,88) key=1 lives=4 state=16 timer=3
+  try wait     -> ( 12, 88) key=1 dead=0 term=0 score=-545.1
+  try right    -> ( 12, 88) key=1 dead=0 term=0 score=-545.1
+  try left     -> (  7, 88) key=1 dead=0 term=0 score=-586.2
+  try up       -> ( 12, 88) key=1 dead=0 term=0 score=-545.1
+  try down     -> ( 12, 88) key=1 dead=0 term=0 score=-545.1
+  try right+A  -> ( 12, 88) key=1 dead=0 term=0 score=-545.1
+  try left+A   -> (  7, 88) key=1 dead=0 term=0 score=-586.2
+  try A        -> ( 12, 88) key=1 dead=0 term=0 score=-545.1
+  try B        -> ( 12, 88) key=1 dead=0 term=0 score=-545.1
+  try right+B  -> ( 12, 88) key=1 dead=0 term=0 score=-545.1
+chunk 72: choose wait score=-545.1 stall=9
+chunk 72: wait -> (12,88) key=1 lives=4 state=16 timer=10
+  try wait     -> ( 12, 88) key=1 dead=0 term=0 score=-605.1
+  try right    -> ( 20, 88) key=1 dead=0 term=0 score=-542.7
+  try left     -> (  4, 88) key=1 dead=0 term=0 score=-611.6
+  try up       -> ( 12, 88) key=1 dead=0 term=0 score=-605.1
+  try down     -> ( 12, 88) key=1 dead=0 term=0 score=-605.1
+  try right+A  -> ( 20, 88) key=1 dead=0 term=0 score=-542.7
+  try left+A   -> (  4, 88) key=1 dead=0 term=0 score=-611.6
+  try A        -> ( 12, 88) key=1 dead=0 term=0 score=-605.1
+  try B        -> ( 12, 88) key=1 dead=0 term=0 score=-605.1
+  try right+B  -> ( 20, 88) key=1 dead=0 term=0 score=-542.7
+chunk 73: choose right score=-542.7 stall=10
+backtracking to chunk 72 (was at 73)
+  waypoint 0 (56,136) reached
+replayed to chunk 72
+  try right    -> ( 12, 88) key=1 dead=0 term=0 score=-545.1
+  try left     -> (  7, 88) key=1 dead=0 term=0 score=-586.2
+  try up       -> ( 12, 88) key=1 dead=0 term=0 score=-545.1
+  try down     -> ( 12, 88) key=1 dead=0 term=0 score=-545.1
+  try right+A  -> ( 12, 88) key=1 dead=0 term=0 score=-545.1
+  try left+A   -> (  7, 88) key=1 dead=0 term=0 score=-586.2
+  try A        -> ( 12, 88) key=1 dead=0 term=0 score=-545.1
+  try B        -> ( 12, 88) key=1 dead=0 term=0 score=-545.1
+  try right+B  -> ( 12, 88) key=1 dead=0 term=0 score=-545.1
+chunk 72: choose right score=-545.1 stall=0
+chunk 72: right -> (12,88) key=1 lives=4 state=16 timer=10
+  try wait     -> ( 12, 88) key=1 dead=0 term=0 score=-605.1
+  try right    -> ( 20, 88) key=1 dead=0 term=0 score=-542.7
+  try left     -> (  4, 88) key=1 dead=0 term=0 score=-611.6
+  try up       -> ( 12, 88) key=1 dead=0 term=0 score=-605.1
+  try down     -> ( 12, 88) key=1 dead=0 term=0 score=-605.1
+  try right+A  -> ( 20, 88) key=1 dead=0 term=0 score=-542.7
+  try left+A   -> (  4, 88) key=1 dead=0 term=0 score=-611.6
+  try A        -> ( 12, 88) key=1 dead=0 term=0 score=-605.1
+  try B        -> ( 12, 88) key=1 dead=0 term=0 score=-605.1
+  try right+B  -> ( 20, 88) key=1 dead=0 term=0 score=-542.7
+chunk 73: choose right score=-542.7 stall=0
+chunk 73: right -> (20,88) key=1 lives=4 state=16 timer=9
+  try wait     -> ( 26, 88) key=1 dead=0 term=0 score=-859.6
+  try right    -> ( 31, 88) key=1 dead=0 term=0 score=-827.1
+  try left     -> ( 26, 88) key=1 dead=0 term=0 score=-859.6
+  try up       -> ( 26, 88) key=1 dead=0 term=0 score=-859.6
+  try down     -> ( 26, 88) key=1 dead=0 term=0 score=-859.6
+  try right+A  -> ( 31, 88) key=1 dead=0 term=0 score=-827.1
+  try left+A   -> ( 26, 88) key=1 dead=0 term=0 score=-859.6
+  try A        -> ( 26, 88) key=1 dead=0 term=0 score=-859.6
+  try B        -> ( 26, 88) key=1 dead=0 term=0 score=-859.6
+  try right+B  -> ( 31, 88) key=1 dead=0 term=0 score=-827.1
+chunk 74: choose right score=-827.1 stall=1
+chunk 74: right -> (31,88) key=1 lives=4 state=16 timer=8
+  try wait     -> ( 36, 88) key=1 dead=0 term=0 score=-438.4
+  try right    -> ( 41, 88) key=1 dead=0 term=0 score=-474.4
+  try left     -> ( 36, 88) key=1 dead=0 term=0 score=-438.4
+  try up       -> ( 36, 88) key=1 dead=0 term=0 score=-438.4
+  try down     -> ( 36, 88) key=1 dead=0 term=0 score=-438.4
+  try right+A  -> ( 41, 88) key=1 dead=0 term=0 score=-474.4
+  try left+A   -> ( 36, 88) key=1 dead=0 term=0 score=-438.4
+  try A        -> ( 36, 88) key=1 dead=0 term=0 score=-438.4
+  try B        -> ( 36, 88) key=1 dead=0 term=0 score=-438.4
+  try right+B  -> ( 41, 88) key=1 dead=0 term=0 score=-474.4
+chunk 75: choose wait score=-438.4 stall=0
+  dumped chunk075/* to build/nacre-test/slice12/play\nchunk 75: wait -> (36,88) key=1 lives=4 state=16 timer=7
+  try wait     -> ( 36, 88) key=1 dead=0 term=0 score=-498.4
+  try right    -> ( 46, 88) key=1 dead=0 term=0 score=-456.3
+  try left     -> ( 28, 88) key=1 dead=0 term=0 score=-906.2
+  try up       -> ( 36, 88) key=1 dead=0 term=0 score=-498.4
+  try down     -> ( 36, 88) key=1 dead=0 term=0 score=-498.4
+  try right+A  -> ( 46, 88) key=1 dead=0 term=0 score=-456.3
+  try left+A   -> ( 28, 88) key=1 dead=0 term=0 score=-906.2
+  try A        -> ( 36, 88) key=1 dead=0 term=0 score=-498.4
+  try B        -> ( 36, 88) key=1 dead=0 term=0 score=-498.4
+  try right+B  -> ( 46, 88) key=1 dead=0 term=0 score=-456.3
+chunk 76: choose right score=-456.3 stall=1
+chunk 76: right -> (46,88) key=1 lives=4 state=16 timer=6
+  try wait     -> ( 51, 88) key=1 dead=0 term=0 score=-444.9
+  try right    -> ( 57, 88) key=1 dead=0 term=0 score=-801.2
+  try left     -> ( 51, 88) key=1 dead=0 term=0 score=-444.9
+  try up       -> ( 51, 88) key=1 dead=0 term=0 score=-444.9
+  try down     -> ( 51, 88) key=1 dead=0 term=0 score=-444.9
+  try right+A  -> ( 57, 88) key=1 dead=0 term=0 score=-801.2
+  try left+A   -> ( 51, 88) key=1 dead=0 term=0 score=-444.9
+  try A        -> ( 51, 88) key=1 dead=0 term=0 score=-444.9
+  try B        -> ( 51, 88) key=1 dead=0 term=0 score=-444.9
+  try right+B  -> ( 57, 88) key=1 dead=0 term=0 score=-801.2
+chunk 77: choose wait score=-444.9 stall=2
+chunk 77: wait -> (51,88) key=1 lives=4 state=16 timer=5
+  try wait     -> ( 51, 88) key=1 dead=0 term=0 score=-504.9
+  try right    -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+  try left     -> ( 43, 88) key=1 dead=0 term=0 score=-526.4
+  try up       -> ( 51, 88) key=1 dead=0 term=0 score=-504.9
+  try down     -> ( 51, 88) key=1 dead=0 term=0 score=-504.9
+  try right+A  -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+  try left+A   -> ( 43, 88) key=1 dead=0 term=0 score=-526.4
+  try A        -> ( 51, 88) key=1 dead=0 term=0 score=-504.9
+  try B        -> ( 51, 88) key=1 dead=0 term=0 score=-504.9
+  try right+B  -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+chunk 78: choose wait score=-504.9 stall=3
+chunk 78: wait -> (51,88) key=1 lives=4 state=16 timer=4
+  try wait     -> ( 51, 88) key=1 dead=0 term=0 score=-564.9
+  try right    -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+  try left     -> ( 42, 88) key=1 dead=0 term=0 score=-530.3
+  try up       -> ( 51, 88) key=1 dead=0 term=0 score=-564.9
+  try down     -> ( 51, 88) key=1 dead=0 term=0 score=-564.9
+  try right+A  -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+  try left+A   -> ( 42, 88) key=1 dead=0 term=0 score=-530.3
+  try A        -> ( 51, 88) key=1 dead=0 term=0 score=-564.9
+  try B        -> ( 51, 88) key=1 dead=0 term=0 score=-564.9
+  try right+B  -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+chunk 79: choose left score=-530.3 stall=4
+chunk 79: left -> (42,88) key=1 lives=4 state=16 timer=3
+  try wait     -> ( 37, 88) key=1 dead=0 term=0 score=-493.2
+  try right    -> ( 37, 88) key=1 dead=0 term=0 score=-493.2
+  try left     -> ( 31, 88) key=1 dead=0 term=0 score=-887.1
+  try up       -> ( 37, 88) key=1 dead=0 term=0 score=-493.2
+  try down     -> ( 37, 88) key=1 dead=0 term=0 score=-493.2
+  try right+A  -> ( 37, 88) key=1 dead=0 term=0 score=-493.2
+  try left+A   -> ( 31, 88) key=1 dead=0 term=0 score=-887.1
+  try A        -> ( 37, 88) key=1 dead=0 term=0 score=-493.2
+  try B        -> ( 37, 88) key=1 dead=0 term=0 score=-493.2
+  try right+B  -> ( 37, 88) key=1 dead=0 term=0 score=-493.2
+chunk 80: choose wait score=-493.2 stall=5
+chunk 80: wait -> (37,88) key=1 lives=4 state=16 timer=10
+  try wait     -> ( 37, 88) key=1 dead=0 term=0 score=-553.2
+  try right    -> ( 45, 88) key=1 dead=0 term=0 score=-579.4
+  try left     -> ( 27, 88) key=1 dead=0 term=0 score=-912.9
+  try up       -> ( 37, 88) key=1 dead=0 term=0 score=-553.2
+  try down     -> ( 37, 88) key=1 dead=0 term=0 score=-553.2
+  try right+A  -> ( 45, 88) key=1 dead=0 term=0 score=-579.4
+  try left+A   -> ( 27, 88) key=1 dead=0 term=0 score=-912.9
+  try A        -> ( 37, 88) key=1 dead=0 term=0 score=-553.2
+  try B        -> ( 37, 88) key=1 dead=0 term=0 score=-553.2
+  try right+B  -> ( 45, 88) key=1 dead=0 term=0 score=-579.4
+chunk 81: choose wait score=-553.2 stall=6
+chunk 81: wait -> (37,88) key=1 lives=4 state=16 timer=9
+  try wait     -> ( 37, 88) key=1 dead=0 term=0 score=-613.2
+  try right    -> ( 46, 88) key=1 dead=0 term=0 score=-576.3
+  try left     -> ( 27, 88) key=1 dead=0 term=0 score=-912.9
+  try up       -> ( 37, 88) key=1 dead=0 term=0 score=-613.2
+  try down     -> ( 37, 88) key=1 dead=0 term=0 score=-613.2
+  try right+A  -> ( 46, 88) key=1 dead=0 term=0 score=-576.3
+  try left+A   -> ( 27, 88) key=1 dead=0 term=0 score=-912.9
+  try A        -> ( 37, 88) key=1 dead=0 term=0 score=-613.2
+  try B        -> ( 37, 88) key=1 dead=0 term=0 score=-613.2
+  try right+B  -> ( 46, 88) key=1 dead=0 term=0 score=-576.3
+chunk 82: choose right score=-576.3 stall=7
+chunk 82: right -> (46,88) key=1 lives=4 state=16 timer=8
+  try wait     -> ( 51, 88) key=1 dead=0 term=0 score=-564.9
+  try right    -> ( 57, 88) key=1 dead=0 term=0 score=-801.2
+  try left     -> ( 51, 88) key=1 dead=0 term=0 score=-564.9
+  try up       -> ( 51, 88) key=1 dead=0 term=0 score=-564.9
+  try down     -> ( 51, 88) key=1 dead=0 term=0 score=-564.9
+  try right+A  -> ( 57, 88) key=1 dead=0 term=0 score=-801.2
+  try left+A   -> ( 51, 88) key=1 dead=0 term=0 score=-564.9
+  try A        -> ( 51, 88) key=1 dead=0 term=0 score=-564.9
+  try B        -> ( 51, 88) key=1 dead=0 term=0 score=-564.9
+  try right+B  -> ( 57, 88) key=1 dead=0 term=0 score=-801.2
+chunk 83: choose wait score=-564.9 stall=8
+chunk 83: wait -> (51,88) key=1 lives=4 state=16 timer=7
+  try wait     -> ( 51, 88) key=1 dead=0 term=0 score=-624.9
+  try right    -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+  try left     -> ( 43, 88) key=1 dead=0 term=0 score=-646.4
+  try up       -> ( 51, 88) key=1 dead=0 term=0 score=-624.9
+  try down     -> ( 51, 88) key=1 dead=0 term=0 score=-624.9
+  try right+A  -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+  try left+A   -> ( 43, 88) key=1 dead=0 term=0 score=-646.4
+  try A        -> ( 51, 88) key=1 dead=0 term=0 score=-624.9
+  try B        -> ( 51, 88) key=1 dead=0 term=0 score=-624.9
+  try right+B  -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+chunk 84: choose wait score=-624.9 stall=9
+chunk 84: wait -> (51,88) key=1 lives=4 state=16 timer=6
+  try wait     -> ( 51, 88) key=1 dead=0 term=0 score=-684.9
+  try right    -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+  try left     -> ( 42, 88) key=1 dead=0 term=0 score=-650.3
+  try up       -> ( 51, 88) key=1 dead=0 term=0 score=-684.9
+  try down     -> ( 51, 88) key=1 dead=0 term=0 score=-684.9
+  try right+A  -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+  try left+A   -> ( 42, 88) key=1 dead=0 term=0 score=-650.3
+  try A        -> ( 51, 88) key=1 dead=0 term=0 score=-684.9
+  try B        -> ( 51, 88) key=1 dead=0 term=0 score=-684.9
+  try right+B  -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+chunk 85: choose left score=-650.3 stall=10
+backtracking to chunk 84 (was at 85)
+  waypoint 0 (56,136) reached
+replayed to chunk 84
+  try right    -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+  try left     -> ( 43, 88) key=1 dead=0 term=0 score=-646.4
+  try up       -> ( 51, 88) key=1 dead=0 term=0 score=-624.9
+  try down     -> ( 51, 88) key=1 dead=0 term=0 score=-624.9
+  try right+A  -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+  try left+A   -> ( 43, 88) key=1 dead=0 term=0 score=-646.4
+  try A        -> ( 51, 88) key=1 dead=0 term=0 score=-624.9
+  try B        -> ( 51, 88) key=1 dead=0 term=0 score=-624.9
+  try right+B  -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+chunk 84: choose up score=-624.9 stall=0
+chunk 84: up -> (51,88) key=1 lives=4 state=16 timer=6
+  try wait     -> ( 51, 88) key=1 dead=0 term=0 score=-684.9
+  try right    -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+  try left     -> ( 42, 88) key=1 dead=0 term=0 score=-650.3
+  try up       -> ( 51, 88) key=1 dead=0 term=0 score=-684.9
+  try down     -> ( 51, 88) key=1 dead=0 term=0 score=-684.9
+  try right+A  -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+  try left+A   -> ( 42, 88) key=1 dead=0 term=0 score=-650.3
+  try A        -> ( 51, 88) key=1 dead=0 term=0 score=-684.9
+  try B        -> ( 51, 88) key=1 dead=0 term=0 score=-684.9
+  try right+B  -> ( 61, 91) key=1 dead=0 term=0 score=-834.6
+chunk 85: choose left score=-650.3 stall=1
+chunk 85: left -> (42,88) key=1 lives=4 state=16 timer=5
+  try wait     -> ( 37, 88) key=1 dead=0 term=0 score=-613.2
+  try right    -> ( 37, 88) key=1 dead=0 term=0 score=-613.2
+  try left     -> ( 31, 88) key=1 dead=0 term=0 score=-887.1
+  try up       -> ( 37, 88) key=1 dead=0 term=0 score=-613.2
+  try down     -> ( 37, 88) key=1 dead=0 term=0 score=-613.2
+  try right+A  -> ( 37, 88) key=1 dead=0 term=0 score=-613.2
+  try left+A   -> ( 31, 88) key=1 dead=0 term=0 score=-887.1
+  try A        -> ( 37, 88) key=1 dead=0 term=0 score=-613.2
+  try B        -> ( 37, 88) key=1 dead=0 term=0 score=-613.2
+  try right+B  -> ( 37, 88) key=1 dead=0 term=0 score=-613.2
+chunk 86: choose wait score=-613.2 stall=0
+chunk 86: wait -> (37,88) key=1 lives=4 state=16 timer=4
+  try wait     -> ( 37, 88) key=1 dead=0 term=0 score=-673.2
+  try right    -> ( 45, 88) key=1 dead=0 term=0 score=-699.4
+  try left     -> ( 27, 88) key=1 dead=0 term=0 score=-912.9
+  try up       -> ( 37, 88) key=1 dead=0 term=0 score=-673.2
+  try down     -> ( 37, 88) key=1 dead=0 term=0 score=-673.2
+  try right+A  -> ( 45, 88) key=1 dead=0 term=0 score=-699.4
+  try left+A   -> ( 27, 88) key=1 dead=0 term=0 score=-912.9
+  try A        -> ( 37, 88) key=1 dead=0 term=0 score=-673.2
+  try B        -> ( 37, 88) key=1 dead=0 term=0 score=-673.2
+  try right+B  -> ( 45, 88) key=1 dead=0 term=0 score=-699.4
+chunk 87: choose wait score=-673.2 stall=1
+chunk 87: wait -> (37,88) key=1 lives=4 state=16 timer=3
+  try wait     -> ( 37, 88) key=1 dead=0 term=0 score=-733.2
+  try right    -> ( 46, 88) key=1 dead=0 term=0 score=-696.3
+  try left     -> ( 27, 88) key=1 dead=0 term=0 score=-912.9
+  try up       -> ( 37, 88) key=1 dead=0 term=0 score=-733.2
+  try down     -> ( 37, 88) key=1 dead=0 term=0 score=-733.2
+  try right+A  -> ( 46, 72) key=1 dead=0 term=0 score=-249.7
+  try left+A   -> ( 27, 72) key=1 dead=0 term=0 score=-332.2
+  try A        -> ( 37, 72) key=1 dead=0 term=0 score=-249.4
+  try B        -> ( 37, 88) key=1 dead=0 term=0 score=-733.2
+  try right+B  -> ( 46, 88) key=1 dead=0 term=0 score=-696.3
+chunk 88: choose A score=-249.4 stall=0
+chunk 88: A -> (37,72) key=1 lives=4 state=16 timer=10
+  try wait     -> ( 37, 77) key=1 dead=0 term=0 score=-344.2
+  try right    -> ( 46, 77) key=1 dead=0 term=0 score=-293.6
+  try left     -> ( 27, 77) key=1 dead=0 term=0 score=-359.1
+  try up       -> ( 37, 77) key=1 dead=0 term=0 score=-344.2
+  try down     -> ( 37, 77) key=1 dead=0 term=0 score=-344.2
+  try right+A  -> ( 46, 77) key=1 dead=0 term=0 score=-293.6
+  try left+A   -> ( 27, 77) key=1 dead=0 term=0 score=-359.1
+  try A        -> ( 37, 77) key=1 dead=0 term=0 score=-344.2
+  try B        -> ( 37, 77) key=1 dead=0 term=0 score=-344.2
+  try right+B  -> ( 46, 77) key=1 dead=0 term=0 score=-293.6
+chunk 89: choose right score=-293.6 stall=1
+chunk 89: right -> (46,77) key=1 lives=4 state=16 timer=9
+  try wait     -> ( 54, 88) key=1 dead=0 term=0 score=-681.6
+  try right    -> ( 57, 88) key=1 dead=0 term=0 score=-801.2
+  try left     -> ( 54, 88) key=1 dead=0 term=0 score=-681.6
+  try up       -> ( 54, 88) key=1 dead=0 term=0 score=-681.6
+  try down     -> ( 54, 88) key=1 dead=0 term=0 score=-681.6
+  try right+A  -> ( 57, 88) key=1 dead=0 term=0 score=-801.2
+  try left+A   -> ( 54, 88) key=1 dead=0 term=0 score=-681.6
+  try A        -> ( 54, 88) key=1 dead=0 term=0 score=-681.6
+  try B        -> ( 54, 88) key=1 dead=0 term=0 score=-681.6
+  try right+B  -> ( 57, 88) key=1 dead=0 term=0 score=-801.2
+chunk 90: choose wait score=-681.6 stall=2
+chunk 90: wait -> (54,88) key=1 lives=4 state=16 timer=8
+  try wait     -> ( 55, 88) key=1 dead=0 term=0 score=-741.2
+  try right    -> ( 64, 88) key=1 dead=0 term=0 score=-690.8
+  try left     -> ( 50, 88) key=1 dead=0 term=0 score=-746.6
+  try up       -> ( 52, 81) key=1 dead=0 term=0 score=-314.2
+  try down     -> ( 55, 88) key=1 dead=0 term=0 score=-741.2
+  try right+A  -> ( 65, 72) key=1 dead=0 term=0 score=-184.6
+  try left+A   -> ( 45, 63) key=1 dead=0 term=0 score=-131.4
+  try A        -> ( 56, 72) key=1 dead=0 term=0 score=-161.0
+  try B        -> ( 55, 88) key=1 dead=0 term=0 score=-741.2
+  try right+B  -> ( 64, 88) key=1 dead=0 term=0 score=-690.8
+chunk 91: choose left+A score=-131.4 stall=0
+chunk 91: left+A -> (45,63) key=1 lives=4 state=16 timer=7
+  try wait     -> ( 37, 59) key=1 dead=0 term=0 score=-193.4
+  try right    -> ( 37, 59) key=1 dead=0 term=0 score=-193.4
+  try left     -> ( 34, 59) key=1 dead=0 term=0 score=-223.0
+  try up       -> ( 37, 59) key=1 dead=0 term=0 score=-193.4
+  try down     -> ( 37, 59) key=1 dead=0 term=0 score=-193.4
+  try right+A  -> ( 37, 59) key=1 dead=0 term=0 score=-193.4
+  try left+A   -> ( 34, 59) key=1 dead=0 term=0 score=-223.0
+  try A        -> ( 37, 59) key=1 dead=0 term=0 score=-193.4
+  try B        -> ( 37, 59) key=1 dead=0 term=0 score=-193.4
+  try right+B  -> ( 37, 59) key=1 dead=0 term=0 score=-193.4
+chunk 92: choose wait score=-193.4 stall=1
+chunk 92: wait -> (37,59) key=1 lives=4 state=16 timer=6
+  try wait     -> ( 34, 74) key=1 dead=0 term=0 score=-345.3
+  try right    -> ( 34, 74) key=1 dead=0 term=0 score=-345.3
+  try left     -> ( 26, 74) key=1 dead=0 term=0 score=-350.9
+  try up       -> ( 34, 74) key=1 dead=0 term=0 score=-345.3
+  try down     -> ( 34, 74) key=1 dead=0 term=0 score=-345.3
+  try right+A  -> ( 34, 74) key=1 dead=0 term=0 score=-345.3
+  try left+A   -> ( 26, 74) key=1 dead=0 term=0 score=-350.9
+  try A        -> ( 34, 74) key=1 dead=0 term=0 score=-345.3
+  try B        -> ( 34, 74) key=1 dead=0 term=0 score=-345.3
+  try right+B  -> ( 34, 74) key=1 dead=0 term=0 score=-345.3
+chunk 93: choose wait score=-345.3 stall=2
+chunk 93: wait -> (34,74) key=1 lives=4 state=16 timer=5
+  try wait     -> ( 34, 88) key=1 dead=0 term=0 score=-749.3
+  try right    -> ( 43, 88) key=1 dead=0 term=0 score=-706.4
+  try left     -> ( 24, 88) key=1 dead=0 term=0 score=-933.5
+  try up       -> ( 34, 88) key=1 dead=0 term=0 score=-749.3
+  try down     -> ( 34, 88) key=1 dead=0 term=0 score=-749.3
+  try right+A  -> ( 43, 88) key=1 dead=0 term=0 score=-706.4
+  try left+A   -> ( 24, 88) key=1 dead=0 term=0 score=-933.5
+  try A        -> ( 34, 88) key=1 dead=0 term=0 score=-749.3
+  try B        -> ( 34, 88) key=1 dead=0 term=0 score=-749.3
+  try right+B  -> ( 43, 88) key=1 dead=0 term=0 score=-706.4
+chunk 94: choose right score=-706.4 stall=3
+chunk 94: right -> (43,88) key=1 lives=4 state=16 timer=4
+  try wait     -> ( 47, 88) key=1 dead=0 term=0 score=-753.4
+  try right    -> ( 53, 88) key=1 dead=0 term=0 score=-742.4
+  try left     -> ( 47, 88) key=1 dead=0 term=0 score=-753.4
+  try up       -> ( 52, 85) key=1 dead=0 term=0 score=-353.7
+  try down     -> ( 47, 88) key=1 dead=0 term=0 score=-753.4
+  try right+A  -> ( 53, 88) key=1 dead=0 term=0 score=-742.4
+  try left+A   -> ( 47, 88) key=1 dead=0 term=0 score=-753.4
+  try A        -> ( 47, 88) key=1 dead=0 term=0 score=-753.4
+  try B        -> ( 47, 88) key=1 dead=0 term=0 score=-753.4
+  try right+B  -> ( 53, 88) key=1 dead=0 term=0 score=-742.4
+chunk 95: choose up score=-353.7 stall=4
+chunk 95: up -> (52,85) key=1 lives=4 state=16 timer=3
+  try wait     -> ( 52, 85) key=1 dead=0 term=0 score=-413.7
+  try right    -> ( 54, 88) key=1 dead=0 term=0 score=-741.6
+  try left     -> ( 49, 88) key=1 dead=0 term=0 score=-748.6
+  try up       -> ( 52, 78) key=1 dead=0 term=0 score=-284.6
+  try down     -> ( 52, 88) key=1 dead=0 term=0 score=-743.5
+  try right+A  -> ( 60, 91) key=1 dead=0 term=0 score=-833.3
+  try left+A   -> ( 43, 88) key=1 dead=0 term=0 score=-766.4
+  try A        -> ( 52, 88) key=1 dead=0 term=0 score=-743.5
+  try B        -> ( 52, 85) key=1 dead=0 term=0 score=-413.7
+  try right+B  -> ( 54, 88) key=1 dead=0 term=0 score=-741.6
+chunk 96: choose up score=-284.6 stall=5
+chunk 96: up -> (52,78) key=1 lives=4 state=16 timer=10
+  try wait     -> ( 52, 78) key=1 dead=0 term=0 score=-344.6
+  try right    -> ( 54, 80) key=1 dead=0 term=0 score=-361.8
+  try left     -> ( 49, 80) key=1 dead=0 term=0 score=-371.0
+  try up       -> ( 52, 70) key=1 dead=0 term=0 score=-146.6
+  try down     -> ( 52, 86) key=1 dead=0 term=0 score=-423.7
+  try right+A  -> ( 61, 89) key=1 dead=0 term=0 score=-814.8
+  try left+A   -> ( 43, 89) key=1 dead=0 term=0 score=-775.7
+  try A        -> ( 52, 89) key=1 dead=0 term=0 score=-753.4
+  try B        -> ( 52, 78) key=1 dead=0 term=0 score=-344.6
+  try right+B  -> ( 54, 80) key=1 dead=0 term=0 score=-361.8
+chunk 97: choose up score=-146.6 stall=6
+chunk 97: up -> (52,70) key=1 lives=4 state=16 timer=9
+  try wait     -> ( 52, 70) key=1 dead=0 term=0 score=-206.6
+  try right    -> ( 54, 73) key=1 dead=0 term=0 score=-292.2
+  try left     -> ( 49, 73) key=1 dead=0 term=0 score=-304.8
+  try up       -> ( 52, 63) key=1 dead=0 term=0 score=-81.6
+  try down     -> ( 52, 78) key=1 dead=0 term=0 score=-344.6
+  try right+A  -> ( 61, 82) key=1 dead=0 term=0 score=-325.8
+  try left+A   -> ( 43, 82) key=1 dead=0 term=0 score=-291.7
+  try A        -> ( 52, 82) key=1 dead=0 term=0 score=-384.1
+  try B        -> ( 52, 70) key=1 dead=0 term=0 score=-206.6
+  try right+B  -> ( 54, 73) key=1 dead=0 term=0 score=-292.2
+chunk 98: choose up score=-81.6 stall=0
+chunk 98: up -> (52,63) key=1 lives=4 state=16 timer=8
+  try wait     -> ( 52, 63) key=1 dead=0 term=0 score=-141.6
+  try right    -> ( 54, 65) key=1 dead=0 term=0 score=-153.2
+  try left     -> ( 49, 65) key=1 dead=0 term=0 score=-175.0
+  try up       -> ( 52, 55) key=1 dead=0 term=0 score=-42.2
+  try down     -> ( 52, 71) key=1 dead=0 term=0 score=-216.2
+  try right+A  -> ( 61, 74) key=1 dead=0 term=0 score=-187.8
+  try left+A   -> ( 43, 74) key=1 dead=0 term=0 score=-343.0
+  try A        -> ( 52, 74) key=1 dead=0 term=0 score=-305.4
+  try B        -> ( 52, 63) key=1 dead=0 term=0 score=-141.6
+  try right+B  -> ( 54, 65) key=1 dead=0 term=0 score=-153.2
+chunk 99: choose up score=-42.2 stall=0
+  waypoint 1 (56,56) reached
+chunk 99: up -> (52,55) key=1 lives=4 state=16 timer=7
+  try wait     -> ( 52, 55) key=1 dead=0 term=0 score=-424.5
+  try right    -> ( 54, 58) key=1 dead=0 term=0 score=-401.6
+  try left     -> ( 49, 58) key=1 dead=0 term=0 score=-451.5
+  try up       -> ( 52, 48) key=1 dead=0 term=0 score=-440.5
+  try down     -> ( 52, 63) key=1 dead=0 term=0 score=-422.2
+  try right+A  -> ( 61, 67) key=1 dead=0 term=0 score=-279.9
+  try left+A   -> ( 43, 67) key=1 dead=0 term=0 score=-456.4
+  try A        -> ( 52, 67) key=1 dead=0 term=0 score=-427.7
+  try B        -> ( 52, 55) key=1 dead=0 term=0 score=-424.5
+  try right+B  -> ( 54, 58) key=1 dead=0 term=0 score=-401.6
+chunk 100: choose right+A score=-279.9 stall=1
+  dumped chunk100/* to build/nacre-test/slice12/play\nchunk 100: right+A -> (61,67) key=1 lives=4 state=16 timer=6
+  try wait     -> ( 69, 86) key=1 dead=0 term=0 score=-323.0
+  try right    -> ( 72, 86) key=1 dead=0 term=0 score=-306.3
+  try left     -> ( 69, 86) key=1 dead=0 term=0 score=-323.0
+  try up       -> ( 69, 86) key=1 dead=0 term=0 score=-323.0
+  try down     -> ( 69, 86) key=1 dead=0 term=0 score=-323.0
+  try right+A  -> ( 72, 86) key=1 dead=0 term=0 score=-306.3
+  try left+A   -> ( 69, 86) key=1 dead=0 term=0 score=-323.0
+  try A        -> ( 69, 86) key=1 dead=0 term=0 score=-323.0
+  try B        -> ( 69, 86) key=1 dead=0 term=0 score=-323.0
+  try right+B  -> ( 72, 86) key=1 dead=0 term=0 score=-306.3
+chunk 101: choose right score=-306.3 stall=2
+chunk 101: right -> (72,86) key=1 lives=4 state=16 timer=5
+  try wait     -> ( 78, 88) key=1 dead=0 term=0 score=-658.3
+  try right    -> ( 82, 88) key=1 dead=0 term=0 score=-587.4
+  try left     -> ( 78, 88) key=1 dead=0 term=0 score=-658.3
+  try up       -> ( 78, 88) key=1 dead=0 term=0 score=-658.3
+  try down     -> ( 78, 88) key=1 dead=0 term=0 score=-658.3
+  try right+A  -> ( 82, 88) key=1 dead=0 term=0 score=-587.4
+  try left+A   -> ( 78, 88) key=1 dead=0 term=0 score=-658.3
+  try A        -> ( 78, 88) key=1 dead=0 term=0 score=-658.3
+  try B        -> ( 78, 88) key=1 dead=0 term=0 score=-658.3
+  try right+B  -> ( 82, 88) key=1 dead=0 term=0 score=-587.4
+chunk 102: choose right score=-587.4 stall=3
+chunk 102: right -> (82,88) key=1 lives=4 state=16 timer=4
+  try wait     -> ( 87, 88) key=1 dead=0 term=0 score=-641.2
+  try right    -> ( 92, 88) key=1 dead=0 term=0 score=-463.8
+  try left     -> ( 87, 88) key=1 dead=0 term=0 score=-641.2
+  try up       -> ( 87, 88) key=1 dead=0 term=0 score=-641.2
+  try down     -> ( 87, 88) key=1 dead=0 term=0 score=-641.2
+  try right+A  -> ( 93, 72) key=1 dead=0 term=0 score=-131.0
+  try left+A   -> ( 73, 63) key=0 dead=0 term=0 score=9961.2
+  try A        -> ( 90, 72) key=1 dead=0 term=0 score=-122.7
+  try B        -> ( 87, 88) key=1 dead=0 term=0 score=-641.2
+  try right+B  -> ( 92, 88) key=1 dead=0 term=0 score=-463.8
+chunk 103: choose left+A score=9961.2 stall=0
+chunk 103: KEY COLLECTED at (73,63)
+  dumped key/* to build/nacre-test/slice12/play\nchunk 103: left+A -> (73,63) key=0 lives=4 state=16 timer=3
+  try wait     -> ( 65, 70) key=0 dead=0 term=0 score=9964.6
+  try right    -> ( 65, 70) key=0 dead=0 term=0 score=9964.6
+  try left     -> ( 62, 70) key=0 dead=0 term=0 score=9918.7
+  try up       -> ( 65, 70) key=0 dead=0 term=0 score=9964.6
+  try down     -> ( 65, 70) key=0 dead=0 term=0 score=9964.6
+  try right+A  -> ( 65, 70) key=0 dead=0 term=0 score=9964.6
+  try left+A   -> ( 62, 70) key=0 dead=0 term=0 score=9918.7
+  try A        -> ( 65, 70) key=0 dead=0 term=0 score=9964.6
+  try B        -> ( 65, 70) key=0 dead=0 term=0 score=9964.6
+  try right+B  -> ( 65, 70) key=0 dead=0 term=0 score=9964.6
+chunk 104: choose wait score=9964.6 stall=0
+chunk 104: wait -> (65,70) key=0 lives=4 state=16 timer=10
+  try wait     -> ( 62, 89) key=0 dead=0 term=0 score=9277.6
+  try right    -> ( 62, 89) key=0 dead=0 term=0 score=9277.6
+  try left     -> ( 54, 89) key=0 dead=0 term=0 score=9342.4
+  try up       -> ( 62, 89) key=0 dead=0 term=0 score=9277.6
+  try down     -> ( 62, 89) key=0 dead=0 term=0 score=9277.6
+  try right+A  -> ( 62, 89) key=0 dead=0 term=0 score=9277.6
+  try left+A   -> ( 54, 89) key=0 dead=0 term=0 score=9342.4
+  try A        -> ( 62, 89) key=0 dead=0 term=0 score=9277.6
+  try B        -> ( 62, 89) key=0 dead=0 term=0 score=9277.6
+  try right+B  -> ( 62, 89) key=0 dead=0 term=0 score=9277.6
+chunk 105: choose left score=9342.4 stall=1
+chunk 105: left -> (54,89) key=0 lives=4 state=16 timer=9
+  try wait     -> ( 48, 88) key=0 dead=0 term=0 score=9285.2
+  try right    -> ( 48, 88) key=0 dead=0 term=0 score=9285.2
+  try left     -> ( 44, 88) key=0 dead=0 term=0 score=9333.2
+  try up       -> ( 52, 83) key=0 dead=0 term=0 score=9712.1
+  try down     -> ( 48, 88) key=0 dead=0 term=0 score=9285.2
+  try right+A  -> ( 48, 88) key=0 dead=0 term=0 score=9285.2
+  try left+A   -> ( 44, 88) key=0 dead=0 term=0 score=9333.2
+  try A        -> ( 48, 88) key=0 dead=0 term=0 score=9285.2
+  try B        -> ( 48, 88) key=0 dead=0 term=0 score=9285.2
+  try right+B  -> ( 48, 88) key=0 dead=0 term=0 score=9285.2
+chunk 106: choose up score=9712.1 stall=2
+chunk 106: up -> (52,83) key=0 lives=4 state=16 timer=8
+  try wait     -> ( 52, 83) key=0 dead=0 term=0 score=9652.1
+  try right    -> ( 55, 86) key=0 dead=0 term=0 score=9618.8
+  try left     -> ( 49, 86) key=0 dead=0 term=0 score=9610.9
+  try up       -> ( 52, 76) key=0 dead=0 term=0 score=9795.0
+  try down     -> ( 52, 88) key=0 dead=0 term=0 score=9292.5
+  try right+A  -> ( 61, 91) key=0 dead=0 term=0 score=9255.4
+  try left+A   -> ( 43, 88) key=0 dead=0 term=0 score=9329.6
+  try A        -> ( 52, 88) key=0 dead=0 term=0 score=9292.5
+  try B        -> ( 52, 83) key=0 dead=0 term=0 score=9652.1
+  try right+B  -> ( 55, 86) key=0 dead=0 term=0 score=9618.8
+chunk 107: choose up score=9795.0 stall=3
+chunk 107: up -> (52,76) key=0 lives=4 state=16 timer=7
+  try wait     -> ( 52, 76) key=0 dead=0 term=0 score=9735.0
+  try right    -> ( 55, 78) key=0 dead=0 term=0 score=9714.8
+  try left     -> ( 49, 78) key=0 dead=0 term=0 score=9704.1
+  try up       -> ( 52, 68) key=0 dead=0 term=0 score=9948.5
+  try down     -> ( 52, 84) key=0 dead=0 term=0 score=9640.2
+  try right+A  -> ( 61, 87) key=0 dead=0 term=0 score=9723.0
+  try left+A   -> ( 43, 87) key=0 dead=0 term=0 score=9760.8
+  try A        -> ( 52, 87) key=0 dead=0 term=0 score=9604.4
+  try B        -> ( 52, 76) key=0 dead=0 term=0 score=9735.0
+  try right+B  -> ( 55, 78) key=0 dead=0 term=0 score=9714.8
+chunk 108: choose up score=9948.5 stall=4
+chunk 108: up -> (52,68) key=0 lives=4 state=16 timer=6
+  try wait     -> ( 52, 68) key=0 dead=0 term=0 score=9888.5
+  try right    -> ( 55, 71) key=0 dead=0 term=0 score=9858.7
+  try left     -> ( 49, 71) key=0 dead=0 term=0 score=9843.5
+  try up       -> ( 52, 61) key=0 dead=0 term=0 score=10025.0
+  try down     -> ( 52, 76) key=0 dead=0 term=0 score=9735.0
+  try right+A  -> ( 61, 80) key=0 dead=0 term=0 score=9805.8
+  try left+A   -> ( 43, 80) key=0 dead=0 term=0 score=9838.1
+  try A        -> ( 52, 80) key=0 dead=0 term=0 score=9687.7
+  try B        -> ( 52, 68) key=0 dead=0 term=0 score=9888.5
+  try right+B  -> ( 55, 71) key=0 dead=0 term=0 score=9858.7
+chunk 109: choose up score=10025.0 stall=0
+chunk 109: up -> (52,61) key=0 lives=4 state=16 timer=5
+  try wait     -> ( 52, 61) key=0 dead=0 term=0 score=9965.0
+  try right    -> ( 55, 63) key=0 dead=0 term=0 score=9954.3
+  try left     -> ( 49, 63) key=0 dead=0 term=0 score=9926.0
+  try up       -> ( 52, 53) key=0 dead=0 term=0 score=10055.0
+  try down     -> ( 52, 69) key=0 dead=0 term=0 score=9877.0
+  try right+A  -> ( 61, 72) key=0 dead=0 term=0 score=9959.4
+  try left+A   -> ( 43, 72) key=0 dead=0 term=0 score=9800.8
+  try A        -> ( 52, 72) key=0 dead=0 term=0 score=9782.1
+  try B        -> ( 52, 61) key=0 dead=0 term=0 score=9965.0
+  try right+B  -> ( 55, 63) key=0 dead=0 term=0 score=9954.3
+chunk 110: choose up score=10055.0 stall=0
+  post-key waypoint 0 (56,56) reached
+chunk 110: up -> (52,53) key=0 lives=4 state=16 timer=4
+  try wait     -> ( 52, 53) key=0 dead=0 term=0 score=9921.3
+  try right    -> ( 55, 56) key=0 dead=0 term=0 score=9889.0
+  try left     -> ( 49, 56) key=0 dead=0 term=0 score=9949.0
+  try up       -> ( 52, 46) key=0 dead=0 term=0 score=10022.8
+  try down     -> ( 52, 61) key=0 dead=0 term=0 score=9899.0
+  try right+A  -> ( 61, 65) key=0 dead=0 term=0 score=9852.5
+  try left+A   -> ( 43, 65) key=0 dead=0 term=0 score=10046.1
+  try A        -> ( 52, 65) key=0 dead=0 term=0 score=9871.0
+  try B        -> ( 52, 53) key=0 dead=0 term=0 score=9921.3
+  try right+B  -> ( 55, 56) key=0 dead=0 term=0 score=9889.0
+chunk 111: choose left+A score=10046.1 stall=1
+chunk 111: left+A -> (43,65) key=0 lives=4 state=16 timer=3
+  try wait     -> ( 35, 84) key=0 dead=0 term=0 score=9818.6
+  try right    -> ( 35, 84) key=0 dead=0 term=0 score=9818.6
+  try left     -> ( 32, 84) key=0 dead=0 term=0 score=9811.8
+  try up       -> ( 35, 84) key=0 dead=0 term=0 score=9818.6
+  try down     -> ( 35, 84) key=0 dead=0 term=0 score=9818.6
+  try right+A  -> ( 35, 84) key=0 dead=0 term=0 score=9818.6
+  try left+A   -> ( 32, 84) key=0 dead=0 term=0 score=9811.8
+  try A        -> ( 35, 84) key=0 dead=0 term=0 score=9818.6
+  try B        -> ( 35, 84) key=0 dead=0 term=0 score=9818.6
+  try right+B  -> ( 35, 84) key=0 dead=0 term=0 score=9818.6
+chunk 112: choose wait score=9818.6 stall=2
+chunk 112: wait -> (35,84) key=0 lives=4 state=16 timer=10
+  try wait     -> ( 33, 88) key=0 dead=0 term=0 score=9407.4
+  try right    -> ( 34, 88) key=0 dead=0 term=0 score=9409.4
+  try left     -> ( 25, 88) key=0 dead=0 term=0 score=9261.6
+  try up       -> ( 33, 88) key=0 dead=0 term=0 score=9407.4
+  try down     -> ( 33, 88) key=0 dead=0 term=0 score=9407.4
+  try right+A  -> ( 34, 88) key=0 dead=0 term=0 score=9409.4
+  try left+A   -> ( 25, 88) key=0 dead=0 term=0 score=9261.6
+  try A        -> ( 33, 88) key=0 dead=0 term=0 score=9407.4
+  try B        -> ( 33, 88) key=0 dead=0 term=0 score=9407.4
+  try right+B  -> ( 34, 88) key=0 dead=0 term=0 score=9409.4
+chunk 113: choose right score=9409.4 stall=3
+chunk 113: right -> (34,88) key=0 lives=4 state=16 timer=9
+  try wait     -> ( 39, 88) key=0 dead=0 term=0 score=9354.8
+  try right    -> ( 45, 88) key=0 dead=0 term=0 score=9351.1
+  try left     -> ( 39, 88) key=0 dead=0 term=0 score=9354.8
+  try up       -> ( 39, 88) key=0 dead=0 term=0 score=9354.8
+  try down     -> ( 39, 88) key=0 dead=0 term=0 score=9354.8
+  try right+A  -> ( 45, 72) key=0 dead=0 term=0 score=9839.4
+  try left+A   -> ( 25, 63) key=0 dead=0 term=0 score=9979.5
+  try A        -> ( 41, 72) key=0 dead=0 term=0 score=9846.7
+  try B        -> ( 39, 88) key=0 dead=0 term=0 score=9354.8
+  try right+B  -> ( 45, 88) key=0 dead=0 term=0 score=9351.1
+chunk 114: choose left+A score=9979.5 stall=4
+chunk 114: left+A -> (25,63) key=0 lives=4 state=16 timer=8
+  try wait     -> ( 17, 59) key=0 dead=0 term=0 score=9921.1
+  try right    -> ( 17, 59) key=0 dead=0 term=0 score=9921.1
+  try left     -> ( 14, 59) key=0 dead=0 term=0 score=9891.3
+  try up       -> ( 17, 59) key=0 dead=0 term=0 score=9921.1
+  try down     -> ( 17, 59) key=0 dead=0 term=0 score=9921.1
+  try right+A  -> ( 17, 59) key=0 dead=0 term=0 score=9921.1
+  try left+A   -> ( 14, 59) key=0 dead=0 term=0 score=9891.3
+  try A        -> ( 17, 59) key=0 dead=0 term=0 score=9921.1
+  try B        -> ( 17, 59) key=0 dead=0 term=0 score=9921.1
+  try right+B  -> ( 17, 59) key=0 dead=0 term=0 score=9921.1
+chunk 115: choose wait score=9921.1 stall=5
+chunk 115: wait -> (17,59) key=0 lives=4 state=16 timer=7
+  try wait     -> ( 14, 74) key=0 dead=0 term=0 score=9806.8
+  try right    -> ( 14, 74) key=0 dead=0 term=0 score=9806.8
+  try left     -> (  7, 74) key=0 dead=0 term=0 score=9747.1
+  try up       -> ( 14, 74) key=0 dead=0 term=0 score=9806.8
+  try down     -> ( 14, 74) key=0 dead=0 term=0 score=9806.8
+  try right+A  -> ( 14, 74) key=0 dead=0 term=0 score=9806.8
+  try left+A   -> (  7, 74) key=0 dead=0 term=0 score=9747.1
+  try A        -> ( 14, 74) key=0 dead=0 term=0 score=9806.8
+  try B        -> ( 14, 74) key=0 dead=0 term=0 score=9806.8
+  try right+B  -> ( 14, 74) key=0 dead=0 term=0 score=9806.8
+chunk 116: choose wait score=9806.8 stall=6
+chunk 116: wait -> (14,74) key=0 lives=4 state=16 timer=6
+  try wait     -> ( 14, 88) key=0 dead=0 term=0 score=9622.7
+  try right    -> ( 23, 88) key=0 dead=0 term=0 score=9612.6
+  try left     -> (  5, 88) key=0 dead=0 term=0 score=9620.8
+  try up       -> ( 14, 88) key=0 dead=0 term=0 score=9622.7
+  try down     -> ( 14, 88) key=0 dead=0 term=0 score=9622.7
+  try right+A  -> ( 23, 88) key=0 dead=0 term=0 score=9612.6
+  try left+A   -> (  5, 88) key=0 dead=0 term=0 score=9620.8
+  try A        -> ( 14, 88) key=0 dead=0 term=0 score=9622.7
+  try B        -> ( 14, 88) key=0 dead=0 term=0 score=9622.7
+  try right+B  -> ( 23, 88) key=0 dead=0 term=0 score=9612.6
+chunk 117: choose wait score=9622.7 stall=7
+chunk 117: wait -> (14,88) key=0 lives=4 state=16 timer=5
+  try wait     -> ( 14, 88) key=0 dead=0 term=0 score=9562.7
+  try right    -> ( 22, 88) key=0 dead=0 term=0 score=9607.8
+  try left     -> (  6, 88) key=0 dead=0 term=0 score=9628.1
+  try up       -> ( 14, 88) key=0 dead=0 term=0 score=9562.7
+  try down     -> ( 12, 94) key=0 dead=0 term=0 score=9491.0
+  try right+A  -> ( 22, 88) key=0 dead=0 term=0 score=9607.8
+  try left+A   -> (  6, 88) key=0 dead=0 term=0 score=9628.1
+  try A        -> ( 14, 88) key=0 dead=0 term=0 score=9562.7
+  try B        -> ( 14, 88) key=0 dead=0 term=0 score=9562.7
+  try right+B  -> ( 22, 88) key=0 dead=0 term=0 score=9607.8
+chunk 118: choose left score=9628.1 stall=8
+chunk 118: left -> (6,88) key=0 lives=4 state=16 timer=4
+  try wait     -> (  4, 88) key=0 dead=0 term=0 score=9553.3
+  try right    -> (  9, 88) key=0 dead=0 term=0 score=9529.5
+  try left     -> (  4, 88) key=0 dead=0 term=0 score=9553.3
+  try up       -> (  4, 88) key=0 dead=0 term=0 score=9553.3
+  try down     -> (  3, 88) key=0 dead=0 term=0 score=9545.8
+  try right+A  -> ( 16, 63) key=0 dead=0 term=0 score=9835.0
+  try left+A   -> (  4, 72) key=0 dead=0 term=0 score=9733.0
+  try A        -> (  4, 72) key=0 dead=0 term=0 score=9733.0
+  try B        -> (  4, 88) key=0 dead=0 term=0 score=9553.3
+  try right+B  -> (  9, 88) key=0 dead=0 term=0 score=9529.5
+chunk 119: choose right+A score=9835.0 stall=9
+chunk 119: right+A -> (16,63) key=0 lives=4 state=16 timer=3
+  try wait     -> ( 24, 59) key=0 dead=0 term=0 score=9930.2
+  try right    -> ( 26, 59) key=0 dead=0 term=0 score=9949.8
+  try left     -> ( 24, 59) key=0 dead=0 term=0 score=9930.2
+  try up       -> ( 24, 59) key=0 dead=0 term=0 score=9930.2
+  try down     -> ( 24, 59) key=0 dead=0 term=0 score=9930.2
+  try right+A  -> ( 26, 59) key=0 dead=0 term=0 score=9949.8
+  try left+A   -> ( 24, 59) key=0 dead=0 term=0 score=9930.2
+  try A        -> ( 24, 59) key=0 dead=0 term=0 score=9930.2
+  try B        -> ( 24, 59) key=0 dead=0 term=0 score=9930.2
+  try right+B  -> ( 26, 59) key=0 dead=0 term=0 score=9949.8
+chunk 120: choose right score=9949.8 stall=10
+backtracking to chunk 119 (was at 120)
+  waypoint 0 (56,136) reached
+  waypoint 1 (56,56) reached
+  post-key waypoint 0 (56,56) reached
+replayed to chunk 119
+  try wait     -> (  4, 88) key=0 dead=0 term=0 score=9553.3
+  try right    -> (  9, 88) key=0 dead=0 term=0 score=9529.5
+  try left     -> (  4, 88) key=0 dead=0 term=0 score=9553.3
+  try up       -> (  4, 88) key=0 dead=0 term=0 score=9553.3
+  try down     -> (  3, 88) key=0 dead=0 term=0 score=9545.8
+  try left+A   -> (  4, 72) key=0 dead=0 term=0 score=9733.0
+  try A        -> (  4, 72) key=0 dead=0 term=0 score=9733.0
+  try B        -> (  4, 88) key=0 dead=0 term=0 score=9553.3
+  try right+B  -> (  9, 88) key=0 dead=0 term=0 score=9529.5
+chunk 119: choose left+A score=9733.0 stall=0
+chunk 119: left+A -> (4,72) key=0 lives=4 state=16 timer=3
+  try wait     -> (  4, 77) key=0 dead=0 term=0 score=9640.2
+  try right    -> ( 13, 77) key=0 dead=0 term=0 score=9714.9
+  try left     -> (  4, 77) key=0 dead=0 term=0 score=9640.2
+  try up       -> (  4, 77) key=0 dead=0 term=0 score=9640.2
+  try down     -> (  4, 77) key=0 dead=0 term=0 score=9640.2
+  try right+A  -> ( 13, 77) key=0 dead=0 term=0 score=9714.9
+  try left+A   -> (  4, 77) key=0 dead=0 term=0 score=9640.2
+  try A        -> (  4, 77) key=0 dead=0 term=0 score=9640.2
+  try B        -> (  4, 77) key=0 dead=0 term=0 score=9640.2
+  try right+B  -> ( 13, 77) key=0 dead=0 term=0 score=9714.9
+chunk 120: choose right score=9714.9 stall=1
+chunk 120: right -> (13,77) key=0 lives=4 state=16 timer=10
+  try wait     -> ( 21, 88) key=0 dead=0 term=0 score=9602.8
+  try right    -> ( 24, 88) key=0 dead=0 term=0 score=9257.2
+  try left     -> ( 21, 88) key=0 dead=0 term=0 score=9602.8
+  try up       -> ( 21, 88) key=0 dead=0 term=0 score=9602.8
+  try down     -> ( 21, 88) key=0 dead=0 term=0 score=9602.8
+  try right+A  -> ( 24, 88) key=0 dead=0 term=0 score=9257.2
+  try left+A   -> ( 21, 88) key=0 dead=0 term=0 score=9602.8
+  try A        -> ( 21, 88) key=0 dead=0 term=0 score=9602.8
+  try B        -> ( 21, 88) key=0 dead=0 term=0 score=9602.8
+  try right+B  -> ( 24, 88) key=0 dead=0 term=0 score=9257.2
+chunk 121: choose wait score=9602.8 stall=2
+chunk 121: wait -> (21,88) key=0 lives=4 state=16 timer=9
+  try wait     -> ( 22, 88) key=0 dead=0 term=0 score=9547.8
+  try right    -> ( 31, 88) key=0 dead=0 term=0 score=9282.6
+  try left     -> ( 17, 88) key=0 dead=0 term=0 score=9520.9
+  try up       -> ( 22, 88) key=0 dead=0 term=0 score=9547.8
+  try down     -> ( 22, 88) key=0 dead=0 term=0 score=9547.8
+  try right+A  -> ( 32, 72) key=0 dead=0 term=0 score=9828.1
+  try left+A   -> ( 12, 63) key=0 dead=0 term=0 score=9856.4
+  try A        -> ( 23, 72) key=0 dead=0 term=0 score=9893.5
+  try B        -> ( 22, 88) key=0 dead=0 term=0 score=9547.8
+  try right+B  -> ( 31, 88) key=0 dead=0 term=0 score=9282.6
+chunk 122: choose A score=9893.5 stall=0
+chunk 122: A -> (23,72) key=0 lives=4 state=16 timer=8
+  try wait     -> ( 23, 77) key=0 dead=0 term=0 score=9786.8
+  try right    -> ( 32, 77) key=0 dead=0 term=0 score=9772.3
+  try left     -> ( 13, 77) key=0 dead=0 term=0 score=9654.9
+  try up       -> ( 23, 77) key=0 dead=0 term=0 score=9786.8
+  try down     -> ( 23, 77) key=0 dead=0 term=0 score=9786.8
+  try right+A  -> ( 32, 77) key=0 dead=0 term=0 score=9772.3
+  try left+A   -> ( 13, 77) key=0 dead=0 term=0 score=9654.9
+  try A        -> ( 23, 77) key=0 dead=0 term=0 score=9786.8
+  try B        -> ( 23, 77) key=0 dead=0 term=0 score=9786.8
+  try right+B  -> ( 32, 77) key=0 dead=0 term=0 score=9772.3
+chunk 123: choose wait score=9786.8 stall=1
+chunk 123: wait -> (23,77) key=0 lives=4 state=16 timer=7
+  try wait     -> ( 23, 88) key=0 dead=0 term=0 score=9552.6
+  try right    -> ( 32, 88) key=0 dead=0 term=0 score=9345.2
+  try left     -> ( 13, 88) key=0 dead=0 term=0 score=9556.3
+  try up       -> ( 23, 88) key=0 dead=0 term=0 score=9552.6
+  try down     -> ( 23, 88) key=0 dead=0 term=0 score=9552.6
+  try right+A  -> ( 32, 88) key=0 dead=0 term=0 score=9345.2
+  try left+A   -> ( 13, 88) key=0 dead=0 term=0 score=9556.3
+  try A        -> ( 23, 88) key=0 dead=0 term=0 score=9552.6
+  try B        -> ( 23, 88) key=0 dead=0 term=0 score=9552.6
+  try right+B  -> ( 32, 88) key=0 dead=0 term=0 score=9345.2
+chunk 124: choose left score=9556.3 stall=2
+chunk 124: left -> (13,88) key=0 lives=4 state=16 timer=6
+  try wait     -> ( 10, 88) key=0 dead=0 term=0 score=9476.4
+  try right    -> ( 11, 88) key=0 dead=0 term=0 score=9483.1
+  try left     -> (  4, 88) key=0 dead=0 term=0 score=9553.3
+  try up       -> ( 10, 88) key=0 dead=0 term=0 score=9476.4
+  try down     -> ( 12, 95) key=0 dead=0 term=0 score=9420.9
+  try right+A  -> ( 22, 63) key=0 dead=0 term=0 score=9891.9
+  try left+A   -> (  4, 72) key=0 dead=0 term=0 score=9673.0
+  try A        -> (  8, 72) key=0 dead=0 term=0 score=9649.2
+  try B        -> ( 10, 88) key=0 dead=0 term=0 score=9476.4
+  try right+B  -> ( 11, 88) key=0 dead=0 term=0 score=9483.1
+chunk 125: choose right+A score=9891.9 stall=3
+  dumped chunk125/* to build/nacre-test/slice12/play\nchunk 125: right+A -> (22,63) key=0 lives=4 state=16 timer=5
+  try wait     -> ( 30, 59) key=0 dead=0 term=0 score=9988.6
+  try right    -> ( 33, 59) key=0 dead=0 term=0 score=10016.8
+  try left     -> ( 30, 59) key=0 dead=0 term=0 score=9988.6
+  try up       -> ( 30, 59) key=0 dead=0 term=0 score=9988.6
+  try down     -> ( 30, 59) key=0 dead=0 term=0 score=9988.6
+  try right+A  -> ( 33, 59) key=0 dead=0 term=0 score=10016.8
+  try left+A   -> ( 30, 59) key=0 dead=0 term=0 score=9988.6
+  try A        -> ( 30, 59) key=0 dead=0 term=0 score=9988.6
+  try B        -> ( 30, 59) key=0 dead=0 term=0 score=9988.6
+  try right+B  -> ( 33, 59) key=0 dead=0 term=0 score=10016.8
+chunk 126: choose right score=10016.8 stall=0
+chunk 126: right -> (33,59) key=0 lives=4 state=16 timer=4
+  try wait     -> ( 41, 74) key=0 dead=0 term=0 score=9822.7
+  try right    -> ( 44, 74) key=0 dead=0 term=0 score=9818.6
+  try left     -> ( 41, 74) key=0 dead=0 term=0 score=9822.7
+  try up       -> ( 41, 74) key=0 dead=0 term=0 score=9822.7
+  try down     -> ( 41, 74) key=0 dead=0 term=0 score=9822.7
+  try right+A  -> ( 44, 74) key=0 dead=0 term=0 score=9818.6
+  try left+A   -> ( 41, 74) key=0 dead=0 term=0 score=9822.7
+  try A        -> ( 41, 74) key=0 dead=0 term=0 score=9822.7
+  try B        -> ( 41, 74) key=0 dead=0 term=0 score=9822.7
+  try right+B  -> ( 44, 74) key=0 dead=0 term=0 score=9818.6
+chunk 127: choose wait score=9822.7 stall=1
+chunk 127: wait -> (41,74) key=0 lives=4 state=16 timer=3
+  try wait     -> ( 44, 88) key=0 dead=0 term=0 score=9352.5
+  try right    -> ( 52, 88) key=0 dead=0 term=0 score=9273.2
+  try left     -> ( 44, 88) key=0 dead=0 term=0 score=9352.5
+  try up       -> ( 44, 88) key=0 dead=0 term=0 score=9352.5
+  try down     -> ( 44, 88) key=0 dead=0 term=0 score=9352.5
+  try right+A  -> ( 52, 88) key=0 dead=0 term=0 score=9273.2
+  try left+A   -> ( 44, 88) key=0 dead=0 term=0 score=9352.5
+  try A        -> ( 44, 88) key=0 dead=0 term=0 score=9352.5
+  try B        -> ( 44, 88) key=0 dead=0 term=0 score=9352.5
+  try right+B  -> ( 52, 88) key=0 dead=0 term=0 score=9273.2
+chunk 128: choose wait score=9352.5 stall=2
+chunk 128: wait -> (44,88) key=0 lives=4 state=16 timer=10
+  try wait     -> ( 44, 88) key=0 dead=0 term=0 score=9292.5
+  try right    -> ( 52, 88) key=0 dead=0 term=0 score=9273.2
+  try left     -> ( 36, 88) key=0 dead=0 term=0 score=9352.5
+  try up       -> ( 44, 88) key=0 dead=0 term=0 score=9292.5
+  try down     -> ( 44, 88) key=0 dead=0 term=0 score=9292.5
+  try right+A  -> ( 52, 88) key=0 dead=0 term=0 score=9273.2
+  try left+A   -> ( 36, 88) key=0 dead=0 term=0 score=9352.5
+  try A        -> ( 44, 88) key=0 dead=0 term=0 score=9292.5
+  try B        -> ( 44, 88) key=0 dead=0 term=0 score=9292.5
+  try right+B  -> ( 52, 88) key=0 dead=0 term=0 score=9273.2
+chunk 129: choose left score=9352.5 stall=3
+chunk 129: left -> (36,88) key=0 lives=4 state=16 timer=9
+  try wait     -> ( 31, 88) key=0 dead=0 term=0 score=9282.6
+  try right    -> ( 31, 88) key=0 dead=0 term=0 score=9282.6
+  try left     -> ( 26, 88) key=0 dead=0 term=0 score=9265.7
+  try up       -> ( 31, 88) key=0 dead=0 term=0 score=9282.6
+  try down     -> ( 31, 88) key=0 dead=0 term=0 score=9282.6
+  try right+A  -> ( 45, 63) key=0 dead=0 term=0 score=9999.0
+  try left+A   -> ( 25, 72) key=0 dead=0 term=0 score=9907.7
+  try A        -> ( 28, 72) key=0 dead=0 term=0 score=9927.0
+  try B        -> ( 31, 88) key=0 dead=0 term=0 score=9282.6
+  try right+B  -> ( 31, 88) key=0 dead=0 term=0 score=9282.6
+chunk 130: choose right+A score=9999.0 stall=4
+chunk 130: right+A -> (45,63) key=0 lives=4 state=16 timer=8
+  try wait     -> ( 53, 59) key=0 dead=0 term=0 score=9899.6
+  try right    -> ( 56, 59) key=0 dead=0 term=0 score=9990.2
+  try left     -> ( 53, 59) key=0 dead=0 term=0 score=9899.6
+  try up       -> ( 53, 59) key=0 dead=0 term=0 score=9899.6
+  try down     -> ( 53, 59) key=0 dead=0 term=0 score=9899.6
+  try right+A  -> ( 56, 59) key=0 dead=0 term=0 score=9990.2
+  try left+A   -> ( 53, 59) key=0 dead=0 term=0 score=9899.6
+  try A        -> ( 53, 59) key=0 dead=0 term=0 score=9899.6
+  try B        -> ( 53, 59) key=0 dead=0 term=0 score=9899.6
+  try right+B  -> ( 56, 59) key=0 dead=0 term=0 score=9990.2
+chunk 131: choose right score=9990.2 stall=5
+chunk 131: right -> (56,59) key=0 lives=4 state=16 timer=7
+  try wait     -> ( 64, 74) key=0 dead=0 term=0 score=9823.0
+  try right    -> ( 67, 74) key=0 dead=0 term=0 score=9798.5
+  try left     -> ( 64, 74) key=0 dead=0 term=0 score=9823.0
+  try up       -> ( 64, 74) key=0 dead=0 term=0 score=9823.0
+  try down     -> ( 64, 74) key=0 dead=0 term=0 score=9823.0
+  try right+A  -> ( 67, 74) key=0 dead=0 term=0 score=9798.5
+  try left+A   -> ( 64, 74) key=0 dead=0 term=0 score=9823.0
+  try A        -> ( 64, 74) key=0 dead=0 term=0 score=9823.0
+  try B        -> ( 64, 74) key=0 dead=0 term=0 score=9823.0
+  try right+B  -> ( 67, 74) key=0 dead=0 term=0 score=9798.5
+chunk 132: choose wait score=9823.0 stall=6
+chunk 132: wait -> (64,74) key=0 lives=4 state=16 timer=6
+  try wait     -> ( 67, 88) key=0 dead=0 term=0 score=9316.3
+  try right    -> ( 75, 88) key=0 dead=0 term=0 score=9260.8
+  try left     -> ( 67, 88) key=0 dead=0 term=0 score=9316.3
+  try up       -> ( 67, 88) key=0 dead=0 term=0 score=9316.3
+  try down     -> ( 67, 88) key=0 dead=0 term=0 score=9316.3
+  try right+A  -> ( 75, 88) key=0 dead=0 term=0 score=9260.8
+  try left+A   -> ( 67, 88) key=0 dead=0 term=0 score=9316.3
+  try A        -> ( 67, 88) key=0 dead=0 term=0 score=9316.3
+  try B        -> ( 67, 88) key=0 dead=0 term=0 score=9316.3
+  try right+B  -> ( 75, 88) key=0 dead=0 term=0 score=9260.8
+chunk 133: choose wait score=9316.3 stall=7
+chunk 133: wait -> (67,88) key=0 lives=4 state=16 timer=5
+  try wait     -> ( 67, 88) key=0 dead=0 term=0 score=9256.3
+  try right    -> ( 75, 88) key=0 dead=0 term=0 score=9260.8
+  try left     -> ( 59, 91) key=0 dead=0 term=0 score=9210.8
+  try up       -> ( 67, 88) key=0 dead=0 term=0 score=9256.3
+  try down     -> ( 67, 88) key=0 dead=0 term=0 score=9256.3
+  try right+A  -> ( 75, 88) key=0 dead=0 term=0 score=9260.8
+  try left+A   -> ( 59, 91) key=0 dead=0 term=0 score=9210.8
+  try A        -> ( 67, 88) key=0 dead=0 term=0 score=9256.3
+  try B        -> ( 67, 88) key=0 dead=0 term=0 score=9256.3
+  try right+B  -> ( 75, 88) key=0 dead=0 term=0 score=9260.8
+chunk 134: choose right score=9260.8 stall=8
+chunk 134: right -> (75,88) key=0 lives=4 state=16 timer=4
+  try wait     -> ( 80, 88) key=0 dead=0 term=0 score=9222.8
+  try right    -> ( 85, 88) key=0 dead=0 term=0 score=9182.8
+  try left     -> ( 80, 88) key=0 dead=0 term=0 score=9222.8
+  try up       -> ( 80, 88) key=0 dead=0 term=0 score=9222.8
+  try down     -> ( 80, 88) key=0 dead=0 term=0 score=9222.8
+  try right+A  -> ( 86, 72) key=0 dead=0 term=0 score=9640.0
+  try left+A   -> ( 66, 63) key=0 dead=0 term=0 score=9875.7
+  try A        -> ( 83, 72) key=0 dead=0 term=0 score=9668.2
+  try B        -> ( 80, 88) key=0 dead=0 term=0 score=9222.8
+  try right+B  -> ( 85, 88) key=0 dead=0 term=0 score=9182.8
+chunk 135: choose left+A score=9875.7 stall=9
+chunk 135: left+A -> (66,63) key=0 lives=4 state=16 timer=3
+  try wait     -> ( 58, 70) key=0 dead=0 term=0 score=9843.0
+  try right    -> ( 58, 70) key=0 dead=0 term=0 score=9843.0
+  try left     -> ( 55, 70) key=0 dead=0 term=0 score=9805.8
+  try up       -> ( 58, 70) key=0 dead=0 term=0 score=9843.0
+  try down     -> ( 58, 70) key=0 dead=0 term=0 score=9843.0
+  try right+A  -> ( 58, 70) key=0 dead=0 term=0 score=9843.0
+  try left+A   -> ( 55, 70) key=0 dead=0 term=0 score=9805.8
+  try A        -> ( 58, 70) key=0 dead=0 term=0 score=9843.0
+  try B        -> ( 58, 70) key=0 dead=0 term=0 score=9843.0
+  try right+B  -> ( 58, 70) key=0 dead=0 term=0 score=9843.0
+chunk 136: choose wait score=9843.0 stall=10
+backtracking to chunk 135 (was at 136)
+  waypoint 0 (56,136) reached
+  waypoint 1 (56,56) reached
+  post-key waypoint 0 (56,56) reached
+replayed to chunk 135
+  try wait     -> ( 80, 88) key=0 dead=0 term=0 score=9222.8
+  try right    -> ( 85, 88) key=0 dead=0 term=0 score=9182.8
+  try left     -> ( 80, 88) key=0 dead=0 term=0 score=9222.8
+  try up       -> ( 80, 88) key=0 dead=0 term=0 score=9222.8
+  try down     -> ( 80, 88) key=0 dead=0 term=0 score=9222.8
+  try right+A  -> ( 86, 72) key=0 dead=0 term=0 score=9640.0
+  try A        -> ( 83, 72) key=0 dead=0 term=0 score=9668.2
+  try B        -> ( 80, 88) key=0 dead=0 term=0 score=9222.8
+  try right+B  -> ( 85, 88) key=0 dead=0 term=0 score=9182.8
+chunk 135: choose A score=9668.2 stall=0
+chunk 135: A -> (83,72) key=0 lives=4 state=16 timer=3
+  try wait     -> ( 85, 77) key=0 dead=0 term=0 score=9560.4
+  try right    -> ( 93, 77) key=0 dead=0 term=0 score=9546.9
+  try left     -> ( 85, 77) key=0 dead=0 term=0 score=9560.4
+  try up       -> ( 85, 77) key=0 dead=0 term=0 score=9560.4
+  try down     -> ( 85, 77) key=0 dead=0 term=0 score=9560.4
+  try right+A  -> ( 93, 77) key=0 dead=0 term=0 score=9546.9
+  try left+A   -> ( 85, 77) key=0 dead=0 term=0 score=9560.4
+  try A        -> ( 85, 77) key=0 dead=0 term=0 score=9560.4
+  try B        -> ( 85, 77) key=0 dead=0 term=0 score=9560.4
+  try right+B  -> ( 93, 77) key=0 dead=0 term=0 score=9546.9
+chunk 136: choose wait score=9560.4 stall=1
+chunk 136: wait -> (85,77) key=0 lives=4 state=16 timer=10
+  try wait     -> ( 85, 88) key=0 dead=0 term=0 score=9182.8
+  try right    -> ( 94, 88) key=0 dead=0 term=0 score=9287.3
+  try left     -> ( 77, 88) key=0 dead=0 term=0 score=9185.8
+  try up       -> ( 85, 88) key=0 dead=0 term=0 score=9182.8
+  try down     -> ( 85, 88) key=0 dead=0 term=0 score=9182.8
+  try right+A  -> ( 94, 88) key=0 dead=0 term=0 score=9287.3
+  try left+A   -> ( 77, 88) key=0 dead=0 term=0 score=9185.8
+  try A        -> ( 85, 88) key=0 dead=0 term=0 score=9182.8
+  try B        -> ( 85, 88) key=0 dead=0 term=0 score=9182.8
+  try right+B  -> ( 94, 88) key=0 dead=0 term=0 score=9287.3
+chunk 137: choose right score=9287.3 stall=2
+chunk 137: right -> (94,88) key=0 lives=4 state=16 timer=9
+  try wait     -> ( 98, 88) key=0 dead=0 term=0 score=9252.6
+  try right    -> (100, 88) key=0 dead=0 term=0 score=9235.0
+  try left     -> ( 97, 88) key=0 dead=0 term=0 score=9261.3
+  try up       -> ( 98, 88) key=0 dead=0 term=0 score=9252.6
+  try down     -> ( 98, 88) key=0 dead=0 term=0 score=9252.6
+  try right+A  -> (100, 72) key=0 dead=0 term=0 score=9506.0
+  try left+A   -> ( 85, 71) key=0 dead=0 term=0 score=9654.7
+  try A        -> (100, 72) key=0 dead=0 term=0 score=9506.0
+  try B        -> ( 98, 88) key=0 dead=0 term=0 score=9252.6
+  try right+B  -> (100, 88) key=0 dead=0 term=0 score=9235.0
+chunk 138: choose left+A score=9654.7 stall=3
+chunk 138: left+A -> (85,71) key=0 lives=4 state=16 timer=8
+  try wait     -> ( 77, 86) key=0 dead=0 term=0 score=9562.7
+  try right    -> ( 77, 86) key=0 dead=0 term=0 score=9562.7
+  try left     -> ( 75, 86) key=0 dead=0 term=0 score=9578.0
+  try up       -> ( 77, 86) key=0 dead=0 term=0 score=9562.7
+  try down     -> ( 77, 86) key=0 dead=0 term=0 score=9562.7
+  try right+A  -> ( 77, 86) key=0 dead=0 term=0 score=9562.7
+  try left+A   -> ( 75, 86) key=0 dead=0 term=0 score=9578.0
+  try A        -> ( 77, 86) key=0 dead=0 term=0 score=9562.7
+  try B        -> ( 77, 86) key=0 dead=0 term=0 score=9562.7
+  try right+B  -> ( 77, 86) key=0 dead=0 term=0 score=9562.7
+chunk 139: choose left score=9578.0 stall=4
+chunk 139: left -> (75,86) key=0 lives=4 state=16 timer=7
+  try wait     -> ( 68, 88) key=0 dead=0 term=0 score=9249.8
+  try right    -> ( 68, 88) key=0 dead=0 term=0 score=9249.8
+  try left     -> ( 64, 88) key=0 dead=0 term=0 score=9275.0
+  try up       -> ( 68, 88) key=0 dead=0 term=0 score=9249.8
+  try down     -> ( 68, 88) key=0 dead=0 term=0 score=9249.8
+  try right+A  -> ( 68, 88) key=0 dead=0 term=0 score=9249.8
+  try left+A   -> ( 64, 88) key=0 dead=0 term=0 score=9275.0
+  try A        -> ( 68, 88) key=0 dead=0 term=0 score=9249.8
+  try B        -> ( 68, 88) key=0 dead=0 term=0 score=9249.8
+  try right+B  -> ( 68, 88) key=0 dead=0 term=0 score=9249.8
+chunk 140: choose left score=9275.0 stall=5
+chunk 140: left -> (64,88) key=0 lives=4 state=16 timer=6
+  try wait     -> ( 59, 93) key=0 dead=0 term=0 score=9189.1
+  try right    -> ( 59, 93) key=0 dead=0 term=0 score=9189.1
+  try left     -> ( 54, 88) key=0 dead=0 term=0 score=9265.7
+  try up       -> ( 59, 93) key=0 dead=0 term=0 score=9189.1
+  try down     -> ( 59, 93) key=0 dead=0 term=0 score=9189.1
+  try right+A  -> ( 73, 63) key=0 dead=0 term=0 score=9747.7
+  try left+A   -> ( 53, 72) key=0 dead=0 term=0 score=9740.8
+  try A        -> ( 56, 72) key=0 dead=0 term=0 score=9900.7
+  try B        -> ( 59, 93) key=0 dead=0 term=0 score=9189.1
+  try right+B  -> ( 59, 93) key=0 dead=0 term=0 score=9189.1
+chunk 141: choose A score=9900.7 stall=0
+chunk 141: A -> (56,72) key=0 lives=4 state=16 timer=5
+final: 142 chunks, done=0
+SCHEDULE f0=2499 chunks=142:
+  right:2499:2559
+  left:2559:2574
+  a:2559:2574
+  right:2604:2619
+  a:2604:2619
+  right:2649:2664
+  a:2649:2664
+  left:2679:2709
+  left:2739:2754
+  right:2754:2769
+  a:2754:2769
+  left:2799:2814
+  a:2814:2829
+  left:2844:2859
+  right:2859:2874
+  a:2859:2874
+  left:2904:2919
+  a:2904:2919
+  right:2949:2964
+  right:3039:3054
+  right:3069:3099
+  left:3114:3129
+  right:3159:3204
+  left:3204:3219
+  a:3204:3219
+  left:3219:3249
+  right:3279:3294
+  right:3324:3339
+  up:3354:3369
+  left:3369:3444
+  left:3459:3474
+  left:3564:3579
+  right:3579:3624
+  right:3639:3654
+  left:3684:3699
+  right:3729:3744
+  up:3759:3774
+  left:3774:3789
+  a:3819:3834
+  right:3834:3849
+  left:3864:3879
+  a:3864:3879
+  right:3909:3924
+  up:3924:3999
+  right:3999:4014
+  a:3999:4014
+  right:4014:4044
+  left:4044:4059
+  a:4044:4059
+  left:4074:4089
+  up:4089:4164
+  left:4164:4179
+  a:4164:4179
+  right:4194:4209
+  left:4209:4224
+  a:4209:4224
+  left:4269:4284
+  left:4284:4299
+  a:4284:4299
+  right:4299:4314
+  a:4329:4344
+  left:4359:4374
+  right:4374:4389
+  a:4374:4389
+  right:4389:4404
+  left:4434:4449
+  right:4449:4464
+  a:4449:4464
+  right:4464:4479
+  right:4509:4524
+  a:4524:4539
+  right:4554:4569
+  left:4569:4584
+  a:4569:4584
+  left:4584:4614
+  a:4614:4629
+ACTIONS: 1 1 1 1 6 0 0 5 0 0 5 0 2 2 0 0 2 5 0 0 2 7 0 2 5 0 0 6 0 0 1 0 0 0 0 0 1 0 1 1 0 2 0 0 1 1 1 6 2 2 0 0 1 0 0 1 0 3 2 2 2 2 2 0 2 0 0 0 0 0 0 2 1 1 1 0 1 0 0 2 0 0 1 0 3 2 0 0 7 1 0 6 0 0 1 3 3 3 3 3 5 1 1 6 0 2 3 3 3 3 3 6 0 1 6 0 0 0 2 6 1 0 7 0 2 5 1 0 0 2 5 1 0 0 1 7 0 1 6 2 2 7

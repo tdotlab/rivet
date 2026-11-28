@@ -1,0 +1,35 @@
+DD18 frame=2098 pc=1057 bank=5 00->ff
+DD18 frame=2150 pc=1057 bank=1 ff->00
+CHUNK 0 frame=2499 x=17 y=136 key=1
+POSITION frame=2501 pc=1142 bank=11 x=17->17 y=136->134
+POSITION frame=2502 pc=1142 bank=11 x=17->17 y=134->133
+POSITION frame=2503 pc=1142 bank=11 x=17->17 y=133->131
+POSITION frame=2504 pc=1142 bank=11 x=17->17 y=131->130
+POSITION frame=2505 pc=1142 bank=11 x=17->17 y=130->128
+POSITION frame=2506 pc=1142 bank=11 x=17->17 y=128->127
+POSITION frame=2507 pc=1142 bank=11 x=17->17 y=127->126
+POSITION frame=2508 pc=1142 bank=11 x=17->17 y=126->125
+POSITION frame=2509 pc=1142 bank=11 x=17->17 y=125->124
+POSITION frame=2510 pc=1142 bank=11 x=17->17 y=124->122
+POSITION frame=2512 pc=1142 bank=11 x=17->17 y=122->121
+POSITION frame=2513 pc=1142 bank=11 x=17->17 y=121->120
+CHUNK 1 frame=2514 x=17 y=120 key=1
+POSITION frame=2522 pc=1142 bank=11 x=17->17 y=120->121
+POSITION frame=2525 pc=1142 bank=11 x=17->17 y=121->122
+POSITION frame=2526 pc=1142 bank=11 x=17->17 y=122->123
+POSITION frame=2528 pc=1142 bank=11 x=17->17 y=123->124
+CHUNK 2 frame=2529 x=17 y=124 key=1
+POSITION frame=2529 pc=1142 bank=11 x=17->17 y=124->125
+POSITION frame=2530 pc=1142 bank=11 x=17->17 y=125->126
+POSITION frame=2531 pc=1142 bank=11 x=17->17 y=126->128
+POSITION frame=2532 pc=1142 bank=11 x=17->17 y=128->129
+POSITION frame=2533 pc=1142 bank=11 x=17->17 y=129->130
+POSITION frame=2534 pc=1142 bank=11 x=17->17 y=130->131
+POSITION frame=2535 pc=1142 bank=11 x=17->17 y=131->133
+POSITION frame=2536 pc=1142 bank=11 x=17->17 y=133->134
+POSITION frame=2537 pc=1142 bank=11 x=17->17 y=134->135
+POSITION frame=2538 pc=1142 bank=11 x=17->17 y=135->136
+POSITION frame=2539 pc=1142 bank=11 x=17->17 y=136->138
+POSITION frame=2540 pc=4def bank=16 x=17->17 y=138->136
+CHUNK 3 frame=2544 x=17 y=136 key=1
+TOTAL PC $0000: 0

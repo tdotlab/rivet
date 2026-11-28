@@ -1,0 +1,157 @@
+DD18 frame=2098 pc=1057 bank=5 00->ff
+DD18 frame=2150 pc=1057 bank=1 ff->00
+CHUNK 0 frame=2499 x=17 y=136 key=1
+CHUNK 1 frame=2514 x=26 y=120 key=1
+CHUNK 2 frame=2529 x=37 y=124 key=1
+CHUNK 3 frame=2544 x=48 y=136 key=1
+CHUNK 4 frame=2559 x=58 y=120 key=1
+CHUNK 5 frame=2574 x=69 y=124 key=1
+CHUNK 6 frame=2589 x=80 y=136 key=1
+CHUNK 7 frame=2604 x=90 y=136 key=1
+CHUNK 8 frame=2619 x=101 y=136 key=1
+CHUNK 9 frame=2634 x=112 y=136 key=1
+CHUNK 10 frame=2649 x=122 y=120 key=1
+CHUNK 11 frame=2664 x=133 y=124 key=1
+CHUNK 12 frame=2679 x=144 y=124 key=1
+CHUNK 13 frame=2694 x=140 y=101 key=1
+CHUNK 14 frame=2709 x=149 y=95 key=1
+CHUNK 15 frame=2724 x=155 y=108 key=1
+CHUNK 16 frame=2739 x=153 y=112 key=1
+CHUNK 17 frame=2754 x=153 y=96 key=1
+CHUNK 18 frame=2769 x=153 y=100 key=1
+CHUNK 19 frame=2784 x=144 y=112 key=1
+CHUNK 20 frame=2799 x=152 y=89 key=1
+CHUNK 21 frame=2814 x=151 y=83 key=1
+CHUNK 22 frame=2829 x=140 y=88 key=1
+CHUNK 23 frame=2844 x=148 y=65 key=1
+CHUNK 24 frame=2859 x=156 y=59 key=1
+CHUNK 25 frame=2874 x=146 y=64 key=1
+CHUNK 26 frame=2889 x=137 y=48 key=1
+CHUNK 27 frame=2904 x=127 y=48 key=1
+CHUNK 28 frame=2919 x=120 y=57 key=1
+CHUNK 29 frame=2934 x=119 y=72 key=1
+CHUNK 30 frame=2949 x=120 y=72 key=1
+PC $4a51 frame 2949 state=16 timer=6 bank=7
+PC $4a75 frame 2949 state=16 timer=6 bank=7
+PC $4b47 frame 2949 state=16 timer=6 bank=7
+DD18 frame=2949 pc=4b47 bank=7 00->03
+CHUNK 31 frame=2964 x=120 y=72 key=1
+CHUNK 32 frame=2979 x=120 y=82 key=1
+CHUNK 33 frame=2994 x=120 y=97 key=1
+CHUNK 34 frame=3009 x=120 y=112 key=1
+CHUNK 35 frame=3024 x=112 y=112 key=1
+CHUNK 36 frame=3039 x=101 y=107 key=1
+CHUNK 37 frame=3054 x=95 y=96 key=1
+CHUNK 38 frame=3069 x=94 y=106 key=1
+CHUNK 39 frame=3084 x=92 y=125 key=1
+CHUNK 40 frame=3099 x=81 y=119 key=1
+CHUNK 41 frame=3114 x=75 y=108 key=1
+CHUNK 42 frame=3129 x=75 y=118 key=1
+CHUNK 43 frame=3144 x=85 y=119 key=1
+CHUNK 44 frame=3159 x=95 y=108 key=1
+CHUNK 45 frame=3174 x=102 y=112 key=1
+CHUNK 46 frame=3189 x=100 y=107 key=1
+CHUNK 47 frame=3204 x=90 y=96 key=1
+CHUNK 48 frame=3219 x=82 y=106 key=1
+CHUNK 49 frame=3234 x=71 y=125 key=1
+CHUNK 50 frame=3249 x=66 y=119 key=1
+CHUNK 51 frame=3264 x=73 y=108 key=1
+CHUNK 52 frame=3279 x=84 y=118 key=1
+CHUNK 53 frame=3294 x=95 y=137 key=1
+STATEWRITE frame=3300 pc=1d2d bank=12 state=16->16 timer=4->5
+STATEWRITE frame=3301 pc=1d2d bank=12 state=16->16 timer=5->6
+STATEWRITE frame=3302 pc=1d2d bank=12 state=16->16 timer=6->7
+STATEWRITE frame=3303 pc=1d2d bank=12 state=16->16 timer=7->8
+STATEWRITE frame=3304 pc=1d2d bank=12 state=16->16 timer=8->9
+STATEWRITE frame=3305 pc=1d2d bank=12 state=16->16 timer=9->10
+STATEWRITE frame=3306 pc=0855 bank=12 state=16->16 timer=10->3
+STATEWRITE frame=3307 pc=1d2d bank=12 state=16->16 timer=3->4
+STATEWRITE frame=3308 pc=1d2d bank=12 state=16->16 timer=4->5
+CHUNK 54 frame=3309 x=99 y=131 key=1
+STATEWRITE frame=3309 pc=1d2d bank=12 state=16->16 timer=5->6
+STATEWRITE frame=3310 pc=1d2d bank=12 state=16->16 timer=6->7
+STATEWRITE frame=3311 pc=1d2d bank=12 state=16->16 timer=7->8
+STATEWRITE frame=3312 pc=1d2d bank=12 state=16->16 timer=8->9
+STATEWRITE frame=3313 pc=1d2d bank=12 state=16->16 timer=9->10
+STATEWRITE frame=3314 pc=0855 bank=12 state=16->16 timer=10->3
+STATEWRITE frame=3315 pc=1d2d bank=12 state=16->16 timer=3->4
+STATEWRITE frame=3316 pc=1d2d bank=12 state=16->16 timer=4->5
+STATEWRITE frame=3317 pc=1d2d bank=12 state=16->16 timer=5->6
+STATEWRITE frame=3318 pc=1d2d bank=12 state=16->16 timer=6->7
+STATEWRITE frame=3319 pc=1d2d bank=12 state=16->16 timer=7->8
+STATEWRITE frame=3320 pc=1d2d bank=12 state=16->16 timer=8->9
+STATEWRITE frame=3321 pc=1d2d bank=12 state=16->16 timer=9->10
+STATEWRITE frame=3322 pc=0855 bank=12 state=16->16 timer=10->3
+STATEWRITE frame=3323 pc=1d2d bank=12 state=16->16 timer=3->4
+CHUNK 55 frame=3324 x=101 y=120 key=1
+STATEWRITE frame=3324 pc=1d2d bank=12 state=16->16 timer=4->5
+STATEWRITE frame=3325 pc=1d2d bank=12 state=16->16 timer=5->6
+STATEWRITE frame=3326 pc=1d2d bank=12 state=16->16 timer=6->7
+STATEWRITE frame=3327 pc=1d2d bank=12 state=16->16 timer=7->8
+STATEWRITE frame=3328 pc=1d2d bank=12 state=16->16 timer=8->9
+STATEWRITE frame=3329 pc=1d2d bank=12 state=16->16 timer=9->10
+STATEWRITE frame=3330 pc=0855 bank=12 state=16->16 timer=10->3
+STATEWRITE frame=3331 pc=1d2d bank=12 state=16->16 timer=3->4
+STATEWRITE frame=3332 pc=1d2d bank=12 state=16->16 timer=4->5
+STATEWRITE frame=3333 pc=1d2d bank=12 state=16->16 timer=5->6
+STATEWRITE frame=3334 pc=1d2d bank=12 state=16->16 timer=6->7
+STATEWRITE frame=3335 pc=1d2d bank=12 state=16->16 timer=7->8
+STATEWRITE frame=3336 pc=1d2d bank=12 state=16->16 timer=8->9
+STATEWRITE frame=3337 pc=1d2d bank=12 state=16->16 timer=9->10
+STATEWRITE frame=3338 pc=0855 bank=12 state=16->16 timer=10->3
+CHUNK 56 frame=3339 x=112 y=130 key=1
+STATEWRITE frame=3339 pc=1d2d bank=12 state=16->16 timer=3->4
+STATEWRITE frame=3340 pc=1d2d bank=12 state=16->16 timer=4->5
+STATEWRITE frame=3341 pc=1d2d bank=12 state=16->16 timer=5->6
+STATEWRITE frame=3342 pc=1d2d bank=12 state=16->16 timer=6->7
+STATEWRITE frame=3343 pc=1d2d bank=12 state=16->16 timer=7->8
+STATEWRITE frame=3344 pc=1d2d bank=12 state=16->16 timer=8->9
+STATEWRITE frame=3345 pc=1d2d bank=12 state=16->16 timer=9->10
+STATEWRITE frame=3345 pc=4126 bank=16 state=16->16 timer=10->25
+CHUNK 57 frame=3354 x=120 y=136 key=1
+CHUNK 58 frame=3369 x=121 y=136 key=1
+CHUNK 59 frame=3384 x=121 y=136 key=1
+CHUNK 60 frame=3399 x=121 y=136 key=1
+CHUNK 61 frame=3414 x=121 y=136 key=1
+CHUNK 62 frame=3429 x=121 y=136 key=1
+CHUNK 63 frame=3444 x=121 y=136 key=1
+CHUNK 64 frame=3459 x=121 y=136 key=1
+CHUNK 65 frame=3474 x=121 y=136 key=1
+CHUNK 66 frame=3489 x=121 y=136 key=1
+CHUNK 67 frame=3504 x=105 y=136 key=1
+CHUNK 68 frame=3519 x=105 y=136 key=1
+CHUNK 69 frame=3534 x=105 y=136 key=1
+CHUNK 70 frame=3549 x=123 y=136 key=1
+CHUNK 71 frame=3564 x=123 y=136 key=1
+CHUNK 72 frame=3579 x=123 y=136 key=1
+CHUNK 73 frame=3594 x=123 y=136 key=1
+CHUNK 74 frame=3609 x=123 y=136 key=1
+CHUNK 75 frame=3624 x=123 y=136 key=1
+STATEWRITE frame=3625 pc=6fd4 bank=16 state=16->16 timer=25->26
+STATEWRITE frame=3626 pc=09d7 bank=16 state=16->16 timer=26->42
+STATEWRITE frame=3627 pc=08c2 bank=16 state=16->16 timer=42->41
+STATEWRITE frame=3627 pc=0b68 bank=16 state=16->16 timer=41->43
+CHUNK 76 frame=3639 x=123 y=136 key=1
+STATEWRITE frame=3644 pc=1d2d bank=16 state=16->16 timer=43->44
+CHUNK 77 frame=3654 x=123 y=136 key=1
+CHUNK 78 frame=3669 x=123 y=136 key=1
+CHUNK 79 frame=3684 x=123 y=136 key=1
+STATEWRITE frame=3685 pc=1d2d bank=16 state=16->16 timer=44->45
+STATEWRITE frame=3695 pc=0bf9 bank=16 state=16->16 timer=45->0
+STATEWRITE frame=3696 pc=0d25 bank=16 state=16->20 timer=0->0
+CHUNK 80 frame=3699 x=0 y=0 key=0
+STATEWRITE frame=3699 pc=1d2d bank=1 state=20->20 timer=0->1
+CHUNK 81 frame=3714 x=176 y=16 key=0
+CHUNK 82 frame=3729 x=176 y=16 key=0
+CHUNK 83 frame=3744 x=176 y=16 key=0
+CHUNK 84 frame=3759 x=176 y=16 key=0
+CHUNK 85 frame=3774 x=176 y=16 key=0
+CHUNK 86 frame=3789 x=176 y=16 key=0
+TOTAL PC $4a51: 1
+TOTAL PC $4a75: 1
+TOTAL PC $4b47: 1
+TOTAL PC $6c7a: 0
+TOTAL PC $6c8f: 0
+TOTAL PC $6ca4: 0
+TOTAL PC $6cb9: 0
+TOTAL PC $7b6e: 0
